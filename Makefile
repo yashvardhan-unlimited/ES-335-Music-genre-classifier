@@ -28,7 +28,7 @@ features:
 	$(PY) -W ignore scripts/extract_features.py
 # tune classical models on train, score on valid (per clip) -> results/val/*.json
 tune:
-	$(PY) -W ignore -m src.train_classical --split C --seed 0 --models dummy,knn,logreg
+	$(PY) -W ignore -m src.train_classical --split C --seed 0 --models dummy,knn,logreg,svm,xgb
 # scripts/train_cnn.py
 cnn:
 	$(TODO)

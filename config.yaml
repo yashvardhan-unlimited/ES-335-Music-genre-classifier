@@ -47,4 +47,18 @@ grids:
     weights: [uniform, distance]
   logreg:
     C: [0.01, 0.1, 1, 10]
+  svm:
+    C: [0.1, 1, 10, 100]
+    gamma: [scale, 0.001, 0.01, 0.1]   # plain decimals: YAML reads 1e-3 as a string
+  xgb:
+    max_depth: [3, 5, 7]
+    learning_rate: [0.05, 0.1]
 logreg_max_iter: 2000
+
+# fixed XGBoost settings; trees are capped at n_estimators and early-stopped on valid mlogloss
+xgb:
+  n_estimators: 2000
+  subsample: 0.8
+  colsample_bytree: 0.8
+  early_stopping_rounds: 50
+  eval_metric: mlogloss

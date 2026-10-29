@@ -282,3 +282,58 @@ same on every machine and makes the refit agree with the grid score (asserted).
 the main process); converting features to float64 (reduces but does not
 remove the dependence); ignoring it (the asserted equality would hold or fail
 depending on the machine's core count).
+
+## 2026-10-30: RBF SVM tuned on C x gamma, probabilities by Platt scaling
+
+**Decision.** `Pipeline(StandardScaler, SVC(kernel="rbf", probability=True,
+random_state=42))`, grid C {0.1, 1, 10, 100} x gamma {"scale", 0.001, 0.01,
+0.1}, tuned like kNN/logreg (`GridSearchCV` on the predefined train->valid
+fold, clip macro-F1, refit on train only). The JSON stores the numeric value
+of `gamma="scale"` on our training data (0.0175) so the heatmap can place it
+on the gamma axis.
+
+**Reason.** C and gamma together set how flexible the boundary is; a log grid
+over both is the standard search (Hsu, Chang & Lin). Soft voting needs window
+probabilities, and an SVM only gives margins, so sklearn fits Platt's sigmoid
+on top. gamma values are written as plain decimals in config because YAML
+reads `1e-3` as a string.
+
+**Rejected.** A linear SVM (logistic regression already covers the linear
+case); `CalibratedClassifierCV(SVC(), ensemble=False)` (the replacement for
+the deprecated `probability=True`, needed only from sklearn 1.11; we pin
+1.9.1); majority vote on `predict` (would avoid Platt but throws away
+confidence, and lesson 06 chose soft voting for all models). Known caveat:
+Platt's internal 5-fold CV splits windows, not clips, so sibling windows can
+sit on both sides of it; this affects only the probability mapping, never
+which data the valid score is computed on.
+
+**Note.** The best setting (C = 100, gamma = 0.001) lies on the corner of the
+grid. The grid was fixed by the step specification and was not widened after
+seeing valid scores.
+
+## 2026-10-30: XGBoost tuned by a manual loop with early stopping on valid
+
+**Decision.** `XGBClassifier` on unscaled window features, integer labels in
+config genre order. Loop over max_depth {3, 5, 7} x learning_rate {0.05, 0.1};
+fixed n_estimators 2000, subsample 0.8, colsample_bytree 0.8. Each fit
+early-stops when valid **window** mlogloss has not improved for 50 rounds;
+predictions use the trees up to the best round. The setting with the highest
+valid **clip** macro-F1 wins (ties: first in grid order). The best setting's
+train/valid mlogloss per round is stored in the JSON for the curve. The
+summary table now reads every result JSON for the split, so it lists all
+models even when only some were re-run.
+
+**Reason.** The number of trees is the most important XGBoost capacity knob
+and early stopping finds it in one fit instead of a grid over it. mlogloss is
+smooth and changes every round, so it is a good stopping signal; clip
+macro-F1 is our metric, so it chooses between settings, as for every other
+model. Trees split on thresholds, which do not change under any monotone
+rescaling of a feature, so no scaler is needed.
+
+**Rejected.** `GridSearchCV` (cannot pass a per-fit `eval_set` cleanly, and
+n_estimators would become another grid axis); early stopping on clip
+macro-F1 (jumpy: one clip changes it by ~0.005, so the stopping point would be
+noise); an inner train-only hold-out for early stopping (would shrink the
+already small, artist-disjoint train set and break the equal-size design).
+Known caveat: valid now picks both the tree count and the setting, so the
+valid score is slightly optimistic for XGBoost. The test part answers that.

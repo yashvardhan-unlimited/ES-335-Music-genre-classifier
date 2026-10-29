@@ -155,9 +155,9 @@
    ]
   ]
  },
- "n_train_windows": 4420,
  "n_valid_windows": 1970,
  "n_valid_clips": 197,
+ "n_train_windows": 4420,
  "grid": [
   {
    "params": {},

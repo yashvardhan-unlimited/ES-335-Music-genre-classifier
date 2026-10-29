@@ -59,4 +59,7 @@ MODELS = {
     "dummy_stratified": (dummy_stratified, None),
     "knn": (knn_pipeline, "knn"),
     "logreg": (logreg_pipeline, "logreg"),
+    "svm": (svm_pipeline, "svm"),
 }
+# xgb is not in MODELS: it needs integer labels and early stopping, so train_classical.tune_xgb
+# runs its own loop instead of GridSearchCV.

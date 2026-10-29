@@ -7,5 +7,6 @@
 5. [05_audio_features.md](05_audio_features.md): sampling, framing and Hann windows, STFT, mel filterbank, dB, MFCCs, chroma, spectral features, HPSS, tempo, fixed vs learned transforms.
 6. [06_evaluation_metrics_bootstrap.md](06_evaluation_metrics_bootstrap.md): confusion matrix, precision/recall/F1, macro vs micro vs weighted, clip vs window, soft vs majority vote, bootstrap, artist-cluster resampling, paired comparisons, limits.
 7. [07_baselines_knn_logreg.md](07_baselines_knn_logreg.md): why floors and baselines, dummy classifiers, standardisation, kNN (distance, voting, bias-variance in k, curse of dimensionality, lazy learning), multinomial logistic regression (softmax, cross-entropy, L2 and C, linear boundaries), the C-valid results and the k plot.
+8. [08_svm_xgboost.md](08_svm_xgboost.md): maximum margin, hinge loss and C, kernels and the kernel trick, RBF and gamma, reading the C x gamma heatmap, one-vs-one, Platt scaling, decision trees and Gini, gradient boosting (XGBoost), learning rate, depth, subsampling, early stopping, why trees need no scaling, the C-valid results.
 
 Terms: [glossary.md](glossary.md)

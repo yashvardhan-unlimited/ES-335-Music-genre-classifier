@@ -41,3 +41,25 @@ def test_load_windows_rows_match_features_index():
 def test_load_windows_refuses_test():
     with pytest.raises(PermissionError):
         load_windows("C", "test")
+
+
+def test_tune_xgb_early_stops_and_picks_by_valid_clip_f1():
+    from src.train_classical import GENRES, tune_xgb
+    rng = np.random.default_rng(0)
+
+    def part(n_clips: int, offset: int) -> tuple[pd.DataFrame, pd.Series]:
+        genre = np.repeat(np.array(GENRES)[np.arange(n_clips) % len(GENRES)], 3)
+        X = pd.DataFrame(rng.normal(size=(len(genre), 4)) + pd.factorize(genre, sort=True)[0][:, None] * 0.5,
+                         index=pd.Index(np.repeat(np.arange(n_clips) + offset, 3), name="clip_id"))
+        return X, pd.Series(genre, index=X.index)
+
+    X_tr, y_tr = part(60, 0)
+    X_va, y_va = part(30, 1000)
+    fixed = {"n_estimators": 300, "subsample": 0.8, "colsample_bytree": 0.8,
+             "early_stopping_rounds": 10, "eval_metric": "mlogloss"}
+    r = tune_xgb(X_tr, y_tr, X_va, y_va, grid={"max_depth": [1, 2], "learning_rate": [0.3]}, fixed=fixed)
+    assert len(r["grid"]) == 2 and r["n_valid_clips"] == 30
+    assert r["valid_macro_f1"] == max(g["valid_macro_f1"] for g in r["grid"])
+    assert r["n_trees"] < 300  # stopped early
+    valid = r["curve"]["valid_mlogloss"]
+    assert len(valid) == r["n_trees"] + 10 and min(valid) == valid[r["best_iteration"]]
