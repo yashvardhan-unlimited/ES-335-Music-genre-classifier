@@ -1,0 +1,50 @@
+# Pipeline entry points. Each target will call the script named in its comment
+# once that script exists; until then it just says so.
+ifeq ($(OS),Windows_NT)
+PY := .venv/Scripts/python.exe
+else
+PY := .venv/bin/python
+endif
+
+TODO = @echo "$@: not yet implemented"
+
+.PHONY: setup data splits features tune cnn analysis test export site all tests
+
+setup:
+	python3.11 -m venv .venv || py -3.11 -m venv .venv
+	$(PY) -m pip install -r requirements.txt
+
+# download GTZAN (skips if present), audit every file, EDA figures + summary
+data:
+	bash scripts/download_data.sh
+	$(PY) -W ignore -m src.data
+	$(PY) -W ignore scripts/eda.py
+# scripts/make_splits.py
+splits:
+	$(TODO)
+# handcrafted window features + full-clip log-mels -> features/
+features:
+	$(PY) -W ignore scripts/extract_features.py
+# scripts/tune_classical.py
+tune:
+	$(TODO)
+# scripts/train_cnn.py
+cnn:
+	$(TODO)
+# scripts/analysis.py
+analysis:
+	$(TODO)
+# scripts/evaluate_test.py (refuses to run without git tag pre-test-freeze)
+test:
+	$(TODO)
+# scripts/export_site_data.py
+export:
+	$(TODO)
+# scripts/build_site.py
+site:
+	$(TODO)
+
+all: data splits features tune cnn analysis export site
+
+tests:
+	$(PY) -m pytest -q

@@ -1,0 +1,11 @@
+.venv/
+/data/
+/features/
+/models/
+__pycache__/
+*.wav
+*.au
+*.mp3
+kaggle.json
+.ipynb_checkpoints/
+.DS_Store

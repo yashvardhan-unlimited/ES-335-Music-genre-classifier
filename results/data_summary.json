@@ -1,0 +1,123 @@
+{
+  "n_files": 1000,
+  "n_loadable": 999,
+  "counts_per_genre": {
+    "blues": {
+      "files": 100,
+      "loadable": 100
+    },
+    "classical": {
+      "files": 100,
+      "loadable": 100
+    },
+    "country": {
+      "files": 100,
+      "loadable": 100
+    },
+    "disco": {
+      "files": 100,
+      "loadable": 100
+    },
+    "hiphop": {
+      "files": 100,
+      "loadable": 100
+    },
+    "jazz": {
+      "files": 100,
+      "loadable": 99
+    },
+    "metal": {
+      "files": 100,
+      "loadable": 100
+    },
+    "pop": {
+      "files": 100,
+      "loadable": 100
+    },
+    "reggae": {
+      "files": 100,
+      "loadable": 100
+    },
+    "rock": {
+      "files": 100,
+      "loadable": 100
+    }
+  },
+  "failures": [
+    "jazz.00054"
+  ],
+  "duration_s": {
+    "min": 29.931972789115648,
+    "max": 30.648888888888887
+  },
+  "shorter_than_30s": {
+    "classical.00049": 29.996,
+    "classical.00051": 29.993,
+    "country.00003": 29.996,
+    "country.00004": 29.996,
+    "country.00007": 29.982,
+    "disco.00014": 29.993,
+    "hiphop.00031": 29.996,
+    "hiphop.00032": 29.932,
+    "rock.00038": 29.996
+  },
+  "clip_share_over_1pct": {},
+  "identical_md5_groups": [
+    [
+      "metal.00058",
+      "rock.00016"
+    ],
+    [
+      "metal.00034",
+      "metal.00094"
+    ],
+    [
+      "pop.00054",
+      "pop.00060"
+    ],
+    [
+      "metal.00041",
+      "metal.00062"
+    ],
+    [
+      "metal.00045",
+      "metal.00066"
+    ],
+    [
+      "hiphop.00039",
+      "hiphop.00045"
+    ],
+    [
+      "metal.00044",
+      "metal.00065"
+    ],
+    [
+      "pop.00067",
+      "pop.00071"
+    ],
+    [
+      "disco.00098",
+      "disco.00099"
+    ],
+    [
+      "hiphop.00076",
+      "hiphop.00078"
+    ],
+    [
+      "reggae.00081",
+      "reggae.00082"
+    ],
+    [
+      "metal.00043",
+      "metal.00064"
+    ],
+    [
+      "metal.00040",
+      "metal.00061"
+    ],
+    [
+      "metal.00042",
+      "metal.00063"
+    ]
+  ]
+}

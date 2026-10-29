@@ -1,0 +1,39 @@
+seed: 42
+
+audio:
+  sr: 22050
+  clip_seconds: 30
+  window_seconds: 3
+  n_windows: 10
+
+mel:
+  n_fft: 2048
+  hop_length: 512
+  n_mels: 128
+  ref: 1.0
+
+mfcc:
+  n_mfcc: 20
+
+split_sizes:
+  train: 443
+  valid: 197
+  test: 290
+
+split_seeds: [0, 1, 2, 3, 4]
+
+bootstrap:
+  n: 2000
+  ci: 95
+
+paths:
+  raw: data/raw
+  audio_dir: data/raw/Data/genres_original
+  splits: splits
+  features: features
+  models: models
+  results: results
+  site_data: docs/data
+  site_img: docs/img
+
+genres: [blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, rock]
