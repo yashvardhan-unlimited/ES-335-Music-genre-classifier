@@ -1,5 +1,7 @@
 # Glossary
 
+**Affine transformation.** A map of the form z = a x + b (per feature here). Standardisation is affine, so standardising data that was already affinely rescaled gives the same result as standardising the original data.
+
 **Artist-cluster bootstrap.** A bootstrap that resamples whole artists (with all their clips) instead of single clips, because clips by one artist are correlated. Gives honest confidence intervals.
 
 **Artist-disjoint split.** A split in which no artist has clips in more than one part (train, valid, test). Prevents the model from scoring by recognising artists.
@@ -74,6 +76,8 @@
 
 **Group splitting.** Assigning all examples that share a group (clip, song, artist) to the same part, so the model is tested on unseen groups.
 
+**GroupKFold.** sklearn cross-validation splitter that keeps all rows of one group (clip, artist, patient) in the same fold, so no group is on both sides of a split.
+
 **GTZAN.** Genre dataset of Tzanetakis & Cook (2002): 1000 clips of 30 s, 10 genres, 22,050 Hz mono, collected 2000-2001 from CDs, radio and microphone recordings.
 
 **Hann window.** A taper that goes smoothly to zero at both ends of a frame, reducing spectral leakage in the STFT.
@@ -93,6 +97,8 @@
 **Kernel trick.** Replacing every dot product in an algorithm by a kernel, so a linear method works in a much richer feature space and draws non-linear boundaries in the original space.
 
 **Kernel.** A function K(x, x') returning the dot product of two points after a (possibly infinite-dimensional) feature map, without computing that map. Acts as a similarity measure.
+
+**KFold.** sklearn splitter dividing rows into k folds, each used once for validation. With several rows per source and no grouping it leaks; with shuffle=True every window of a clip lands in a random fold.
 
 **L2 penalty.** Adds (1/2) times the sum of squared weights to the loss, pulling weights towards zero to limit overfitting.
 
@@ -119,6 +125,8 @@
 **md5.** A 128-bit hash of a file's bytes; identical files have identical md5, so it detects exact duplicates and fingerprints a dataset copy.
 
 **Mel scale.** A frequency scale spaced roughly like human pitch perception: fine at low frequencies, coarse at high ones.
+
+**Metric mismatch.** Selecting hyperparameters by one score (e.g. window accuracy) while reporting another (clip macro-F1). Not leakage, but it can pick settings that are worse on the reported metric.
 
 **MFCC.** Mel-frequency cepstral coefficient: DCT of a log-mel frame; low coefficients summarise the spectral envelope (timbre).
 
@@ -154,6 +162,8 @@
 
 **PredefinedSplit.** sklearn splitter with a fixed train/validation assignment (-1 = always train, 0 = validation fold).
 
+**Preprocessing leakage.** Fitting a learned preprocessing step (scaler, PCA, feature selection, oversampling) on data that includes the evaluation rows, so their information shapes the model.
+
 **PYTHONHASHSEED.** Environment variable fixing the randomisation of Python's string hashing; read at interpreter start.
 
 **RBF kernel.** Radial basis function (Gaussian) kernel, exp(-gamma ||x - x'||^2): 1 for identical points, near 0 for distant ones. Its decision function is a weighted sum of Gaussian bumps on the support vectors.
@@ -161,6 +171,8 @@
 **Recall.** Of the clips truly in a class, the share the model found: TP / (TP + FN).
 
 **Refit.** Retraining the selected hyperparameter setting after a search; we refit on train only (GridSearchCV refit=False) so valid stays held out.
+
+**Reported score.** The number a procedure itself produces as its estimate of performance (e.g. GridSearchCV's best_score_). In lesson 09 it is compared with the true valid score of the chosen setting.
 
 **Reproducibility.** Another person obtaining the same results from the same code, data and settings.
 
@@ -172,6 +184,10 @@
 
 **Seed.** The starting state of a pseudo-random number generator; the same seed produces the same sequence of "random" numbers.
 
+**Selection bias (in model selection).** The optimism of a score that was itself used to choose among candidates: the best of many noisy scores is likely to be lucky. Also called the winner's curse.
+
+**Selection score.** The score a tuning procedure maximises to choose hyperparameters. It only needs to rank settings in the right order; leakage that biases settings unequally changes that order.
+
 **Slack variable.** xi_i >= 0 in the soft-margin SVM: how far training point i violates the margin. Their sum, multiplied by C, is added to the objective.
 
 **Soft margin.** An SVM that allows margin violations at a cost C per unit of slack, so it works on overlapping classes. Small C tolerates violations (simpler boundary), large C punishes them (closer fit).
@@ -179,6 +195,8 @@
 **Soft vote.** Combining window predictions by averaging their class probabilities, then taking the most probable class for the clip.
 
 **Softmax.** Turns K scores into probabilities: exp(z_g) divided by the sum of exp(z_h) over all classes.
+
+**Spearman rank correlation.** Pearson correlation of the ranks of two sets of values: 1 for the same order, 0 for unrelated, -1 for reversed. Used in lesson 09 to compare how selection scores and true scores rank the 16 SVM settings.
 
 **Spectral bandwidth.** The magnitude-weighted spread of frequencies around the spectral centroid.
 

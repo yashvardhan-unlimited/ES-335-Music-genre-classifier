@@ -1,0 +1,411 @@
+{
+ "split": "C",
+ "model": "svm",
+ "grid": {
+  "C": [
+   0.1,
+   1,
+   10,
+   100
+  ],
+  "gamma": [
+   "scale",
+   0.001,
+   0.01,
+   0.1
+  ]
+ },
+ "variants": [
+  {
+   "name": "correct",
+   "mistake": "none",
+   "selection_metric": "valid clip macro-F1",
+   "chosen_params": {
+    "C": 100,
+    "gamma": 0.001
+   },
+   "reported_score": 0.4582016145841276,
+   "true_valid_clip_macro_f1": 0.4582016145841276,
+   "spearman_selection_vs_true": 1.0,
+   "grid": [
+    {
+     "params": "C=0.1, gamma=scale",
+     "selection_score": 0.4006305816702711,
+     "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.001",
+     "selection_score": 0.4566269718875596,
+     "true_valid_clip_macro_f1": 0.4566269718875596
+    },
+    {
+     "params": "C=0.1, gamma=0.01",
+     "selection_score": 0.38144059244209183,
+     "true_valid_clip_macro_f1": 0.38144059244209183
+    },
+    {
+     "params": "C=0.1, gamma=0.1",
+     "selection_score": 0.3400730601888441,
+     "true_valid_clip_macro_f1": 0.3400730601888441
+    },
+    {
+     "params": "C=1, gamma=scale",
+     "selection_score": 0.4055725880679441,
+     "true_valid_clip_macro_f1": 0.4055725880679441
+    },
+    {
+     "params": "C=1, gamma=0.001",
+     "selection_score": 0.42216356388604154,
+     "true_valid_clip_macro_f1": 0.42216356388604154
+    },
+    {
+     "params": "C=1, gamma=0.01",
+     "selection_score": 0.42243118396018586,
+     "true_valid_clip_macro_f1": 0.42243118396018586
+    },
+    {
+     "params": "C=1, gamma=0.1",
+     "selection_score": 0.4079795236211311,
+     "true_valid_clip_macro_f1": 0.4079795236211311
+    },
+    {
+     "params": "C=10, gamma=scale",
+     "selection_score": 0.423677501872766,
+     "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.001",
+     "selection_score": 0.43982892388517225,
+     "true_valid_clip_macro_f1": 0.43982892388517225
+    },
+    {
+     "params": "C=10, gamma=0.01",
+     "selection_score": 0.4275821111434146,
+     "true_valid_clip_macro_f1": 0.4275821111434146
+    },
+    {
+     "params": "C=10, gamma=0.1",
+     "selection_score": 0.40432900432900426,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=100, gamma=scale",
+     "selection_score": 0.433041775850125,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=100, gamma=0.001",
+     "selection_score": 0.4582016145841276,
+     "true_valid_clip_macro_f1": 0.4582016145841276
+    },
+    {
+     "params": "C=100, gamma=0.01",
+     "selection_score": 0.428321131279771,
+     "true_valid_clip_macro_f1": 0.428321131279771
+    },
+    {
+     "params": "C=100, gamma=0.1",
+     "selection_score": 0.40432900432900426,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    }
+   ]
+  },
+  {
+   "name": "scaler_on_train_valid",
+   "mistake": "StandardScaler fit on train+valid before the model",
+   "selection_metric": "valid clip macro-F1 (leaky scaling)",
+   "chosen_params": {
+    "C": 100,
+    "gamma": 0.001
+   },
+   "reported_score": 0.4516117839280831,
+   "true_valid_clip_macro_f1": 0.4582016145841276,
+   "spearman_selection_vs_true": 0.9617083946980853,
+   "grid": [
+    {
+     "params": "C=0.1, gamma=scale",
+     "selection_score": 0.39254305516169197,
+     "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.001",
+     "selection_score": 0.4480914476456948,
+     "true_valid_clip_macro_f1": 0.4566269718875596
+    },
+    {
+     "params": "C=0.1, gamma=0.01",
+     "selection_score": 0.38876206006829084,
+     "true_valid_clip_macro_f1": 0.38144059244209183
+    },
+    {
+     "params": "C=0.1, gamma=0.1",
+     "selection_score": 0.344192255195432,
+     "true_valid_clip_macro_f1": 0.3400730601888441
+    },
+    {
+     "params": "C=1, gamma=scale",
+     "selection_score": 0.42348962144496377,
+     "true_valid_clip_macro_f1": 0.4055725880679441
+    },
+    {
+     "params": "C=1, gamma=0.001",
+     "selection_score": 0.42216356388604154,
+     "true_valid_clip_macro_f1": 0.42216356388604154
+    },
+    {
+     "params": "C=1, gamma=0.01",
+     "selection_score": 0.42315249066468585,
+     "true_valid_clip_macro_f1": 0.42243118396018586
+    },
+    {
+     "params": "C=1, gamma=0.1",
+     "selection_score": 0.40973093738044997,
+     "true_valid_clip_macro_f1": 0.4079795236211311
+    },
+    {
+     "params": "C=10, gamma=scale",
+     "selection_score": 0.4281642311012456,
+     "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.001",
+     "selection_score": 0.4404878953728111,
+     "true_valid_clip_macro_f1": 0.43982892388517225
+    },
+    {
+     "params": "C=10, gamma=0.01",
+     "selection_score": 0.42881022116409434,
+     "true_valid_clip_macro_f1": 0.4275821111434146
+    },
+    {
+     "params": "C=10, gamma=0.1",
+     "selection_score": 0.40880679334652575,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=100, gamma=scale",
+     "selection_score": 0.4275623967535732,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=100, gamma=0.001",
+     "selection_score": 0.4516117839280831,
+     "true_valid_clip_macro_f1": 0.4582016145841276
+    },
+    {
+     "params": "C=100, gamma=0.01",
+     "selection_score": 0.428321131279771,
+     "true_valid_clip_macro_f1": 0.428321131279771
+    },
+    {
+     "params": "C=100, gamma=0.1",
+     "selection_score": 0.40880679334652575,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    }
+   ]
+  },
+  {
+   "name": "kfold_windows",
+   "mistake": "KFold(5, shuffle=True) over train windows, no grouping",
+   "selection_metric": "5-fold CV clip macro-F1 over train windows",
+   "chosen_params": {
+    "C": 100,
+    "gamma": "scale"
+   },
+   "reported_score": 0.9725040736720769,
+   "true_valid_clip_macro_f1": 0.433041775850125,
+   "spearman_selection_vs_true": 0.25184094256259204,
+   "grid": [
+    {
+     "params": "C=0.1, gamma=scale",
+     "selection_score": 0.7748782624601465,
+     "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.001",
+     "selection_score": 0.5938617262634887,
+     "true_valid_clip_macro_f1": 0.4566269718875596
+    },
+    {
+     "params": "C=0.1, gamma=0.01",
+     "selection_score": 0.7474869789550368,
+     "true_valid_clip_macro_f1": 0.38144059244209183
+    },
+    {
+     "params": "C=0.1, gamma=0.1",
+     "selection_score": 0.7133766620813397,
+     "true_valid_clip_macro_f1": 0.3400730601888441
+    },
+    {
+     "params": "C=1, gamma=scale",
+     "selection_score": 0.9389174969798983,
+     "true_valid_clip_macro_f1": 0.4055725880679441
+    },
+    {
+     "params": "C=1, gamma=0.001",
+     "selection_score": 0.763782993405076,
+     "true_valid_clip_macro_f1": 0.42216356388604154
+    },
+    {
+     "params": "C=1, gamma=0.01",
+     "selection_score": 0.9031974910488669,
+     "true_valid_clip_macro_f1": 0.42243118396018586
+    },
+    {
+     "params": "C=1, gamma=0.1",
+     "selection_score": 0.944861919052253,
+     "true_valid_clip_macro_f1": 0.4079795236211311
+    },
+    {
+     "params": "C=10, gamma=scale",
+     "selection_score": 0.9710529058061977,
+     "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.001",
+     "selection_score": 0.8605581418893289,
+     "true_valid_clip_macro_f1": 0.43982892388517225
+    },
+    {
+     "params": "C=10, gamma=0.01",
+     "selection_score": 0.9656557460314875,
+     "true_valid_clip_macro_f1": 0.4275821111434146
+    },
+    {
+     "params": "C=10, gamma=0.1",
+     "selection_score": 0.9508565355253047,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=100, gamma=scale",
+     "selection_score": 0.9725040736720769,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=100, gamma=0.001",
+     "selection_score": 0.924571172259172,
+     "true_valid_clip_macro_f1": 0.4582016145841276
+    },
+    {
+     "params": "C=100, gamma=0.01",
+     "selection_score": 0.9676288745242687,
+     "true_valid_clip_macro_f1": 0.428321131279771
+    },
+    {
+     "params": "C=100, gamma=0.1",
+     "selection_score": 0.9508565355253047,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    }
+   ]
+  },
+  {
+   "name": "window_accuracy",
+   "mistake": "hyperparameters chosen by valid window accuracy",
+   "selection_metric": "valid window accuracy",
+   "chosen_params": {
+    "C": 10,
+    "gamma": 0.001
+   },
+   "reported_score": 0.4517766497461929,
+   "true_valid_clip_macro_f1": 0.43982892388517225,
+   "spearman_selection_vs_true": 0.6204865354638167,
+   "grid": [
+    {
+     "params": "C=0.1, gamma=scale",
+     "selection_score": 0.40913705583756343,
+     "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.001",
+     "selection_score": 0.4137055837563452,
+     "true_valid_clip_macro_f1": 0.4566269718875596
+    },
+    {
+     "params": "C=0.1, gamma=0.01",
+     "selection_score": 0.40964467005076144,
+     "true_valid_clip_macro_f1": 0.38144059244209183
+    },
+    {
+     "params": "C=0.1, gamma=0.1",
+     "selection_score": 0.20304568527918782,
+     "true_valid_clip_macro_f1": 0.3400730601888441
+    },
+    {
+     "params": "C=1, gamma=scale",
+     "selection_score": 0.4248730964467005,
+     "true_valid_clip_macro_f1": 0.4055725880679441
+    },
+    {
+     "params": "C=1, gamma=0.001",
+     "selection_score": 0.4365482233502538,
+     "true_valid_clip_macro_f1": 0.42216356388604154
+    },
+    {
+     "params": "C=1, gamma=0.01",
+     "selection_score": 0.4436548223350254,
+     "true_valid_clip_macro_f1": 0.42243118396018586
+    },
+    {
+     "params": "C=1, gamma=0.1",
+     "selection_score": 0.3248730964467005,
+     "true_valid_clip_macro_f1": 0.4079795236211311
+    },
+    {
+     "params": "C=10, gamma=scale",
+     "selection_score": 0.4152284263959391,
+     "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.001",
+     "selection_score": 0.4517766497461929,
+     "true_valid_clip_macro_f1": 0.43982892388517225
+    },
+    {
+     "params": "C=10, gamma=0.01",
+     "selection_score": 0.4228426395939086,
+     "true_valid_clip_macro_f1": 0.4275821111434146
+    },
+    {
+     "params": "C=10, gamma=0.1",
+     "selection_score": 0.3284263959390863,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=100, gamma=scale",
+     "selection_score": 0.4137055837563452,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=100, gamma=0.001",
+     "selection_score": 0.43299492385786803,
+     "true_valid_clip_macro_f1": 0.4582016145841276
+    },
+    {
+     "params": "C=100, gamma=0.01",
+     "selection_score": 0.4233502538071066,
+     "true_valid_clip_macro_f1": 0.428321131279771
+    },
+    {
+     "params": "C=100, gamma=0.1",
+     "selection_score": 0.3284263959390863,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    }
+   ]
+  }
+ ],
+ "diagnostics": {
+  "mistake1_mean_shift_in_train_sd": {
+   "max_abs": 0.059623384848928686,
+   "median_abs": 0.024357004900061707
+  },
+  "mistake1_sd_ratio_all_over_train": {
+   "min": 0.9367214704605357,
+   "max": 1.2030800017028476
+  },
+  "mistake1_inner_scaler_max_prob_diff": 0.0005466970916498948,
+  "mistake1_inner_scaler_changed_window_predictions": 0,
+  "mistake2_heldout_windows_with_sibling_in_train_fold": 1.0,
+  "n_train_windows": 4420,
+  "n_valid_windows": 1970
+ }
+}

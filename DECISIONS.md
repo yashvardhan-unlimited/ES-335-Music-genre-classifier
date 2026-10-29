@@ -337,3 +337,28 @@ noise); an inner train-only hold-out for early stopping (would shrink the
 already small, artist-disjoint train set and break the equal-size design).
 Known caveat: valid now picks both the tree count and the setting, so the
 valid score is slightly optimistic for XGBoost. The test part answers that.
+
+## 2026-10-30: Leakage lab design (scripts/leakage_lab.py)
+
+**Decision.** Four SVM tunings on split C train/valid: the correct one and
+three mistakes, each changing exactly one thing: (1) StandardScaler fit on
+train+valid and the Pipeline's own scaler set to `passthrough`; (2)
+`KFold(5, shuffle=True, random_state=42)` over train windows with the
+correct pipeline and clip macro-F1 scorer; (3) the correct split with
+`scoring="accuracy"` (window accuracy). The "true" score of any chosen
+setting is its valid clip macro-F1 from the correct grid, which the script
+asserts equals `results/val/C_s0_svm.json`. Spearman correlation between
+each variant's selection scores and the true scores is recorded.
+
+**Reason.** Isolating one mistake per variant makes each effect
+attributable. The inner scaler is removed in (1) because pre-scaling
+followed by a train-only scaler is an affine composition that cancels the
+leak (measured: 0 changed predictions), which would hide the mistake.
+
+**Rejected.** A combined "bad notebook" variant (effects not attributable);
+running the lab on test (would make test a second validation set); a
+GroupKFold-by-clip variant (not requested; would still leak artists, since
+351 of 442 C-train clips share an artist with another train clip). Caveat
+recorded in lesson 09: the correct variant wins on valid by construction,
+so the lab's evidence is about reported numbers and rankings, not about
+which choice is better on new data.
