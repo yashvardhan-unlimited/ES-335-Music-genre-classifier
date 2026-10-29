@@ -26,9 +26,9 @@ splits:
 # handcrafted window features + full-clip log-mels -> features/
 features:
 	$(PY) -W ignore scripts/extract_features.py
-# scripts/tune_classical.py
+# tune classical models on train, score on valid (per clip) -> results/val/*.json
 tune:
-	$(TODO)
+	$(PY) -W ignore -m src.train_classical --split C --seed 0 --models dummy,knn,logreg
 # scripts/train_cnn.py
 cnn:
 	$(TODO)

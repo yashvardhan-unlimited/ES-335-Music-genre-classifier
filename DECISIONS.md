@@ -232,3 +232,53 @@ sees); accuracy as primary (hides a failing genre); normal-approximation CIs
 treating missing-artist clips as one shared "unknown" artist (would glue
 unrelated clips together); comparing two models by whether their separate CIs
 overlap (ignores that they are scored on the same clips).
+
+## 2026-10-30: Baselines and the classical tuning protocol
+
+**Decision.**
+- Two floors: `DummyClassifier` most-frequent and stratified (random draws
+  with the train genre frequencies). Then kNN and multinomial logistic
+  regression as simple baselines; every scaled model has its
+  `StandardScaler` inside a `Pipeline`.
+- Grids live in `config.yaml`: kNN k ∈ {1, 3, 5, 9, 15, 25} × weights ∈
+  {uniform, distance}; logistic regression C ∈ {0.01, 0.1, 1, 10}, L2,
+  `max_iter` 2000.
+- `GridSearchCV(cv=PredefinedSplit, scoring=ClipMacroF1Scorer, refit=False)`.
+  The best setting (ties → first in grid order) is refit on **train only**, and
+  that model's valid predictions give every number in `results/val/*.json`.
+  An assert checks that the refit score equals the grid-search score.
+- Valid JSONs also record majority-vote macro-F1 and window accuracy, as
+  diagnostics only.
+
+**Reason.** A floor shows what "no signal" scores under our metric (with 10
+genres macro-F1 can be far below accuracy for a constant predictor); a simple
+baseline shows what any later model has to beat. `refit=True` would retrain
+on train+valid, so per-genre F1 and the confusion matrix "on valid" would
+come from a model that had seen valid. Grids in config follow the
+all-constants-in-config rule.
+
+**Rejected.** k-fold CV over windows (windows of one clip in both folds, see
+lesson 04); `refit=True` (valid would no longer be held out for the reported
+diagnostics); unscaled kNN/logreg (feature standard deviations run from 0.002 for `harm_rms_var` to 1.5e6 for `rolloff_var`, so
+distance and the L2 penalty would be ruled by the largest-unit features);
+picking the "simplest" model among near-ties (a rule we would have to
+invent; ties are reported in the grid instead). Whether the final test model
+is refit on train+valid is decided before the test freeze, not here.
+
+## 2026-10-30: Classical models fit with one BLAS thread
+
+**Decision.** The train-only refit in `tune_and_score` runs inside
+`threadpool_limits(1)`, matching the grid-search workers (joblib gives each
+worker one BLAS thread when `n_jobs=-1`).
+
+**Reason.** Measured: logistic regression (C = 1) fit with all threads vs one
+thread gave coefficients differing by up to 0.043 and 8 different valid
+window predictions (valid clip macro-F1 0.457 vs 0.452). lbfgs stops at a
+tolerance, and the thread count changes the floating-point summation order,
+so it stops at a slightly different point. One thread makes the numbers the
+same on every machine and makes the refit agree with the grid score (asserted).
+
+**Rejected.** `n_jobs=1` everywhere (slower, still thread-count dependent in
+the main process); converting features to float64 (reduces but does not
+remove the dependence); ignoring it (the asserted equality would hold or fail
+depending on the machine's core count).

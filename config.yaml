@@ -39,3 +39,12 @@ paths:
   site_img: docs/img
 
 genres: [blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, rock]
+
+# hyperparameter grids, tuned on the valid part by clip macro-F1 (src/train_classical.py)
+grids:
+  knn:
+    n_neighbors: [1, 3, 5, 9, 15, 25]
+    weights: [uniform, distance]
+  logreg:
+    C: [0.01, 0.1, 1, 10]
+logreg_max_iter: 2000

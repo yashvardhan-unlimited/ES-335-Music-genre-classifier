@@ -6,5 +6,6 @@
 4. [04_splits_and_leakage.md](04_splits_and_leakage.md): i.i.d., leakage, group splitting, the A -> B -> B' -> C ladder and its measured leakage, identical sizes, stratification, the test lock.
 5. [05_audio_features.md](05_audio_features.md): sampling, framing and Hann windows, STFT, mel filterbank, dB, MFCCs, chroma, spectral features, HPSS, tempo, fixed vs learned transforms.
 6. [06_evaluation_metrics_bootstrap.md](06_evaluation_metrics_bootstrap.md): confusion matrix, precision/recall/F1, macro vs micro vs weighted, clip vs window, soft vs majority vote, bootstrap, artist-cluster resampling, paired comparisons, limits.
+7. [07_baselines_knn_logreg.md](07_baselines_knn_logreg.md): why floors and baselines, dummy classifiers, standardisation, kNN (distance, voting, bias-variance in k, curse of dimensionality, lazy learning), multinomial logistic regression (softmax, cross-entropy, L2 and C, linear boundaries), the C-valid results and the k plot.
 
 Terms: [glossary.md](glossary.md)
