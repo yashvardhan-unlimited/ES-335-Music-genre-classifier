@@ -205,3 +205,30 @@ with B and B' (≈70%). Reporting it lets readers judge.
 
 `tests/test_splits.py` pins the exact set of 13 crossing artists, so any change
 to C or the metadata is caught.
+
+## 2026-10-29: Evaluation design (fixed before any model is compared)
+
+**Decision.**
+- Primary metric: clip-level macro-F1 after **soft voting** (mean of the 10
+  window probabilities). Majority vote (ties broken by mean probability) is
+  reported only as a comparison.
+- Hyperparameters are scored by `ClipMacroF1Scorer` on the valid part via a
+  `PredefinedSplit` (train = −1, valid = 0), never by k-fold over windows.
+- Uncertainty: 95% percentile bootstrap, 2,000 resamples, resampling
+  **artists** (clusters); a clip with no artist name is its own cluster.
+- Model comparisons: paired bootstrap on the same resampled clusters,
+  reporting the difference, its 95% CI and the share of resamples where A > B.
+
+**Reason.** Clips are the unit of prediction; macro-F1 weighs every genre
+equally; soft voting keeps window confidence; clips by one artist are
+correlated, so resampling clips would make intervals too narrow (in a
+synthetic check on C-valid's artist structure, 79 clusters for 197 clips, the
+artist CI was 2.7× wider than the clip CI); pairing removes the shared
+difficulty of the test set from a comparison.
+
+**Rejected.** Window-level accuracy (counts each clip 10 times, not what a user
+sees); accuracy as primary (hides a failing genre); normal-approximation CIs
+(macro-F1 is bounded and its sampling distribution is not guaranteed normal);
+treating missing-artist clips as one shared "unknown" artist (would glue
+unrelated clips together); comparing two models by whether their separate CIs
+overlap (ignores that they are scored on the same clips).

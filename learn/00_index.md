@@ -5,5 +5,6 @@
 3. [03_data_and_gtzan_faults.md](03_data_and_gtzan_faults.md): what GTZAN is, licence, digital audio basics, the file audit and its numbers, GTZAN's faults, reading the EDA figures.
 4. [04_splits_and_leakage.md](04_splits_and_leakage.md): i.i.d., leakage, group splitting, the A -> B -> B' -> C ladder and its measured leakage, identical sizes, stratification, the test lock.
 5. [05_audio_features.md](05_audio_features.md): sampling, framing and Hann windows, STFT, mel filterbank, dB, MFCCs, chroma, spectral features, HPSS, tempo, fixed vs learned transforms.
+6. [06_evaluation_metrics_bootstrap.md](06_evaluation_metrics_bootstrap.md): confusion matrix, precision/recall/F1, macro vs micro vs weighted, clip vs window, soft vs majority vote, bootstrap, artist-cluster resampling, paired comparisons, limits.
 
 Terms: [glossary.md](glossary.md)

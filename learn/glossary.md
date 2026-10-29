@@ -12,9 +12,13 @@
 
 **Clipping.** Distortion when a signal exceeds the largest representable value and its peaks are cut flat. We count samples with |x| >= 0.999 (`clip_share`).
 
+**Cluster bootstrap.** A bootstrap that resamples whole clusters (here artists) with replacement, keeping correlated clips together.
+
 **Confidence interval (95%).** A range produced by a procedure that, over repeated samples, contains the true value 95% of the time. Here estimated with the bootstrap percentile method.
 
 **Config file.** `config.yaml`: the single place where all constants (seed, audio settings, sizes, paths) are defined.
+
+**Confusion matrix.** K x K table counting clips of each true class (rows) by predicted class (columns); the diagonal holds correct predictions.
 
 **Data leakage.** Information available during training or evaluation that would not be available at real prediction time, making scores look better than real performance.
 
@@ -23,6 +27,8 @@
 **DCT.** Discrete cosine transform; rewrites a sequence as a sum of cosines. Applied to a log-mel frame it gives MFCCs.
 
 **Exact repetition.** The same audio file present twice in a dataset; found here as identical md5 hashes (14 pairs in GTZAN).
+
+**F1 score.** Harmonic mean of precision and recall for one class: 2PR / (P + R).
 
 **Fault-filtered split.** The published GTZAN split (Kereliuk, Sturm & Larsen 2015) that removes duplicated, mislabelled and distorted clips and keeps artists disjoint: 443/197/290 clips.
 
@@ -46,11 +52,15 @@
 
 **Macro-F1.** The unweighted mean of the per-class F1 scores, so each genre counts equally regardless of how many clips it has.
 
+**Majority vote.** Clip prediction = the class most windows predict; ties broken by mean probability.
+
 **md5.** A 128-bit hash of a file's bytes; identical files have identical md5, so it detects exact duplicates and fingerprints a dataset copy.
 
 **Mel scale.** A frequency scale spaced roughly like human pitch perception: fine at low frequencies, coarse at high ones.
 
 **MFCC.** Mel-frequency cepstral coefficient: DCT of a log-mel frame; low coefficients summarise the spectral envelope (timbre).
+
+**Micro-F1.** F1 computed from TP, FP and FN summed over all classes; equals accuracy in single-label classification.
 
 **Mislabeling.** A clip whose genre label is wrong or doubtful; it caps achievable accuracy and teaches the model wrong mappings.
 
@@ -58,13 +68,25 @@
 
 **Onset strength.** A per-frame measure of how much spectral energy increases, i.e. how likely a note or hit starts; the input to tempo estimation.
 
+**Paired bootstrap.** Bootstrapping the difference between two models using the same resamples for both, so shared test-set difficulty cancels.
+
+**Percentile interval.** Bootstrap CI taken as the 2.5th and 97.5th percentiles of the resampled statistic.
+
 **Pinned version.** An exact package version (`name==X.Y.Z`) in `requirements.txt`, so everyone installs the same code.
 
+**Precision.** Of the clips predicted as a class, the share that truly belong to it: TP / (TP + FP).
+
+**PredefinedSplit.** sklearn splitter with a fixed train/validation assignment (-1 = always train, 0 = validation fold).
+
 **PYTHONHASHSEED.** Environment variable fixing the randomisation of Python's string hashing; read at interpreter start.
+
+**Recall.** Of the clips truly in a class, the share the model found: TP / (TP + FN).
 
 **Reproducibility.** Another person obtaining the same results from the same code, data and settings.
 
 **RMS.** Root-mean-square of the samples; a measure of average signal level (loudness), reported in dBFS as `rms_db`.
+
+**Sampling distribution.** The distribution a statistic would have over many independent samples of the same size; its spread is the statistic's uncertainty.
 
 **Sampling rate.** Number of samples stored per second of audio; GTZAN uses 22,050 Hz.
 
@@ -91,6 +113,8 @@
 **Unit of prediction.** The object a prediction and its score refer to; here one 30 s clip.
 
 **Virtual environment (venv).** A self-contained Python installation for one project, isolating its packages from others.
+
+**Weighted-F1.** Per-class F1 averaged with weights equal to each class's share of true examples.
 
 **Window.** A 3 s non-overlapping segment of a clip (10 per clip); the training row.
 
