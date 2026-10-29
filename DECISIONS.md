@@ -134,3 +134,74 @@ CNN load clips lazily; full clips (not windows) are stored so windowing stays
 a choice of the training code.
 *Rejected:* float32 (2x disk for no benefit); storing pre-cut windows (fixes
 the window scheme into the cache).
+
+## 2026-10-29: Splits A, B, B', C: what each can still leak
+
+**Decision.** Four splits, all with identical sizes (see next entry), built by
+`scripts/make_splits.py` into `splits/`. Each file lists every window of the
+999 usable clips with `part` in {train, valid, test, unused}.
+
+| Split | Built how | Removes | Can still leak (measured on test, `results/split_summary.json`) |
+|---|---|---|---|
+| A | windows drawn at random from the 9,990 windows (seed 0) | nothing | the same clip: 970 of 974 test clips also have windows in train; same artist 98.5% |
+| B | clips drawn from the 999 usable clips, stratified by genre (seeds 0-4) | within-clip leakage | exact duplicates (2-5 test clips have a byte-identical file in train) and artists (69.0-75.5% of test clips share an artist with train) |
+| B' | same as B but drawn from the 929 usable fault-filtered clips (seeds 0-4) | + duplicates and faulty clips | artists (68.3-72.8%) |
+| C | published fault-filtered, artist-filtered split | + artist leakage, as far as the published labels go | 22 of 290 test clips (7.6%) share a gtzan-bind artist name with train (next entry but one) |
+
+Each step of the ladder A → B → B' → C removes one kind of leakage while
+keeping sizes fixed, so the drop in score from one step to the next estimates
+how much that kind of leakage was inflating the score.
+
+**Why identical sizes.** If C had fewer training clips than B, a lower score on
+C could come from less data, not from removing leakage. Fixing the train,
+valid and test sizes for all four splits (and stratifying B and B' by genre)
+makes leakage the only systematic difference. B and B' use 5 seeds to show how
+much the score moves from the random draw alone.
+
+**Rejected:** each split at its natural size (A and B from all 999 clips):
+confounds leakage with training-set size.
+
+## 2026-10-29: All splits use 442/197/290 clips (jazz.00054 is in published C train)
+
+**Decision.** The published split C has 443/197/290 clips, but jazz.00054 is
+in its train part and cannot be loaded. C therefore has 442 usable train clips,
+and `config.yaml` `split_sizes` is set to 442/197/290 for all splits (A uses
+4,420/1,970/2,900 windows). jazz.00054 keeps its `split_C = train` label in
+`splits/metadata.csv` with `load_ok = False`, and has no windows in any split file.
+
+**Reason.** B' is drawn from the same pool as C (929 usable clips), which cannot
+supply 443 + 197 + 290 = 930. Using C's usable sizes everywhere keeps all
+four splits identical in size.
+
+**Rejected:** keeping 443 for A and B only (sizes would differ from B'/C by
+one clip; small, but it breaks the "identical sizes" rule for no benefit);
+replacing jazz.00054 with another clip in C (would no longer be the published split).
+
+## 2026-10-29: Published split C kept as the main split despite residual artist overlap
+
+**Decision.** Use the published split C unchanged (option 1 of three), and
+report its artist overlap rather than hide or remove it.
+
+**Finding.** With artist names from gtzan-bind (`seungheondoh/gtzan-bind`,
+`artist_name`), 13 artists have clips in more than one part of C: Anthrax,
+Bob Marley, Boney M., Burning Spear, Danzig, Dark Tranquillity, Earth, Wind &
+Fire, Freddie McGregor, the Juilliard String Quartet credit, KC and the
+Sunshine Band, Metallica, Peter Tosh, Slayer (74 clips). 22 of 290 test clips
+(7.6%) share an artist with train; 14 clips in C have no artist name. The
+published split was built from Sturm's own artist annotations; gtzan-bind's
+names appear to come from automatic (Shazam) matching, so the two may disagree.
+We have not verified which is right.
+
+**Reason.** The published split is what prior work reports on, so our numbers
+stay comparable; its sizes match the design; and the overlap is small compared
+with B and B' (≈70%). Reporting it lets readers judge.
+
+**Rejected.**
+- *Dropping the 74 conflicting clips* ("C-strict"): changes sizes and no longer
+  matches the published split. Possible later as a sensitivity check.
+- *Rebuilding an artist-disjoint split from gtzan-bind names*: exact disjointness
+  by those names, but not the published split, and it inherits any errors in
+  the automatic artist matching.
+
+`tests/test_splits.py` pins the exact set of 13 crossing artists, so any change
+to C or the metadata is caught.

@@ -30,11 +30,15 @@
 
 **Frame.** A short slice of audio (here 2048 samples, 93 ms) analysed as one spectrum; frames advance by the hop length (512 samples).
 
+**Group splitting.** Assigning all examples that share a group (clip, song, artist) to the same part, so the model is tested on unseen groups.
+
 **GTZAN.** Genre dataset of Tzanetakis & Cook (2002): 1000 clips of 30 s, 10 genres, 22,050 Hz mono, collected 2000-2001 from CDs, radio and microphone recordings.
 
 **Hann window.** A taper that goes smoothly to zero at both ends of a frame, reducing spectral leakage in the STFT.
 
 **HPSS.** Harmonic-percussive source separation: median filtering of the spectrogram along time (harmonic) and frequency (percussive) to split a signal into two parts.
+
+**i.i.d..** Independent and identically distributed: examples drawn separately from one distribution; the assumption behind unbiased test estimates.
 
 **Learned statistic.** A quantity computed from many clips (mean, std, PCA axes, selected features); must be fitted on training data only.
 
@@ -74,7 +78,13 @@
 
 **Spectral roll-off.** The frequency below which a fixed share (85%) of a frame's spectral energy lies.
 
+**Split A / B / B' / C.** Our four splits: A random windows; B random clips; B' random clips from the fault-filtered pool; C the published artist-filtered split. Same sizes, different leakage.
+
 **STFT.** Short-time Fourier transform: Fourier transforms of overlapping windowed frames, giving a time-frequency representation.
+
+**Stratification.** Sampling each class in proportion to its share of the pool, so every part has the same class mix.
+
+**Test lock.** `load_split` refuses the test part unless allow_test=True and the git tag pre-test-freeze exists; ensures the test set is used once.
 
 **Training row.** One example the model is fit on; here one 3 s window, labelled with its clip's genre.
 
@@ -83,5 +93,7 @@
 **Virtual environment (venv).** A self-contained Python installation for one project, isolating its packages from others.
 
 **Window.** A 3 s non-overlapping segment of a clip (10 per clip); the training row.
+
+**Within-clip leakage.** Windows of one clip in both train and test; the model sees near-copies of test windows during training.
 
 **Zero-crossing rate.** Fraction of consecutive samples whose sign changes; high for noisy or bright sounds.

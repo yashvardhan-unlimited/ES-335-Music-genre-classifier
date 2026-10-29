@@ -8,7 +8,7 @@ def test_config_loads():
     cfg = load_config()
     assert cfg["seed"] == 42
     assert cfg["audio"]["sr"] == 22050
-    assert sum(cfg["split_sizes"].values()) == 930
+    assert sum(cfg["split_sizes"].values()) == 929
     assert len(cfg["genres"]) == 10
 
 

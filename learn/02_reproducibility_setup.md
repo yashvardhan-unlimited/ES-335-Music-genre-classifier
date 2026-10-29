@@ -167,7 +167,7 @@ can rerun cannot be checked, so it carries little weight.
 `tests/test_utils.py`
 
 - `test_config_loads`: checks seed 42, sample rate 22,050, split sizes summing
-  to 930, and 10 genres.
+  to 929, and 10 genres.
 - `test_set_seed_repeats_draws`: draws from numpy and torch twice with the same
   seed and requires exact equality (`np.array_equal`, `torch.equal`), not
   approximate equality.

@@ -15,7 +15,7 @@ must obey.
 |---|---|
 | `README.md` → *Question* | The research question in two sentences. |
 | `DECISIONS.md` | First decision: split C (artist-disjoint) is the main result, with reasons and rejected alternatives. |
-| `config.yaml` | The numbers the framing fixes: `audio.clip_seconds: 30`, `audio.window_seconds: 3`, `audio.n_windows: 10`, `split_sizes: {train: 443, valid: 197, test: 290}`, the 10 `genres`. |
+| `config.yaml` | The numbers the framing fixes: `audio.clip_seconds: 30`, `audio.window_seconds: 3`, `audio.n_windows: 10`, `split_sizes: {train: 442, valid: 197, test: 290}` (published C is 443/197/290; jazz.00054 is unreadable, see lesson 04), the 10 `genres`. |
 
 Command to see the config the rest of the project will use:
 
@@ -66,7 +66,7 @@ second, so a 30 s clip is $30 \times 22050 = 661{,}500$ samples and a 3 s window
 is $3 \times 22050 = 66{,}150$ samples. With `mel.hop_length = 512` and
 librosa's centred frames, one window becomes
 $1 + \lfloor 66150 / 512 \rfloor = 130$ frames, so a log-mel window is a
-$128 \times 130$ image (`mel.n_mels = 128`). Split C has 443 training clips,
+$128 \times 130$ image (`mel.n_mels = 128`). Split C has 442 usable training clips,
 so models train on $443 \times 10 = 4{,}430$ windows.
 
 **The danger this creates:** windows from the same clip are near-copies of each
@@ -158,11 +158,11 @@ graded, not the size of the number.
 | Choice | Alternative rejected | Why |
 |---|---|---|
 | Predict per clip | Predict per window | Users and labels are per clip; window accuracy counts each clip 10 times and mixes easy and hard windows. |
-| Train on 3 s windows | Train on full 30 s clips | 10x more rows; standard in GTZAN literature; full clips would leave 443 training examples for a CNN. |
+| Train on 3 s windows | Train on full 30 s clips | 10x more rows; standard in GTZAN literature; full clips would leave 442 training examples for a CNN. |
 | Soft vote | Majority (hard) vote | Keeps confidence information; avoids ties (e.g. 5 vs 5 windows). |
 | Macro-F1 primary | Accuracy primary | Equal weight per genre; robust if a split is not perfectly balanced. |
 | Split C main | Random split main | Removes artist leakage; matches the real use case; comparable with published work. |
-| Same 443/197/290 sizes on A, B, B', C | Each split's natural size | Differences between splits then reflect leakage only, not training-set size. |
+| Same 442/197/290 sizes on A, B, B', C | Each split's natural size | Differences between splits then reflect leakage only, not training-set size. |
 | Artist-cluster bootstrap | Clip bootstrap | Clips of one artist are not independent; clip bootstrap gives CIs that are too narrow. |
 
 ---
@@ -173,9 +173,9 @@ No model code yet. The framing appears in code as configuration:
 
 - `config.yaml` lines 3-7: `audio` block. `n_windows: 10` must equal
   `clip_seconds / window_seconds`; later windowing code will check this.
-- `config.yaml` lines 18-21: `split_sizes`. They sum to 930, the number of
-  clips left after Sturm's fault filtering.
-- `config.yaml` line 39: the ordered `genres` list. Its order defines the class
+- `config.yaml` lines 20-23: `split_sizes` (with the comment on lines 18-19). They sum to 929: the 930
+  clips left after Sturm's fault filtering, minus the unreadable jazz.00054.
+- `config.yaml` line 41: the ordered `genres` list. Its order defines the class
   index 0-9 used everywhere (labels, confusion matrices).
 - `tests/test_utils.py` `test_config_loads`: asserts these framing numbers so an
   accidental edit fails the tests.
@@ -203,7 +203,7 @@ No model code yet. The framing appears in code as configuration:
 
 No experiments yet. Fixed facts recorded:
 - 10 genres, 10 windows per clip, 3 s windows of 66,150 samples.
-- Split sizes 443 / 197 / 290 clips (930 total), identical for all four splits.
+- Split sizes 442 / 197 / 290 clips (929 total), identical for all four splits.
 
 ---
 

@@ -1,0 +1,677 @@
+{
+  "A": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 995,
+      "valid": 888,
+      "test": 974
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 100,
+        "classical": 100,
+        "country": 99,
+        "disco": 99,
+        "hiphop": 100,
+        "jazz": 99,
+        "metal": 99,
+        "pop": 99,
+        "reggae": 100,
+        "rock": 100
+      },
+      "valid": {
+        "blues": 87,
+        "classical": 92,
+        "country": 89,
+        "disco": 89,
+        "hiphop": 88,
+        "jazz": 87,
+        "metal": 89,
+        "pop": 86,
+        "reggae": 90,
+        "rock": 91
+      },
+      "test": {
+        "blues": 99,
+        "classical": 98,
+        "country": 97,
+        "disco": 98,
+        "hiphop": 97,
+        "jazz": 96,
+        "metal": 99,
+        "pop": 96,
+        "reggae": 97,
+        "rock": 97
+      }
+    },
+    "test_clips_also_in_train": 970,
+    "test_clips_with_identical_file_in_train": 1,
+    "test_clips_missing_artist": 13,
+    "test_clips_artist_in_train": 959,
+    "share_test_clips_artist_in_train": 0.9846
+  },
+  "B_seed0": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 44,
+        "classical": 44,
+        "country": 45,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 44,
+        "metal": 44,
+        "pop": 44,
+        "reggae": 45,
+        "rock": 44
+      },
+      "valid": {
+        "blues": 20,
+        "classical": 20,
+        "country": 19,
+        "disco": 20,
+        "hiphop": 20,
+        "jazz": 19,
+        "metal": 20,
+        "pop": 20,
+        "reggae": 19,
+        "rock": 20
+      },
+      "test": {
+        "blues": 29,
+        "classical": 29,
+        "country": 29,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 29,
+        "metal": 29,
+        "pop": 29,
+        "reggae": 29,
+        "rock": 29
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 5,
+    "test_clips_missing_artist": 6,
+    "test_clips_artist_in_train": 211,
+    "share_test_clips_artist_in_train": 0.7276
+  },
+  "Bp_seed0": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 48,
+        "classical": 47,
+        "country": 47,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 41,
+        "metal": 43,
+        "pop": 40,
+        "reggae": 41,
+        "rock": 47
+      },
+      "valid": {
+        "blues": 21,
+        "classical": 21,
+        "country": 21,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 18,
+        "metal": 19,
+        "pop": 18,
+        "reggae": 18,
+        "rock": 22
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 27,
+        "metal": 29,
+        "pop": 26,
+        "reggae": 27,
+        "rock": 31
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 4,
+    "test_clips_artist_in_train": 201,
+    "share_test_clips_artist_in_train": 0.6931
+  },
+  "B_seed1": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 44,
+        "classical": 44,
+        "country": 45,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 44,
+        "metal": 44,
+        "pop": 44,
+        "reggae": 44,
+        "rock": 45
+      },
+      "valid": {
+        "blues": 20,
+        "classical": 20,
+        "country": 19,
+        "disco": 20,
+        "hiphop": 20,
+        "jazz": 19,
+        "metal": 20,
+        "pop": 20,
+        "reggae": 20,
+        "rock": 19
+      },
+      "test": {
+        "blues": 29,
+        "classical": 29,
+        "country": 29,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 29,
+        "metal": 29,
+        "pop": 29,
+        "reggae": 29,
+        "rock": 29
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 3,
+    "test_clips_missing_artist": 5,
+    "test_clips_artist_in_train": 212,
+    "share_test_clips_artist_in_train": 0.731
+  },
+  "Bp_seed1": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 48,
+        "classical": 47,
+        "country": 47,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 41,
+        "metal": 43,
+        "pop": 40,
+        "reggae": 41,
+        "rock": 47
+      },
+      "valid": {
+        "blues": 21,
+        "classical": 21,
+        "country": 21,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 18,
+        "metal": 19,
+        "pop": 18,
+        "reggae": 18,
+        "rock": 22
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 27,
+        "metal": 29,
+        "pop": 26,
+        "reggae": 27,
+        "rock": 31
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 2,
+    "test_clips_artist_in_train": 207,
+    "share_test_clips_artist_in_train": 0.7138
+  },
+  "B_seed2": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 44,
+        "classical": 45,
+        "country": 44,
+        "disco": 44,
+        "hiphop": 45,
+        "jazz": 44,
+        "metal": 44,
+        "pop": 44,
+        "reggae": 44,
+        "rock": 44
+      },
+      "valid": {
+        "blues": 20,
+        "classical": 19,
+        "country": 20,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 19,
+        "metal": 20,
+        "pop": 20,
+        "reggae": 20,
+        "rock": 20
+      },
+      "test": {
+        "blues": 29,
+        "classical": 29,
+        "country": 29,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 29,
+        "metal": 29,
+        "pop": 29,
+        "reggae": 29,
+        "rock": 29
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 2,
+    "test_clips_missing_artist": 3,
+    "test_clips_artist_in_train": 200,
+    "share_test_clips_artist_in_train": 0.6897
+  },
+  "Bp_seed2": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 48,
+        "classical": 47,
+        "country": 47,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 41,
+        "metal": 43,
+        "pop": 40,
+        "reggae": 41,
+        "rock": 47
+      },
+      "valid": {
+        "blues": 21,
+        "classical": 21,
+        "country": 21,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 18,
+        "metal": 19,
+        "pop": 18,
+        "reggae": 18,
+        "rock": 22
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 27,
+        "metal": 29,
+        "pop": 26,
+        "reggae": 27,
+        "rock": 31
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 2,
+    "test_clips_artist_in_train": 198,
+    "share_test_clips_artist_in_train": 0.6828
+  },
+  "B_seed3": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 44,
+        "classical": 44,
+        "country": 45,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 44,
+        "metal": 44,
+        "pop": 45,
+        "reggae": 44,
+        "rock": 44
+      },
+      "valid": {
+        "blues": 20,
+        "classical": 20,
+        "country": 19,
+        "disco": 20,
+        "hiphop": 20,
+        "jazz": 19,
+        "metal": 20,
+        "pop": 19,
+        "reggae": 20,
+        "rock": 20
+      },
+      "test": {
+        "blues": 29,
+        "classical": 29,
+        "country": 29,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 29,
+        "metal": 29,
+        "pop": 29,
+        "reggae": 29,
+        "rock": 29
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 4,
+    "test_clips_missing_artist": 2,
+    "test_clips_artist_in_train": 219,
+    "share_test_clips_artist_in_train": 0.7552
+  },
+  "Bp_seed3": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 47,
+        "classical": 47,
+        "country": 47,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 41,
+        "metal": 43,
+        "pop": 40,
+        "reggae": 41,
+        "rock": 48
+      },
+      "valid": {
+        "blues": 22,
+        "classical": 21,
+        "country": 21,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 18,
+        "metal": 19,
+        "pop": 18,
+        "reggae": 18,
+        "rock": 21
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 27,
+        "metal": 29,
+        "pop": 26,
+        "reggae": 27,
+        "rock": 31
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 2,
+    "test_clips_artist_in_train": 211,
+    "share_test_clips_artist_in_train": 0.7276
+  },
+  "B_seed4": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 44,
+        "classical": 44,
+        "country": 44,
+        "disco": 45,
+        "hiphop": 45,
+        "jazz": 44,
+        "metal": 44,
+        "pop": 44,
+        "reggae": 44,
+        "rock": 44
+      },
+      "valid": {
+        "blues": 20,
+        "classical": 20,
+        "country": 20,
+        "disco": 19,
+        "hiphop": 19,
+        "jazz": 19,
+        "metal": 20,
+        "pop": 20,
+        "reggae": 20,
+        "rock": 20
+      },
+      "test": {
+        "blues": 29,
+        "classical": 29,
+        "country": 29,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 29,
+        "metal": 29,
+        "pop": 29,
+        "reggae": 29,
+        "rock": 29
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 4,
+    "test_clips_missing_artist": 2,
+    "test_clips_artist_in_train": 204,
+    "share_test_clips_artist_in_train": 0.7034
+  },
+  "Bp_seed4": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 47,
+        "classical": 47,
+        "country": 47,
+        "disco": 44,
+        "hiphop": 44,
+        "jazz": 41,
+        "metal": 43,
+        "pop": 40,
+        "reggae": 41,
+        "rock": 48
+      },
+      "valid": {
+        "blues": 22,
+        "classical": 21,
+        "country": 21,
+        "disco": 20,
+        "hiphop": 19,
+        "jazz": 18,
+        "metal": 19,
+        "pop": 18,
+        "reggae": 18,
+        "rock": 21
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 29,
+        "jazz": 27,
+        "metal": 29,
+        "pop": 26,
+        "reggae": 27,
+        "rock": 31
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 4,
+    "test_clips_artist_in_train": 209,
+    "share_test_clips_artist_in_train": 0.7207
+  },
+  "C": {
+    "windows_per_part": {
+      "train": 4420,
+      "valid": 1970,
+      "test": 2900
+    },
+    "clips_per_part": {
+      "train": 442,
+      "valid": 197,
+      "test": 290
+    },
+    "genre_counts": {
+      "train": {
+        "blues": 46,
+        "classical": 48,
+        "country": 45,
+        "disco": 42,
+        "hiphop": 47,
+        "jazz": 42,
+        "metal": 44,
+        "pop": 41,
+        "reggae": 43,
+        "rock": 44
+      },
+      "valid": {
+        "blues": 23,
+        "classical": 20,
+        "country": 23,
+        "disco": 22,
+        "hiphop": 18,
+        "jazz": 17,
+        "metal": 20,
+        "pop": 13,
+        "reggae": 17,
+        "rock": 24
+      },
+      "test": {
+        "blues": 31,
+        "classical": 31,
+        "country": 30,
+        "disco": 29,
+        "hiphop": 27,
+        "jazz": 27,
+        "metal": 27,
+        "pop": 30,
+        "reggae": 26,
+        "rock": 32
+      }
+    },
+    "test_clips_also_in_train": 0,
+    "test_clips_with_identical_file_in_train": 0,
+    "test_clips_missing_artist": 6,
+    "test_clips_artist_in_train": 22,
+    "share_test_clips_artist_in_train": 0.0759
+  },
+  "C_artists_in_more_than_one_part": [
+    "Anthrax",
+    "Bob Marley",
+    "Boney M.",
+    "Burning Spear",
+    "Danzig",
+    "Dark Tranquillity",
+    "Earth, Wind & Fire",
+    "Freddie McGregor",
+    "Juilliard String Quartet, Robert Mann, Joel Smirnoff, Samuel Rhodes & Joel Krosnick",
+    "KC and the Sunshine Band",
+    "Metallica",
+    "Peter Tosh",
+    "Slayer"
+  ]
+}

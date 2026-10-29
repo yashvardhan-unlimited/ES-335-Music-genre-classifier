@@ -15,8 +15,10 @@ mel:
 mfcc:
   n_mfcc: 20
 
+# usable clips per part; published split C is 443/197/290, minus jazz.00054
+# (in C train, unreadable). All splits A/B/B'/C use these sizes.
 split_sizes:
-  train: 443
+  train: 442
   valid: 197
   test: 290
 

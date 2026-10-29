@@ -7,7 +7,7 @@ How well can models predict a 30-second clip's genre from audio alone, and how
 much of that accuracy survives an artist-aware split that removes leakage?
 
 - Unit of prediction: one 30 s clip (soft vote over its ten 3 s windows).
-- Main result: the fault-filtered, artist-disjoint split C (443/197/290 clips).
+- Main result: the fault-filtered, artist-disjoint split C (published 443/197/290; 442/197/290 usable, since jazz.00054 is unreadable).
   See [DECISIONS.md](DECISIONS.md).
 - Primary metric: clip-level macro-F1 with an artist-cluster bootstrap 95% CI.
 

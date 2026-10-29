@@ -19,9 +19,10 @@ data:
 	bash scripts/download_data.sh
 	$(PY) -W ignore -m src.data
 	$(PY) -W ignore scripts/eda.py
-# scripts/make_splits.py
+# artist + fault-filtered split from gtzan-bind (once), then splits A, B, B', C
 splits:
-	$(TODO)
+	test -f splits/gtzan_bind.csv || $(PY) -W ignore -m src.fetch_meta
+	$(PY) -W ignore scripts/make_splits.py
 # handcrafted window features + full-clip log-mels -> features/
 features:
 	$(PY) -W ignore scripts/extract_features.py
