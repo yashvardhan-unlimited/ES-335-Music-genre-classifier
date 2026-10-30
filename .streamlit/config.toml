@@ -1,0 +1,13 @@
+[server]
+address = "localhost"       # this machine only: the app is not published
+maxUploadSize = 50          # MB
+fileWatcherType = "none"    # the watcher trips over torch's lazy modules
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"     # no Deploy button: this app stays local
+
+[theme]
+base = "light"              # chart colours are validated against the light surface

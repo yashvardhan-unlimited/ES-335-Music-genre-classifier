@@ -488,3 +488,35 @@ was the rule fixed in advance (lesson 06).
 tuning); majority vote (never clearly better, discards confidence); per-model
 choice of window length or vote (more freedom to overfit valid, and models
 would no longer be compared on equal terms).
+
+## 2026-10-31: Local Streamlit web app for classification and results
+
+**Decision.** `app.py` (Streamlit UI) on top of `src/webapp.py` (all logic, no
+Streamlit, tested). It classifies uploads (WAV, MP3, FLAC, OGG) and sample clips
+and shows every validation result. It runs on localhost only. It serves the
+single CNN run with the best valid clip macro-F1 on split C (read from
+`C_cnn_summary.json`: run seed 2, 0.635); the dashboard headlines the mean over
+seeds (0.610 +/- 0.028), not that best run. Uploads use 10 evenly spaced 3 s
+windows over the whole file (first 10 minutes), soft-voted, the same steps as
+evaluation. Samples are 2 random valid clips per genre, drawn with the config
+seed before seeing any score. Scores are shown raw and labelled as uncalibrated.
+
+**Reason.** GitHub Pages cannot run the model. Keeping the app local needs no
+exception to the rules on audio and models: audio and weights are read from
+git-ignored folders. Samples come from valid because predicting test clips before
+the freeze would break the test lock. Random selection keeps wrong predictions in
+the samples, so the demo does not flatter the model. Temperature scaling is not
+applied: on seed 2 cross-fitting worsened clip ECE (0.077 to 0.114, lesson 11).
+`tests/test_webapp.py` checks that the app's path reproduces the stored valid
+score on all 197 clips, so serving cannot drift from what was evaluated.
+
+**Rejected.** A public host (Hugging Face Spaces): needs an exception for model
+files and copyright-safe samples, since GTZAN must not be republished; the user
+chose local first. Client-side inference in `docs/` (ONNX): puts weights in the
+public site and needs mel extraction rewritten in JavaScript, a second pipeline
+that could drift. Gradio: good for one input-output demo, weaker for a multi-part
+dashboard. Flask or FastAPI plus a hand-written page: much more code for the same
+result. Averaging the three CNN seeds: a new model with no measured score, and
+the final model is decided at the freeze. Hand-picking samples the model gets
+right: misleading. M4A support: needs ffmpeg, which this project does
+not install.

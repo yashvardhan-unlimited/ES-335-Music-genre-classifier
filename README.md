@@ -41,9 +41,20 @@ make tests   # pytest
 ```
 _Each stage is filled in as it is implemented. All constants are in `config.yaml`._
 
+## Web app (local)
+Upload audio (WAV, MP3, FLAC, OGG), try sample clips, and browse the results dashboard:
+
+```bash
+.venv/Scripts/python.exe -m streamlit run app.py    # Linux/macOS: .venv/bin/python
+```
+Then open http://localhost:8501. It runs on this computer only and needs the trained CNN
+(`models/`), the log-mels (`features/mel/`) and GTZAN (`data/raw/`, for playing samples).
+The dashboard shows validation scores until the `pre-test-freeze` tag exists.
+
 ## Repository layout
 ```
 config.yaml       all constants (seeds, audio, mel, split sizes, paths)
+app.py            local web app (Streamlit); its logic is in src/webapp.py
 src/              library code (utils, splits, features, models, evaluation)
 scripts/          command-line entry points called by the Makefile
 tests/            pytest tests

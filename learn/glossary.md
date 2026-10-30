@@ -8,6 +8,8 @@
 
 **Affine transformation.** A map of the form z = a x + b (per feature here). Standardisation is affine, so standardising data that was already affinely rescaled gives the same result as standardising the original data.
 
+**Annotated tag.** A git object that names one commit hash and records the tagger, date and a message (git tag -a). Our pre-test-freeze tag marks the commit in which every choice was fixed before test.
+
 **Artist-cluster bootstrap.** A bootstrap that resamples whole artists (with all their clips) instead of single clips, because clips by one artist are correlated. Gives honest confidence intervals.
 
 **Artist-disjoint split.** A split in which no artist has clips in more than one part (train, valid, test). Prevents the model from scoring by recognising artists.
@@ -42,11 +44,15 @@
 
 **Column subsampling (colsample_bytree).** Growing each boosted tree on a random share of the features (0.8 here); makes trees less alike and reduces variance.
 
+**Commit hash.** The identifier of a git commit, computed from all committed file contents, the parent commit, author, date and message; changing any committed byte gives a different hash.
+
 **Confidence interval (95%).** A range produced by a procedure that, over repeated samples, contains the true value 95% of the time. Here estimated with the bootstrap percentile method.
 
 **Config file.** `config.yaml`: the single place where all constants (seed, audio settings, sizes, paths) are defined.
 
 **Confusion matrix.** K x K table counting clips of each true class (rows) by predicted class (columns); the diagonal holds correct predictions.
+
+**Controlled experiment.** An experiment that changes one factor (here the split) and holds everything else fixed (models, grids, metric, sizes, seeds), so differences in the outcome can be attributed to that factor.
 
 **Convolution (2-D).** Sliding a small learned filter over an image and computing, at every position, a weighted sum of the local patch; the output is a feature map showing where the pattern occurs.
 
@@ -70,6 +76,8 @@
 
 **Distance weighting.** A kNN option in which each neighbour's vote is weighted by 1/distance, so closer neighbours count more.
 
+**Distribution shift.** The data seen in use differs from the training data, for example modern loud masters against GTZAN's older recordings. Measured scores may then no longer hold.
+
 **Dropout.** During training, setting each unit to zero with probability p (0.3 here) and scaling the rest by 1/(1-p), so the network cannot rely on any single unit. Off at evaluation.
 
 **Dual problem.** The SVM optimisation rewritten in terms of one multiplier alpha_i per training point, bounded by 0 and C. Data enter it only through dot products, which is what makes the kernel trick possible.
@@ -86,6 +94,8 @@
 
 **F1 score.** Harmonic mean of precision and recall for one class: 2PR / (P + R).
 
+**Family-wise error rate.** The probability of at least one false positive among several tests; 1 - (1 - 0.05)^m for m independent tests at the 5% level, 0.56 for m = 16.
+
 **Fault-filtered split.** The published GTZAN split (Kereliuk, Sturm & Larsen 2015) that removes duplicated, mislabelled and distorted clips and keeps artists disjoint: 443/197/290 clips.
 
 **Feature map.** The output image of one convolution filter: large where the filter's pattern is present in the input.
@@ -97,6 +107,8 @@
 **Frame.** A short slice of audio (here 2048 samples, 93 ms) analysed as one spectrum; frames advance by the hop length (512 samples).
 
 **Gamma (RBF).** The inverse width of the RBF kernel's Gaussian bumps. Large gamma makes each support vector influence only its close neighbourhood (risk of overfitting); small gamma gives smooth, nearly linear boundaries. sklearn's "scale" equals 1/(number of features x variance of X), 0.0175 on our standardised features.
+
+**Garden of forking paths.** Gelman and Loken's name for the many analysis choices that could have been made differently after seeing the data; even without deliberate fishing, they make results look stronger than they are.
 
 **Gini impurity.** 1 minus the sum of squared class shares in a node: the chance two random points from the node have different labels. 0 for a pure node, 0.9 for an even 10-class mix.
 
@@ -119,6 +131,8 @@
 **Hyperparameter.** A setting chosen before training rather than learned from data (k in kNN, C in logistic regression); we choose them on the valid part only.
 
 **i.i.d..** Independent and identically distributed: examples drawn separately from one distribution; the assumption behind unbiased test estimates.
+
+**Input validation.** Checking data from outside the program before using it. The app rejects unreadable, too-short and silent files with a readable message.
 
 **Inverse regularisation strength (C).** sklearn's C: it multiplies the data loss against a fixed L2 penalty, so small C means strong regularisation and large C means weak.
 
@@ -174,11 +188,15 @@
 
 **Multinomial logistic regression.** A linear model with one weight vector per class whose scores go through a softmax; trained by minimising cross-entropy.
 
+**Multiple comparisons.** Making many comparisons (configurations, looks at test, subgroups) and reporting the best; the best of many noisy scores is optimistic.
+
 **Nyquist frequency.** Half the sampling rate, the highest frequency a sampled signal can represent (11,025 Hz for GTZAN).
 
 **One-vs-one (OvO).** Multiclass strategy training one binary classifier per pair of classes (45 for 10 genres) and predicting by their votes. sklearn's SVC uses it.
 
 **Onset strength.** A per-frame measure of how much spectral energy increases, i.e. how likely a note or hit starts; the input to tempo estimation.
+
+**Open-set problem.** A classifier trained on a closed list of classes still answers for inputs from none of them, because softmax cannot refuse. Our app names one of ten genres even for a podcast.
 
 **Over-confidence.** Predicted confidence systematically higher than accuracy; shows up as reliability-diagram points below the diagonal and as spikes in cross-entropy on wrong predictions.
 
@@ -197,6 +215,8 @@
 **Pipeline.** An sklearn object chaining preprocessing and a model, so preprocessing such as scaling is refit on the training rows of each fit and never sees held-out data.
 
 **Platt scaling.** Turning an SVM's decision values into probabilities with a fitted sigmoid 1/(1 + exp(A f + B)); sklearn fits A and B on internal 5-fold cross-validation scores.
+
+**Post-hoc analysis.** An analysis decided after seeing the results it is about. It suggests hypotheses but does not confirm them; it is labelled as such and never replaces the pre-specified result.
 
 **Precision.** Of the clips predicted as a class, the share that truly belong to it: TP / (TP + FP).
 
@@ -266,6 +286,8 @@
 
 **Stratification.** Sampling each class in proportion to its share of the pool, so every part has the same class mix.
 
+**Streamlit.** A Python library that turns a script into a web app and reruns the script on every interaction. Our app.py uses it, on localhost only.
+
 **Support vector machine (SVM).** A maximum-margin classifier: minimises ||w||^2/2 plus C times the hinge losses; with a kernel it draws non-linear boundaries.
 
 **Support vector.** A training point with a non-zero dual multiplier: on or inside the margin, or misclassified. The SVM's decision function depends only on these points (2,113 of 4,420 windows in our best SVM).
@@ -274,11 +296,17 @@
 
 **Test lock.** `load_split` refuses the test part unless allow_test=True and the git tag pre-test-freeze exists; ensures the test set is used once.
 
+**Test part.** The part of a split used once, after all choices are frozen, to estimate the performance of the finished pipeline. Locked in code until the tag pre-test-freeze exists.
+
 **Training row.** One example the model is fit on; here one 3 s window, labelled with its clip's genre.
+
+**Training-serving skew.** Input prepared differently in the deployed app than during training. The model still answers, so nothing fails visibly, but measured performance stops applying.
 
 **Translation equivariance.** Shifting the input shifts a convolution's output by the same amount, because the same filter is used everywhere. Natural along time in a spectrogram, only partly along frequency.
 
 **Unit of prediction.** The object a prediction and its score refer to; here one 30 s clip.
+
+**Validation part.** The part of a split used to choose hyperparameters, epochs and design options by clip macro-F1; the chosen model's validation score is therefore optimistic.
 
 **Virtual environment (venv).** A self-contained Python installation for one project, isolating its packages from others.
 
@@ -289,6 +317,8 @@
 **Weighted-F1.** Per-class F1 averaged with weights equal to each class's share of true examples.
 
 **Window.** A 3 s non-overlapping segment of a clip (10 per clip); the training row.
+
+**Winner's curse.** The best of several noisy scores is biased upwards, because it was picked partly for lucky noise. It is why we headline the CNN mean (0.610), not the best run (0.635).
 
 **Within-clip leakage.** Windows of one clip in both train and test; the model sees near-copies of test windows during training.
 
