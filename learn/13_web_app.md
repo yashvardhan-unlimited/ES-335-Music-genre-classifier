@@ -15,7 +15,7 @@ without touching the locked test part?
 |---|---|
 | `app.py` | The Streamlit interface: two tabs, Classify and Results. Layout and charts only. |
 | `src/webapp.py` | All logic, with no Streamlit in it: load the served CNN, decode and check audio, classify, pick samples, read `results/val`. |
-| `tests/test_webapp.py` | 25 tests, including one that runs the app's path over all 197 valid clips and one that drives the app itself. |
+| `tests/test_webapp.py` | 27 tests, including one that runs the app's path over all 197 valid clips and one that drives the app itself. |
 | `.streamlit/config.toml` | Localhost only, 50 MB upload limit, no usage statistics, no Deploy button, light theme. |
 | `config.yaml` (`app:`) | Which split is served, the 10-minute cut, samples per genre, how many genres to name. |
 
@@ -129,7 +129,8 @@ over seeds, 0.610, not the 0.635 of the run we picked.
 | One run: best on valid | Average of the three seeds | An ensemble is a new model with no measured score. The final model is decided at the freeze. |
 | Raw scores, labelled | Temperature-scaled scores | On seed 2, cross-fitted scaling worsened clip ECE from 0.077 to 0.114. |
 | 10 windows across the file | First 30 s only | Intros are often unrepresentative of a song. |
-| WAV, MP3, FLAC, OGG | M4A too | M4A needs ffmpeg, which the project does not install. |
+| AAC and M4A through PyAV, after librosa fails | Decoding every format with PyAV | librosa stays first, so WAV, MP3, FLAC and OGG keep the path the stored scores were measured on. |
+| PyAV | System-wide ffmpeg, or `imageio-ffmpeg` | PyAV ships its own decoder, so nothing extra is installed by hand, and it reads uploads from memory. |
 
 ---
 
@@ -137,32 +138,38 @@ over seeds, 0.610, not the 0.635 of the run we picked.
 
 **`src/webapp.py`**
 
-- **L44-57 `load_classifier`**: reads the per-seed scores from
+- **L45-58 `load_classifier`**: reads the per-seed scores from
   `C_cnn_summary.json` and takes the best with `max`, so the seed is derived from
-  results, not hand-copied. L50 asserts the checkpoint's class order equals the
-  config's, because a swapped order would silently mislabel every prediction. L53
+  results, not hand-copied. L51 asserts the checkpoint's class order equals the
+  config's, because a swapped order would silently mislabel every prediction. L54
   loads the normalisation stats saved from that run's own training clips.
-- **L60-74 `load_audio`**: uploads are untrusted input, so this is the one place
-  they are checked. L67 caps decoding at 10 minutes. L68-69 turn any decoder error
-  into one readable `ValueError`, because each backend raises its own type. L70-71
-  reject anything shorter than one window. L72 uses `not max > 0` deliberately:
+- **L61-75 `decode_with_av`**: reads AAC and M4A, which libsndfile cannot. L64 rewinds
+  the upload, because librosa has already read from it. L66 asks for mono 32-bit
+  floats at the project rate, the same form `librosa.load` returns. L73-74 stop
+  decoding at the 10-minute cut, since a 50 MB low-bitrate file can hold many hours.
+- **L78-83 `decode`**: tries librosa first (L81, with the 10-minute cut), so the
+  evaluated formats never touch PyAV, and falls back only if librosa fails.
+- **L86-100 `load_audio`**: uploads are untrusted input, so this is the one place
+  they are checked. L94-95 turn any decoder error into one readable `ValueError`,
+  because each backend raises its own type. L96-97 reject anything shorter than one
+  window. L98 uses `not max > 0` deliberately:
   the test is False for silence and also for NaN, since any comparison with NaN
   is False.
-- **L77-86 `classify_mel`**: L83 cuts the windows, L84 normalises and adds the
-  channel dimension, L85-86 run the network without gradients. This mirrors
+- **L103-112 `classify_mel`**: L109 cuts the windows, L110 normalises and adds the
+  channel dimension, L111-112 run the network without gradients. This mirrors
   `MelWindowDataset` in eval mode, and the 197-clip test proves it.
-- **L89-93 `summarise`**: the soft vote, then a count of windows that agree with
+- **L115-119 `summarise`**: the soft vote, then a count of windows that agree with
   the winner. Agreement is a diagnostic only and never changes the answer.
-- **L101-103 `classify_sample`**: uses the cached log-mel, the exact input the
+- **L127-129 `classify_sample`**: uses the cached log-mel, the exact input the
   stored score used, so a sample's prediction equals the evaluated one.
-- **L106-111 `sample_clips`**: L108 loads through `load_split(..., "valid")`, so
-  test clips cannot enter. L110 samples with the config seed before any score
+- **L132-137 `sample_clips`**: L134 loads through `load_split(..., "valid")`, so
+  test clips cannot enter. L136 samples with the config seed before any score
   exists to look at.
-- **L114-125 `load_results`**: `RESULT_FILE` (L30) matches only per-run files, so
+- **L140-151 `load_results`**: `RESULT_FILE` (L31) matches only per-run files, so
   analysis JSONs are skipped.
-- **L128-133 `missing_runs`**: lists what the protocol expects but has not got.
+- **L154-159 `missing_runs`**: lists what the protocol expects but has not got.
   The dashboard shows this, so a partial table can never pass as complete.
-- **L143-147 `ladder`**: L146-147 reindex to every model and split, so an unfinished
+- **L169-173 `ladder`**: L172-173 reindex to every model and split, so an unfinished
   cell stays as NaN and draws a gap instead of a line joining across it.
 
 **`app.py`**
@@ -198,6 +205,9 @@ over seeds, 0.610, not the 0.635 of the run we picked.
    score comes from 197 clips.
 7. **Publishing by accident.** `server.address = "localhost"` keeps the app on this
    computer. Do not change it on a shared network without thinking about uploads.
+8. **Testing a change against an old server.** `fileWatcherType = "none"` means a
+   running app keeps its old code. Stop it with Ctrl+C and start it again after any
+   change. Our first AAC browser test failed for exactly this reason.
 
 ---
 
@@ -207,11 +217,13 @@ Quoted from the code's output, all on **validation** data:
 
 | check | result |
 |---|---|
-| Full test suite | 94 passed (69 earlier + 25 new) |
+| Full test suite | 96 passed (69 earlier + 27 for the app) |
 | App path on all 197 valid clips | 0.6348, equal to the stored score of run seed 2 |
 | Served CNN run | seed 2, valid macro-F1 0.635, clip ECE 0.077 |
 | Browser run, MP3 made from `jazz.00007` (a valid clip) | jazz 94%, blues 3%, classical 2%; 10 of 10 windows |
 | Sample `blues.00009` | jazz 87%, blues 8%, classical 2%: wrong, and shown as wrong |
+| 30 valid clips re-encoded as AAC, then as M4A | Same top genre on 29 of 30 in each format; largest score change per clip: median 0.011, worst 0.063 |
+| Browser run, AAC and M4A made from `jazz.00004` (a valid clip) | Prediction jazz in both; 10 of 10 windows |
 | Unreadable file | "This file could not be read as audio." |
 | 1 s file | "This audio is too short: at least 3 seconds are needed." |
 
@@ -281,6 +293,14 @@ note because uploads would leave the user's computer.
 **Q9. What if an upload is 3 s long?**
 It works. All 10 windows overlap almost completely, so we get little more than one
 window's evidence and the vote adds almost nothing. Under 3 s, the app refuses.
+
+**Q10. Does an AAC upload get the same answer as the original WAV?**
+Not always. AAC is lossy and PyAV resamples with its own filter, so the log-mel
+changes slightly: this is a small training-serving skew. We measured it instead of
+assuming it away: on 30 valid clips the top genre held on 29, and no genre's score
+moved by more than 0.063. That is 30 clips at one bitrate, not a scored evaluation,
+so 0.635 still describes WAV input only. Why not put a real `.aac` in the tests?
+The tests encode one in memory, so no audio is committed.
 
 ---
 

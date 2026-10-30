@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import BinaryIO
 
+import av
 import librosa
 import numpy as np
 import pandas as pd
@@ -57,6 +58,31 @@ def load_classifier(split: str = APP["split"]) -> Classifier:
                       calibration["models"][f"cnn_s{seed}"]["before"]["clip_ece"])
 
 
+def decode_with_av(source: str | Path | BinaryIO) -> np.ndarray:
+    """AAC and M4A, which librosa's backends cannot read: mono at the project rate, cut likewise."""
+    if hasattr(source, "seek"):
+        source.seek(0)  # librosa has already read from it
+    limit = SR * APP["max_seconds"]
+    resampler = av.AudioResampler(format="flt", layout="mono", rate=SR)
+    chunks, kept = [], 0
+    with av.open(str(source) if isinstance(source, Path) else source) as container:
+        for frame in container.decode(audio=0):
+            for out in resampler.resample(frame):
+                chunks.append(out.to_ndarray().ravel())
+                kept += chunks[-1].size
+            if kept >= limit:  # a small upload can hold hours of low-bitrate audio
+                break
+    return np.concatenate(chunks)[:limit]
+
+
+def decode(source: str | Path | BinaryIO) -> np.ndarray:
+    """librosa first, so every format it reads stays on the evaluated path; then PyAV."""
+    try:
+        return librosa.load(source, sr=SR, mono=True, duration=APP["max_seconds"])[0]
+    except Exception:
+        return decode_with_av(source)
+
+
 def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
     """Decode a file or file-like object to mono at the project rate, cut at app.max_seconds.
 
@@ -64,7 +90,7 @@ def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
     classify (not audio, under one 3 s window, silent).
     """
     try:
-        y, _ = librosa.load(source, sr=SR, mono=True, duration=APP["max_seconds"])
+        y = decode(source)
     except Exception as e:  # each decoder raises its own errors on a bad file
         raise ValueError("This file could not be read as audio.") from e
     if y.size < N_WIN:

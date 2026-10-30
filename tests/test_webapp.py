@@ -2,6 +2,7 @@ import io
 import json
 from pathlib import Path
 
+import av
 import numpy as np
 import pandas as pd
 import pytest
@@ -34,15 +35,43 @@ def audio_bytes(seconds: float, fmt: str = "WAV", amp: float = 0.3) -> io.BytesI
     return buf
 
 
+def encoded_bytes(y: np.ndarray, fmt: str) -> io.BytesIO:
+    """Encode mono floats at SR as AAC, in raw ADTS ("adts") or an M4A container ("ipod")."""
+    buf = io.BytesIO()
+    with av.open(buf, "w", format=fmt) as out:
+        stream = out.add_stream("aac", rate=SR, layout="mono")
+        frame = av.AudioFrame.from_ndarray(y[None].astype(np.float32), format="fltp", layout="mono")
+        frame.sample_rate = SR
+        for packet in stream.encode(frame):
+            out.mux(packet)
+        for packet in stream.encode(None):
+            out.mux(packet)
+    buf.seek(0)
+    return buf
+
+
+def sine(seconds: float, amp: float = 0.3) -> np.ndarray:
+    return amp * np.sin(2 * np.pi * 440 * np.arange(int(seconds * SR)) / SR)
+
+
 @pytest.mark.parametrize("fmt", ["WAV", "FLAC", "OGG", "MP3"])
 def test_load_audio_reads_uploaded_bytes(fmt):
     y = w.load_audio(audio_bytes(4, fmt))
     assert abs(y.size / SR - 4) < 0.2 and y.ndim == 1
 
 
+@pytest.mark.parametrize("fmt", ["adts", "ipod"])
+def test_load_audio_reads_aac_at_the_project_rate(fmt):
+    y = w.load_audio(encoded_bytes(sine(4), fmt))
+    assert abs(y.size / SR - 4) < 0.2 and y.ndim == 1
+    spectrum = np.abs(np.fft.rfft(y))
+    assert abs(spectrum.argmax() * SR / y.size - 440) < 2  # wrong rate would move the pitch
+
+
 def test_load_audio_cuts_long_audio(monkeypatch):
     monkeypatch.setitem(w.APP, "max_seconds", 5)
     assert abs(w.load_audio(audio_bytes(8)).size / SR - 5) < 0.01
+    assert abs(w.load_audio(encoded_bytes(sine(8), "adts")).size / SR - 5) < 0.01
 
 
 @pytest.mark.parametrize("source,message", [(io.BytesIO(b"this is not audio" * 100), "could not be read"),

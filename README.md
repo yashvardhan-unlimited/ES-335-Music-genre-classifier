@@ -42,7 +42,7 @@ make tests   # pytest
 _Each stage is filled in as it is implemented. All constants are in `config.yaml`._
 
 ## Web app (local)
-Upload audio (WAV, MP3, FLAC, OGG), try sample clips, and browse the results dashboard:
+Upload audio (WAV, MP3, FLAC, OGG, AAC, M4A), try sample clips, and browse the results dashboard:
 
 ```bash
 .venv/Scripts/python.exe -m streamlit run app.py    # Linux/macOS: .venv/bin/python

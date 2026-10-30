@@ -1,5 +1,7 @@
 # Glossary
 
+**AAC (Advanced Audio Coding).** A lossy audio format, the usual one in `.m4a` files. libsndfile cannot decode it, so the web app reads it through PyAV.
+
 **Ablation.** Removing or changing one component (a feature group, the window length) while keeping everything else fixed and retraining, to measure what that component contributes.
 
 **Adam.** An optimiser that keeps running averages of each parameter's gradient and squared gradient and steps by their ratio, giving every parameter its own step size. Used with learning rate 0.001.

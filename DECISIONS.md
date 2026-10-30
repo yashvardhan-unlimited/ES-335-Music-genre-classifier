@@ -518,5 +518,22 @@ that could drift. Gradio: good for one input-output demo, weaker for a multi-par
 dashboard. Flask or FastAPI plus a hand-written page: much more code for the same
 result. Averaging the three CNN seeds: a new model with no measured score, and
 the final model is decided at the freeze. Hand-picking samples the model gets
-right: misleading. M4A support: needs ffmpeg, which this project does
-not install.
+right: misleading.
+
+## 2026-10-31: AAC and M4A uploads through PyAV
+
+**Decision.** Accept `.aac` and `.m4a` in the web app. `load_audio` still tries
+librosa first and falls back to PyAV (`av`) only for files librosa cannot read.
+
+**Reason.** A user's AAC file was refused, and libsndfile has no AAC decoder.
+PyAV ships its own FFmpeg libraries, so nothing else needs installing. librosa
+stays first so WAV, MP3, FLAC and OGG keep the exact path the stored scores were
+measured on. PyAV resamples with its own filter, so AAC audio is not bit-identical
+to what librosa would give. Measured on 30 valid clips re-encoded as AAC and as
+M4A: same top genre on 29 of 30 in each, largest score change 0.063. The stored
+scores still describe WAV input only.
+
+**Rejected.** Installing ffmpeg system-wide for audioread: an extra manual step on
+every machine, and audioread cannot read in-memory uploads. `imageio-ffmpeg`: a
+separate binary and temp files for each upload. Decoding every format with PyAV:
+would move the evaluated formats off their measured path.

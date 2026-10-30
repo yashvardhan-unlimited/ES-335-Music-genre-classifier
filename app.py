@@ -25,7 +25,7 @@ FIGURES = [("cnn_curves_C.png", "CNN training curves on split C"),
            ("analysis_calibration.png", "Calibration"),
            ("analysis_voting.png", "Soft against majority vote"),
            ("leakage_lab.png", "Leakage lab: three deliberate mistakes")]
-UPLOAD_TYPES = ["wav", "mp3", "flac", "ogg"]
+UPLOAD_TYPES = ["wav", "mp3", "flac", "ogg", "aac", "m4a"]
 
 st.set_page_config(page_title="GTZAN genre classifier", layout="wide")
 
