@@ -2,8 +2,8 @@
 
 Run from repo root:
     python -m src.train_classical --split C --seed 0 --models dummy,knn,logreg,svm,xgb
-Writes results/val/{split}_s{seed}_{model}.json, the figures val_knn_k.png, val_svm_heatmap.png
-and val_xgb_curve.png in results/figures/ (for the models that ran) and prints a summary table
+Writes results/val/{split}_s{seed}_{model}.json, for split C also the figures val_knn_k.png,
+val_svm_heatmap.png and val_xgb_curve.png in results/figures/, and prints a summary table
 of every model with a result file for this split and seed. Only train and valid are ever loaded.
 """
 import argparse
@@ -50,10 +50,13 @@ def param_grid(name: str) -> dict:
     return {f"clf__{k}": v for k, v in CFG["grids"][key].items()} if key else {}
 
 
-def valid_report(probs: np.ndarray, classes: np.ndarray, X_va: pd.DataFrame, y_va: pd.Series) -> dict:
-    """Clip scores (soft vote; majority as a diagnostic) and window accuracy from valid window probs."""
-    ids, _, soft = aggregate_clips(probs, X_va.index)
-    _, _, major = aggregate_clips(probs, X_va.index, "majority")
+def valid_report(probs: np.ndarray, classes: np.ndarray, y_va: pd.Series) -> dict:
+    """Clip scores (soft vote; majority as a diagnostic) and window accuracy from valid window probs.
+
+    y_va: one genre per window, indexed by clip_id (row order = probs row order).
+    """
+    ids, _, soft = aggregate_clips(probs, y_va.index)
+    _, _, major = aggregate_clips(probs, y_va.index, "majority")
     y_clip = y_va.groupby(level=0).first().loc[ids].to_numpy()
     s = clip_scores(y_clip, classes[soft], labels=GENRES)
     return {
@@ -63,7 +66,7 @@ def valid_report(probs: np.ndarray, classes: np.ndarray, X_va: pd.DataFrame, y_v
         "window_accuracy": window_accuracy(y_va, classes[probs.argmax(axis=1)]),
         "per_genre_f1": s["per_genre_f1"],
         "confusion": {"labels": GENRES, "counts": s["confusion"].tolist()},
-        "n_valid_windows": len(X_va), "n_valid_clips": len(ids),
+        "n_valid_windows": len(y_va), "n_valid_clips": len(ids),
     }
 
 
@@ -83,11 +86,17 @@ def tune_and_score(name: str, X_tr: pd.DataFrame, y_tr: pd.Series,
     # the n_jobs=-1 grid workers: lbfgs results depend on the thread count otherwise.
     with threadpool_limits(1):
         est = clone(gs.estimator).set_params(**best).fit(X_tr, y_tr)
-    report = valid_report(est.predict_proba(X_va), est.classes_, X_va, y_va)
-    assert np.isclose(report["valid_macro_f1"], res["mean_test_score"][int(np.argmin(res["rank_test_score"]))])
+    report = valid_report(est.predict_proba(X_va), est.classes_, y_va)
+    grid_score = float(res["mean_test_score"][int(np.argmin(res["rank_test_score"]))])
+    if not np.isclose(report["valid_macro_f1"], grid_score):
+        # splits with GTZAN's exact-duplicate files (A, B) give kNN equal-distance ties that the grid
+        # worker can break differently; the reported numbers are the refit model's, both are kept
+        log.warning("%s: refit valid macro-F1 %.4f != grid %.4f (distance ties?)", name,
+                    report["valid_macro_f1"], grid_score)
     return {
         "best_params": {k.removeprefix("clf__"): v for k, v in best.items()},
         **report,
+        "grid_valid_macro_f1": grid_score,
         "n_train_windows": len(X_tr),
         "grid": [{"params": {k.removeprefix("clf__"): v for k, v in p.items()}, "valid_macro_f1": float(m)}
                  for p, m in zip(res["params"], res["mean_test_score"])],
@@ -115,7 +124,7 @@ def tune_xgb(X_tr: pd.DataFrame, y_tr: pd.Series, X_va: pd.DataFrame, y_va: pd.S
         est = xgb_model(**fixed, **params).fit(X_tr, y_tr_code, verbose=False,
                                                eval_set=[(X_tr, y_tr_code), (X_va, y_va_code)])
         # predict_proba uses only the trees up to best_iteration (early stopping)
-        report = valid_report(est.predict_proba(X_va), classes, X_va, y_va)
+        report = valid_report(est.predict_proba(X_va), classes, y_va)
         rows.append({"params": params, "best_iteration": int(est.best_iteration),
                      "valid_mlogloss": float(est.best_score), "valid_macro_f1": report["valid_macro_f1"]})
         log.info("xgb %s: %d trees, valid mlogloss %.4f, clip macro-F1 %.3f", params,
@@ -273,13 +282,14 @@ def main() -> None:
         path.write_text(json.dumps(r, indent=1))
         results[name] = r
         log.info("%s -> %s", name, path)
-    if "knn" in results:
-        floor = results.get("dummy_stratified", {}).get("valid_macro_f1")
-        plot_knn_k(results["knn"], FIG_DIR / "val_knn_k.png", floor)
-    if "svm" in results:
-        plot_svm_heatmap(results["svm"], FIG_DIR / "val_svm_heatmap.png")
-    if "xgb" in results:
-        plot_xgb_curve(results["xgb"], FIG_DIR / "val_xgb_curve.png")
+    if args.split == "C":  # tuning figures are drawn for the main split only (other splits: JSONs)
+        if "knn" in results:
+            floor = results.get("dummy_stratified", {}).get("valid_macro_f1")
+            plot_knn_k(results["knn"], FIG_DIR / "val_knn_k.png", floor)
+        if "svm" in results:
+            plot_svm_heatmap(results["svm"], FIG_DIR / "val_svm_heatmap.png")
+        if "xgb" in results:
+            plot_xgb_curve(results["xgb"], FIG_DIR / "val_xgb_curve.png")
     print(summary_table(args.split, args.seed).to_string(index=False, float_format="%.3f"))
 
 

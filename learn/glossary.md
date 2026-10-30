@@ -1,12 +1,20 @@
 # Glossary
 
+**Adam.** An optimiser that keeps running averages of each parameter's gradient and squared gradient and steps by their ratio, giving every parameter its own step size. Used with learning rate 0.001.
+
+**AdamW.** Adam with decoupled weight decay: the decay is subtracted from the weights directly instead of being added to the gradient (where Adam would rescale it).
+
 **Affine transformation.** A map of the form z = a x + b (per feature here). Standardisation is affine, so standardising data that was already affinely rescaled gives the same result as standardising the original data.
 
 **Artist-cluster bootstrap.** A bootstrap that resamples whole artists (with all their clips) instead of single clips, because clips by one artist are correlated. Gives honest confidence intervals.
 
 **Artist-disjoint split.** A split in which no artist has clips in more than one part (train, valid, test). Prevents the model from scoring by recognising artists.
 
+**Backpropagation.** Computing the gradient of the loss with respect to every weight of a network by applying the chain rule layer by layer from the output back to the input.
+
 **Baseline.** A simple, well-understood model (here kNN and logistic regression) that any more complex model must beat to justify its complexity.
+
+**Batch normalisation.** Standardising each channel over the mini-batch, then rescaling with learned gamma and shifting with learned beta; uses running averages at evaluation time. Stabilises and speeds up training.
 
 **Best iteration.** The boosting round (counted from 0) at which the validation loss was lowest during early stopping; XGBoost then predicts with trees up to that round only. Our chosen XGBoost model stopped at best iteration 53, i.e. 54 rounds.
 
@@ -17,6 +25,8 @@
 **Boosting.** Building an ensemble sequentially, each new weak model (here a shallow tree) correcting the errors of the sum of the previous ones. It mainly reduces bias, unlike bagging, which averages independent models to reduce variance.
 
 **Bootstrap.** Estimating the uncertainty of a statistic by recomputing it on many datasets drawn with replacement from the observed one; the spread of those values gives a confidence interval.
+
+**Channel.** One of the stacked 2-D maps a convolution layer outputs (one per filter); our blocks have 32, 64, 128 and 128.
 
 **Chroma.** A 12-value per-frame vector of energy in each pitch class (C to B), with octaves folded together; describes harmony.
 
@@ -34,9 +44,13 @@
 
 **Confusion matrix.** K x K table counting clips of each true class (rows) by predicted class (columns); the diagonal holds correct predictions.
 
+**Convolution (2-D).** Sliding a small learned filter over an image and computing, at every position, a weighted sum of the local patch; the output is a feature map showing where the pattern occurs.
+
 **Cross-entropy loss.** -log of the probability a model gives to the true class; the loss logistic regression minimises. Confident wrong predictions cost the most.
 
 **Curse of dimensionality.** In many dimensions, data is sparse and distances between points become similar, so "nearest" neighbours are not really near.
+
+**Data augmentation.** Randomly transforming training inputs in ways that keep the label (crops, gain, masking) so the model sees more varied data and overfits less. Never applied to evaluation data.
 
 **Data leakage.** Information available during training or evaluation that would not be available at real prediction time, making scores look better than real performance.
 
@@ -50,17 +64,23 @@
 
 **Distance weighting.** A kNN option in which each neighbour's vote is weighted by 1/distance, so closer neighbours count more.
 
+**Dropout.** During training, setting each unit to zero with probability p (0.3 here) and scaling the rest by 1/(1-p), so the network cannot rely on any single unit. Off at evaluation.
+
 **Dual problem.** The SVM optimisation rewritten in terms of one multiplier alpha_i per training point, bounded by 0 and C. Data enter it only through dot products, which is what makes the kernel trick possible.
 
 **Dummy classifier.** A model that ignores the features (always the most frequent class, or random draws with the training class frequencies); it gives the score floor.
 
 **Early stopping.** Stopping iterative training when a validation loss has not improved for a set number of rounds (patience; 50 here) and keeping the model from the best round. Turns the number of trees into a quantity chosen from data.
 
+**Epoch.** One pass over the training data; for our CNN 10 random crops per training clip (4,420 items on split C).
+
 **Exact repetition.** The same audio file present twice in a dataset; found here as identical md5 hashes (14 pairs in GTZAN).
 
 **F1 score.** Harmonic mean of precision and recall for one class: 2PR / (P + R).
 
 **Fault-filtered split.** The published GTZAN split (Kereliuk, Sturm & Larsen 2015) that removes duplicated, mislabelled and distorted clips and keeps artists disjoint: 443/197/290 clips.
+
+**Feature map.** The output image of one convolution filter: large where the filter's pattern is present in the input.
 
 **Fixed transform.** A feature computation that uses only the clip itself and preset constants; it cannot leak between splits.
 
@@ -71,6 +91,8 @@
 **Gamma (RBF).** The inverse width of the RBF kernel's Gaussian bumps. Large gamma makes each support vector influence only its close neighbourhood (risk of overfitting); small gamma gives smooth, nearly linear boundaries. sklearn's "scale" equals 1/(number of features x variance of X), 0.0175 on our standardised features.
 
 **Gini impurity.** 1 minus the sum of squared class shares in a node: the chance two random points from the node have different labels. 0 for a pure node, 0.9 for an even 10-class mix.
+
+**Global average pooling.** Replacing each feature map by its mean, giving one number per channel; removes the need for a large dense layer and makes the output independent of where patterns occur.
 
 **Gradient boosting.** Boosting viewed as gradient descent in function space: each new tree is fit to the negative gradient of the loss at the current predictions, and added multiplied by the learning rate.
 
@@ -120,6 +142,8 @@
 
 **Margin (SVM).** The gap between a separating hyperplane and the nearest training points of either class, of width 2/||w||. The SVM chooses the boundary with the widest margin.
 
+**Max-pooling.** Keeping the largest value in each small block (2 x 2 here), halving height and width; adds tolerance to small shifts and grows the receptive field.
+
 **max_depth.** The deepest a single boosted tree may grow; a depth-d tree can model interactions among up to d features. Deeper trees fit faster and overfit sooner.
 
 **md5.** A 128-bit hash of a file's bytes; identical files have identical md5, so it detects exact duplicates and fingerprints a dataset copy.
@@ -131,6 +155,8 @@
 **MFCC.** Mel-frequency cepstral coefficient: DCT of a log-mel frame; low coefficients summarise the spectral envelope (timbre).
 
 **Micro-F1.** F1 computed from TP, FP and FN summed over all classes; equals accuracy in single-label classification.
+
+**Mini-batch.** The group of training examples (64 here) whose average loss gives one gradient step.
 
 **Mislabeling.** A clip whose genre label is wrong or doubtful; it caps achievable accuracy and teaches the model wrong mappings.
 
@@ -145,6 +171,8 @@
 **Onset strength.** A per-frame measure of how much spectral energy increases, i.e. how likely a note or hit starts; the input to tempo estimation.
 
 **Overfitting.** Fitting the training data, noise included, better than the pattern generalises; seen as a large train-valid gap (kNN k=1: train macro-F1 1.0, valid 0.409).
+
+**Padding.** Adding a border (of zeros) around the input so a convolution's output keeps the input's size.
 
 **Paired bootstrap.** Bootstrapping the difference between two models using the same resamples for both, so shared test-set difficulty cancels.
 
@@ -166,11 +194,17 @@
 
 **PYTHONHASHSEED.** Environment variable fixing the randomisation of Python's string hashing; read at interpreter start.
 
+**Random crop.** A training window taken at a random start position in the clip (any of 1,163 offsets for our 130-frame crops), so the model sees a different slice of each clip every epoch.
+
 **RBF kernel.** Radial basis function (Gaussian) kernel, exp(-gamma ||x - x'||^2): 1 for identical points, near 0 for distant ones. Its decision function is a weighted sum of Gaussian bumps on the support vectors.
 
 **Recall.** Of the clips truly in a class, the share the model found: TP / (TP + FN).
 
+**Receptive field.** The input region that one unit of a network layer depends on; 46 mel bins x 46 frames (about 1.07 s) for our last conv block.
+
 **Refit.** Retraining the selected hyperparameter setting after a search; we refit on train only (GridSearchCV refit=False) so valid stays held out.
+
+**ReLU.** Rectified linear unit, max(0, z): the non-linearity after each convolution; passes positive values, zeroes negative ones.
 
 **Reported score.** The number a procedure itself produces as its estimate of performance (e.g. GridSearchCV's best_score_). In lesson 09 it is compared with the true valid score of the chosen setting.
 
@@ -181,6 +215,8 @@
 **Sampling distribution.** The distribution a statistic would have over many independent samples of the same size; its spread is the statistic's uncertainty.
 
 **Sampling rate.** Number of samples stored per second of audio; GTZAN uses 22,050 Hz.
+
+**Seed variance.** The spread of results when only the random seed changes (initial weights, crops, augmentation, batch order); 0.580 to 0.635 valid macro-F1 for our three CNN seeds.
 
 **Seed.** The starting state of a pseudo-random number generator; the same seed produces the same sequence of "random" numbers.
 
@@ -197,6 +233,8 @@
 **Softmax.** Turns K scores into probabilities: exp(z_g) divided by the sum of exp(z_h) over all classes.
 
 **Spearman rank correlation.** Pearson correlation of the ranks of two sets of values: 1 for the same order, 0 for unrelated, -1 for reversed. Used in lesson 09 to compare how selection scores and true scores rank the 16 SVM settings.
+
+**SpecAugment.** Augmentation for spectrograms that blanks random bands of frequencies and random stretches of time (2 masks each here, up to 15 bins and 20 frames).
 
 **Spectral bandwidth.** The magnitude-weighted spread of frequencies around the spectral centroid.
 
@@ -222,9 +260,15 @@
 
 **Training row.** One example the model is fit on; here one 3 s window, labelled with its clip's genre.
 
+**Translation equivariance.** Shifting the input shifts a convolution's output by the same amount, because the same filter is used everywhere. Natural along time in a spectrogram, only partly along frequency.
+
 **Unit of prediction.** The object a prediction and its score refer to; here one 30 s clip.
 
 **Virtual environment (venv).** A self-contained Python installation for one project, isolating its packages from others.
+
+**Weight decay.** Adding lambda times each weight to its gradient (an L2 penalty, lambda = 0.0001 here) so the weights stay small.
+
+**Weight sharing.** Using the same filter weights at every position of the input, which makes a convolution's parameter count independent of the image size.
 
 **Weighted-F1.** Per-class F1 averaged with weights equal to each class's share of true examples.
 

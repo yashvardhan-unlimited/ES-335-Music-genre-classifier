@@ -1,9 +1,11 @@
 """Extract handcrafted window features and full-clip log-mels for every usable clip.
 
-Run from repo root: python scripts/extract_features.py
+Run from repo root: python scripts/extract_features.py [--mels-only]
 Writes features/handcrafted.npy, features/index.csv, features/feature_names.json,
-features/mel/<clip_id>.npy.
+features/mel/<clip_id>.npy. --mels-only writes just the log-mels (what the CNN needs;
+much faster, no HPSS or tempo), e.g. on Colab.
 """
+import argparse
 import json
 import sys
 import time
@@ -16,7 +18,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.features import N_WINDOWS, clip_features, feature_names  # noqa: E402
+from src.features import N_WINDOWS, clip_features, clip_mel, feature_names, load_clip  # noqa: E402
 from src.utils import get_logger, load_config  # noqa: E402
 
 log = get_logger("extract_features")
@@ -28,6 +30,12 @@ def process(clip_id: str, path: str, mel_dir: Path) -> tuple[np.ndarray, bool]:
     feats, mel, padded = clip_features(path)
     np.save(mel_dir / f"{clip_id}.npy", mel)
     return feats, padded
+
+
+def process_mel(clip_id: str, path: str, mel_dir: Path) -> None:
+    """Log-mel only, written straight to disk."""
+    warnings.filterwarnings("ignore")
+    np.save(mel_dir / f"{clip_id}.npy", clip_mel(load_clip(path)[0]))
 
 
 def pipeline_figure(path: str, out: Path) -> None:
@@ -65,6 +73,9 @@ def pipeline_figure(path: str, out: Path) -> None:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--mels-only", action="store_true", help="write only features/mel/<clip_id>.npy")
+    args = ap.parse_args()
     cfg = load_config()
     out = Path(cfg["paths"]["features"])
     mel_dir = out / "mel"
@@ -73,6 +84,11 @@ def main() -> None:
     clips = meta[meta["load_ok"]].reset_index(drop=True)
 
     t0 = time.perf_counter()
+    if args.mels_only:
+        jobs = (delayed(process_mel)(c, p, mel_dir) for c, p in zip(clips["clip_id"], clips["path"]))
+        list(tqdm(Parallel(n_jobs=-1, return_as="generator")(jobs), total=len(clips), desc="mels"))
+        log.info("%d mels in %.1f s", len(list(mel_dir.glob("*.npy"))), time.perf_counter() - t0)
+        return
     jobs = (delayed(process)(c, p, mel_dir) for c, p in zip(clips["clip_id"], clips["path"]))
     results = Parallel(n_jobs=-1, return_as="generator")(jobs)
     results = list(tqdm(results, total=len(clips), desc="clips"))

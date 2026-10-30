@@ -362,3 +362,107 @@ GroupKFold-by-clip variant (not requested; would still leak artists, since
 recorded in lesson 09: the correct variant wins on valid by construction,
 so the lab's evidence is about reported numbers and rankings, not about
 which choice is better on new data.
+
+## 2026-10-30: Log-mel CNN design and training protocol
+
+**Decision.** `GenreCNN`: 4 blocks Conv 3x3 (32, 64, 128, 128) -> BatchNorm
+-> ReLU -> MaxPool 2x2, global average pooling, dropout 0.3, Linear(10);
+conv layers without bias (BatchNorm's beta replaces it); 241,898 parameters.
+Input: 130-frame (3 s) crops of each clip's full log-mel, normalised per
+mel bin with mean/std from the **training clips only** (saved to
+`results/mel_norm_{split}_s{seed}.json`). Training: an epoch = 10 random
+crops per training clip, random gain +/-6 dB before normalisation,
+SpecAugment (2 frequency masks <= 15 bins, 2 time masks <= 20 frames, set to
+0 = the training mean) after it; Adam lr 1e-3, weight decay 1e-4, batch 64,
+at most 60 epochs; after every epoch, valid clip macro-F1 (soft vote over the
+10 fixed windows) decides early stopping (patience 8) and the best weights
+are kept. Torch seed = config seed (42) + run seed; three run seeds (0, 1, 2)
+from config. `valid_report` now takes (probs, classes, labels indexed by
+clip) so the CNN is scored by the same code as the classical models.
+`--refit_epochs N` trains on train+valid for N epochs (stats from
+train+valid) for later use. (Split A was first refused by the CLI; see
+"CNN on window-level split A" below for how it is handled now.)
+
+**Reason.** A small CNN is the standard learned-feature model for log-mels
+and is trainable on a CPU (about 49 s per epoch here). Random crops
+multiply the effective training set (1,163 possible offsets per clip) and
+augmentation counters overfitting with only 442 training clips. Early
+stopping on the project metric keeps model selection consistent with every
+other model. Per-bin normalisation from train only follows the
+learned-preprocessing rule.
+
+**Rejected.** Fixed 10 windows per clip for training (no crop diversity);
+per-clip or per-window normalisation (removes absolute loudness/brightness
+information and differs between train and eval if done on crops); AdamW
+(decoupled weight decay; the step specification asks for Adam); a
+pretrained audio network (e.g. PANNs, VGGish: trained on far more data,
+possibly overlapping GTZAN sources, and it would answer a different
+question); early stopping on valid loss (smooth, but not the project
+metric; logged per epoch for the curves). Known caveat: valid picks the
+epoch, so the CNN's valid score is slightly optimistic, like XGBoost's.
+
+## 2026-10-30: One tuning protocol for every split; CNN with one run per split seed
+
+**Decision.** `scripts/tune_all.sh` (also `make tune`) runs the same
+protocol on A (seed 0), B (seeds 0-4), B' (seeds 0-4) and C: dummies, kNN,
+logistic regression, SVM and XGBoost with the config grids, selected on
+**that split's own valid part** by clip macro-F1 (soft vote), refit on train
+only; the CNN with the config architecture and training settings,
+early-stopped on the same metric. The CNN runs **once per split seed** on
+A, B and B' (run seed = split seed; 11 runs) and three times on C (run seeds
+0-2). Chosen settings are collected in `results/chosen_params.json`, scores
+in `results/val/summary.csv`.
+
+**Reason.** The ladder A -> B -> B' -> C is meant to measure leakage, so
+nothing else may differ between the rungs: same models, grids, selection
+rule, metric and training sizes. One CNN run per split seed: a CNN run takes
+14 to 35 min on this CPU (the three C seeds: 14.4, 35.4, 26.2 min), so
+three runs per split seed would add 22 runs (11 split seeds x 2), about 5-13 h; the 5 split seeds of B and B' already give a
+spread that includes seed-to-seed CNN variation.
+
+**Rejected.** Reusing C's chosen hyperparameters on the other splits (each
+split must select on its own valid part, or A/B scores would not show what a
+leaky protocol would really pick); 3 CNN seeds everywhere (time, see above).
+
+## 2026-10-30: CNN on window-level split A uses fixed train windows
+
+**Decision.** On split A (windows, not clips, are assigned to parts) the CNN
+trains on exactly the train windows at their fixed positions (still with
+gain and SpecAugment, no random offsets), computes the per-bin
+normalisation from those windows' frames only, and scores each clip by soft
+vote over its valid windows, the same rows the classical models use. On
+clip-level splits nothing changes (verified: identical items and stats).
+
+**Reason.** Random crops of the full clip would read audio of the clip's
+valid and test windows. Known residue: each 130-frame window overlaps its
+neighbour by about one frame, and the centred STFT frames at a window edge
+include ~46 ms of the neighbouring window. This is negligible next to A's
+designed leak (sibling windows in train) and A is the leaky reference.
+
+**Rejected.** Refusing split A for the CNN (the ladder would lack the CNN on
+its first rung); random crops within runs of consecutive train windows
+(more code for a split that is a leakage reference, not a result).
+
+## 2026-10-30: Grid-vs-refit check becomes a warning (exact duplicates)
+
+**Decision.** `tune_and_score` keeps comparing the refit model's valid
+macro-F1 with the grid-search score, but a mismatch is logged as a warning
+and both are stored (`grid_valid_macro_f1`), instead of failing.
+
+**Reason.** On split A, kNN with k = 3 gave 0.9132 when refit and 0.912 in
+the grid worker. Split A/B pools contain GTZAN's exact-duplicate files (114
+duplicated window rows in A train+valid), so kNN meets equal-distance ties,
+and the joblib worker's data copy breaks them differently. Fitting directly
+on either slicing gives 0.9132. The reported numbers are the refit model's.
+Split C (no duplicates) still matches exactly.
+
+**Rejected.** Dropping the check (it caught nothing wrong here, but it is
+the guard that reported diagnostics belong to the selected model).
+
+## 2026-10-30: Tuning figures only for split C
+
+**Decision.** `train_classical.py` draws `val_knn_k.png`,
+`val_svm_heatmap.png` and `val_xgb_curve.png` only when run on split C.
+
+**Reason.** The lessons cite these as split C figures; running the protocol
+on A/B/B' would overwrite them. Other splits' grids are in their JSONs.

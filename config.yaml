@@ -62,3 +62,37 @@ xgb:
   colsample_bytree: 0.8
   early_stopping_rounds: 50
   eval_metric: mlogloss
+
+# log-mel CNN (src/cnn.py, src/train_cnn.py). Training seed = seed + run seed.
+cnn:
+  crop_frames: 130          # 3 s at hop 512 (66,150 / 512 = 129.2 frames)
+  crops_per_clip: 10        # random crops per training clip per epoch
+  channels: [32, 64, 128, 128]
+  dropout: 0.3
+  batch_size: 64
+  lr: 0.001
+  weight_decay: 0.0001
+  epochs: 60
+  patience: 8               # epochs without a better valid clip macro-F1
+  seeds: [0, 1, 2]
+  augment:
+    freq_masks: 2
+    freq_width: 15          # max mel bins per mask
+    time_masks: 2
+    time_width: 20          # max frames per mask
+    gain_db: 6              # uniform in [-6, +6] dB, added before normalisation
+
+# validation analyses (scripts/analysis_val.py), split C train/valid only
+analysis:
+  window_seconds: [1, 3, 5, 10]           # must divide clip_seconds
+  artist_fractions: [0.25, 0.5, 0.75, 1.0]
+  repeats: 3                              # random artist subsets per fraction (seeds seed+0..2)
+  calibration_bins: 10
+  permutation_repeats: 10                 # permutation importance on valid (scripts/analysis_errors.py)
+  feature_groups:                         # feature-name stems (mfcc1..20 -> mfcc); every feature in one group
+    mfcc: [mfcc]
+    chroma: [chroma]
+    spectral_shape: [centroid, bandwidth, rolloff]
+    zcr_rms: [zcr, rms]
+    hpss: [harm_rms, perc_rms]
+    tempo: [tempo]
