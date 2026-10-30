@@ -1,0 +1,52 @@
+{
+ "model": "svm",
+ "params": {
+  "C": 100,
+  "gamma": 0.001
+ },
+ "full_valid_macro_f1": 0.4582016145841276,
+ "results": [
+  {
+   "dropped": "mfcc",
+   "n_features_dropped": 40,
+   "n_features_left": 17,
+   "valid_macro_f1": 0.41600320754625175,
+   "change": -0.04219840703787586
+  },
+  {
+   "dropped": "chroma",
+   "n_features_dropped": 2,
+   "n_features_left": 55,
+   "valid_macro_f1": 0.4584197415141702,
+   "change": 0.00021812693004258366
+  },
+  {
+   "dropped": "spectral_shape",
+   "n_features_dropped": 6,
+   "n_features_left": 51,
+   "valid_macro_f1": 0.4709598177559065,
+   "change": 0.012758203171778892
+  },
+  {
+   "dropped": "zcr_rms",
+   "n_features_dropped": 4,
+   "n_features_left": 53,
+   "valid_macro_f1": 0.46756465854763973,
+   "change": 0.009363043963512119
+  },
+  {
+   "dropped": "hpss",
+   "n_features_dropped": 4,
+   "n_features_left": 53,
+   "valid_macro_f1": 0.4491954407121619,
+   "change": -0.009006173871965728
+  },
+  {
+   "dropped": "tempo",
+   "n_features_dropped": 1,
+   "n_features_left": 56,
+   "valid_macro_f1": 0.4643027256674223,
+   "change": 0.006101111083294697
+  }
+ ]
+}

@@ -1,0 +1,328 @@
+{
+ "cnn_epochs": 13,
+ "n_artist_groups_in_train": 146,
+ "runs": [
+  {
+   "fraction": 0.25,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 91,
+   "n_artist_groups": 36,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.2689763983318619
+  },
+  {
+   "fraction": 0.25,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 91,
+   "n_artist_groups": 36,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.25423742275140676,
+   "seconds": 214.81673580000643
+  },
+  {
+   "fraction": 0.25,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 124,
+   "n_artist_groups": 36,
+   "n_genres": 9,
+   "model": "svm",
+   "valid_macro_f1": 0.3723633493801561
+  },
+  {
+   "fraction": 0.25,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 124,
+   "n_artist_groups": 36,
+   "n_genres": 9,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.24097296301902366,
+   "seconds": 230.44934469999862
+  },
+  {
+   "fraction": 0.25,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 86,
+   "n_artist_groups": 36,
+   "n_genres": 9,
+   "model": "svm",
+   "valid_macro_f1": 0.26956705237379214
+  },
+  {
+   "fraction": 0.25,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 86,
+   "n_artist_groups": 36,
+   "n_genres": 9,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.20275462088946816,
+   "seconds": 162.33748980000382
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 225,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.46955416060781907
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 225,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.3394338933088933,
+   "seconds": 407.83692489998066
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 223,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.383250360477999
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 223,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.5157308435620342,
+   "seconds": 418.50655469999765
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 173,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.42695098740829385
+  },
+  {
+   "fraction": 0.5,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 173,
+   "n_artist_groups": 73,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.47306463317718883,
+   "seconds": 316.2372496999742
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 290,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.4403055400281855
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 290,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.42443146370961865,
+   "seconds": 511.9127038999868
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 360,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.4386698134601542
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 360,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.48468979314525795,
+   "seconds": 649.0914488000271
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 279,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.45309969483530776
+  },
+  {
+   "fraction": 0.75,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 279,
+   "n_artist_groups": 110,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.49386268746542816,
+   "seconds": 532.0254099000013
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.4582016145841276
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 0,
+   "seed": 42,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.5743326704004044,
+   "seconds": 828.999859500007
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.4582016145841276
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 1,
+   "seed": 43,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.5625925295894336,
+   "seconds": 824.639903800009
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "svm",
+   "valid_macro_f1": 0.4582016145841276
+  },
+  {
+   "fraction": 1.0,
+   "repeat": 2,
+   "seed": 44,
+   "n_clips": 442,
+   "n_artist_groups": 146,
+   "n_genres": 10,
+   "model": "cnn",
+   "epochs": 13,
+   "valid_macro_f1": 0.4457048793173966,
+   "seconds": 827.9096982000046
+  }
+ ],
+ "summary": [
+  {
+   "model": "cnn",
+   "fraction": 0.25,
+   "mean": 0.23265500221996618,
+   "sd": 0.02673033998623847,
+   "mean_clips": 100.33333333333333
+  },
+  {
+   "model": "cnn",
+   "fraction": 0.5,
+   "mean": 0.44274312334937216,
+   "sd": 0.09197662276806212,
+   "mean_clips": 207.0
+  },
+  {
+   "model": "cnn",
+   "fraction": 0.75,
+   "mean": 0.4676613147734349,
+   "sd": 0.03771803964685939,
+   "mean_clips": 309.6666666666667
+  },
+  {
+   "model": "cnn",
+   "fraction": 1.0,
+   "mean": 0.5275433597690782,
+   "sd": 0.07111687836614847,
+   "mean_clips": 442.0
+  },
+  {
+   "model": "svm",
+   "fraction": 0.25,
+   "mean": 0.30363560002860335,
+   "sd": 0.05952070955765482,
+   "mean_clips": 100.33333333333333
+  },
+  {
+   "model": "svm",
+   "fraction": 0.5,
+   "mean": 0.4265851694980373,
+   "sd": 0.043153062999856474,
+   "mean_clips": 207.0
+  },
+  {
+   "model": "svm",
+   "fraction": 0.75,
+   "mean": 0.4440250161078825,
+   "sd": 0.007901344559999206,
+   "mean_clips": 309.6666666666667
+  },
+  {
+   "model": "svm",
+   "fraction": 1.0,
+   "mean": 0.4582016145841276,
+   "sd": 0.0,
+   "mean_clips": 442.0
+  }
+ ]
+}

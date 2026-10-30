@@ -144,3 +144,44 @@ def paired_bootstrap_diff(df: pd.DataFrame, pred_col_a: str, pred_col_b: str, me
     tail = (100 - ci) / 2
     low, high = np.percentile(diffs, [tail, 100 - tail])
     return float(metric_fn(y, a) - metric_fn(y, b)), float(low), float(high), float(np.mean(diffs > 0))
+
+
+def reliability(probs: np.ndarray, y_true_idx: np.ndarray, n_bins: int = 10) -> pd.DataFrame:
+    """Reliability table: confidence = max probability, equal-width bins on [0, 1].
+
+    One row per bin: lo, hi, n, mean confidence, accuracy (NaN for empty bins).
+    """
+    probs = np.asarray(probs, dtype=float)
+    conf = probs.max(axis=1)
+    correct = probs.argmax(axis=1) == np.asarray(y_true_idx)
+    edges = np.linspace(0, 1, n_bins + 1)
+    b = np.clip(np.digitize(conf, edges[1:-1], right=True), 0, n_bins - 1)  # (lo, hi], first bin [0, hi]
+    rows = [{"lo": edges[k], "hi": edges[k + 1], "n": int((b == k).sum()),
+             "confidence": float(conf[b == k].mean()) if (b == k).any() else np.nan,
+             "accuracy": float(correct[b == k].mean()) if (b == k).any() else np.nan} for k in range(n_bins)]
+    return pd.DataFrame(rows)
+
+
+def ece(probs: np.ndarray, y_true_idx: np.ndarray, n_bins: int = 10) -> float:
+    """Expected calibration error: sum over bins of (n_bin / n) * |accuracy - confidence|."""
+    t = reliability(probs, y_true_idx, n_bins)
+    t = t[t["n"] > 0]
+    return float((t["n"] / t["n"].sum() * (t["accuracy"] - t["confidence"]).abs()).sum())
+
+
+def softmax_t(logits: np.ndarray, temperature: float = 1.0) -> np.ndarray:
+    """Softmax of logits / temperature, row-wise."""
+    from scipy.special import softmax
+    return softmax(np.asarray(logits, dtype=float) / temperature, axis=1)
+
+
+def fit_temperature(logits: np.ndarray, y_true_idx: np.ndarray) -> float:
+    """Temperature T > 0 minimising the mean cross-entropy of softmax(logits / T) (Guo et al. 2017)."""
+    from scipy.optimize import minimize_scalar
+    from scipy.special import log_softmax
+    z, y = np.asarray(logits, dtype=float), np.asarray(y_true_idx)
+
+    def nll(log_t: float) -> float:
+        return float(-log_softmax(z / np.exp(log_t), axis=1)[np.arange(len(y)), y].mean())
+
+    return float(np.exp(minimize_scalar(nll, bounds=(-3, 3), method="bounded").x))

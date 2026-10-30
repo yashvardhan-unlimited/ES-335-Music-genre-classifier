@@ -1,5 +1,7 @@
 # Glossary
 
+**Ablation.** Removing or changing one component (a feature group, the window length) while keeping everything else fixed and retraining, to measure what that component contributes.
+
 **Adam.** An optimiser that keeps running averages of each parameter's gradient and squared gradient and steps by their ratio, giving every parameter its own step size. Used with learning rate 0.001.
 
 **AdamW.** Adam with decoupled weight decay: the decay is subtracted from the weights directly instead of being added to the gradient (where Adam would rescale it).
@@ -26,6 +28,8 @@
 
 **Bootstrap.** Estimating the uncertainty of a statistic by recomputing it on many datasets drawn with replacement from the observed one; the spread of those values gives a confidence interval.
 
+**Calibration.** A classifier is calibrated if, among predictions made with confidence p, a fraction p is correct. Our CNNs are over-confident per window (every fitted temperature is above 1).
+
 **Channel.** One of the stacked 2-D maps a convolution layer outputs (one per filter); our blocks have 32, 64, 128 and 128.
 
 **Chroma.** A 12-value per-frame vector of energy in each pitch class (C to B), with octaves folded together; describes harmony.
@@ -47,6 +51,8 @@
 **Convolution (2-D).** Sliding a small learned filter over an image and computing, at every position, a weighted sum of the local patch; the output is a feature map showing where the pattern occurs.
 
 **Cross-entropy loss.** -log of the probability a model gives to the true class; the loss logistic regression minimises. Confident wrong predictions cost the most.
+
+**Cross-fitting.** Fitting a quantity on one half of the data and evaluating it on the other half, then swapping, so the evaluation never uses data the fit saw. We cross-fit the CNN temperature over the two valid artist halves.
 
 **Curse of dimensionality.** In many dimensions, data is sparse and distances between points become similar, so "nearest" neighbours are not really near.
 
@@ -75,6 +81,8 @@
 **Epoch.** One pass over the training data; for our CNN 10 random crops per training clip (4,420 items on split C).
 
 **Exact repetition.** The same audio file present twice in a dataset; found here as identical md5 hashes (14 pairs in GTZAN).
+
+**Expected calibration error (ECE).** The bin-share-weighted mean gap between accuracy and mean confidence over confidence bins (10 equal-width bins here). 0 means perfectly calibrated; CNN seed 1 drops from 0.196 to 0.038 per window after temperature scaling.
 
 **F1 score.** Harmonic mean of precision and recall for one class: 2PR / (P + R).
 
@@ -130,6 +138,8 @@
 
 **Learned statistic.** A quantity computed from many clips (mean, std, PCA axes, selected features); must be fitted on training data only.
 
+**Learning curve.** Validation score as a function of training-set size. Still rising at full size means the model is data-limited (variance); flat means more of the same data will not help (bias). We grow the training set by artists, not clips.
+
 **Learning rate (shrinkage).** In boosting, the factor (0.05 or 0.1 here) multiplying each new tree's contribution. Smaller values regularise but need more trees; halving it roughly doubled the trees early stopping chose.
 
 **Log-mel spectrogram.** A time-frequency picture of audio: short-time Fourier magnitudes pooled into mel-spaced bands and converted to dB.
@@ -170,6 +180,8 @@
 
 **Onset strength.** A per-frame measure of how much spectral energy increases, i.e. how likely a note or hit starts; the input to tempo estimation.
 
+**Over-confidence.** Predicted confidence systematically higher than accuracy; shows up as reliability-diagram points below the diagonal and as spikes in cross-entropy on wrong predictions.
+
 **Overfitting.** Fitting the training data, noise included, better than the pattern generalises; seen as a large train-valid gap (kNN k=1: train macro-F1 1.0, valid 0.409).
 
 **Padding.** Adding a border (of zeros) around the input so a convolution's output keeps the input's size.
@@ -203,6 +215,8 @@
 **Receptive field.** The input region that one unit of a network layer depends on; 46 mel bins x 46 frames (about 1.07 s) for our last conv block.
 
 **Refit.** Retraining the selected hyperparameter setting after a search; we refit on train only (GridSearchCV refit=False) so valid stays held out.
+
+**Reliability diagram.** A plot of accuracy against mean confidence per confidence bin; a calibrated model lies on the diagonal.
 
 **ReLU.** Rectified linear unit, max(0, z): the non-linearity after each convolution; passes positive values, zeroes negative ones.
 
@@ -255,6 +269,8 @@
 **Support vector machine (SVM).** A maximum-margin classifier: minimises ||w||^2/2 plus C times the hinge losses; with a kernel it draws non-linear boundaries.
 
 **Support vector.** A training point with a non-zero dual multiplier: on or inside the margin, or misclassified. The SVM's decision function depends only on these points (2,113 of 4,420 windows in our best SVM).
+
+**Temperature scaling.** Dividing all logits by one learned number T before the softmax (T > 1 softens, T < 1 sharpens). It changes confidences but never which class has the highest score of a single window.
 
 **Test lock.** `load_split` refuses the test part unless allow_test=True and the git tag pre-test-freeze exists; ensures the test set is used once.
 

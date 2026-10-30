@@ -24,10 +24,14 @@ def load_clip(path: str, sr: int = SR) -> tuple[np.ndarray, bool]:
     return y.astype(np.float32), padded
 
 
-def windows(y: np.ndarray) -> np.ndarray:
-    """(661,500,) -> (10, 66,150) non-overlapping windows (a view, no copy)."""
+def windows(y: np.ndarray, n_windows: int = N_WINDOWS) -> np.ndarray:
+    """(661,500,) -> (n_windows, 661,500 / n_windows) non-overlapping windows (a view, no copy).
+
+    Default 10 windows of 3 s; the window-length ablation uses 30, 6 and 3 (1, 5, 10 s).
+    """
     assert y.size == N_CLIP, f"expected {N_CLIP} samples, got {y.size}"
-    return y.reshape(N_WINDOWS, N_WIN)
+    assert N_CLIP % n_windows == 0, f"{n_windows} windows do not divide the clip evenly"
+    return y.reshape(n_windows, N_CLIP // n_windows)
 
 
 def clip_tempo(y: np.ndarray, sr: int = SR) -> float:
@@ -42,6 +46,16 @@ def feature_names() -> list[str]:
     for base in ("chroma", "centroid", "bandwidth", "rolloff", "zcr", "rms", "harm_rms", "perc_rms"):
         names += [f"{base}_mean", f"{base}_var"]
     return names + ["tempo"]
+
+
+def feature_group(name: str, groups: dict[str, list[str]] = CFG["analysis"]["feature_groups"]) -> str:
+    """Group of one feature name: its stem (name minus _mean/_var, mfcc numbers dropped) looked up
+    in config analysis.feature_groups, e.g. 'mfcc7_var' -> 'mfcc', 'harm_rms_mean' -> 'hpss'."""
+    stem = name.removesuffix("_mean").removesuffix("_var").rstrip("0123456789")
+    matches = [g for g, stems in groups.items() if stem in stems]
+    if len(matches) != 1:
+        raise ValueError(f"feature {name!r} (stem {stem!r}) is in {len(matches)} groups")
+    return matches[0]
 
 
 def _mv(x: np.ndarray) -> list[float]:
@@ -77,13 +91,17 @@ def clip_mel(y: np.ndarray, sr: int = SR) -> np.ndarray:
     return librosa.power_to_db(S, ref=CFG["mel"]["ref"]).astype(np.float16)
 
 
+def clip_handcrafted(y: np.ndarray, window_counts: list[int]) -> dict[int, np.ndarray]:
+    """57 features per window for each window count (e.g. 10 -> 10 x 57), sharing one
+    clip-level HPSS and tempo between all of them."""
+    harmonic, percussive = librosa.effects.hpss(y)
+    tempo = clip_tempo(y)
+    return {n: np.stack([handcrafted_features(w, SR, tempo, h, p)
+                         for w, h, p in zip(windows(y, n), windows(harmonic, n), windows(percussive, n))])
+            for n in window_counts}
+
+
 def clip_features(path: str) -> tuple[np.ndarray, np.ndarray, bool]:
     """All features of one clip: (10 x 57 handcrafted, log-mel, padded)."""
     y, padded = load_clip(path)
-    harmonic, percussive = librosa.effects.hpss(y)
-    tempo = clip_tempo(y)
-    feats = np.stack([
-        handcrafted_features(w, SR, tempo, h, p)
-        for w, h, p in zip(windows(y), windows(harmonic), windows(percussive))
-    ])
-    return feats, clip_mel(y), padded
+    return clip_handcrafted(y, [N_WINDOWS])[N_WINDOWS], clip_mel(y), padded

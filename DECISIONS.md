@@ -466,3 +466,25 @@ the guard that reported diagnostics belong to the selected model).
 
 **Reason.** The lessons cite these as split C figures; running the protocol
 on A/B/B' would overwrite them. Other splits' grids are in their JSONs.
+
+## 2026-10-30: Keep 3 s windows and soft voting (after the validation analyses)
+
+**Decision.** The window length stays **3 s** (10 windows per clip) and the
+clip prediction stays the **soft vote** (mean of window probabilities), for
+every model.
+
+**Reason.** Window length (SVM with its 3 s-tuned params, split C valid,
+`results/val/analysis_window_length.json`): 1 s 0.435, 3 s 0.458, 5 s 0.477,
+10 s 0.449. The spread (0.042) is a handful of the 197 valid clips, the
+params were tuned at 3 s (favouring it), and 5 s would be chosen *after*
+seeing valid scores for a 0.019 gain, which is selection on noise; changing
+it would also change the CNN input and every tuned model. Voting
+(`analysis_voting.json`): soft minus majority is between -0.008 (CNN seed 2)
+and +0.013 (CNN seed 0) for every model, soft >= majority for 8 of 9
+results; soft voting uses each window's confidence and has no ties, and it
+was the rule fixed in advance (lesson 06).
+
+**Rejected.** 5 s windows (post-hoc, within noise, would invalidate all
+tuning); majority vote (never clearly better, discards confidence); per-model
+choice of window length or vote (more freedom to overfit valid, and models
+would no longer be compared on equal terms).

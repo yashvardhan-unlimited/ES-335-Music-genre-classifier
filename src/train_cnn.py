@@ -155,7 +155,7 @@ def run(split: str, seed: int, epochs: int, device: torch.device, refit_epochs: 
     stub = f"{split}_s{seed}"
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     weights = MODEL_DIR / f"cnn_{stub}{suffix}.pt"
-    torch.save({"state_dict": out["state"], "channels": CNN["channels"], "classes": list(GENRES),
+    torch.save({"state_dict": out["state"], "channels": CNN["channels"], "classes": [str(g) for g in GENRES],
                 "best_epoch": out["best_epoch"]}, weights)
     norm_path = RESULTS / f"mel_norm_{stub}{suffix}.json"
     mean, std = out["norm_stats"]

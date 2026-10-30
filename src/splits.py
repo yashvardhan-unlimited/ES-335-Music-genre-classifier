@@ -117,3 +117,19 @@ def load_split(name: str, part: str, seed: int = 0, allow_test: bool = False) ->
         raise PermissionError("test set locked until pre-test-freeze tag")
     df = pd.read_csv(split_file(name, seed))
     return df[df["part"] == part].reset_index(drop=True)
+
+
+def artist_groups(clip_ids: list[str]) -> pd.Series:
+    """Artist of each clip (index clip_id); a clip without an artist is its own group."""
+    meta = pd.read_csv(SPLITS / "metadata.csv").set_index("clip_id")
+    artist = meta.loc[list(clip_ids), "artist"]
+    return artist.where(artist.notna(), "__solo_" + artist.index.to_series())
+
+
+def sample_artists(clip_ids: list[str], fraction: float, seed: int) -> list[str]:
+    """Clips of a random round(fraction * n_groups) artist groups (see artist_groups), in input order."""
+    groups = artist_groups(clip_ids)
+    unique = np.sort(groups.unique())
+    rng = np.random.default_rng(seed)
+    keep = set(rng.choice(unique, size=max(1, round(fraction * len(unique))), replace=False))
+    return [c for c in clip_ids if groups[c] in keep]
