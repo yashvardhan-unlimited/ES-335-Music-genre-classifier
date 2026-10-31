@@ -213,9 +213,10 @@ over seeds, 0.610, not the 0.635 of the run we picked.
 8. **Reading "Prediction" as a promise.** The cut-off catches weak answers, not all
    wrong ones: `blues.00009` scores 87% and is still wrong. A high score on music
    unlike GTZAN proves even less, since 0.7 was only measured on GTZAN clips.
-9. **Testing a change against an old server.** `fileWatcherType = "none"` means a
-   running app keeps its old code. Stop it with Ctrl+C and start it again after any
-   change. Our first AAC browser test failed for exactly this reason.
+9. **Reloading the page instead of restarting.** With `fileWatcherType = "none"`, a
+   running app re-reads `app.py` but keeps `src/webapp.py` and its caches in memory.
+   After a change, new `app.py` meets old logic: that gave "could not be read as
+   audio" on a good AAC file, then `KeyError: 'unsure'`. Stop the app and start it again.
 
 ---
 

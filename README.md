@@ -50,6 +50,7 @@ Upload audio (WAV, MP3, FLAC, OGG, AAC, M4A), try sample clips, and browse the r
 Then open http://localhost:8501. It runs on this computer only and needs the trained CNN
 (`models/`), the log-mels (`features/mel/`) and GTZAN (`data/raw/`, for playing samples).
 The dashboard shows validation scores until the `pre-test-freeze` tag exists.
+After changing any code, stop the app and start it again: reloading the page is not enough.
 
 ## Repository layout
 ```
