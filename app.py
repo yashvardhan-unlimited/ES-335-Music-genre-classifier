@@ -78,10 +78,13 @@ def bars(data: pd.DataFrame, label: str, value: str, axis_title: str, labelled: 
 def show_prediction(result: dict, truth: str | None = None) -> None:
     """Top genre, runners-up, all ten scores, and what the numbers do and do not mean."""
     scores, clf = result["scores"], classifier()
-    st.subheader(f"Prediction: {scores.index[0]}")
+    st.subheader(f"Not sure: best guess {scores.index[0]}" if result["unsure"] else f"Prediction: {scores.index[0]}")
     top = ", ".join(f"{g} {s:.0%}" for g, s in scores.head(w.APP["top_k"]).items())
     st.write(f"Top {w.APP['top_k']}: {top}. {result['windows_agreeing']} of {result['n_windows']} windows "
              f"picked {scores.index[0]}.")
+    if result["unsure"]:
+        st.info(f"The top score is under {w.APP['min_confidence']:.0%}. On validation clips, answers this weak were "
+                "right less than half the time, so treat this as a guess.")
     if truth is not None:
         (st.success if truth == scores.index[0] else st.warning)(
             f"{'Correct' if truth == scores.index[0] else 'Wrong'}: GTZAN labels this clip {truth}.")

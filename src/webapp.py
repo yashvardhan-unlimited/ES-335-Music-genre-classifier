@@ -113,10 +113,12 @@ def classify_mel(clf: Classifier, mel: np.ndarray) -> np.ndarray:
 
 
 def summarise(window_probs: np.ndarray) -> dict:
-    """Soft vote: scores (genre -> mean probability, best first) and how many windows agree."""
+    """Soft vote: scores (genre -> mean probability, best first), window agreement, and whether the
+    top score is too weak to state as an answer."""
     scores = pd.Series(window_probs.mean(axis=0), index=GENRES).sort_values(ascending=False)
     agree = int((window_probs.argmax(axis=1) == GENRES.index(scores.index[0])).sum())
-    return {"scores": scores, "windows_agreeing": agree, "n_windows": len(window_probs)}
+    return {"scores": scores, "windows_agreeing": agree, "n_windows": len(window_probs),
+            "unsure": bool(scores.iloc[0] < APP["min_confidence"])}
 
 
 def classify_audio(clf: Classifier, source: str | Path | BinaryIO) -> dict:

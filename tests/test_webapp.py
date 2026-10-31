@@ -100,6 +100,25 @@ def test_summarise_is_a_soft_vote_not_a_majority():
     assert out["scores"].iloc[0] == pytest.approx(0.6)
 
 
+@pytest.mark.parametrize("top,unsure", [(0.27, True), (0.69, True), (0.7, False), (0.95, False)])
+def test_summarise_is_unsure_below_the_cutoff(monkeypatch, top, unsure):
+    monkeypatch.setitem(w.APP, "min_confidence", 0.7)
+    probs = np.full((1, 10), (1 - top) / 9, dtype=np.float64)
+    probs[0, 0] = top
+    assert w.summarise(probs)["unsure"] is unsure
+
+
+@needs_model
+@needs_mels
+def test_unsure_cutoff_separates_weak_answers_on_valid():
+    clf = w.load_classifier()
+    clips = load_split("C", "valid").drop_duplicates("clip_id")
+    results = [w.classify_sample(clf, c.clip_id) for c in clips.itertuples()]
+    right = np.array([r["scores"].index[0] == g for r, g in zip(results, clips["genre"])])
+    unsure = np.array([r["unsure"] for r in results])
+    assert right[unsure].mean() < 0.5 < 0.8 < right[~unsure].mean()  # the wording in app.py relies on this
+
+
 @pytest.mark.parametrize("model", ["dummy_stratified", "cnn"])
 def test_load_results_scores_match_their_files(model):
     r = w.load_results()
@@ -197,6 +216,6 @@ def test_app_runs_sample_and_results_tabs_without_errors():
     assert not at.exception
 
     at.file_uploader[0].set_value(("tone.wav", audio_bytes(4).getvalue(), "audio/wav")).run()
-    assert not at.exception and any(s.value.startswith("Prediction: ") for s in at.subheader)
+    assert not at.exception and any(s.value.startswith(("Prediction: ", "Not sure: ")) for s in at.subheader)
     at.file_uploader[0].set_value(("bad.wav", b"this is not audio" * 100, "audio/wav")).run()
     assert not at.exception and any("could not be read" in e.value for e in at.error)

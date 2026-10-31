@@ -537,3 +537,24 @@ scores still describe WAV input only.
 every machine, and audioread cannot read in-memory uploads. `imageio-ffmpeg`: a
 separate binary and temp files for each upload. Decoding every format with PyAV:
 would move the evaluated formats off their measured path.
+
+## 2026-10-31: "Not sure" under a top score of 0.7
+
+**Decision.** When the soft-vote top score is below `app.min_confidence` (0.7), the
+web app heads the result "Not sure: best guess <genre>" with a short explanation,
+and still draws the chart. The predicted genre itself does not change.
+
+**Reason.** A real upload scored country at 27%, and stating that flatly overclaims.
+Chosen on C valid only, 197 clips, served run: accuracy is about 0.43 in every band
+from 0.4 to 0.7, then about 0.85 above it. Under 0.7: 103 clips, accuracy 0.427. At
+0.7 or more: 94 clips, accuracy 0.883. Seeds 0 and 1 agree (0.466 and 0.360 below,
+0.875 and 0.815 above). This is display only, so macro-F1 and the protocol are
+unaffected. `tests/test_webapp.py` guards the claim in the app's wording. Cost: 52%
+of valid clips show "Not sure". Scores above 0.7 can still be wrong (`blues.00009`,
+87%), and 0.7 is unmeasured on music outside GTZAN.
+
+**Rejected.** A cut-off of 0.5: states a genre on clips between 0.5 and 0.7, where
+accuracy is under 0.5. Window agreement: accuracy does not rise steadily with it.
+Quoting the measured accuracies in the app: they would be hand-copied numbers that
+go stale, so the wording says "less than half" and a test checks it. Temperature
+scaling first: it worsened calibration on this run (lesson 11).

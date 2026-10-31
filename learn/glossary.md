@@ -260,6 +260,8 @@
 
 **Selection score.** The score a tuning procedure maximises to choose hyperparameters. It only needs to rank settings in the right order; leakage that biases settings unequally changes that order.
 
+**Selective prediction.** Letting a classifier hold back an answer when its confidence is low, trading coverage for accuracy on what it does answer. The web app says "Not sure" under a top score of 0.7.
+
 **Slack variable.** xi_i >= 0 in the soft-margin SVM: how far training point i violates the margin. Their sum, multiplied by C, is added to the objective.
 
 **Soft margin.** An SVM that allows margin violations at a cost C per unit of slack, so it works on overlapping classes. Small C tolerates violations (simpler boundary), large C punishes them (closer fit).
