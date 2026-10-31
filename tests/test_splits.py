@@ -109,5 +109,5 @@ def test_credit_clusters_are_what_the_bootstrap_needs_on_C():
     train = set(c.loc[c["split_C"] == "train", "cluster"].dropna())
     test = c[c["split_C"] == "test"]
     assert credit_clusters(META["artist"]).nunique() == 294 and META["artist"].nunique() == 321
-    assert test["cluster"].isin(train).sum() == 25 and test["artist"].isin(set(c.loc[c["split_C"] == "train", "artist"])).sum() == 22
+    assert test["cluster"].isin(train).sum() == 25 and test["artist"].isin(set(c.loc[c["split_C"] == "train", "artist"].dropna())).sum() == 22
     assert test["cluster"].nunique() == 113

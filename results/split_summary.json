@@ -52,7 +52,8 @@
     "test_clips_with_identical_file_in_train": 1,
     "test_clips_missing_artist": 13,
     "test_clips_artist_in_train": 959,
-    "share_test_clips_artist_in_train": 0.9846
+    "share_test_clips_artist_in_train": 0.9846,
+    "test_clips_credit_cluster_in_train": 959
   },
   "B_seed0": {
     "windows_per_part": {
@@ -107,7 +108,8 @@
     "test_clips_with_identical_file_in_train": 5,
     "test_clips_missing_artist": 6,
     "test_clips_artist_in_train": 211,
-    "share_test_clips_artist_in_train": 0.7276
+    "share_test_clips_artist_in_train": 0.7276,
+    "test_clips_credit_cluster_in_train": 223
   },
   "Bp_seed0": {
     "windows_per_part": {
@@ -162,7 +164,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 4,
     "test_clips_artist_in_train": 201,
-    "share_test_clips_artist_in_train": 0.6931
+    "share_test_clips_artist_in_train": 0.6931,
+    "test_clips_credit_cluster_in_train": 207
   },
   "B_seed1": {
     "windows_per_part": {
@@ -217,7 +220,8 @@
     "test_clips_with_identical_file_in_train": 3,
     "test_clips_missing_artist": 5,
     "test_clips_artist_in_train": 212,
-    "share_test_clips_artist_in_train": 0.731
+    "share_test_clips_artist_in_train": 0.731,
+    "test_clips_credit_cluster_in_train": 215
   },
   "Bp_seed1": {
     "windows_per_part": {
@@ -272,7 +276,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 2,
     "test_clips_artist_in_train": 207,
-    "share_test_clips_artist_in_train": 0.7138
+    "share_test_clips_artist_in_train": 0.7138,
+    "test_clips_credit_cluster_in_train": 220
   },
   "B_seed2": {
     "windows_per_part": {
@@ -327,7 +332,8 @@
     "test_clips_with_identical_file_in_train": 2,
     "test_clips_missing_artist": 3,
     "test_clips_artist_in_train": 200,
-    "share_test_clips_artist_in_train": 0.6897
+    "share_test_clips_artist_in_train": 0.6897,
+    "test_clips_credit_cluster_in_train": 205
   },
   "Bp_seed2": {
     "windows_per_part": {
@@ -382,7 +388,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 2,
     "test_clips_artist_in_train": 198,
-    "share_test_clips_artist_in_train": 0.6828
+    "share_test_clips_artist_in_train": 0.6828,
+    "test_clips_credit_cluster_in_train": 211
   },
   "B_seed3": {
     "windows_per_part": {
@@ -437,7 +444,8 @@
     "test_clips_with_identical_file_in_train": 4,
     "test_clips_missing_artist": 2,
     "test_clips_artist_in_train": 219,
-    "share_test_clips_artist_in_train": 0.7552
+    "share_test_clips_artist_in_train": 0.7552,
+    "test_clips_credit_cluster_in_train": 226
   },
   "Bp_seed3": {
     "windows_per_part": {
@@ -492,7 +500,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 2,
     "test_clips_artist_in_train": 211,
-    "share_test_clips_artist_in_train": 0.7276
+    "share_test_clips_artist_in_train": 0.7276,
+    "test_clips_credit_cluster_in_train": 220
   },
   "B_seed4": {
     "windows_per_part": {
@@ -547,7 +556,8 @@
     "test_clips_with_identical_file_in_train": 4,
     "test_clips_missing_artist": 2,
     "test_clips_artist_in_train": 204,
-    "share_test_clips_artist_in_train": 0.7034
+    "share_test_clips_artist_in_train": 0.7034,
+    "test_clips_credit_cluster_in_train": 217
   },
   "Bp_seed4": {
     "windows_per_part": {
@@ -602,7 +612,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 4,
     "test_clips_artist_in_train": 209,
-    "share_test_clips_artist_in_train": 0.7207
+    "share_test_clips_artist_in_train": 0.7207,
+    "test_clips_credit_cluster_in_train": 223
   },
   "C": {
     "windows_per_part": {
@@ -657,7 +668,8 @@
     "test_clips_with_identical_file_in_train": 0,
     "test_clips_missing_artist": 6,
     "test_clips_artist_in_train": 22,
-    "share_test_clips_artist_in_train": 0.0759
+    "share_test_clips_artist_in_train": 0.0759,
+    "test_clips_credit_cluster_in_train": 25
   },
   "C_artists_in_more_than_one_part": [
     "Anthrax",
