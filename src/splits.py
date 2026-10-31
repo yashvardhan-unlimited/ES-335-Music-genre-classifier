@@ -103,7 +103,10 @@ def make_split_C() -> pd.DataFrame:
 
 def is_test_unlocked() -> bool:
     """True only if the git tag pre-test-freeze exists."""
-    res = subprocess.run(["git", "tag", "-l", "pre-test-freeze"], capture_output=True, text=True)
+    try:
+        res = subprocess.run(["git", "tag", "-l", "pre-test-freeze"], capture_output=True, text=True)
+    except OSError:  # no git on this machine: stay locked
+        return False
     return res.returncode == 0 and res.stdout.strip() == "pre-test-freeze"
 
 
@@ -115,6 +118,8 @@ def load_split(name: str, part: str, seed: int = 0, allow_test: bool = False) ->
     """Rows (windows) of one part of split name in {A, B, Bp, C}. The test part is locked."""
     if part == "test" and not (allow_test and is_test_unlocked()):
         raise PermissionError("test set locked until pre-test-freeze tag")
+    if part not in (*PARTS, "unused"):
+        raise ValueError(f"unknown part {part!r}")
     df = pd.read_csv(split_file(name, seed))
     return df[df["part"] == part].reset_index(drop=True)
 

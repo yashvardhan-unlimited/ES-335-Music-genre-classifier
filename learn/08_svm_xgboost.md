@@ -619,53 +619,53 @@ With 54 rounds and one tree per class per round, the chosen model has
 
 ### `src/train_classical.py`
 
-- **L53–67 `valid_report`**: extracted from the old `tune_and_score` so
+- **L53–70 `valid_report`**: extracted from the old `tune_and_score` so
   that the SVM (through `GridSearchCV`) and XGBoost (through its own loop)
   are scored by **the same code**: soft-vote clip predictions, clip
   macro-F1 and accuracy, majority-vote F1, window accuracy, per-genre F1,
   confusion counts in config genre order.
-- **L70–94 `tune_and_score`**: unchanged logic: grid search on the
+- **L73–103 `tune_and_score`**: unchanged logic: grid search on the
   predefined train -> valid fold, refit the winner on train only with one
-  BLAS thread, assert that its valid F1 equals the grid-search score, then
-  `valid_report`.
-- **L97–132 `tune_xgb`**:
-  - L105–106: grid and fixed settings default to config; the test passes
+  BLAS thread, compare its valid F1 with the grid-search score (a mismatch
+  logs a warning), then `valid_report`.
+- **L106–141 `tune_xgb`**:
+  - L114–115: grid and fixed settings default to config; the test passes
     small ones.
-  - L107–110: genres become integer codes 0..9 **in config order**
+  - L116–119: genres become integer codes 0..9 **in config order**
     (`pd.Categorical(..., categories=GENRES).codes`); an unknown label would
     become -1, which the assert catches. `classes = np.array(GENRES)` maps
     probability column k back to genre k. If the encoding and decoding used
     different orders, every prediction would be silently mislabelled.
-  - L113–114: `itertools.product` over the grid values, in config order
+  - L122–123: `itertools.product` over the grid values, in config order
     (depth outer, learning rate inner), so "ties -> first" is well defined.
-  - L115–116: fit with `eval_set=[(train), (valid)]`. XGBoost records
+  - L124–125: fit with `eval_set=[(train), (valid)]`. XGBoost records
     mlogloss for both after every round and **early-stops on the last entry
     (valid)**. The train entry is only for the curve.
-  - L117–118: `predict_proba` on valid automatically uses only the trees up
+  - L126–127: `predict_proba` on valid automatically uses only the trees up
     to `best_iteration`; the probabilities go through `valid_report`.
-  - L119–122: one grid row per setting with `best_iteration`, best valid
+  - L128–131: one grid row per setting with `best_iteration`, best valid
     mlogloss and valid clip macro-F1; logged as it runs.
-  - L123–126: keep the setting with the highest clip macro-F1 (strict `>`,
+  - L132–135: keep the setting with the highest clip macro-F1 (strict `>`,
     so the first of any tie stays) and its loss curves.
-  - L128–129: warn if early stopping never triggered (cap reached).
-  - L130–132: JSON content, same keys as other models plus
+  - L137–138: warn if early stopping never triggered (cap reached).
+  - L139–141: JSON content, same keys as other models plus
     `best_iteration`, `n_trees`, `fixed_params`, `curve`.
   - No refit step: the model that produced the valid probabilities *is*
     the trained-on-train model.
-- **L167–204 `plot_svm_heatmap`**: L174–176 place `"scale"` at its numeric
-  value so columns are in true gamma order; L183 sets the colour range to
+- **L176–213 `plot_svm_heatmap`**: L183–185 place `"scale"` at its numeric
+  value so columns are in true gamma order; L192 sets the colour range to
   the grid's own range rounded out to 0.05 (with a 0 to 0.6 range every cell
-  looked the same blue); L189–193 mark the best cell with a bold label and
+  looked the same blue); L198–202 mark the best cell with a bold label and
   an orange frame. Sequential single-hue blue colour map, light = low.
-- **L207–233 `plot_xgb_curve`**: train and valid mlogloss per round,
+- **L216–242 `plot_xgb_curve`**: train and valid mlogloss per round,
   dashed line at the best round (`best_iteration + 1`, since rounds are
   counted from 1 on the x axis), direct line labels instead of a legend.
-- **L236–246 `summary_table`**: reads `results/val/{split}_s{seed}_{name}.json`
+- **L245–255 `summary_table`**: reads `results/val/{split}_s{seed}_{name}.json`
   for every model in `MODELS` plus `xgb`, so the printed table always
   covers all models that have results.
-- **L249 `main`**: L267 routes `xgb` to `tune_xgb` and every other model to
-  `tune_and_score`; L269–271 compute and store `gamma_scale_value` for the
-  SVM; L276–282 draw the figures for the models that ran.
+- **L258 `main`**: L276 routes `xgb` to `tune_xgb` and every other model to
+  `tune_and_score`; L278–280 compute and store `gamma_scale_value` for the
+  SVM; L285–291 draw the figures for the models that ran.
 
 ### `tests/test_models.py`
 

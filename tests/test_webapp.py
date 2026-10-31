@@ -35,13 +35,15 @@ def audio_bytes(seconds: float, fmt: str = "WAV", amp: float = 0.3) -> io.BytesI
     return buf
 
 
-def encoded_bytes(y: np.ndarray, fmt: str) -> io.BytesIO:
-    """Encode mono floats at SR as AAC, in raw ADTS ("adts") or an M4A container ("ipod")."""
+def encoded_bytes(y: np.ndarray, fmt: str = "adts", rate: int = SR) -> io.BytesIO:
+    """Encode (samples,) or (channels, samples) floats as AAC, in raw ADTS ("adts") or M4A ("ipod")."""
+    y = np.atleast_2d(y).astype(np.float32)
+    layout = {1: "mono", 2: "stereo", 6: "5.1"}[len(y)]
     buf = io.BytesIO()
     with av.open(buf, "w", format=fmt) as out:
-        stream = out.add_stream("aac", rate=SR, layout="mono")
-        frame = av.AudioFrame.from_ndarray(y[None].astype(np.float32), format="fltp", layout="mono")
-        frame.sample_rate = SR
+        stream = out.add_stream("aac", rate=rate, layout=layout)
+        frame = av.AudioFrame.from_ndarray(y, format="fltp", layout=layout)
+        frame.sample_rate = rate
         for packet in stream.encode(frame):
             out.mux(packet)
         for packet in stream.encode(None):
@@ -50,8 +52,12 @@ def encoded_bytes(y: np.ndarray, fmt: str) -> io.BytesIO:
     return buf
 
 
-def sine(seconds: float, amp: float = 0.3) -> np.ndarray:
-    return amp * np.sin(2 * np.pi * 440 * np.arange(int(seconds * SR)) / SR)
+def sine(seconds: float, amp: float = 0.3, rate: int = SR) -> np.ndarray:
+    return amp * np.sin(2 * np.pi * 440 * np.arange(int(seconds * rate)) / rate)
+
+
+def rms(y: np.ndarray) -> float:
+    return float(np.sqrt(np.mean(y ** 2)))
 
 
 @pytest.mark.parametrize("fmt", ["WAV", "FLAC", "OGG", "MP3"])
@@ -72,6 +78,44 @@ def test_load_audio_cuts_long_audio(monkeypatch):
     monkeypatch.setitem(w.APP, "max_seconds", 5)
     assert abs(w.load_audio(audio_bytes(8)).size / SR - 5) < 0.01
     assert abs(w.load_audio(encoded_bytes(sine(8), "adts")).size / SR - 5) < 0.01
+
+
+@pytest.mark.parametrize("fmt", ["adts", "ipod"])
+@pytest.mark.parametrize("channels", [2, 6])
+def test_aac_channels_are_averaged_like_librosa(fmt, channels):
+    # the CNN uses a fixed dB reference, so a level error is a skew against training
+    tone = sine(4, rate=44100)
+    y = w.load_audio(encoded_bytes(np.tile(tone, (channels, 1)), fmt, 44100))
+    live = 5 / 6 if channels == 6 else 1  # the encoder low-passes 5.1's LFE channel, removing this tone
+    assert rms(y) == pytest.approx(rms(tone) * live, rel=0.03)
+
+
+def test_aac_stream_that_changes_rate_or_channels_is_read():
+    mono = encoded_bytes(sine(4, rate=44100), rate=44100).getvalue()
+    other_rate = encoded_bytes(sine(4, rate=48000), rate=48000).getvalue()
+    stereo = encoded_bytes(np.tile(sine(4, rate=44100), (2, 1)), rate=44100).getvalue()
+    for data in (mono + other_rate, mono + stereo):
+        y = w.load_audio(io.BytesIO(data))
+        assert abs(y.size / SR - 8) < 0.3 and rms(y) == pytest.approx(0.3 / np.sqrt(2), rel=0.03)
+
+
+def test_aac_cut_off_or_damaged_keeps_what_decodes():
+    data = encoded_bytes(sine(6)).getvalue()
+    assert abs(w.load_audio(io.BytesIO(data[:int(len(data) * 0.7)])).size / SR - 4.2) < 0.3
+    damaged = bytearray(data)
+    damaged[len(data) // 2:len(data) // 2 + 200] = bytes(200)
+    assert w.load_audio(io.BytesIO(bytes(damaged))).size / SR > 4
+
+
+@pytest.mark.parametrize("bad", [np.inf, np.nan])
+def test_load_audio_rejects_non_finite_samples(bad):
+    y = sine(4).astype(np.float32)
+    y[1000] = bad
+    buf = io.BytesIO()
+    sf.write(buf, y, SR, format="WAV", subtype="FLOAT")
+    buf.seek(0)
+    with pytest.raises(ValueError, match="could not be read"):
+        w.load_audio(buf)
 
 
 @pytest.mark.parametrize("source,message", [(io.BytesIO(b"this is not audio" * 100), "could not be read"),
@@ -210,7 +254,7 @@ def test_app_runs_sample_and_results_tabs_without_errors():
     from streamlit.testing.v1 import AppTest
     at = AppTest.from_file(str(Path("app.py").resolve()), default_timeout=120).run()
     assert not at.exception
-    assert any(s.value.startswith("Prediction: ") for s in at.subheader)
+    assert any(s.value.startswith(("Prediction: ", "Not sure: ")) for s in at.subheader)
     assert any("validation" in i.value for i in at.info)            # scores are labelled as validation
     at.radio[0].set_value("Upload your own").run()
     assert not at.exception
@@ -219,3 +263,25 @@ def test_app_runs_sample_and_results_tabs_without_errors():
     assert not at.exception and any(s.value.startswith(("Prediction: ", "Not sure: ")) for s in at.subheader)
     at.file_uploader[0].set_value(("bad.wav", b"this is not audio" * 100, "audio/wav")).run()
     assert not at.exception and any("could not be read" in e.value for e in at.error)
+
+
+@needs_model
+@needs_mels
+@pytest.mark.parametrize("keep", ["cnn", "nothing"])
+def test_app_survives_unfinished_results(monkeypatch, keep):
+    from streamlit.testing.v1 import AppTest
+    import streamlit as st
+    results = w.load_results()
+    partial = results[results["model"] == keep].reset_index(drop=True)
+    monkeypatch.setattr(w, "load_results", lambda: partial)
+    st.cache_data.clear()
+    try:
+        at = AppTest.from_file(str(Path("app.py").resolve()), default_timeout=120).run()
+        assert not at.exception
+    finally:
+        st.cache_data.clear()
+
+
+def test_load_results_with_no_files_keeps_its_columns(tmp_path):
+    assert {"split", "seed", "model"} <= set(w.load_results(tmp_path).columns)
+    assert len(w.missing_runs(w.load_results(tmp_path))) > 0

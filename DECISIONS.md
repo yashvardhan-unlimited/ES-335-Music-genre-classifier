@@ -558,3 +558,24 @@ accuracy is under 0.5. Window agreement: accuracy does not rise steadily with it
 Quoting the measured accuracies in the app: they would be hand-copied numbers that
 go stale, so the wording says "less than half" and a test checks it. Temperature
 scaling first: it worsened calibration on this run (lesson 11).
+
+## 2026-10-31: Whole-code audit: AAC decoding follows librosa, tuning resumes
+
+**Decision.** `decode_with_av` now only decodes: it averages channels and resamples
+with `librosa.resample`, as `librosa.load` does, and it skips damaged packets. This
+replaces the FFmpeg mono downmix in the entry "AAC and M4A uploads through PyAV".
+`tune_all.sh` skips runs that have a result file. The test lock stays shut when git is
+missing, and `load_split` rejects unknown parts.
+
+**Reason.** FFmpeg's float downmix made stereo AAC 2.98 dB louder and 5.1 AAC 10.64 dB
+louder than librosa's average, and the CNN uses a fixed dB reference, so this was a
+training-serving skew. The earlier check missed it because its clips were mono. Now,
+on 30 valid clips, stereo AAC and M4A each keep the same top genre on 30 of 30, with a
+largest score change of 0.030. Stored scores never used this path and are unchanged.
+
+**Rejected.** Per-clip loudness normalisation: a change to the model's input, which
+needs retraining. Replacing `SVC(probability=True)` now: it would change stored SVM
+probabilities, and it is safe on the pinned sklearn 1.9.1. A hash of settings in each
+result file, so that resuming notices changed grids: more machinery than one project
+needs, so the script's header says to delete old files instead.
+

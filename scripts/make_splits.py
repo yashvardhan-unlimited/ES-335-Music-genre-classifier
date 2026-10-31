@@ -61,7 +61,7 @@ def main() -> None:
     summary = {name: summarise(win, meta, cfg["genres"]) for name, win in splits.items()}
     summary["C_artists_in_more_than_one_part"] = crossing
     out = Path(cfg["paths"]["results"]) / "split_summary.json"
-    out.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    out.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     for name, s in summary.items():
         if isinstance(s, dict):
             log.info("%-9s clips %s  test clips also in train %3d  identical file in train %d  "

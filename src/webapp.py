@@ -28,6 +28,8 @@ VAL_DIR = RESULTS / "val"
 MODEL_NAMES = {"cnn": "CNN (log-mel)", "svm": "RBF SVM", "logreg": "Logistic regression", "xgb": "XGBoost",
                "knn": "kNN", "dummy_stratified": "Dummy (stratified)", "dummy_most_frequent": "Dummy (most frequent)"}
 SPLIT_SEEDS = {"A": [0], "B": CFG["split_seeds"], "Bp": CFG["split_seeds"], "C": [0]}
+RESULT_COLUMNS = ["split", "seed", "model", "macro_f1", "majority_macro_f1", "accuracy", "window_accuracy",
+                  "per_genre_f1", "confusion"]
 RESULT_FILE = re.compile(rf"({'|'.join(SPLIT_SEEDS)})_s(\d+)_({'|'.join(MODEL_NAMES)})\.json")
 
 
@@ -59,20 +61,36 @@ def load_classifier(split: str = APP["split"]) -> Classifier:
 
 
 def decode_with_av(source: str | Path | BinaryIO) -> np.ndarray:
-    """AAC and M4A, which librosa's backends cannot read: mono at the project rate, cut likewise."""
+    """AAC and M4A, which librosa's backends cannot read, processed as librosa.load would.
+
+    Channels are averaged and resampling is librosa's, because FFmpeg's own mono downmix is louder
+    and the CNN uses a fixed dB reference. A stream can change rate or channels midway, so each run
+    is kept apart. Damaged packets are skipped, as players do; ValueError if nothing decodes.
+    """
     if hasattr(source, "seek"):
         source.seek(0)  # librosa has already read from it
-    limit = SR * APP["max_seconds"]
-    resampler = av.AudioResampler(format="flt", layout="mono", rate=SR)
-    chunks, kept = [], 0
+    runs, key, resampler, seconds = [], None, None, 0.0
     with av.open(str(source) if isinstance(source, Path) else source) as container:
-        for frame in container.decode(audio=0):
-            for out in resampler.resample(frame):
-                chunks.append(out.to_ndarray().ravel())
-                kept += chunks[-1].size
-            if kept >= limit:  # a small upload can hold hours of low-bitrate audio
-                break
-    return np.concatenate(chunks)[:limit]
+        try:
+            for packet in container.demux(container.streams.audio[0]):
+                try:
+                    frames = packet.decode()
+                except av.error.InvalidDataError:
+                    continue
+                for frame in frames:
+                    if key != (frame.sample_rate, frame.layout.name):
+                        key = (frame.sample_rate, frame.layout.name)
+                        resampler = av.AudioResampler(format="fltp", layout=key[1], rate=key[0])  # format only
+                        runs.append((key[0], []))
+                    for out in resampler.resample(frame):
+                        runs[-1][1].append(out.to_ndarray().mean(axis=0))
+                        seconds += out.samples / key[0]
+                if seconds >= APP["max_seconds"]:  # a small upload can hold hours of low-bitrate audio
+                    break
+        except av.error.InvalidDataError:  # a damaged tail: keep what was decoded
+            pass
+    parts = [librosa.resample(np.concatenate(c), orig_sr=rate, target_sr=SR, res_type="soxr_hq") for rate, c in runs]
+    return np.concatenate(parts)[:SR * APP["max_seconds"]]
 
 
 def decode(source: str | Path | BinaryIO) -> np.ndarray:
@@ -87,7 +105,7 @@ def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
     """Decode a file or file-like object to mono at the project rate, cut at app.max_seconds.
 
     Uploads are untrusted input: raises ValueError with a readable message for anything we cannot
-    classify (not audio, under one 3 s window, silent).
+    classify (not audio, non-finite samples, under one 3 s window, silent).
     """
     try:
         y = decode(source)
@@ -95,7 +113,7 @@ def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
         raise ValueError("This file could not be read as audio.") from e
     if y.size < N_WIN:
         raise ValueError(f"This audio is too short: at least {N_WIN / SR:.0f} seconds are needed.")
-    if not np.abs(y).max() > 0:  # False for all zeros and for NaN
+    if not y.any():
         raise ValueError("This audio is silent, so there is nothing to classify.")
     return y
 
@@ -150,7 +168,7 @@ def load_results(val_dir: Path = VAL_DIR) -> pd.DataFrame:
                          "majority_macro_f1": r["valid_macro_f1_majority"], "accuracy": r["valid_accuracy"],
                          "window_accuracy": r["window_accuracy"], "per_genre_f1": r["per_genre_f1"],
                          "confusion": r["confusion"]["counts"]})
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=RESULT_COLUMNS)
 
 
 def missing_runs(results: pd.DataFrame) -> list[str]:

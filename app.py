@@ -4,13 +4,16 @@ Run from repo root: .venv/Scripts/python.exe -m streamlit run app.py
 Logic lives in src/webapp.py. Only validation scores exist until the pre-test-freeze tag.
 """
 import io
+import os
+from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
-from src import webapp as w
-from src.splits import is_test_unlocked
+os.chdir(Path(__file__).resolve().parent)  # config.yaml and every path in it are relative to the repo root
+from src import webapp as w  # noqa: E402
+from src.splits import is_test_unlocked  # noqa: E402
 
 BLUE, GREY, INK, GRID = "#2a78d6", "#8a8984", "#52514e", "#e4e3df"
 BLUES = ["#e9f2fd", "#86b6ef", "#3987e5", "#1c5cab", "#0d366b"]     # sequential, light to dark
@@ -35,7 +38,7 @@ def classifier() -> w.Classifier:
     return w.load_classifier()
 
 
-@st.cache_data
+@st.cache_data(ttl=60)  # runs finishing in the background appear without a restart
 def results() -> pd.DataFrame:
     return w.load_results()
 
@@ -106,7 +109,8 @@ def classify_tab() -> None:
         names = {f"{c.genre}: {c.clip_id}": c for c in clips.itertuples()}
         with left:
             clip = names[st.selectbox("Sample clip", list(names))]
-            st.audio(clip.path)
+            if Path(clip.path).exists():
+                st.audio(clip.path)
             st.caption("Random clips from the validation part. The model never trained on them, "
                        "though validation chose when training stopped. No test clips are used.")
         with right:
@@ -129,15 +133,17 @@ def classify_tab() -> None:
 
 
 def overview(table: pd.DataFrame, res: pd.DataFrame) -> None:
-    best, floor = table.iloc[0], table.loc["dummy_stratified", "macro_f1"]
-    trained = table.drop(["dummy_stratified", "dummy_most_frequent"]).index
+    best = table.iloc[0]
+    trained = table.index[~table.index.str.startswith("dummy")]
     c = w.ladder(res).set_index(["model", "split"])["mean"]
-    drop = (c.xs("A", level="split") - c.xs("C", level="split")).reindex(trained)
+    drop = (c.xs("A", level="split") - c.xs("C", level="split")).reindex(trained).dropna()
     a, b, d, e = st.columns(4)
     a.metric(f"Best macro-F1 ({w.MODEL_NAMES[best.name]})", f"{best['macro_f1']:.3f}")
     b.metric("Its accuracy", f"{best['accuracy']:.3f}")
-    d.metric("Random-guess floor", f"{floor:.3f}")
-    e.metric(f"Leakage drop, A to C ({w.MODEL_NAMES[drop.idxmax()]})", f"{drop.max():.3f}")
+    if "dummy_stratified" in table.index:
+        d.metric("Random-guess floor", f"{table.loc['dummy_stratified', 'macro_f1']:.3f}")
+    if len(drop):
+        e.metric(f"Leakage drop, A to C ({w.MODEL_NAMES[drop.idxmax()]})", f"{drop.max():.3f}")
 
 
 def models_section(table: pd.DataFrame) -> None:
@@ -179,7 +185,7 @@ def ladder_section(res: pd.DataFrame) -> None:
 
 def genre_section(res: pd.DataFrame) -> None:
     st.subheader("Per genre on split C")
-    labels = {w.MODEL_NAMES[m]: m for m in LINE_COLORS}
+    labels = {w.MODEL_NAMES[m]: m for m in LINE_COLORS if m in set(res.loc[res["split"] == w.APP["split"], "model"])}
     model = labels[st.selectbox("Model", list(labels))]
     left, right = st.columns(2, gap="large")
     with left:
@@ -215,6 +221,9 @@ def results_tab() -> None:
         st.warning(f"The validation protocol is unfinished: {len(missing)} runs are missing "
                    f"({', '.join(missing)}), so those cells are blank.")
     table = w.model_table(res)
+    if table.empty:
+        st.warning(f"No results for split {w.APP['split']} yet, so there is nothing to show.")
+        return
     overview(table, res)
     models_section(table)
     ladder_section(res)
@@ -230,11 +239,10 @@ def results_tab() -> None:
 st.title("GTZAN genre classifier")
 try:
     classifier()
+    classify, dashboard = st.tabs(["Classify", "Results"])
+    with classify:
+        classify_tab()
+    with dashboard:
+        results_tab()
 except FileNotFoundError as e:
-    st.error(f"Trained model not found ({e.filename}). Run the CNN training first.")
-    st.stop()
-classify, dashboard = st.tabs(["Classify", "Results"])
-with classify:
-    classify_tab()
-with dashboard:
-    results_tab()
+    st.error(f"A required file is missing: {e.filename}. See the Web app section of the README.")

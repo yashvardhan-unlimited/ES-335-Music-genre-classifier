@@ -341,37 +341,37 @@ over-confident window. Which wins is an empirical question.
 
 ### `src/splits.py`
 
-- **L122–126 `artist_groups`**, **L129–135 `sample_artists`**: draw
+- **L127–131 `artist_groups`**, **L134–140 `sample_artists`**: draw
   `round(fraction x n_groups)` groups with `np.random.default_rng(seed)` from
   the sorted group list (so the draw does not depend on clip order), return
   their clips in input order.
 
 ### `scripts/analysis_val.py`
 
-- **L64–68 `svm_probs`**: the tuned SVM refit on the given rows with one BLAS
+- **L65–69 `svm_probs`**: the tuned SVM refit on the given rows with one BLAS
   thread, as in tuning.
-- **L91–106 `extract_ablation`**: runs `clip_handcrafted` for all four window
+- **L92–107 `extract_ablation`**: runs `clip_handcrafted` for all four window
   counts in parallel over the 639 train+valid clips (no test clips) and
   saves one array plus index per length; skipped if already present.
-- **L117–159 `part_window_length`**: checks the 3 s ablation features against
+- **L118–160 `part_window_length`**: checks the 3 s ablation features against
   the main features, then fits and scores the SVM per length.
-- **L164–175 `cnn_valid_logits`, `window_labels`**: CNN logits on the 10 fixed
+- **L165–171 `cnn_valid_logits`, `window_labels`**: CNN logits on the 10 fixed
   windows of every valid clip, and the matching per-window labels.
-- **L178–228 `part_learning_curves`**: for each fraction and repeat (seed
+- **L179–229 `part_learning_curves`**: for each fraction and repeat (seed
   42 + repeat): sample artists; SVM on their windows; CNN via
   `train_cnn.fit(..., valid=None, epochs=13)` (normalisation stats from the
   subset), then valid logits and `valid_report`.
-- **L232–264 `part_feature_groups`**: full SVM, then one refit per dropped
+- **L233–265 `part_feature_groups`**: full SVM, then one refit per dropped
   group.
-- **L268–277 `calibration_entry`**: ECE and reliability tables at window and
+- **L269–278 `calibration_entry`**: ECE and reliability tables at window and
   clip level, and clip macro-F1.
-- **L280–291 `cross_fit_temperature`**: two halves of valid artists; $T$ from
+- **L281–292 `cross_fit_temperature`**: two halves of valid artists; $T$ from
   one half applied to the other.
-- **L294–352 `part_calibration`**: SVM and XGBoost refit exactly as tuned
+- **L295–353 `part_calibration`**: SVM and XGBoost refit exactly as tuned
   (asserts the XGBoost refit reproduces its valid score), CNN checkpoints of
   the three seeds (asserts each reproduces its valid score), temperature
   in-sample and cross-fitted.
-- **L356–384 `part_voting`**: reads `valid_macro_f1` and
+- **L357–385 `part_voting`**: reads `valid_macro_f1` and
   `valid_macro_f1_majority` from every model's result file.
 
 ---

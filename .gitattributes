@@ -1,0 +1,4 @@
+* text=auto
+# scripts and the Makefile must keep LF on Windows too: bash in WSL fails on CRLF
+*.sh text eol=lf
+Makefile text eol=lf

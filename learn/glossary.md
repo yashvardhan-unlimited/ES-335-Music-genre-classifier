@@ -80,6 +80,8 @@
 
 **Distribution shift.** The data seen in use differs from the training data, for example modern loud masters against GTZAN's older recordings. Measured scores may then no longer hold.
 
+**Downmix.** Reducing several audio channels to fewer. Averaging keeps the level of a sound common to both channels; FFmpeg's float downmix adds them at about 0.707 each, which is 3 dB louder for stereo.
+
 **Dropout.** During training, setting each unit to zero with probability p (0.3 here) and scaling the rest by 1/(1-p), so the network cannot rely on any single unit. Off at evaluation.
 
 **Dual problem.** The SVM optimisation rewritten in terms of one multiplier alpha_i per training point, bounded by 0 and C. Data enter it only through dot products, which is what makes the kernel trick possible.
@@ -95,6 +97,8 @@
 **Expected calibration error (ECE).** The bin-share-weighted mean gap between accuracy and mean confidence over confidence bins (10 equal-width bins here). 0 means perfectly calibrated; CNN seed 1 drops from 0.196 to 0.038 per window after temperature scaling.
 
 **F1 score.** Harmonic mean of precision and recall for one class: 2PR / (P + R).
+
+**Fail closed.** When a check cannot decide, it gives the safe answer. The test lock returns locked if git is missing.
 
 **Family-wise error rate.** The probability of at least one false positive among several tests; 1 - (1 - 0.05)^m for m independent tests at the 5% level, 0.56 for m = 16.
 
@@ -238,6 +242,8 @@
 
 **Refit.** Retraining the selected hyperparameter setting after a search; we refit on train only (GridSearchCV refit=False) so valid stays held out.
 
+**Regression test.** A test that reproduces a fixed bug, so it fails if the bug returns. It is written before the fix, to prove that it can fail.
+
 **Reliability diagram.** A plot of accuracy against mean confidence per confidence bin; a calibrated model lies on the diagonal.
 
 **ReLU.** Rectified linear unit, max(0, z): the non-linearity after each convolution; passes positive values, zeroes negative ones.
@@ -245,6 +251,8 @@
 **Reported score.** The number a procedure itself produces as its estimate of performance (e.g. GridSearchCV's best_score_). In lesson 09 it is compared with the true valid score of the chosen setting.
 
 **Reproducibility.** Another person obtaining the same results from the same code, data and settings.
+
+**Resumable pipeline.** A pipeline that skips work whose output already exists, so a stopped run loses only the step in progress.
 
 **RMS.** Root-mean-square of the samples; a measure of average signal level (loudness), reported in dBFS as `rms_db`.
 

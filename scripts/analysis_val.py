@@ -40,8 +40,9 @@ from src.utils import get_logger, load_config, set_seed  # noqa: E402
 CFG = load_config()
 A = CFG["analysis"]
 GENRES = np.array(CFG["genres"])
-VAL_DIR = Path(CFG["paths"]["results"]) / "val"
-FIG_DIR = Path(CFG["paths"]["results"]) / "figures"
+RESULTS = Path(CFG["paths"]["results"])
+VAL_DIR = RESULTS / "val"
+FIG_DIR = RESULTS / "figures"
 ABL_DIR = Path(CFG["paths"]["features"]) / "ablation"
 MODEL_DIR = Path(CFG["paths"]["models"])
 COLORS = {"svm": "#2a78d6", "xgb": "#eb6834", "cnn": "#1baf7a", "logreg": "#eda100"}
@@ -311,7 +312,7 @@ def part_calibration() -> dict:
     device = pick_device("auto")
     for s in CFG["cnn"]["seeds"]:
         ck = torch.load(MODEL_DIR / f"cnn_C_s{s}.pt", map_location=device)
-        norm = json.loads(Path(f"results/mel_norm_C_s{s}.json").read_text())
+        norm = json.loads((RESULTS / f"mel_norm_C_s{s}.json").read_text())
         logits = cnn_valid_logits(ck["state_dict"], (np.array(norm["mean"]), np.array(norm["std"])), valid, device)
         before = calibration_entry(softmax_t(logits), y_win)
         assert np.isclose(before["clip_macro_f1"], load_json(f"C_s{s}_cnn.json")["valid_macro_f1"]), "cnn differs"

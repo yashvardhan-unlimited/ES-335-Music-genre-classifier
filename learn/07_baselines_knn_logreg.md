@@ -340,7 +340,7 @@ which is exactly why the clip is the unit of prediction.
 
 ### `src/models.py`
 
-- **L20–27 `dummy_most_frequent`, `dummy_stratified`**: thin wrappers;
+- **L20–22 `dummy_most_frequent`, `dummy_stratified`**: thin wrappers;
   stratified takes `random_state` from config seed (42) so its random draws
   are reproducible.
 - **L30–31 `_scaled`**: the single place where `StandardScaler` is chained
@@ -360,39 +360,41 @@ which is exactly why the clip is the unit of prediction.
 
 ### `src/train_classical.py`
 
-- **L31–41 `load_windows`**:
-  - L34: `index.csv` row numbers become a `row` column, since row *i* of
+- **L34–44 `load_windows`**:
+  - L37: `index.csv` row numbers become a `row` column, since row *i* of
     `index.csv` is row *i* of `handcrafted.npy`.
-  - L36–37: `load_split` returns this part's windows. It raises
+  - L39–40: `load_split` returns this part's windows. It raises
     `PermissionError` for `test` unless the `pre-test-freeze` tag exists, so
     the test lock covers this loader too. `merge(..., validate="1:1")` fails
     loudly if a window appears twice.
-  - L38: every split row must have features.
-  - L39–40: the feature matrix is indexed by `clip_id`. `ClipMacroF1Scorer`
+  - L41: every split row must have features.
+  - L42–43: the feature matrix is indexed by `clip_id`. `ClipMacroF1Scorer`
     reads clip ids from `X.index`, and sklearn keeps a DataFrame's index when
     it slices rows inside `GridSearchCV`.
-- **L44–47 `param_grid`**: turns `{n_neighbors: [...]}` from config into
+- **L47–50 `param_grid`**: turns `{n_neighbors: [...]}` from config into
   `{clf__n_neighbors: [...]}`. Dummies get `{}`, which `GridSearchCV` treats
   as a single candidate.
-- **L50–84 `tune_and_score`**:
-  - L53–55: stack train then valid. The predefined split marks train rows
+- **L73–103 `tune_and_score`**:
+  - L76–78: stack train then valid. The predefined split marks train rows
     `-1` (always trained on) and valid rows `0` (the one test fold).
-  - L56–58: grid search; every candidate is fit on the 4,420 train windows
+  - L79–81: grid search; every candidate is fit on the 4,420 train windows
     and scored by clip macro-F1 on the 197 valid clips. `n_jobs=-1` runs
     candidates in parallel.
-  - L60: `rank_test_score == 1` may hold for several candidates; `argmin`
+  - L83: `rank_test_score == 1` may hold for several candidates; `argmin`
     takes the first in grid order.
-  - L64–65: refit the winner on train only, with one BLAS thread (Section 3).
-  - L66–71: window probabilities → soft-vote clip predictions → clip scores
-    with labels fixed to the 10 genres in config order.
-  - L72: **self-check**: the refit model's valid macro-F1 must equal the
-    grid search's score for the same setting. If they differed, the
-    reported diagnostics would not belong to the selected model.
-  - L73–84: the JSON content; majority-vote F1 and window accuracy are
+  - L87–88: refit the winner on train only, with one BLAS thread (Section 3).
+  - L89: window probabilities → soft-vote clip predictions → clip scores
+    with labels fixed to the 10 genres in config order (`valid_report`).
+  - L90–95: **self-check**: the refit model's valid macro-F1 is compared with
+    the grid search's score for the same setting. A mismatch logs a warning
+    rather than stopping the run: on splits A and B, GTZAN's exact-duplicate
+    files give kNN equal-distance ties that a grid worker can break
+    differently. The reported numbers are the refit model's; both are kept.
+  - L96–103: the JSON content; majority-vote F1 and window accuracy are
     diagnostics only.
-- **L87 `plot_knn_k`**: one line per weighting, log-scaled k axis, y from 0 so
+- **L144 `plot_knn_k`**: one line per weighting, log-scaled k axis, y from 0 so
   small differences are not blown up, dashed stratified-dummy floor.
-- **L119 `main`**: parses the CLI, expands `dummy`, seeds, loads the two parts
+- **L258 `main`**: parses the CLI, expands `dummy`, seeds, loads the two parts
   once, loops over models, writes JSONs, plots, prints the table.
 
 ### `tests/test_models.py`
@@ -556,8 +558,8 @@ generalisation.
 **Q9. What if you used `refit=True`?**
 GridSearchCV would retrain the best setting on train+valid. Any "valid"
 score computed from that model would be on data it trained on. We keep
-`refit=False` and refit on train only, then assert that the refit score
-equals the grid score.
+`refit=False` and refit on train only, then compare the refit score with
+the grid score and log a warning if they differ.
 
 **Q10. Logreg beats kNN by 0.044. Can you claim logistic regression is
 better?**

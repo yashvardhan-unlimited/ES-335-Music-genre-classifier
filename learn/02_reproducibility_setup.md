@@ -116,8 +116,9 @@ which setting changed between two results.
 
 A Makefile names each stage and the command that runs it, so "how do I
 reproduce this?" has a one-line answer: `make all`. Each target (`data`,
-`splits`, `features`, `tune`, `cnn`, `analysis`, `export`, `site`) currently
-prints "not yet implemented" and will call its script as later steps add them.
+`splits`, `features`, `tune`, `analysis`, `export`, `site`) calls its script;
+`export` and `site` still print "not yet implemented" until those scripts exist.
+`make` is not installed by default on Windows: the README lists the same commands.
 `test` (evaluate on the test set) is deliberately not part of `all`; it runs
 once, after the `pre-test-freeze` tag. `tests` runs pytest.
 

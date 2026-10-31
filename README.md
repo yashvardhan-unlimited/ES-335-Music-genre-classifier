@@ -35,11 +35,26 @@ or `make data`. If Kaggle asks for credentials, put your API token at
 Only `genres_original/` is used; Kaggle's precomputed CSVs and images are ignored.
 
 ## Reproduce
+With `make` (not installed by default on Windows):
+
 ```bash
-make all     # data -> splits -> features -> tune -> cnn -> analysis -> export -> site
+make all     # data -> splits -> features -> tune -> analysis -> export -> site
 make tests   # pytest
 ```
-_Each stage is filled in as it is implemented. All constants are in `config.yaml`._
+`export` and `site` are not implemented yet. Without `make`, from the repo root
+(`python` = `.venv/Scripts/python.exe` on Windows, `.venv/bin/python` elsewhere):
+
+```bash
+python scripts/make_splits.py                  # splits
+python scripts/extract_features.py             # features
+bash scripts/tune_all.sh                       # all models on all splits; several hours
+python scripts/analysis_val.py                 # validation analyses
+python scripts/analysis_errors.py --parts 4
+python scripts/leakage_lab.py
+python -m pytest -q
+```
+`tune_all.sh` resumes: runs with a result file are skipped. After changing a grid or the
+model, delete the old files in `results/val` first. All constants are in `config.yaml`.
 
 ## Web app (local)
 Upload audio (WAV, MP3, FLAC, OGG, AAC, M4A), try sample clips, and browse the results dashboard:

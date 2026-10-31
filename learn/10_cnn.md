@@ -456,7 +456,7 @@ make that acceptable. The valid loss is logged too, so we can see both.
 - **L53–57 `encode`**: genre names to int64 codes in config order (int64
   because PyTorch's loss needs `Long` targets; pandas gives int8).
 - **L60–64 `pick_device`**: `auto` = CUDA if available, else CPU.
-- **L67–72 `predict`**: `model.eval()` (BatchNorm running stats, dropout
+- **L68–72 `predict`**: `model.eval()` (BatchNorm running stats, dropout
   off), no gradients, softmax probabilities for every valid window in order.
 - **L75–87 `train_epoch`**: the standard loop: zero gradients, forward,
   cross-entropy, backward, Adam step; returns the mean loss per crop.

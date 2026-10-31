@@ -8,7 +8,7 @@ endif
 
 TODO = @echo "$@: not yet implemented"
 
-.PHONY: setup data splits features tune cnn analysis test export site all tests
+.PHONY: setup data splits features tune cnn analysis test export site all tests app
 
 setup:
 	python3.11 -m venv .venv || py -3.11 -m venv .venv
@@ -26,15 +26,16 @@ splits:
 # handcrafted window features + full-clip log-mels -> features/
 features:
 	$(PY) -W ignore scripts/extract_features.py
-# tune classical models on train, score on valid (per clip) -> results/val/*.json
+# full validation protocol: every model on A, B (5 seeds), B' (5 seeds), C -> results/val/*.json + summaries
 tune:
-	$(PY) -W ignore -m src.train_classical --split C --seed 0 --models dummy,knn,logreg,svm,xgb
-# scripts/train_cnn.py
-cnn:
-	$(TODO)
-# scripts/analysis.py
+	bash scripts/tune_all.sh
+# the CNN runs are part of tune (scripts/tune_all.sh)
+cnn: tune
+# validation analyses, split C train and valid only
 analysis:
-	$(TODO)
+	$(PY) -W ignore scripts/analysis_val.py
+	$(PY) -W ignore scripts/analysis_errors.py --parts 4
+	$(PY) -W ignore scripts/leakage_lab.py
 # scripts/evaluate_test.py (refuses to run without git tag pre-test-freeze)
 test:
 	$(TODO)
@@ -45,7 +46,10 @@ export:
 site:
 	$(TODO)
 
-all: data splits features tune cnn analysis export site
+all: data splits features tune analysis export site
 
 tests:
 	$(PY) -m pytest -q
+
+app:
+	$(PY) -m streamlit run app.py

@@ -1,6 +1,7 @@
 import pandas as pd
 import pytest
 
+from src import splits
 from src.splits import PARTS, SIZES, load_split, split_file
 from src.utils import load_config
 
@@ -61,9 +62,33 @@ def test_C_artist_overlap_is_exactly_the_documented_set():
     assert set(n_parts[n_parts > 1].index) == C_CROSSING_ARTISTS
 
 
-def test_test_part_is_locked():
+def test_test_part_is_locked_without_the_tag(monkeypatch):
+    monkeypatch.setattr(splits, "is_test_unlocked", lambda: False)
     with pytest.raises(PermissionError, match="pre-test-freeze"):
         load_split("C", "test")
     with pytest.raises(PermissionError):
-        load_split("C", "test", allow_test=True)   # no tag yet
+        load_split("C", "test", allow_test=True)
     assert len(load_split("C", "train")) == SIZES["train"] * 10
+
+
+def test_test_part_needs_the_tag_and_the_explicit_flag(monkeypatch, tmp_path):
+    # a stand-in split file, so no real test row is read even when the lock is open
+    pd.DataFrame({"clip_id": ["x"], "window_idx": [0], "genre": ["rock"], "part": ["test"]}).to_csv(
+        tmp_path / "C.csv", index=False)
+    monkeypatch.setattr(splits, "SPLITS", tmp_path)
+    monkeypatch.setattr(splits, "is_test_unlocked", lambda: True)
+    with pytest.raises(PermissionError):
+        load_split("C", "test")                    # the tag alone does not open it
+    assert len(load_split("C", "test", allow_test=True)) == 1
+
+
+def test_is_test_unlocked_stays_locked_without_git(monkeypatch):
+    def no_git(*_, **__):
+        raise FileNotFoundError("git")
+    monkeypatch.setattr(splits.subprocess, "run", no_git)
+    assert splits.is_test_unlocked() is False
+
+
+def test_unknown_part_is_an_error_not_an_empty_table():
+    with pytest.raises(ValueError, match="vaild"):
+        load_split("C", "vaild")

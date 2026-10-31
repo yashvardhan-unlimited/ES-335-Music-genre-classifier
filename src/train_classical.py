@@ -33,11 +33,11 @@ log = get_logger("train_classical")
 
 def load_windows(split: str, part: str, seed: int = 0) -> tuple[pd.DataFrame, pd.Series]:
     """Handcrafted features of one split part: X (index = clip_id, 57 named columns), y (genre)."""
+    rows = load_split(split, part, seed)  # first, so the test lock fires before any feature file is read
     feats = Path(CFG["paths"]["features"])
     index = pd.read_csv(feats / "index.csv").reset_index(names="row")
     names = json.loads((feats / "feature_names.json").read_text())
-    rows = load_split(split, part, seed).merge(index[["clip_id", "window_idx", "row"]],
-                                               on=["clip_id", "window_idx"], how="left", validate="1:1")
+    rows = rows.merge(index[["clip_id", "window_idx", "row"]], on=["clip_id", "window_idx"], how="left", validate="1:1")
     assert rows["row"].notna().all(), "split rows missing from features/index.csv"
     X = pd.DataFrame(np.load(feats / "handcrafted.npy")[rows["row"]], columns=names,
                      index=pd.Index(rows["clip_id"], name="clip_id"))

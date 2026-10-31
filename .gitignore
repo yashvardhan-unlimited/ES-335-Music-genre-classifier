@@ -6,6 +6,11 @@ __pycache__/
 *.wav
 *.au
 *.mp3
+*.aac
+*.m4a
+*.flac
+*.ogg
+*.pt
 kaggle.json
 .ipynb_checkpoints/
 .DS_Store
