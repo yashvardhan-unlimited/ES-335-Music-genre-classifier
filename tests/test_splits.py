@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from src import splits
-from src.splits import PARTS, SIZES, load_split, split_file
+from src.splits import PARTS, SIZES, credit_clusters, load_split, split_file
 from src.utils import load_config
 
 CFG = load_config()
@@ -92,3 +92,22 @@ def test_is_test_unlocked_stays_locked_without_git(monkeypatch):
 def test_unknown_part_is_an_error_not_an_empty_table():
     with pytest.raises(ValueError, match="vaild"):
         load_split("C", "vaild")
+
+
+def test_credit_clusters_link_any_shared_performer():
+    a = pd.Series(["Bob Marley & The Wailers", "Bob Marley", "Big Youth & Dennis Brown", "Dennis Brown, Bongo Herman",
+                   "Bongo Herman", "Earth, Wind & Fire", None])
+    c = credit_clusters(a)
+    assert c[0] == c[1] and c[2] == c[3] == c[4]         # the link can run through a third credit
+    assert c[0] != c[2] and c[5] not in (c[0], c[2])
+    assert pd.isna(c[6])                                 # no artist stays missing: the bootstrap makes it solo
+
+
+def test_credit_clusters_are_what_the_bootstrap_needs_on_C():
+    # exact names say 22 test clips share an artist with train; shared credits find 3 more
+    c = META[META["load_ok"]].assign(cluster=credit_clusters(META["artist"]))
+    train = set(c.loc[c["split_C"] == "train", "cluster"].dropna())
+    test = c[c["split_C"] == "test"]
+    assert credit_clusters(META["artist"]).nunique() == 294 and META["artist"].nunique() == 321
+    assert test["cluster"].isin(train).sum() == 25 and test["artist"].isin(set(c.loc[c["split_C"] == "train", "artist"])).sum() == 22
+    assert test["cluster"].nunique() == 113

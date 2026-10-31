@@ -9,7 +9,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.splits import (PARTS, add_split_C_to_metadata, make_split_A, make_split_B,  # noqa: E402
+from src.splits import (PARTS, add_split_C_to_metadata, credit_clusters, make_split_A, make_split_B,  # noqa: E402
                         make_split_Bprime, make_split_C)
 from src.utils import get_logger, load_config  # noqa: E402
 
@@ -20,7 +20,8 @@ def summarise(win: pd.DataFrame, meta: pd.DataFrame, genres: list[str]) -> dict:
     """Genre counts per part and three leakage measures for the test part.
 
     A clip counts as 'in' a part if any of its windows is there (matters for A only).
-    Shared artist: test clip whose (non-missing) artist has a clip in train.
+    Shared artist: test clip whose (non-missing) artist has a clip in train, by exact name,
+    and by credit cluster (a performer under two credits counts once).
     """
     m = meta.set_index("clip_id")
     in_part = {p: set(win.loc[win["part"] == p, "clip_id"]) for p in PARTS}
@@ -28,6 +29,7 @@ def summarise(win: pd.DataFrame, meta: pd.DataFrame, genres: list[str]) -> dict:
     train_artists = set(m.loc[list(train), "artist"].dropna())
     train_md5 = set(m.loc[list(train), "md5"])
     test_art = m.loc[list(test), "artist"]
+    clusters = credit_clusters(m["artist"])
     return {
         "windows_per_part": {p: int((win["part"] == p).sum()) for p in PARTS},
         "clips_per_part": {p: len(in_part[p]) for p in PARTS},
@@ -39,6 +41,7 @@ def summarise(win: pd.DataFrame, meta: pd.DataFrame, genres: list[str]) -> dict:
         "test_clips_missing_artist": int(test_art.isna().sum()),
         "test_clips_artist_in_train": int(test_art.isin(train_artists).sum()),
         "share_test_clips_artist_in_train": round(float(test_art.isin(train_artists).mean()), 4),
+        "test_clips_credit_cluster_in_train": int(clusters[list(test)].isin(set(clusters[list(train)].dropna())).sum()),
     }
 
 

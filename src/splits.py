@@ -138,3 +138,26 @@ def sample_artists(clip_ids: list[str], fraction: float, seed: int) -> list[str]
     rng = np.random.default_rng(seed)
     keep = set(rng.choice(unique, size=max(1, round(fraction * len(unique))), replace=False))
     return [c for c in clip_ids if groups[c] in keep]
+
+
+def credit_clusters(artists: pd.Series) -> pd.Series:
+    """Cluster of each artist credit: credits that share a performer, even through a third, are one.
+
+    Credits split on ', ' and ' & ', so 'Bob Marley & The Wailers' joins 'Bob Marley'. Band names
+    such as 'Earth, Wind & Fire' split too, but into parts no other credit uses. Missing stays
+    missing (the bootstrap makes such a clip its own cluster). The artist bootstrap uses this;
+    artist_groups keeps exact names for the stored validation analyses (DECISIONS.md).
+    """
+    parent: dict[str, str] = {}
+
+    def find(name: str) -> str:
+        parent.setdefault(name, name)
+        while parent[name] != name:
+            name = parent[name]
+        return name
+
+    credits = artists.dropna().str.replace(" & ", ", ", regex=False).str.split(", ")
+    for first, *rest in credits:
+        for other in rest:
+            parent[find(other)] = find(first)
+    return credits.str[0].map(find).reindex(artists.index)

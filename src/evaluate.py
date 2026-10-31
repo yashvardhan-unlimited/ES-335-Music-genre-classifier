@@ -10,6 +10,10 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 from sklearn.model_selection import PredefinedSplit
 
+from src.utils import load_config
+
+CFG = load_config()
+BOOT = CFG["bootstrap"]
 Metric = Callable[[np.ndarray, np.ndarray], float]
 
 
@@ -117,11 +121,12 @@ def _resamples(groups: list[np.ndarray], n: int, seed: int):
         yield np.concatenate([groups[i] for i in rng.integers(0, len(groups), len(groups))])
 
 
-def cluster_bootstrap_ci(df: pd.DataFrame, metric_fn: Metric, cluster_col: str = "artist",
-                         n: int = 2000, ci: float = 95, seed: int = 0,
+def cluster_bootstrap_ci(df: pd.DataFrame, metric_fn: Metric, cluster_col: str = "cluster",
+                         n: int = BOOT["n"], ci: float = BOOT["ci"], seed: int = CFG["seed"],
                          true_col: str = "y_true", pred_col: str = "y_pred") -> tuple[float, float, float]:
     """Percentile CI for metric_fn(y_true, y_pred) on one row per clip, resampling clusters.
 
+    cluster_col holds splits.credit_clusters, so one performer under two credits is one cluster.
     Returns (point estimate on the full data, low, high).
     """
     y, p = df[true_col].to_numpy(), df[pred_col].to_numpy()
@@ -132,7 +137,8 @@ def cluster_bootstrap_ci(df: pd.DataFrame, metric_fn: Metric, cluster_col: str =
 
 
 def paired_bootstrap_diff(df: pd.DataFrame, pred_col_a: str, pred_col_b: str, metric_fn: Metric,
-                          cluster_col: str = "artist", n: int = 2000, ci: float = 95, seed: int = 0,
+                          cluster_col: str = "cluster", n: int = BOOT["n"], ci: float = BOOT["ci"],
+                          seed: int = CFG["seed"],
                           true_col: str = "y_true") -> tuple[float, float, float, float]:
     """metric(A) - metric(B) with a CI, using the same resampled clusters for both models.
 

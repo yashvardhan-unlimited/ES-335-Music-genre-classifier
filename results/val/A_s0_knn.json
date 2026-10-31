@@ -1,0 +1,251 @@
+{
+ "split": "A",
+ "seed": 0,
+ "model": "knn",
+ "best_params": {
+  "n_neighbors": 3,
+  "weights": "distance"
+ },
+ "valid_macro_f1": 0.9201683066013929,
+ "valid_accuracy": 0.920045045045045,
+ "valid_macro_f1_majority": 0.9191053088403633,
+ "window_accuracy": 0.8634517766497461,
+ "per_genre_f1": {
+  "blues": 0.9529411764705882,
+  "classical": 0.9319371727748691,
+  "country": 0.898876404494382,
+  "disco": 0.8924731182795699,
+  "hiphop": 0.9166666666666666,
+  "jazz": 0.9142857142857143,
+  "metal": 0.9662921348314607,
+  "pop": 0.9212121212121213,
+  "reggae": 0.9206349206349206,
+  "rock": 0.8863636363636364
+ },
+ "confusion": {
+  "labels": [
+   "blues",
+   "classical",
+   "country",
+   "disco",
+   "hiphop",
+   "jazz",
+   "metal",
+   "pop",
+   "reggae",
+   "rock"
+  ],
+  "counts": [
+   [
+    81,
+    0,
+    3,
+    1,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    89,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    80,
+    2,
+    0,
+    2,
+    1,
+    0,
+    2,
+    1
+   ],
+   [
+    0,
+    1,
+    1,
+    83,
+    2,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    77,
+    1,
+    2,
+    2,
+    1,
+    1
+   ],
+   [
+    1,
+    4,
+    1,
+    0,
+    0,
+    80,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    86,
+    0,
+    0,
+    1
+   ],
+   [
+    0,
+    0,
+    1,
+    3,
+    1,
+    0,
+    0,
+    76,
+    2,
+    3
+   ],
+   [
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    87,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    4,
+    0,
+    2,
+    0,
+    0,
+    3,
+    78
+   ]
+  ]
+ },
+ "n_valid_windows": 1970,
+ "n_valid_clips": 888,
+ "grid_valid_macro_f1": 0.9189921149567436,
+ "n_train_windows": 4420,
+ "grid": [
+  {
+   "params": {
+    "n_neighbors": 1,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.9157861911937427
+  },
+  {
+   "params": {
+    "n_neighbors": 1,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.9157861911937427
+  },
+  {
+   "params": {
+    "n_neighbors": 3,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.9119726465104361
+  },
+  {
+   "params": {
+    "n_neighbors": 3,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.9189921149567436
+  },
+  {
+   "params": {
+    "n_neighbors": 5,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.8967142649995379
+  },
+  {
+   "params": {
+    "n_neighbors": 5,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.9146040140700613
+  },
+  {
+   "params": {
+    "n_neighbors": 9,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.849623793118839
+  },
+  {
+   "params": {
+    "n_neighbors": 9,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.877907960795981
+  },
+  {
+   "params": {
+    "n_neighbors": 15,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.8282766737899884
+  },
+  {
+   "params": {
+    "n_neighbors": 15,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.851053310408366
+  },
+  {
+   "params": {
+    "n_neighbors": 25,
+    "weights": "uniform"
+   },
+   "valid_macro_f1": 0.7800726072395238
+  },
+  {
+   "params": {
+    "n_neighbors": 25,
+    "weights": "distance"
+   },
+   "valid_macro_f1": 0.8144021490365922
+  }
+ ]
+}

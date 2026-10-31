@@ -28,7 +28,7 @@ from threadpoolctl import threadpool_limits
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.cnn import MEL_DIR, GenreCNN, MelWindowDataset  # noqa: E402
+from src.cnn import CNN, MEL_DIR, N_WINDOWS, GenreCNN, MelWindowDataset  # noqa: E402
 from src.evaluate import aggregate_clips, ece, fit_temperature, reliability, softmax_t  # noqa: E402
 from src.features import N_CLIP, SR, clip_handcrafted, feature_group, feature_names, load_clip  # noqa: E402
 from src.models import svm_pipeline, xgb_model  # noqa: E402
@@ -168,7 +168,7 @@ def cnn_valid_logits(state: dict, stats: tuple, valid: pd.Series, device: torch.
     model.load_state_dict(state)
     model.eval()
     ds = MelWindowDataset(list(valid.index), encode(valid), MEL_DIR, "eval", stats)
-    return np.concatenate([model(x.to(device)).cpu().numpy() for x, _ in DataLoader(ds, batch_size=128)])
+    return np.concatenate([model(x.to(device)).cpu().numpy() for x, _ in DataLoader(ds, batch_size=CNN["batch_size"] * 2)])
 
 
 def window_labels(valid: pd.Series, per_clip: int) -> pd.Series:
@@ -196,7 +196,7 @@ def part_learning_curves() -> dict:
             set_seed(seed)
             out = fit(sub, encode(train[sub]), None, None, epochs, device)
             logits = cnn_valid_logits(out["state"], out["norm_stats"], valid, device)
-            f1 = valid_report(softmax_t(logits), GENRES, window_labels(valid, 10))["valid_macro_f1"]
+            f1 = valid_report(softmax_t(logits), GENRES, window_labels(valid, N_WINDOWS))["valid_macro_f1"]
             rows.append({**base, "model": "cnn", "epochs": epochs, "valid_macro_f1": f1,
                          "seconds": time.perf_counter() - t0})
             log.info("fraction %.2f repeat %d (%d clips): svm %.3f, cnn %.3f", frac, rep, len(sub),
@@ -308,7 +308,7 @@ def part_calibration() -> dict:
     assert np.isclose(out["models"]["xgb"]["clip_macro_f1"], xgb["valid_macro_f1"]), "xgb refit differs"
 
     valid = clip_labels("C", "valid")
-    y_win = window_labels(valid, 10)
+    y_win = window_labels(valid, N_WINDOWS)
     device = pick_device("auto")
     for s in CFG["cnn"]["seeds"]:
         ck = torch.load(MODEL_DIR / f"cnn_C_s{s}.pt", map_location=device)
@@ -346,7 +346,7 @@ def part_calibration() -> dict:
         axes_style(ax)
         ax.legend(frameon=False, loc="upper left", fontsize=9)
     axes[0].set_ylabel("accuracy in bin")
-    fig.suptitle(f"Reliability on split C valid (197 clips, {A['calibration_bins']} bins; numbers = clips per bin)")
+    fig.suptitle(f"Reliability on split C valid ({len(valid)} clips, {A['calibration_bins']} bins; numbers = clips per bin)")
     plt.tight_layout()
     plt.savefig(FIG_DIR / "analysis_calibration.png", dpi=120)
     plt.close()

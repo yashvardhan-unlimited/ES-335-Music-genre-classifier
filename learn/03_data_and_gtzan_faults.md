@@ -288,7 +288,7 @@ exactly 123.
 
 `src/data.py`
 
-- Line 13, `CLIP_THRESHOLD = 0.999`: one named constant rather than a magic number.
+- Line 13, `CLIP_THRESHOLD`, read from config (`audit.clip_threshold`, 0.999): one named constant rather than a magic number.
 - Lines 16-22, `list_clips`: `Path(audio_dir).glob("*/*.wav")` finds files
   exactly one folder deep (genre folders). `sorted` makes the order
   deterministic (filesystem order is not guaranteed). `p.stem` gives

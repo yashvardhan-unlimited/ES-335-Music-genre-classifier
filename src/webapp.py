@@ -105,7 +105,7 @@ def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
     """Decode a file or file-like object to mono at the project rate, cut at app.max_seconds.
 
     Uploads are untrusted input: raises ValueError with a readable message for anything we cannot
-    classify (not audio, non-finite samples, under one 3 s window, silent).
+    classify (not audio, non-finite samples, under one 3 s window, silent or nearly so).
     """
     try:
         y = decode(source)
@@ -113,7 +113,7 @@ def load_audio(source: str | Path | BinaryIO) -> np.ndarray:
         raise ValueError("This file could not be read as audio.") from e
     if y.size < N_WIN:
         raise ValueError(f"This audio is too short: at least {N_WIN / SR:.0f} seconds are needed.")
-    if not y.any():
+    if np.sqrt(np.mean(np.square(y, dtype=np.float64))) < 10 ** (APP["min_rms_db"] / 20):
         raise ValueError("This audio is silent, so there is nothing to classify.")
     return y
 
@@ -122,7 +122,7 @@ def classify_mel(clf: Classifier, mel: np.ndarray) -> np.ndarray:
     """Window probabilities (n_windows, n_genres) for a log-mel of any length >= one window.
 
     Same steps as evaluation: 10 evenly spaced windows, normalised with the train stats. A 30 s
-    clip gives exactly the windows the stored scores were measured on.
+    clip gives the windows the stored scores were measured on, to within one frame.
     """
     x = np.stack([mel[:, s:s + WIN] for s in window_starts(mel.shape[1])]).astype(np.float32)
     x = torch.from_numpy((x - clf.mean) / clf.std)[:, None]  # (n_windows, 1, n_mels, WIN)

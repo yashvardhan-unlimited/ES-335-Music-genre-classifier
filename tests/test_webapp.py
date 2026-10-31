@@ -120,10 +120,16 @@ def test_load_audio_rejects_non_finite_samples(bad):
 
 @pytest.mark.parametrize("source,message", [(io.BytesIO(b"this is not audio" * 100), "could not be read"),
                                             (audio_bytes(1), "too short"),
-                                            (audio_bytes(4, amp=0.0), "silent")])
+                                            (audio_bytes(4, amp=0.0), "silent"),
+                                            (audio_bytes(4, amp=1 / 32768), "silent")])  # one bit of dither
 def test_load_audio_rejects_bad_input_with_a_readable_message(source, message):
     with pytest.raises(ValueError, match=message):
         w.load_audio(source)
+
+
+def test_silence_floor_keeps_the_quietest_gtzan_clip():
+    meta = pd.read_csv("splits/metadata.csv")
+    assert meta["rms_db"].min() - w.APP["min_rms_db"] > 15
 
 
 @pytest.mark.parametrize("frames", [130, 400, 1292, 9000])

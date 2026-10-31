@@ -21,7 +21,8 @@ for run in A:0 B:0 B:1 B:2 B:3 B:4 Bp:0 Bp:1 Bp:2 Bp:3 Bp:4 C:0; do
     finished "${split}_s${seed}_cnn" || "$PY" -W ignore -m src.train_cnn --split "$split" --seed "$seed"
   fi
 done
-for s in $("$PY" -c "from src.utils import load_config; print(*load_config()['cnn']['seeds'])"); do
+# tr: a Windows Python run from WSL ends lines in CR, and the last seed would never look finished
+for s in $("$PY" -c "from src.utils import load_config; print(*load_config()['cnn']['seeds'])" | tr -d '\r'); do
   finished "C_s${s}_cnn" || "$PY" -W ignore -m src.train_cnn --split C --seed "$s"
 done
 "$PY" -W ignore -m src.train_cnn --split C --summary

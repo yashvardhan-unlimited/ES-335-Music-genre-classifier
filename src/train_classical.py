@@ -22,7 +22,7 @@ from src.evaluate import (ClipMacroF1Scorer, aggregate_clips, clip_scores, macro
                           make_predefined_split, window_accuracy)
 from src.models import MODELS, xgb_model
 from src.splits import load_split
-from src.utils import get_logger, load_config, set_seed
+from src.utils import get_logger, load_config, set_seed, write_json
 
 CFG = load_config()
 GENRES = CFG["genres"]
@@ -279,7 +279,7 @@ def main() -> None:
             Xs = StandardScaler().fit_transform(X_tr)
             r["gamma_scale_value"] = float(1 / (Xs.shape[1] * Xs.var()))
         path = VAL_DIR / f"{args.split}_s{args.seed}_{name}.json"
-        path.write_text(json.dumps(r, indent=1))
+        write_json(path, r)
         results[name] = r
         log.info("%s -> %s", name, path)
     if args.split == "C":  # tuning figures are drawn for the main split only (other splits: JSONs)

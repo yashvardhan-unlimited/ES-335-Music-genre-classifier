@@ -104,3 +104,8 @@ app:
   samples_per_genre: 2    # random valid clips offered as samples (never test clips)
   top_k: 3                # genres named in the prediction
   min_confidence: 0.7     # top score below this shows "Not sure"; chosen on valid (DECISIONS.md)
+  min_rms_db: -60         # quieter uploads count as silent; the quietest GTZAN clip is -42.4 dBFS
+
+# file audit (src/data.py)
+audit:
+  clip_threshold: 0.999   # |x| at or above this counts as a clipped sample

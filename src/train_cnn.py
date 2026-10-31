@@ -25,7 +25,7 @@ from torch.utils.data import DataLoader
 from src.cnn import CNN, MEL_DIR, N_WINDOWS, GenreCNN, MelWindowDataset, compute_norm_stats, n_params
 from src.splits import load_split
 from src.train_classical import valid_report
-from src.utils import get_logger, load_config, set_seed
+from src.utils import get_logger, load_config, set_seed, write_json
 
 CFG = load_config()
 GENRES = np.array(CFG["genres"])
@@ -171,7 +171,7 @@ def run(split: str, seed: int, epochs: int, device: torch.device, refit_epochs: 
               "n_train_clips": len(both) if refit_epochs else len(train),
               "weights": weights.as_posix(), "norm_stats": norm_path.as_posix(), "history": out["history"]}
     VAL_DIR.mkdir(parents=True, exist_ok=True)
-    (VAL_DIR / f"{stub}_cnn{suffix}.json").write_text(json.dumps(result, indent=1))
+    write_json(VAL_DIR / f"{stub}_cnn{suffix}.json", result)
     return result
 
 

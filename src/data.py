@@ -10,7 +10,7 @@ from src.utils import get_logger, load_config
 
 log = get_logger(__name__)
 
-CLIP_THRESHOLD = 0.999  # |x| at or above this counts as a clipped sample
+CLIP_THRESHOLD = load_config()["audit"]["clip_threshold"]  # |x| at or above this counts as clipped
 
 
 def list_clips(audio_dir: str | Path) -> pd.DataFrame:

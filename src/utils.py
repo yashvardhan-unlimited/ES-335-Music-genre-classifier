@@ -1,7 +1,9 @@
-"""Shared helpers: config loading, seeding, logging."""
+"""Shared helpers: config loading, seeding, logging, atomic JSON."""
+import json
 import logging
 import os
 import random
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -35,3 +37,10 @@ def get_logger(name: str) -> logging.Logger:
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
     return logger
+
+
+def write_json(path: str | Path, obj: dict) -> None:
+    """Write JSON through a temporary file, so a killed run or a reader never meets half a result."""
+    tmp = Path(f"{path}.tmp")
+    tmp.write_text(json.dumps(obj, indent=1))
+    tmp.replace(path)

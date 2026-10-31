@@ -5,6 +5,7 @@ import pytest
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 
+from src.utils import load_config
 from src.evaluate import (ClipMacroF1Scorer, _cluster_rows, aggregate_clips, clip_scores,
                           cluster_bootstrap_ci, macro_f1, make_predefined_split,
                           paired_bootstrap_diff, window_accuracy)
@@ -127,7 +128,7 @@ def test_missing_artist_is_its_own_cluster():
 
 
 def test_cluster_bootstrap_perfect_predictions():
-    df = pd.DataFrame({"y_true": [0, 1, 2, 0], "y_pred": [0, 1, 2, 0], "artist": ["x", "x", "y", None]})
+    df = pd.DataFrame({"y_true": [0, 1, 2, 0], "y_pred": [0, 1, 2, 0], "cluster": ["x", "x", "y", None]})
     assert cluster_bootstrap_ci(df, macro_f1, n=200) == (1.0, 1.0, 1.0)
 
 
@@ -135,7 +136,7 @@ def test_cluster_bootstrap_two_clusters_spans_zero_to_one():
     # artist x: both clips right; artist y: both wrong. Resamples are xx, xy, yx, yy,
     # so accuracy is 1, 0.5 or 0 -> 95% interval [0, 1]; point estimate 0.5.
     acc = lambda t, p: float(np.mean(t == p))  # noqa: E731
-    df = pd.DataFrame({"y_true": [1, 1, 1, 1], "y_pred": [1, 1, 0, 0], "artist": ["x", "x", "y", "y"]})
+    df = pd.DataFrame({"y_true": [1, 1, 1, 1], "y_pred": [1, 1, 0, 0], "cluster": ["x", "x", "y", "y"]})
     assert cluster_bootstrap_ci(df, acc, n=500, seed=1) == (0.5, 0.0, 1.0)
     # same seed -> same interval
     assert cluster_bootstrap_ci(df, acc, n=500, seed=1) == cluster_bootstrap_ci(df, acc, n=500, seed=1)
@@ -143,7 +144,16 @@ def test_cluster_bootstrap_two_clusters_spans_zero_to_one():
 
 def test_paired_bootstrap():
     df = pd.DataFrame({"y_true": [0, 1, 0, 1, 1], "a": [0, 1, 0, 1, 1], "b": [1, 0, 1, 0, 0],
-                       "artist": ["x", "y", "y", "z", None]})
+                       "cluster": ["x", "y", "y", "z", None]})
     acc = lambda t, p: float(np.mean(t == p))  # noqa: E731
     assert paired_bootstrap_diff(df, "a", "b", acc, n=300) == (1.0, 1.0, 1.0, 1.0)
     assert paired_bootstrap_diff(df, "a", "a", acc, n=300) == (0.0, 0.0, 0.0, 0.0)
+
+
+def test_bootstrap_defaults_come_from_config():
+    import inspect
+    boot = load_config()["bootstrap"]
+    for fn in (cluster_bootstrap_ci, paired_bootstrap_diff):
+        p = inspect.signature(fn).parameters
+        assert (p["n"].default, p["ci"].default, p["seed"].default) == (boot["n"], boot["ci"], load_config()["seed"])
+        assert p["cluster_col"].default == "cluster"

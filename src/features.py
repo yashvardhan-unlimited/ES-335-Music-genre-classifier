@@ -42,7 +42,7 @@ def clip_tempo(y: np.ndarray, sr: int = SR) -> float:
 
 def feature_names() -> list[str]:
     """Names of the 57 handcrafted features, in column order."""
-    names = [f"mfcc{i}_{s}" for i in range(1, 21) for s in ("mean", "var")]
+    names = [f"mfcc{i}_{s}" for i in range(1, CFG["mfcc"]["n_mfcc"] + 1) for s in ("mean", "var")]
     for base in ("chroma", "centroid", "bandwidth", "rolloff", "zcr", "rms", "harm_rms", "perc_rms"):
         names += [f"{base}_mean", f"{base}_var"]
     return names + ["tempo"]
