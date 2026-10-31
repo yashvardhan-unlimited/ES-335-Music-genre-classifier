@@ -579,3 +579,46 @@ probabilities, and it is safe on the pinned sklearn 1.9.1. A hash of settings in
 result file, so that resuming notices changed grids: more machinery than one project
 needs, so the script's header says to delete old files instead.
 
+## 2026-11-01: The artist bootstrap clusters on shared credits, not exact names
+
+**Decision.** `splits.credit_clusters` puts two artist credits in one cluster if they share a
+performer, directly or through a third credit, after splitting credits on `, ` and ` & `. The
+test-time bootstrap must use it: `cluster_bootstrap_ci` and `paired_bootstrap_diff` now read a
+`cluster` column by default, so a caller who forgets gets a KeyError, not a silent exact-name
+run. `artist_groups` keeps exact names, so the stored learning curves and cross-fitted
+temperatures stay valid.
+
+**Reason.** gtzan-bind writes one performer in several ways: "Bob Marley & The Wailers" (32
+clips), "Bob Marley" (3). Exact names give 321 artists; shared credits give 294. Resampling a
+performer's clips as two independent clusters makes the interval too narrow, which is the
+error the artist bootstrap exists to prevent. Test clips linked to train in C rise from 22
+(7.6%) to 25 (`results/split_summary.json`, `test_clips_credit_cluster_in_train`). All 17
+merged groups were read by eye and are correct. Found before the freeze, so no test score
+informed it.
+
+**Rejected.** A hand-written alias table: it found only lead-name variants and missed links
+such as "Los Angeles Philharmonic & Leonard Bernstein". Changing `artist_groups` itself: every
+learning curve subset would change, needing about 12 CNN fits and new numbers in lesson 11,
+for a change that touches few artists in analyses that do not report a final score. Rebuilding
+split C from these clusters: it would stop being the published split.
+
+## 2026-11-01: Second audit: resume under WSL, near-silent uploads, atomic result files
+
+**Decision.** `tune_all.sh` strips CR from the seed list. Uploads below `app.min_rms_db`
+(-60 dBFS) are refused as silent. Result JSONs that mark a run as finished go through
+`utils.write_json` (temporary file, then rename). `bootstrap.n`, `bootstrap.ci`, `audit.clip_threshold`
+and `mfcc.n_mfcc` are now read from config. `torchaudio` is dropped from requirements: nothing
+imports it. `scripts/check_lesson_refs.py` checks named line references in the lessons.
+
+**Reason.** Run from WSL, `.venv/Scripts/python.exe` prints CRLF, so the last CNN seed became
+`2\r`, its result file never matched, and every resume retrained seed 2, the served model.
+One bit of dither came back as "classical" at 99.7% with no "Not sure". -60 dBFS is 17.6 dB
+below the quietest GTZAN clip (-42.4 dBFS), so no real clip is near it. A half-written result
+crashed the dashboard and would have counted as finished on resume.
+
+**Rejected.** Using `.venv/bin/python` in WSL: the venv is a Windows one. A pytest for the CR
+fix: Git Bash strips CR itself, so it could not fail there; the fix was checked with a stub
+under WSL before and after. Making the reference check a test: moving code is not a bug, and
+it would fail on every edit above a referenced line. Moving `SVC(probability=True)` to the new
+API: unchanged reason (see the entry above).
+

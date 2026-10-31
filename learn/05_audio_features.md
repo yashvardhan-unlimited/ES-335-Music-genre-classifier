@@ -294,22 +294,24 @@ The figure shows window 0 (0–3 s) of blues.00000.
   661,500, so an edited config that breaks windowing fails immediately.
 - Lines 19-24, `load_clip`: `padded = y.size < N_CLIP`; line 23 zero-pads at the
   end with `np.pad` or slices to 661,500 samples. Returns float32 and the flag.
-- Lines 27-30, `windows`: `reshape(10, 66150)` is a view (no copy). The assert
+- Lines 27-34, `windows`: `reshape(10, 66150)` is a view (no copy). The assert
   guards against an unpadded input.
-- Lines 33-36, `clip_tempo`: `beat_track` on the full clip; `np.atleast_1d`
+- Lines 37-40, `clip_tempo`: `beat_track` on the full clip; `np.atleast_1d`
   because recent librosa versions return tempo as a 1-element array.
-- Lines 39-44, `feature_names`: the 57 names, built in the same order as the
+- Lines 43-48, `feature_names`: the 57 names, built in the same order as the
   feature vector; a test checks length, uniqueness and the first/last names.
-- Lines 51-71, `handcrafted_features`: one STFT magnitude `S` reused for
+- Lines 65-85, `handcrafted_features`: one STFT magnitude `S` reused for
   chroma, centroid, bandwidth and roll-off (computed once). MFCC rows are
-  appended as mean, var pairs (40 values); line 61 gives chroma the power
-  spectrum `S**2` (librosa's convention); line 65 uses the same frame length
-  and hop for ZCR and RMS as for the STFT; line 70 appends the clip tempo.
-- Lines 74-77, `clip_mel`: mel power spectrogram of the full clip, dB with
+  appended as mean, var pairs (40 values); line 75 gives chroma the power
+  spectrum `S**2` (librosa's convention); line 79 uses the same frame length
+  and hop for ZCR and RMS as for the STFT; line 84 appends the clip tempo.
+- Lines 88-91, `clip_mel`: mel power spectrogram of the full clip, dB with
   `ref` from config, cast to float16.
-- Lines 80-89, `clip_features`: loads once, HPSS once (line 83), tempo once,
+- Lines 94-101, `clip_handcrafted`: HPSS once (line 97), tempo once (line 98),
   then iterates over the windows of the signal and of its harmonic and
   percussive parts together with `zip`.
+- Lines 104-107, `clip_features`: loads the clip once and calls
+  `clip_handcrafted` for the 10 windows, then `clip_mel`.
 
 `scripts/extract_features.py`: `Parallel(n_jobs=-1, return_as="generator")`
 returns results in input order while they finish, so `tqdm` can show progress;

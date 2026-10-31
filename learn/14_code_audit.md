@@ -130,11 +130,11 @@ script writes its JSON last, after training, so an interrupted run leaves no fil
 
 **`app.py`**
 
-- **L14**: moves to the repo root before importing `src`, because `config.yaml` and
+- **L15**: moves to the repo root before importing `src`, because `config.yaml` and
   every path in it are relative.
-- **L41**: `ttl=60`, so finished runs appear without a restart.
-- **L135-146 `overview`**: each metric appears only if its numbers exist.
-- **L240-249, the main block**: one `except FileNotFoundError` covers the model,
+- **L42**: `ttl=60`, so finished runs appear without a restart.
+- **L136-147 `overview`**: each metric appears only if its numbers exist.
+- **L240-250, the main block**: one `except FileNotFoundError` covers the model,
   mels and result files.
 
 **`scripts/tune_all.sh`**

@@ -16,6 +16,8 @@
 
 **Artist-disjoint split.** A split in which no artist has clips in more than one part (train, valid, test). Prevents the model from scoring by recognising artists.
 
+**Atomic write.** Replacing a file in one step: write a temporary file, then rename it over the target. A crash or a reader sees the old file or the new one, never half of one.
+
 **Backpropagation.** Computing the gradient of the loss with respect to every weight of a network by applying the chain rule layer by layer from the output back to the input.
 
 **Baseline.** A simple, well-understood model (here kNN and logistic regression) that any more complex model must beat to justify its complexity.
@@ -33,6 +35,8 @@
 **Bootstrap.** Estimating the uncertainty of a statistic by recomputing it on many datasets drawn with replacement from the observed one; the spread of those values gives a confidence interval.
 
 **Calibration.** A classifier is calibrated if, among predictions made with confidence p, a fraction p is correct. Our CNNs are over-confident per window (every fitted temperature is above 1).
+
+**Carriage return (CR).** The character `\r`. Windows ends text lines with CR and LF, Linux with LF alone, so Windows program output read by a Linux shell can carry a stray CR on its last word.
 
 **Channel.** One of the stacked 2-D maps a convolution layer outputs (one per filter); our blocks have 32, 64, 128 and 128.
 
@@ -54,9 +58,13 @@
 
 **Confusion matrix.** K x K table counting clips of each true class (rows) by predicted class (columns); the diagonal holds correct predictions.
 
+**Connected component.** A set of items linked by chains of direct links. Here, artist credits joined through shared names: A and C are in one component if A shares a name with B and B with C.
+
 **Controlled experiment.** An experiment that changes one factor (here the split) and holds everything else fixed (models, grids, metric, sizes, seeds), so differences in the outcome can be attributed to that factor.
 
 **Convolution (2-D).** Sliding a small learned filter over an image and computing, at every position, a weighted sum of the local patch; the output is a feature map showing where the pattern occurs.
+
+**Credit cluster.** All artist credits linked by a shared performer. This project's unit for the artist bootstrap, from `splits.credit_clusters`.
 
 **Cross-entropy loss.** -log of the probability a model gives to the true class; the loss logistic regression minimises. Confident wrong predictions cost the most.
 
@@ -79,6 +87,8 @@
 **Distance weighting.** A kNN option in which each neighbour's vote is weighted by 1/distance, so closer neighbours count more.
 
 **Distribution shift.** The data seen in use differs from the training data, for example modern loud masters against GTZAN's older recordings. Measured scores may then no longer hold.
+
+**Dither.** Very low-level noise added to audio when it is stored at a fixed bit depth. A digitally silent track can contain it, so its samples are not all exactly zero.
 
 **Downmix.** Reducing several audio channels to fewer. Averaging keeps the level of a sound common to both channels; FFmpeg's float downmix adds them at about 0.707 each, which is 3 dB louder for stereo.
 
@@ -315,6 +325,8 @@
 **Training-serving skew.** Input prepared differently in the deployed app than during training. The model still answers, so nothing fails visibly, but measured performance stops applying.
 
 **Translation equivariance.** Shifting the input shifts a convolution's output by the same amount, because the same filter is used everywhere. Natural along time in a spectrogram, only partly along frequency.
+
+**Union-find.** A simple structure for connected components: each item points to a parent, following parents reaches the component's root, and joining two components points one root at the other.
 
 **Unit of prediction.** The object a prediction and its score refer to; here one 30 s clip.
 

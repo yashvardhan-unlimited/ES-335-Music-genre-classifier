@@ -14,5 +14,6 @@
 12. [12_protocol_and_freeze.md](12_protocol_and_freeze.md): one identical tuning protocol on A, B, B' and C, the roles of train / valid / test, why the chosen model's valid score is optimistic, peeking as a multiple-comparisons problem, post-hoc analyses and honest reporting, the annotated git tag pre-test-freeze as evidence, reading the validation table.
 13. [13_web_app.md](13_web_app.md): serving the CNN in a local Streamlit app: training-serving skew and the test that guards against it, classifying audio of any length, input validation, the open-set problem and distribution shift, why model scores are not probabilities, the winner's curse, keeping demos away from the test part.
 14. [14_code_audit.md](14_code_audit.md): a whole-code audit: downmixing and why a 3 dB error is a skew, why a passing check can prove nothing, reproducing a bug before fixing it, failing safe, resumable pipelines.
+15. [15_evidence_audit.md](15_evidence_audit.md): auditing by evidence, not by reading: rebuilding artefacts, why a stub test missed a real bug, clusters of performers and why the bootstrap needs them, connected components, silence thresholds in dBFS, atomic writes.
 
 Terms: [glossary.md](glossary.md)

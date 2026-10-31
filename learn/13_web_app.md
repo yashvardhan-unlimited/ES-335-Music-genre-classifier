@@ -183,12 +183,12 @@ over seeds, 0.610, not the 0.635 of the run we picked.
 - **L36-58, the caches**: Streamlit reruns the whole script on every click.
   `cache_resource` keeps one model in memory; `cache_data` stores results by input.
   `max_entries=8` (L56) stops uploads from filling memory.
-- **L69-78 `bars`**: `labelled` prints values on only the first rows, so the chart
+- **L70-79 `bars`**: `labelled` prints values on only the first rows, so the chart
   stays readable, and the tooltip and table carry the rest.
-- **L81-97 `show_prediction`**: one function for both inputs. L84 picks the heading:
+- **L82-98 `show_prediction`**: one function for both inputs. L84 picks the heading:
   "Not sure: best guess ..." or "Prediction: ...". L88-90 add the explanation. The
   chart is drawn either way. With a known genre it also says "Correct" or "Wrong".
-- **L212-236 `results_tab`**: the validation banner comes first, then the
+- **L213-237 `results_tab`**: the validation banner comes first, then the
   unfinished-runs warning, and only then any number.
 
 ---

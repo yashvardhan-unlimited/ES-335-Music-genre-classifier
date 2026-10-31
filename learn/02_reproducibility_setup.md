@@ -153,15 +153,15 @@ can rerun cannot be checked, so it carries little weight.
 
 `src/utils.py`
 
-- Lines 11-14, `load_config`: opens the file as UTF-8 (Windows defaults to a
+- Lines 13-16, `load_config`: opens the file as UTF-8 (Windows defaults to a
   different encoding) and uses `yaml.safe_load`, which builds only plain
   dicts/lists/numbers and cannot execute arbitrary objects, unlike `yaml.load`.
-- Lines 17-26, `set_seed`:
+- Lines 19-28, `set_seed`:
   - line 23 sets `PYTHONHASHSEED` for child processes (see 2.3);
   - line 24 seeds Python's `random`;
   - line 25 seeds numpy's global generator (used by older APIs and libraries);
   - line 26 `torch.manual_seed` seeds the CPU generator and every CUDA device.
-- Lines 29-37, `get_logger`: attaches a handler only if the logger has none, so
+- Lines 31-39, `get_logger`: attaches a handler only if the logger has none, so
   calling it twice does not print every message twice; INFO level with
   timestamps, so script logs show when each stage ran.
 

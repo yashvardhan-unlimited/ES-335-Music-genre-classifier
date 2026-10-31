@@ -52,6 +52,7 @@ python scripts/analysis_val.py                 # validation analyses
 python scripts/analysis_errors.py --parts 4
 python scripts/leakage_lab.py
 python -m pytest -q
+python scripts/check_lesson_refs.py            # lesson line references still point at their code
 ```
 `tune_all.sh` resumes: runs with a result file are skipped. After changing a grid or the
 model, delete the old files in `results/val` first. All constants are in `config.yaml`.

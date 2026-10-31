@@ -330,12 +330,12 @@ over-confident window. Which wins is an empirical question.
 
 ### `src/evaluate.py`
 
-- **L149–162 `reliability`**: confidence = max probability; bins
+- **L155–168 `reliability`**: confidence = max probability; bins
   $(0, 0.1], \dots, (0.9, 1]$ via `np.digitize(..., right=True)`; per bin:
   count, mean confidence, accuracy.
-- **L165–169 `ece`**: the formula of 2.6 over non-empty bins.
-- **L172–175 `softmax_t`**: `scipy.special.softmax(logits / T)`.
-- **L178–187 `fit_temperature`**: minimises mean cross-entropy over
+- **L171–175 `ece`**: the formula of 2.6 over non-empty bins.
+- **L178–181 `softmax_t`**: `scipy.special.softmax(logits / T)`.
+- **L184–193 `fit_temperature`**: minimises mean cross-entropy over
   $\log T \in [-3, 3]$ (so $T \in [0.05, 20]$) with a bounded scalar search;
   optimising $\log T$ keeps $T$ positive.
 
@@ -355,7 +355,7 @@ over-confident window. Which wins is an empirical question.
   saves one array plus index per length; skipped if already present.
 - **L118–160 `part_window_length`**: checks the 3 s ablation features against
   the main features, then fits and scores the SVM per length.
-- **L165–171 `cnn_valid_logits`, `window_labels`**: CNN logits on the 10 fixed
+- **L164–171 `cnn_valid_logits`, `window_labels`**: CNN logits on the 10 fixed
   windows of every valid clip, and the matching per-window labels.
 - **L179–229 `part_learning_curves`**: for each fraction and repeat (seed
   42 + repeat): sample artists; SVM on their windows; CNN via

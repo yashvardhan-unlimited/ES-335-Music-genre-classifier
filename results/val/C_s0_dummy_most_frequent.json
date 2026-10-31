@@ -157,6 +157,7 @@
  },
  "n_valid_windows": 1970,
  "n_valid_clips": 197,
+ "grid_valid_macro_f1": 0.018433179723502304,
  "n_train_windows": 4420,
  "grid": [
   {

@@ -36,3 +36,13 @@ def test_write_json_never_leaves_half_a_file(tmp_path, monkeypatch):
     with pytest.raises(OSError):
         write_json(path, {"a": 2})
     assert json.loads(path.read_text()) == {"a": 1}     # the old result survives whole
+
+
+def test_lesson_reference_is_repaired_and_a_bare_name_is_left_alone():
+    from scripts.check_lesson_refs import fix_line
+    defs = {"load_split": [("src/splits.py", 117, 124)], "main": [("a.py", 1, 2), ("b.py", 5, 9)]}
+    assert fix_line("- **L100-110 `load_split`**: lock", defs, None)[0] == "- **L117-124 `load_split`**: lock"
+    assert fix_line("Lines 117-124, `load_split`", defs, None) == ("Lines 117-124, `load_split`", [])
+    assert fix_line("L1-2 `main`", defs, "b.py")[0] == "L5-9 `main`"          # the current file settles it
+    assert fix_line("L1-2 `main`", defs, None)[0] == "L1-2 `main`"            # ambiguous: untouched
+    assert fix_line("L3 `unknown_name`", defs, None)[1] == []

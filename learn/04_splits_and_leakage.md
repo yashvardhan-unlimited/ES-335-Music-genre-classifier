@@ -228,9 +228,9 @@ were frozen before the test was opened).
   `split_C` non-missing enter the draw.
 - Lines 95-101, `make_split_C`: `part = split_C`, with `unused` for the 70 clips
   outside C. jazz.00054 is not among the usable clips, so it has no rows.
-- Lines 104-107, `is_test_unlocked`: runs `git tag -l pre-test-freeze`; any git
+- Lines 104-110, `is_test_unlocked`: runs `git tag -l pre-test-freeze`; any git
   error counts as locked. (Named `is_...` so pytest does not mistake it for a test.)
-- Lines 114-119, `load_split`: the lock is checked *before* the file is read.
+- Lines 117-124, `load_split`: the lock is checked *before* the file is read.
 
 `scripts/make_splits.py` → `summarise`: for each split, the set of clips per
 part (a clip is "in" a part if any of its windows is), genre counts, and three
