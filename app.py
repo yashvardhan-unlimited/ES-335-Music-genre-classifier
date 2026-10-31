@@ -2,6 +2,7 @@
 
 Run from repo root: .venv/Scripts/python.exe -m streamlit run app.py
 Logic lives in src/webapp.py. Only validation scores exist until the pre-test-freeze tag.
+
 """
 import io
 import os
@@ -246,3 +247,6 @@ try:
         results_tab()
 except FileNotFoundError as e:
     st.error(f"A required file is missing: {e.filename}. See the Web app section of the README.")
+
+
+# chainging the code to add a new feature to the app
