@@ -31,9 +31,10 @@ FIG_DIR = Path(CFG["paths"]["results"]) / "figures"
 log = get_logger("train_classical")
 
 
-def load_windows(split: str, part: str, seed: int = 0) -> tuple[pd.DataFrame, pd.Series]:
-    """Handcrafted features of one split part: X (index = clip_id, 57 named columns), y (genre)."""
-    rows = load_split(split, part, seed)  # first, so the test lock fires before any feature file is read
+def load_windows(split: str, part: str, seed: int = 0, allow_test: bool = False) -> tuple[pd.DataFrame, pd.Series]:
+    """Handcrafted features of one split part: X (index = clip_id, 57 named columns), y (genre).
+    allow_test is passed to load_split (test also needs the pre-test-freeze tag)."""
+    rows = load_split(split, part, seed, allow_test)  # first, so the lock fires before any feature file is read
     feats = Path(CFG["paths"]["features"])
     index = pd.read_csv(feats / "index.csv").reset_index(names="row")
     names = json.loads((feats / "feature_names.json").read_text())

@@ -622,3 +622,87 @@ under WSL before and after. Making the reference check a test: moving code is no
 it would fail on every edit above a referenced line. Moving `SVC(probability=True)` to the new
 API: unchanged reason (see the entry above).
 
+
+## 2026-11-14: Split D, random artist-grouped splits, added between B' and C
+
+**Decision.** `splits.make_split_D(seed)`, seeds 0-4: the 929 usable fault-filtered clips (the B'
+and C pool), 442/197/290 clips, with every credit cluster (`credit_clusters`; a clip without an
+artist is its own group) inside one part. Groups are placed largest first, each in a random part
+(weighted by free room) among the parts where it keeps every genre within 2 clips of that part's
+quota; if none allows that, in the part where it adds least to the squared distance from the
+quotas. Then single-clip groups of different genres are swapped between parts while that lowers
+the same distance. Every model runs on D with the same protocol as on the other splits.
+
+**Reason.** The step B' -> C changed two things at once: it removed artist leakage, and it
+swapped five random draws for one fixed published partition with its own valid and test clips
+(C valid has 13 pop clips and 24 rock). A drop from B' to C could therefore come from either.
+D keeps B''s pool, sizes and randomness and removes only artist leakage, so B' -> D measures
+artist leakage alone and D -> C measures how the published partition differs from a random
+artist-disjoint one. Balance: the worst genre is 3.6 clips off its quota on D (B': 0.8,
+C: 6.6), and any two D seeds put 54-64% of clips in different parts (B': 56-62%).
+A first version placed groups by cost alone; it put the biggest clusters in the same part
+on every seed (any two seeds differed on only 25-30% of clips), so D's seed spread would have
+understated split-to-split variation. The random placement fixed that. Known limit: Bob Marley
+(30 reggae clips) fits only in train's reggae quota, so it is in train on every seed.
+
+**Rejected.** `StratifiedGroupKFold` (folds of roughly equal size, not exactly 442/197/290);
+`GroupShuffleSplit` (no genre stratification); replacing C as the main result with D (C is
+the published split that prior work reports, and the project question fixes it as the main
+result; D is context for reading C).
+
+## 2026-11-14: SVM grid widened one step past the old corner (before the test freeze)
+
+**Decision.** `grids.svm` is now C {0.1, 1, 10, 100, 1000} x gamma {scale, 0.0001, 0.001,
+0.01, 0.1} on every split, and the leakage lab uses the same 25 settings.
+
+**Reason.** The old best on C (C = 100, gamma = 0.001) was on the grid corner, so the SVM
+might have been under-tuned, which would overstate the CNN's lead. Widening a grid on the
+valid part is ordinary tuning: test has never been loaded. Result on C: the same setting
+wins (0.458), now with untried neighbours on both sides, so the old corner was a real optimum
+and not a cut-off. This replaces the "not widened" note in the SVM entry of 2026-10-30.
+
+**Rejected.** Leaving the grid fixed (an examiner can fairly call a corner optimum
+under-tuned); widening only on C (the splits must share one protocol).
+
+## 2026-11-14: Test protocol, fixed before the pre-test-freeze tag
+
+**Decision.** After the tag, `python scripts/evaluate_part.py --part test` runs once and scores two
+sets of models, both already fixed:
+
+1. **Final models (the headline).** On split C, every model with its chosen settings refit on
+   train+valid (639 clips). Classical models: the same hyperparameters, scaler refit on
+   train+valid. XGBoost: the same hyperparameters and the same early-stopped tree count. CNN:
+   each run seed retrained (`src.train_cnn --refit_epochs`) for its own best epoch count (8, 26
+   and 13 for seeds 0, 1, 2), normalisation statistics from train+valid, torch seed = seed + run
+   seed as before. **Headline: the final CNN's clip macro-F1 on C test, mean over its three run
+   seeds, with a 95% artist-cluster bootstrap CI** (2,000 resamples of credit clusters, the three
+   runs averaged inside each resample). Beside it: the final SVM, and the paired difference
+   CNN - SVM with its CI and the share of resamples in which the CNN is better.
+2. **Ladder models.** The selected models exactly as trained (train only) on every split: A,
+   B (5 seeds), B' (5), D (5), C; the CNN with one run per split seed, three on C. These answer
+   the leakage question with one identical protocol on every rung, and their test scores can be
+   compared with their valid scores. Reported: mean over seeds with a CI, sd over seeds, and the
+   drops A - B (within-clip leakage), B - B' (duplicates and faulty clips), B' - D (artist
+   leakage), D - C (published partition against random artist-disjoint draws), B' - C.
+
+Also reported for both sets on C: per-genre F1 with clip counts, confusion matrices, and
+**C-strict**: C test without the 25 clips whose credit cluster has a clip in C train.
+
+**Rules after the tag.** Nothing chosen on valid changes: models, settings, window length,
+vote rule, the web app's 0.7 "Not sure" threshold and its served model. If a bug turns up after
+the test run, it is fixed in a commit marked post-freeze, and both the original and the
+corrected numbers are reported. The tag never moves.
+
+**Reason for refitting the headline models.** Chosen by the project owner: the final models
+should use all 639 non-test clips, 45% more than train alone, which matters on a dataset this
+small. The settings, tree count and epoch count are all fixed from validation before the
+test part is read, so the refit adds training data but no new choice made after seeing test.
+
+**Reason for keeping the ladder train-only.** Refitting the CNN on every split would take
+19 extra trainings (about 7 hours on this CPU) for comparisons that need only to be equal
+across splits, not as strong as possible. Train-only ladder models are what was validated.
+
+**Rejected.** Refitting everything (time, see above); the best single CNN seed as the
+headline (choosing the best of three on valid is optimistic); scaling the epoch or tree count
+up with the larger training set (one more rule invented without a way to check it); scoring
+test more than once.

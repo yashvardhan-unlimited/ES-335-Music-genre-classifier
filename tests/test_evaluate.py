@@ -8,7 +8,7 @@ from sklearn.model_selection import GridSearchCV
 from src.utils import load_config
 from src.evaluate import (ClipMacroF1Scorer, _cluster_rows, aggregate_clips, clip_scores,
                           cluster_bootstrap_ci, macro_f1, make_predefined_split,
-                          paired_bootstrap_diff, window_accuracy)
+                          bootstrap_resamples, paired_bootstrap_diff, percentile_ci, window_accuracy)
 
 
 def test_soft_vote_averages_probabilities():
@@ -157,3 +157,25 @@ def test_bootstrap_defaults_come_from_config():
         p = inspect.signature(fn).parameters
         assert (p["n"].default, p["ci"].default, p["seed"].default) == (boot["n"], boot["ci"], load_config()["seed"])
         assert p["cluster_col"].default == "cluster"
+
+
+def _toy(seed=0, n=60):
+    rng = np.random.default_rng(seed)
+    y = rng.integers(0, 3, n)
+    return pd.DataFrame({"y_true": y, "a": np.where(rng.random(n) < 0.7, y, (y + 1) % 3),
+                         "b": np.where(rng.random(n) < 0.5, y, (y + 2) % 3),
+                         "cluster": rng.integers(0, 15, n).astype(str)})
+
+
+def test_bootstrap_resamples_give_the_same_interval_as_cluster_bootstrap_ci():
+    df = _toy()
+    _, low, high = cluster_bootstrap_ci(df, macro_f1, pred_col="a", n=300)
+    assert percentile_ci(bootstrap_resamples(df, macro_f1, pred_col="a", n=300)) == pytest.approx((low, high))
+
+
+def test_subtracting_resamples_is_the_paired_bootstrap():
+    df = _toy()
+    diff, low, high, share = paired_bootstrap_diff(df, "a", "b", macro_f1, n=300)
+    d = bootstrap_resamples(df, macro_f1, pred_col="a", n=300) - bootstrap_resamples(df, macro_f1, pred_col="b", n=300)
+    assert percentile_ci(d) == pytest.approx((low, high))
+    assert np.mean(d > 0) == pytest.approx(share)

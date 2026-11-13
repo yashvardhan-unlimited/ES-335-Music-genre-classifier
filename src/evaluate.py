@@ -136,6 +136,26 @@ def cluster_bootstrap_ci(df: pd.DataFrame, metric_fn: Metric, cluster_col: str =
     return float(metric_fn(y, p)), float(low), float(high)
 
 
+def bootstrap_resamples(df: pd.DataFrame, metric_fn: Metric, cluster_col: str = "cluster",
+                        n: int = BOOT["n"], seed: int = CFG["seed"], true_col: str = "y_true",
+                        pred_col: str = "y_pred") -> np.ndarray:
+    """metric_fn on each of n cluster resamples (one row per clip), as an array of length n.
+
+    The draws depend only on the seed and the clusters in row order, so two runs scored on the same
+    clips in the same order get the same resamples: subtracting their arrays is a paired bootstrap,
+    and averaging arrays over runs gives the bootstrap distribution of a mean over runs.
+    """
+    y, p = df[true_col].to_numpy(), df[pred_col].to_numpy()
+    return np.array([metric_fn(y[r], p[r]) for r in _resamples(_cluster_rows(df, cluster_col), n, seed)])
+
+
+def percentile_ci(stats: np.ndarray, ci: float = BOOT["ci"]) -> tuple[float, float]:
+    """(low, high) percentile interval of a bootstrap distribution."""
+    tail = (100 - ci) / 2
+    low, high = np.percentile(stats, [tail, 100 - tail])
+    return float(low), float(high)
+
+
 def paired_bootstrap_diff(df: pd.DataFrame, pred_col_a: str, pred_col_b: str, metric_fn: Metric,
                           cluster_col: str = "cluster", n: int = BOOT["n"], ci: float = BOOT["ci"],
                           seed: int = CFG["seed"],
