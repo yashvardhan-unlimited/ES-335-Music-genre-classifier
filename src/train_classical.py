@@ -257,7 +257,7 @@ def summary_table(split: str, seed: int) -> pd.DataFrame:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--split", default="C", choices=["A", "B", "Bp", "C"])
+    ap.add_argument("--split", default="C", choices=["A", "B", "Bp", "D", "C"])
     ap.add_argument("--seed", type=int, default=0, help="split seed (B, Bp); ignored for A and C files")
     ap.add_argument("--models", default="dummy,knn,logreg,svm,xgb",
                     help="comma list; 'dummy' = dummy_most_frequent + dummy_stratified")

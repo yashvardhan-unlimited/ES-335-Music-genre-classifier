@@ -5,11 +5,12 @@ hiphop, jazz, metal, pop, reggae, rock), 100 clips each, ~30 s, 22,050 Hz mono.
 Question: how well can models predict a 30 s clip's genre from audio alone, and
 how much of that accuracy survives an artist-aware split that removes leakage?
 - Unit of prediction: one 30 s clip. Training row: one 3 s window (10 per clip).
-- Splits (all with exactly 443/197/290 clips in train/valid/test, so only the
+- Splits (all with exactly 442/197/290 usable clips in train/valid/test (published C is
+  443/197/290; jazz.00054 is unreadable), so only the
   leakage differs, not the training size):
-  A = window-random (4,430/1,970/2,900 windows from all 999 clips),
+  A = window-random (4,420/1,970/2,900 windows from all 999 clips),
   B = clip-random from 999 clips, stratified by genre, seeds 0-4,
-  B' = clip-random from the 930 fault-filtered clips, stratified, seeds 0-4,
+  B' = clip-random from the 929 usable fault-filtered clips, stratified, seeds 0-4,
   C = published fault-filtered artist-disjoint split (MAIN result).
 - Models: Dummy, kNN, logistic regression, SVM-RBF, XGBoost, CNN on log-mels.
 - Primary metric: clip-level macro-F1 (soft vote over 10 windows), with

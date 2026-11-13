@@ -1,4 +1,4 @@
-"""Build splits A, B (seeds), B' (seeds), C and results/split_summary.json.
+"""Build splits A, B (seeds), B' (seeds), D (seeds), C and results/split_summary.json.
 
 Run from repo root: python scripts/make_splits.py
 """
@@ -10,7 +10,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.splits import (PARTS, add_split_C_to_metadata, credit_clusters, make_split_A, make_split_B,  # noqa: E402
-                        make_split_Bprime, make_split_C)
+                        make_split_Bprime, make_split_C, make_split_D)
 from src.utils import get_logger, load_config  # noqa: E402
 
 log = get_logger("make_splits")
@@ -59,6 +59,7 @@ def main() -> None:
     for s in cfg["split_seeds"]:
         splits[f"B_seed{s}"] = make_split_B(s)
         splits[f"Bp_seed{s}"] = make_split_Bprime(s)
+        splits[f"D_seed{s}"] = make_split_D(s)
     splits["C"] = make_split_C()
 
     summary = {name: summarise(win, meta, cfg["genres"]) for name, win in splits.items()}

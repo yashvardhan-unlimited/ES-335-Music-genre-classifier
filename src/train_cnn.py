@@ -230,7 +230,7 @@ def summarise(split: str) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--split", default="C", choices=["A", "B", "Bp", "C"])
+    ap.add_argument("--split", default="C", choices=["A", "B", "Bp", "D", "C"])
     ap.add_argument("--seed", type=int, default=0, help="run seed (torch seed = config seed + this); "
                                                         "also the split file seed for B and Bp")
     ap.add_argument("--epochs", type=int, default=CNN["epochs"])

@@ -1,4 +1,4 @@
-"""Train/valid/test splits A, B, B', C and the locked loader.
+"""Train/valid/test splits A, B, B', D, C and the locked loader.
 
 Every split file has one row per window of the 999 usable clips:
 clip_id, window_idx (0-9), genre, part in {train, valid, test, unused}.
@@ -92,6 +92,104 @@ def make_split_Bprime(seed: int) -> pd.DataFrame:
     return out
 
 
+def _grouped_parts(clips: pd.DataFrame, groups: pd.Series, seed: int, slack: float = 2,
+                   max_tries: int = 50) -> pd.Series:
+    """Assign whole groups to train/valid/test with exactly SIZES clips per part, balancing genres.
+
+    Groups go largest first (random order among equal sizes). Each goes to a random part, weighted
+    by free room, among the parts it fits in without taking any genre more than `slack` clips past
+    its quota (each part's share of every genre); if no part allows that, to the part where it adds
+    least to the squared distance from the quotas. A try that leaves a group with nowhere to fit
+    is redrawn with the next random state.
+    Then single-clip groups are swapped between parts to even out the genres (_balance_by_swaps).
+    """
+    sizes = {p: SIZES[p] for p in PARTS}
+    assert sum(sizes.values()) == len(clips), "D uses the whole pool"
+    share = {p: sizes[p] / len(clips) for p in PARTS}
+    genre_total = clips["genre"].value_counts()
+    members = {g: idx for g, idx in clips.groupby(groups.loc[clips.index].to_numpy()).groups.items()}
+    rng = np.random.default_rng(seed)
+    for _ in range(max_tries):
+        keys = list(members)
+        rng.shuffle(keys)
+        keys.sort(key=lambda k: -len(members[k]))  # stable: equal sizes keep the shuffled order
+        part = pd.Series("", index=clips.index)
+        free = dict(sizes)
+        filled = {p: pd.Series(0.0, index=genre_total.index) for p in PARTS}
+        ok = True
+        for k in keys:
+            idx = members[k]
+            g_counts = clips.loc[idx, "genre"].value_counts()
+            fits = [p for p in PARTS if free[p] >= len(idx)]
+            if not fits:
+                ok = False
+                break
+            # random part, weighted by free room (as plain random assignment would be), among those
+            # where the group keeps every genre within `slack` clips of its quota; if there is none,
+            # the part where it adds least to the squared distance from the quotas
+            quota = {p: share[p] * genre_total[g_counts.index] for p in fits}
+            room = [p for p in fits if (filled[p][g_counts.index] + g_counts <= quota[p] + slack).all()]
+            if room:
+                w = np.array([free[p] for p in room], dtype=float)
+                best = room[rng.choice(len(room), p=w / w.sum())]
+            else:
+                cost = {p: float(((filled[p][g_counts.index] + g_counts - quota[p]) ** 2
+                                  - (filled[p][g_counts.index] - quota[p]) ** 2).sum()) for p in fits}
+                best = min(cost, key=cost.get)
+            part[idx] = best
+            free[best] -= len(idx)
+            filled[best] = filled[best].add(g_counts, fill_value=0)
+        if ok:
+            singles = [members[k][0] for k in keys if len(members[k]) == 1]
+            return _balance_by_swaps(part, clips["genre"], singles, share, genre_total)
+    raise RuntimeError(f"no exact grouped split found in {max_tries} tries")
+
+
+def _balance_by_swaps(part: pd.Series, genre: pd.Series, singles: list, share: dict,
+                      genre_total: pd.Series) -> pd.Series:
+    """Swap single-clip groups of different genres between two parts while that lowers the squared
+    distance of the genre counts from their quotas. Sizes and group-disjointness are unchanged."""
+    part = part.copy()
+    quota = pd.DataFrame({p: share[p] * genre_total for p in PARTS})
+    counts = pd.crosstab(genre, part).reindex(index=quota.index, columns=PARTS, fill_value=0).astype(float)
+    improved = True
+    while improved:
+        improved = False
+        for i, a in enumerate(singles):
+            for b in singles[i + 1:]:
+                pa, pb, ga, gb = part[a], part[b], genre[a], genre[b]
+                if pa == pb or ga == gb:
+                    continue
+                cells = [(ga, pa), (ga, pb), (gb, pa), (gb, pb)]
+                before = sum((counts.at[g, p] - quota.at[g, p]) ** 2 for g, p in cells)
+                moved = {(ga, pa): -1, (ga, pb): 1, (gb, pb): -1, (gb, pa): 1}
+                after = sum((counts.at[g, p] + moved[(g, p)] - quota.at[g, p]) ** 2 for g, p in cells)
+                if after < before - 1e-9:
+                    for (g, p), d in moved.items():
+                        counts.at[g, p] += d
+                    part[a], part[b] = pb, pa
+                    improved = True
+    return part
+
+
+def make_split_D(seed: int) -> pd.DataFrame:
+    """Random artist-disjoint split of the fault-filtered clips (the same pool as B' and C).
+
+    Artist groups are credit clusters (credit_clusters); a clip without an artist is its own group.
+    B' -> D removes only artist leakage (same pool, same sizes); D -> C compares a random
+    artist-disjoint draw with the one published partition.
+    """
+    clips = _usable()
+    in_C = clips["split_C"].notna()
+    groups = credit_clusters(clips["artist"])
+    groups = groups.where(groups.notna(), "__solo_" + clips["clip_id"])
+    clips["part"] = "unused"
+    clips.loc[in_C, "part"] = _grouped_parts(clips[in_C], groups, seed)
+    out = _expand(clips)
+    out.to_csv(SPLITS / f"D_seed{seed}.csv", index=False)
+    return out
+
+
 def make_split_C() -> pd.DataFrame:
     """The published fault-filtered split (Kereliuk, Sturm & Larsen 2015)."""
     clips = _usable()
@@ -111,11 +209,12 @@ def is_test_unlocked() -> bool:
 
 
 def split_file(name: str, seed: int = 0) -> Path:
-    return SPLITS / {"A": "A.csv", "B": f"B_seed{seed}.csv", "Bp": f"Bp_seed{seed}.csv", "C": "C.csv"}[name]
+    return SPLITS / {"A": "A.csv", "B": f"B_seed{seed}.csv", "Bp": f"Bp_seed{seed}.csv",
+                     "D": f"D_seed{seed}.csv", "C": "C.csv"}[name]
 
 
 def load_split(name: str, part: str, seed: int = 0, allow_test: bool = False) -> pd.DataFrame:
-    """Rows (windows) of one part of split name in {A, B, Bp, C}. The test part is locked."""
+    """Rows (windows) of one part of split name in {A, B, Bp, D, C}. The test part is locked."""
     if part == "test" and not (allow_test and is_test_unlocked()):
         raise PermissionError("test set locked until pre-test-freeze tag")
     if part not in (*PARTS, "unused"):

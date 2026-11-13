@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 if [ -x .venv/Scripts/python.exe ]; then PY=.venv/Scripts/python.exe; else PY=.venv/bin/python; fi
 finished() { [ -f "results/val/$1.json" ]; }
 
-for run in A:0 B:0 B:1 B:2 B:3 B:4 Bp:0 Bp:1 Bp:2 Bp:3 Bp:4 C:0; do
+for run in A:0 B:0 B:1 B:2 B:3 B:4 Bp:0 Bp:1 Bp:2 Bp:3 Bp:4 D:0 D:1 D:2 D:3 D:4 C:0; do
   split=${run%%:*}; seed=${run##*:}
   # xgb is written last, so its file means every classical model of this run is done
   finished "${split}_s${seed}_xgb" ||

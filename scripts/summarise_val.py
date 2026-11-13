@@ -1,7 +1,7 @@
 """Collect every validation result into chosen params, a summary table and a figure.
 
 Run from repo root: python scripts/summarise_val.py
-Reads results/val/{split}_s{seed}_{model}.json for splits A (seed 0), B and Bp (seeds 0-4), C
+Reads results/val/{split}_s{seed}_{model}.json for splits A (seed 0), B, Bp and D (seeds 0-4), C
 (classical seed 0, CNN run seeds from config). Writes results/chosen_params.json
 (split -> seed -> model -> params, CNN: best epoch), results/val/summary.csv and
 results/figures/val_summary_splits.png. Missing result files are reported and fail the run.
@@ -20,9 +20,9 @@ CFG = load_config()
 RESULTS = Path(CFG["paths"]["results"])
 VAL_DIR = RESULTS / "val"
 CLASSICAL = ["dummy_most_frequent", "dummy_stratified", "knn", "logreg", "svm", "xgb"]
-SPLIT_SEEDS = {"A": [0], "B": CFG["split_seeds"], "Bp": CFG["split_seeds"], "C": [0]}
+SPLIT_SEEDS = {"A": [0], "B": CFG["split_seeds"], "Bp": CFG["split_seeds"], "D": CFG["split_seeds"], "C": [0]}
 LABELS = {"A": "A\nwindow-random", "B": "B\nclip-random", "Bp": "B'\nclip-random,\nfault-filtered",
-          "C": "C\nartist-disjoint"}
+          "D": "D\nartist-grouped,\nrandom", "C": "C\npublished\nartist-disjoint"}
 log = get_logger("summarise_val")
 
 
@@ -83,7 +83,7 @@ def main() -> None:
 
 
 def plot(agg: pd.DataFrame, out: Path) -> None:
-    """Valid clip macro-F1 per model across splits A -> B -> B' -> C (mean +/- sd over seeds)."""
+    """Valid clip macro-F1 per model across splits A -> B -> B' -> D -> C (mean +/- sd over seeds)."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -106,7 +106,7 @@ def plot(agg: pd.DataFrame, out: Path) -> None:
     ax.set_xlim(-0.4, len(splits) - 0.4)
     ax.set(ylabel="valid clip macro-F1 (soft vote)", ylim=(0, 1),
            title="Validation macro-F1 per model as leakage is removed\n"
-                 "(mean +/- sd over split seeds: B, B' 5 seeds; C CNN 3 run seeds; A one seed)")
+                 "(mean +/- sd over split seeds: B, B', D 5 seeds; C CNN 3 run seeds; A one seed)")
     ax.grid(axis="y", color="#e4e3df", lw=0.8)
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)

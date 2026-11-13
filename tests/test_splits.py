@@ -8,7 +8,7 @@ from src.utils import load_config
 CFG = load_config()
 META = pd.read_csv("splits/metadata.csv").set_index("clip_id")
 SEEDS = CFG["split_seeds"]
-CLIP_SPLITS = [("B", s) for s in SEEDS] + [("Bp", s) for s in SEEDS] + [("C", 0)]
+CLIP_SPLITS = [("B", s) for s in SEEDS] + [("Bp", s) for s in SEEDS] + [("D", s) for s in SEEDS] + [("C", 0)]
 # Published C is artist-disjoint by Sturm's labels but not by gtzan-bind's names;
 # these 13 cross parts (DECISIONS.md). Any change to C would change this set.
 C_CROSSING_ARTISTS = {
@@ -42,8 +42,8 @@ def test_clip_splits_exact_counts_and_whole_clips(name, seed):
         assert (per_clip["first"] == p).sum() == SIZES[p]
 
 
-@pytest.mark.parametrize("name,seed", [("Bp", s) for s in SEEDS] + [("C", 0)])
-def test_Bprime_and_C_use_only_fault_filtered_clips(name, seed):
+@pytest.mark.parametrize("name,seed", [("Bp", s) for s in SEEDS] + [("D", s) for s in SEEDS] + [("C", 0)])
+def test_Bprime_D_and_C_use_only_fault_filtered_clips(name, seed):
     df = read(name, seed)
     used = df.loc[df["part"] != "unused", "clip_id"].unique()
     assert META.loc[used, "split_C"].notna().all()
@@ -111,3 +111,29 @@ def test_credit_clusters_are_what_the_bootstrap_needs_on_C():
     assert credit_clusters(META["artist"]).nunique() == 294 and META["artist"].nunique() == 321
     assert test["cluster"].isin(train).sum() == 25 and test["artist"].isin(set(c.loc[c["split_C"] == "train", "artist"].dropna())).sum() == 22
     assert test["cluster"].nunique() == 113
+
+
+@pytest.mark.parametrize("seed", SEEDS)
+def test_D_is_artist_disjoint_by_credit_cluster(seed):
+    df = read("D", seed).drop_duplicates("clip_id").set_index("clip_id")
+    used = df[df["part"] != "unused"]
+    cluster = credit_clusters(META["artist"]).loc[used.index].dropna()
+    assert (used.loc[cluster.index].groupby(cluster)["part"].nunique() == 1).all()
+
+
+@pytest.mark.parametrize("seed", SEEDS)
+def test_D_genres_are_close_to_proportional(seed):
+    # every genre within 4 clips of its share of each part. Whole artists must stay together, so D
+    # cannot match B' (worst 0.8 clips off); published C misses pop in valid by 6.6
+
+    df = read("D", seed).drop_duplicates("clip_id")
+    used = df[df["part"] != "unused"]
+    total = used["genre"].value_counts()
+    for p in PARTS:
+        got = used.loc[used["part"] == p, "genre"].value_counts().reindex(total.index, fill_value=0)
+        assert ((got - total * SIZES[p] / len(used)).abs() <= 4).all(), (p, got.to_dict())
+
+
+def test_D_seeds_differ():
+    parts = [read("D", s).drop_duplicates("clip_id").set_index("clip_id")["part"] for s in SEEDS[:2]]
+    assert (parts[0] != parts[1]).mean() > 0.3
