@@ -56,6 +56,8 @@
 
 **Config file.** `config.yaml`: the single place where all constants (seed, audio settings, sizes, paths) are defined.
 
+**Confounding.** Two changes made at once, so an effect cannot be pinned on either. The old B′ → C step removed artist leakage and switched to one fixed partition at the same time; split D separates the two.
+
 **Confusion matrix.** K x K table counting clips of each true class (rows) by predicted class (columns); the diagonal holds correct predictions.
 
 **Connected component.** A set of items linked by chains of direct links. Here, artist credits joined through shared names: A and C are in one component if A shares a name with B and B with C.
@@ -63,6 +65,8 @@
 **Controlled experiment.** An experiment that changes one factor (here the split) and holds everything else fixed (models, grids, metric, sizes, seeds), so differences in the outcome can be attributed to that factor.
 
 **Convolution (2-D).** Sliding a small learned filter over an image and computing, at every position, a weighted sum of the local patch; the output is a feature map showing where the pattern occurs.
+
+**Corner optimum.** A grid-search winner on the edge of the searched grid, so the true best may lie outside it. Our SVM on C was at a corner of the old 4 × 4 grid; widening it showed the same cell still wins.
 
 **Credit cluster.** All artist credits linked by a shared performer. This project's unit for the artist bootstrap, from `splits.credit_clusters`.
 
@@ -125,6 +129,8 @@
 **Gamma (RBF).** The inverse width of the RBF kernel's Gaussian bumps. Large gamma makes each support vector influence only its close neighbourhood (risk of overfitting); small gamma gives smooth, nearly linear boundaries. sklearn's "scale" equals 1/(number of features x variance of X), 0.0175 on our standardised features.
 
 **Garden of forking paths.** Gelman and Loken's name for the many analysis choices that could have been made differently after seeing the data; even without deliberate fishing, they make results look stronger than they are.
+
+**Genre quota.** The ideal number of clips of one genre in one part: the part's share of the pool times the genre's clip count (e.g. reggae in D train: 442/929 × 86 ≈ 40.9). Split D keeps every genre close to its quota.
 
 **Gini impurity.** 1 minus the sum of squared class shares in a node: the chance two random points from the node have different labels. 0 for a pure node, 0.9 for an even 10-class mix.
 
@@ -299,6 +305,8 @@
 **Spectral roll-off.** The frequency below which a fixed share (85%) of a frame's spectral energy lies.
 
 **Split A / B / B' / C.** Our four splits: A random windows; B random clips; B' random clips from the fault-filtered pool; C the published artist-filtered split. Same sizes, different leakage.
+
+**Split D.** Random artist-grouped splits of the 929 fault-filtered clips, seeds 0–4, 442/197/290 clips, with every credit cluster inside one part. B′ − D measures artist leakage alone; D − C measures the published partition.
 
 **Standardisation.** Rescaling each feature to mean 0 and standard deviation 1 using training-set statistics, so no feature dominates by its units.
 

@@ -262,6 +262,14 @@ good is a mild form of tuning on valid by hand. It is recorded in
 `DECISIONS.md`. Given that C = 0.1 and C = 100 at gamma = 0.001 differ by
 only 0.0016, there is little reason to expect a large gain.
 
+> **Update (2026-11-14, lesson 16).** Before the test freeze we widened the grid to
+> C {0.1, 1, 10, 100, 1000} × gamma {scale, 0.0001, 0.001, 0.01, 0.1} on every split and retuned
+> every SVM. On C the same cell wins (C = 100, gamma = 0.001, 0.458), now with neighbours on all
+> sides, so the corner was a real optimum. The reasoning above against widening was too strict:
+> widening on the valid part before the test part is ever loaded is ordinary tuning (DECISIONS.md,
+> "SVM grid widened"). The numbers in this lesson are from the old 16-setting grid; the current
+> heatmap `results/figures/val_svm_heatmap.png` has 25 cells.
+
 **Even the best SVM fits training far better than valid**: 0.949 window
 accuracy on train vs 0.433 on valid (both from `predict`). This gap is the
 artist-disjoint generalisation gap; it would look much smaller on split A.
@@ -619,16 +627,16 @@ With 54 rounds and one tree per class per round, the chosen model has
 
 ### `src/train_classical.py`
 
-- **L53–70 `valid_report`**: extracted from the old `tune_and_score` so
+- **L54–71 `valid_report`**: extracted from the old `tune_and_score` so
   that the SVM (through `GridSearchCV`) and XGBoost (through its own loop)
   are scored by **the same code**: soft-vote clip predictions, clip
   macro-F1 and accuracy, majority-vote F1, window accuracy, per-genre F1,
   confusion counts in config genre order.
-- **L73–103 `tune_and_score`**: unchanged logic: grid search on the
+- **L74–104 `tune_and_score`**: unchanged logic: grid search on the
   predefined train -> valid fold, refit the winner on train only with one
   BLAS thread, compare its valid F1 with the grid-search score (a mismatch
   logs a warning), then `valid_report`.
-- **L106–141 `tune_xgb`**:
+- **L107–142 `tune_xgb`**:
   - L114–115: grid and fixed settings default to config; the test passes
     small ones.
   - L116–119: genres become integer codes 0..9 **in config order**
@@ -652,18 +660,18 @@ With 54 rounds and one tree per class per round, the chosen model has
     `best_iteration`, `n_trees`, `fixed_params`, `curve`.
   - No refit step: the model that produced the valid probabilities *is*
     the trained-on-train model.
-- **L176–213 `plot_svm_heatmap`**: L183–185 place `"scale"` at its numeric
+- **L177–214 `plot_svm_heatmap`**: L183–185 place `"scale"` at its numeric
   value so columns are in true gamma order; L192 sets the colour range to
   the grid's own range rounded out to 0.05 (with a 0 to 0.6 range every cell
   looked the same blue); L198–202 mark the best cell with a bold label and
   an orange frame. Sequential single-hue blue colour map, light = low.
-- **L216–242 `plot_xgb_curve`**: train and valid mlogloss per round,
+- **L217–243 `plot_xgb_curve`**: train and valid mlogloss per round,
   dashed line at the best round (`best_iteration + 1`, since rounds are
   counted from 1 on the x axis), direct line labels instead of a legend.
-- **L245–255 `summary_table`**: reads `results/val/{split}_s{seed}_{name}.json`
+- **L246–256 `summary_table`**: reads `results/val/{split}_s{seed}_{name}.json`
   for every model in `MODELS` plus `xgb`, so the printed table always
   covers all models that have results.
-- **L258 `main`**: L276 routes `xgb` to `tune_xgb` and every other model to
+- **L259 `main`**: L276 routes `xgb` to `tune_xgb` and every other model to
   `tune_and_score`; L278–280 compute and store `gamma_scale_value` for the
   SVM; L285–291 draw the figures for the models that ran.
 
@@ -843,6 +851,8 @@ before running it, ideally justified by something other than the valid
 score (e.g. "gamma = 0.0001 makes the kernel almost constant, see the
 kernel table"). The gap between the two gamma = 0.001 cells (0.0016)
 suggests little to gain.
+*Update (lesson 16):* we later did exactly that: fixed the wider grid in config before the test
+freeze and reran every split. The winner on C did not change.
 
 **Q10. Is "boosting is gradient descent in function space" just a
 metaphor?**

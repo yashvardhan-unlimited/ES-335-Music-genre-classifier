@@ -38,19 +38,26 @@ Only `genres_original/` is used; Kaggle's precomputed CSVs and images are ignore
 With `make` (not installed by default on Windows):
 
 ```bash
-make all     # data -> splits -> features -> tune -> analysis -> export -> site
+make all     # data -> splits -> features -> tune -> refit -> analysis -> valid -> export
+make test    # the one-time test run; refuses without the pre-test-freeze tag
 make tests   # pytest
 ```
-`export` and `site` are not implemented yet. Without `make`, from the repo root
+Without `make`, from the repo root
 (`python` = `.venv/Scripts/python.exe` on Windows, `.venv/bin/python` elsewhere):
 
 ```bash
-python scripts/make_splits.py                  # splits
+python scripts/make_splits.py                  # splits A, B, B', D, C
 python scripts/extract_features.py             # features
 bash scripts/tune_all.sh                       # all models on all splits; several hours
+python -m src.train_cnn --split C --seed 0 --refit_epochs 8    # final CNNs on train+valid
+python -m src.train_cnn --split C --seed 1 --refit_epochs 26   # (epochs = each seed's best
+python -m src.train_cnn --split C --seed 2 --refit_epochs 13   #  validation epoch)
 python scripts/analysis_val.py                 # validation analyses
 python scripts/analysis_errors.py --parts 4
 python scripts/leakage_lab.py
+python scripts/evaluate_part.py --part valid   # rebuilt valid predictions + artist-bootstrap CIs
+python scripts/evaluate_part.py --part test    # once, after git tag pre-test-freeze (DECISIONS.md)
+python scripts/export_site_data.py             # docs/data/site.json + docs/img for the website
 python -m pytest -q
 python scripts/check_lesson_refs.py            # lesson line references still point at their code
 ```

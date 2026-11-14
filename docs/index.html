@@ -1,15 +1,554 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GTZAN Genre Classifier</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; line-height: 1.5; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GTZAN Genre Leakage</title>
+<meta name="description" content="How well can models predict a music clip's genre from audio alone, and how much of that accuracy survives once artist leakage is removed?">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --s1: #2a78d6; --s1-soft: #86b6ef; --wash: rgba(42,120,214,0.10); --accent: #eb6834;
+  --seq: #cde2fb,#b7d3f6,#9ec5f4,#86b6ef,#6da7ec,#5598e7,#3987e5,#2a78d6,#256abf,#1c5cab,#184f95,#104281,#0d366b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --s1: #3987e5; --s1-soft: #1c5cab; --wash: rgba(57,135,229,0.14); --accent: #d95926;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --s1: #3987e5; --s1-soft: #1c5cab; --wash: rgba(57,135,229,0.14); --accent: #d95926;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 60rem; margin: 0 auto; padding: 0 16px 4rem; }
+header.top { max-width: 60rem; margin: 0 auto; padding: 2.5rem 16px 1rem; }
+nav { position: sticky; top: 0; z-index: 5; background: var(--page); border-bottom: 1px solid var(--border); }
+nav ul { max-width: 60rem; margin: 0 auto; padding: 0.5rem 16px; display: flex; gap: 1.1rem; list-style: none;
+  overflow-x: auto; white-space: nowrap; font-size: 0.9rem; }
+nav a { color: var(--ink-2); text-decoration: none; }
+nav a:hover, nav a:focus { color: var(--ink); text-decoration: underline; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.2; margin: 0 0 0.6rem; }
+h2 { font-size: 1.45rem; margin: 3rem 0 0.6rem; scroll-margin-top: 3rem; }
+h3 { font-size: 1.1rem; margin: 1.6rem 0 0.4rem; }
+p, li { color: var(--ink); max-width: 44rem; }
+.lede { font-size: 1.15rem; color: var(--ink-2); max-width: 44rem; }
+.muted, figcaption, .note { color: var(--ink-2); font-size: 0.92rem; }
+a { color: var(--s1); }
+code { font-size: 0.88em; background: var(--wash); padding: 0.1em 0.3em; border-radius: 4px; }
+pre { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem;
+  overflow-x: auto; font-size: 0.85rem; }
+.banner { border: 1px solid var(--accent); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 1rem 0;
+  background: var(--surface); font-size: 0.95rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem; margin: 1rem 0; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1rem; align-items: stretch; }
+@media (max-width: 680px) { .hero { grid-template-columns: 1fr; } }
+.hero-fig { font-size: clamp(3rem, 10vw, 4.4rem); font-weight: 600; line-height: 1; margin: 0.3rem 0; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.8rem; }
+.tile .label { color: var(--ink-2); font-size: 0.88rem; }
+.tile .value { font-size: 1.6rem; font-weight: 600; }
+.tile .sub { color: var(--muted); font-size: 0.82rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.6rem 0; align-items: center; }
+.controls button { font: inherit; font-size: 0.9rem; border: 1px solid var(--border); background: var(--surface);
+  color: var(--ink); border-radius: 999px; padding: 0.3rem 0.8rem; cursor: pointer; }
+.controls button[aria-pressed="true"] { background: var(--s1); border-color: var(--s1); color: #fff; }
+.controls button:focus-visible, select:focus-visible, .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { font: inherit; font-size: 0.9rem; padding: 0.3rem 0.5rem; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--ink); max-width: 100%; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { fill: var(--ink-2); font: 12px system-ui, -apple-system, "Segoe UI", sans-serif; }
+.tick text { fill: var(--muted); font-variant-numeric: tabular-nums; }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.baseline { stroke: var(--axis); stroke-width: 1; }
+.tooltip { position: fixed; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.45rem 0.6rem; font-size: 0.85rem; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  opacity: 0; transition: opacity 0.1s; max-width: 18rem; z-index: 10; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--border); }
+th { color: var(--ink-2); font-weight: 600; }
+.table-wrap { overflow-x: auto; }
+details summary { cursor: pointer; color: var(--ink-2); font-size: 0.9rem; margin-top: 0.5rem; }
+.two { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.2rem; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+.cm-wrap { overflow-x: auto; }
+.cell { cursor: pointer; }
+.cliplist { max-height: 16rem; overflow-y: auto; font-size: 0.88rem; }
+.cliplist li { font-variant-numeric: tabular-nums; }
+figure { margin: 1.2rem 0; }
+figure img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps li { counter-increment: s; position: relative; padding-left: 2.2rem; margin: 0.6rem 0; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 0.05rem; width: 1.6rem; height: 1.6rem;
+  border-radius: 50%; background: var(--wash); color: var(--s1); font-weight: 600; text-align: center; line-height: 1.6rem; font-size: 0.85rem; }
+footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+.theme-toggle { float: right; font: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border);
+  color: var(--ink-2); border-radius: 999px; padding: 0.2rem 0.7rem; cursor: pointer; }
+</style>
 </head>
 <body>
-  <h1>GTZAN genre classifier: coming soon</h1>
-  <p>How well can models predict a 30-second clip's genre from audio alone, and how much of that accuracy survives an artist-aware split?</p>
+<header class="top">
+  <button class="theme-toggle" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
+  <p class="muted">ES 335 course project · GTZAN music genre classification</p>
+  <h1>How much of a genre classifier's accuracy is really about genre?</h1>
+  <p class="lede">We predict the genre of a 30-second music clip from its audio alone, then ask how much of that
+    accuracy survives once the test set contains no artist the model heard in training.</p>
+  <div id="partBanner"></div>
+</header>
+<nav aria-label="Sections"><ul>
+  <li><a href="#answer">Answer</a></li><li><a href="#ladder">Leakage ladder</a></li>
+  <li><a href="#models">Models</a></li><li><a href="#errors">Errors</a></li>
+  <li><a href="#data">Data</a></li><li><a href="#method">Method</a></li>
+  <li><a href="#limits">Limitations</a></li><li><a href="#reproduce">Reproduce</a></li>
+</ul></nav>
+<main>
+
+<section id="answer">
+  <h2>The answer in one number</h2>
+  <div class="hero">
+    <div class="card">
+      <div class="muted" id="heroLabel">Clip-level macro-F1 of the CNN on the artist-disjoint split C</div>
+      <div class="hero-fig" id="heroValue">…</div>
+      <div class="muted" id="heroCI"></div>
+      <p class="note" id="heroText"></p>
+    </div>
+    <div class="tiles" id="tiles"></div>
+  </div>
+  <p id="answerText"></p>
+</section>
+
+<section id="ladder">
+  <h2>The leakage ladder: same models, same sizes, less leakage</h2>
+  <p>Every split below has exactly 442 training, 197 validation and 290 test clips, and every model is tuned the same
+    way on each. Only what can leak from training into the test set changes, one step at a time. So the fall from one
+    rung to the next estimates how much that kind of leakage was inflating the score.</p>
+  <div class="card">
+    <div class="controls" id="ladderModels" role="group" aria-label="Choose a model"></div>
+    <div id="ladderChart"></div>
+    <p class="note" id="ladderNote"></p>
+    <div class="table-wrap"><table id="dropTable"></table></div>
+    <details><summary>Table view of the chart</summary><div class="table-wrap"><table id="ladderTable"></table></div></details>
+  </div>
+  <div class="table-wrap"><table id="splitTable"></table></div>
+</section>
+
+<section id="models">
+  <h2>Every model on split C</h2>
+  <p id="modelsIntro"></p>
+  <div class="card"><div id="modelChart"></div>
+    <p class="note" id="pairedNote"></p>
+    <details><summary>Table view</summary><div class="table-wrap"><table id="modelTable"></table></div></details>
+  </div>
+</section>
+
+<section id="errors">
+  <h2>Where the model goes wrong</h2>
+  <p>Rows are the true genre, columns the predicted genre; each row is coloured by the share of that genre's clips.
+    <strong>Click or tap a cell</strong> to list the clips in it, most confident first. Confident mistakes are the
+    interesting ones.</p>
+  <div class="card">
+    <div class="controls"><label for="cmModel" class="muted">Model&nbsp;</label><select id="cmModel"></select></div>
+    <div class="two">
+      <div class="cm-wrap" id="cmChart"></div>
+      <div>
+        <h3 id="cellTitle">Pick a cell</h3>
+        <p class="note" id="cellNote">The list shows each clip's id and the model's top score.</p>
+        <ol class="cliplist" id="cellList"></ol>
+      </div>
+    </div>
+    <h3>F1 per genre</h3>
+    <div id="genreChart"></div>
+    <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
+      clip moves a genre's F1 by several points, so read small differences as noise.</p>
+  </div>
+</section>
+
+<section id="data">
+  <h2>Data</h2>
+  <p><strong>GTZAN</strong> (Tzanetakis &amp; Cook, 2002): 1,000 clips of 30 s, 100 per genre, 22,050 Hz mono, in
+    10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. We downloaded it from a
+    Kaggle mirror. The audio is not republished here.</p>
+  <ul>
+    <li id="dataAudit"></li>
+    <li>Sturm (2013) listened to every clip and found exact duplicates, the same song in several clips, mislabels,
+      distorted clips, and many clips per artist. A random split puts the same artist, and sometimes the same
+      recording, on both sides.</li>
+    <li>Artist names come from <code>gtzan-bind</code>. Credits that share a performer ("Bob Marley &amp; The
+      Wailers" and "Bob Marley") count as one artist cluster.</li>
+  </ul>
+  <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
+    <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+  <ol class="steps">
+    <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
+      every window and the clip's prediction is the average of its ten probability vectors (soft vote).</li>
+    <li><strong>Features.</strong> 57 handcrafted numbers per window (20 MFCC means and variances, chroma, spectral
+      shape, zero-crossing rate, loudness, harmonic/percussive energy, clip tempo) for the classical models; a
+      128-band log-mel spectrogram for the CNN.</li>
+    <li><strong>Models.</strong> Two dummy floors (most frequent; random by class frequency), k-nearest neighbours,
+      logistic regression, an RBF SVM, XGBoost, and a small 4-block CNN trained from scratch with random crops and
+      SpecAugment.</li>
+    <li><strong>Tuning.</strong> Every hyperparameter grid is scored on the validation part only, by clip macro-F1,
+      never by k-fold over windows (which would put a clip's windows on both sides). Scalers and normalisation
+      statistics are fitted on training data only.</li>
+    <li><strong>Metric.</strong> Clip-level macro-F1: F1 per genre, averaged, so every genre counts equally. 95%
+      intervals come from a bootstrap that resamples <em>artists</em>, because clips by one artist are not
+      independent.</li>
+    <li><strong>Test lock.</strong> Code refuses to read the test part until a git tag, <code>pre-test-freeze</code>,
+      exists. The tag is created only after every choice, including which models count as final, is written down,
+      and test is then scored once.</li>
+  </ol>
+  <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
+    <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
+  <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
+    <figcaption>More training artists, better scores on new artists: neither model has levelled off at 442 clips.</figcaption></figure>
+</section>
+
+<section id="limits">
+  <h2>Limitations: what this does not show</h2>
+  <ul>
+    <li><strong>One small, old dataset.</strong> GTZAN is about 1,000 clips, mostly from around 2000, partly from radio
+      and CDs of uneven quality. A score here says little about today's streaming catalogue.</li>
+    <li><strong>One label per clip, ten Western genres.</strong> Real songs mix genres, and the labels themselves are
+      one person's judgement; some are wrong (Sturm 2013).</li>
+    <li><strong>Artist labels are matched automatically.</strong> They come from gtzan-bind, not from listening, so
+      some links between clips may be missed. Split C still shares artist clusters between train and test for a few
+      test clips by these names; the C-strict figure above removes them.</li>
+    <li><strong>"Audio alone" can still mean shortcuts.</strong> We keep absolute loudness on purpose, and recording
+      quality, mastering and era all differ by genre in GTZAN. The model may use them; we have not separated those
+      cues from genre.</li>
+    <li><strong>The validation part made many choices</strong> (hyperparameters, CNN epochs, XGBoost trees, window
+      length, voting), so validation scores are optimistic. That is why the headline is a test score.</li>
+    <li><strong>Unequal runs.</strong> The CNN has three training runs on C; the classical models are deterministic,
+      one run each. The random splits B, B′ and D have five draws each; C is one published draw.</li>
+    <li><strong>One fixed split is noisy.</strong> The five random artist-disjoint draws (D) differ a lot from each
+      other, so a single split, including C, can land anywhere in that range.</li>
+  </ul>
+</section>
+
+<section id="demo">
+  <h2>Local demo app</h2>
+  <p>A Streamlit app in the repository classifies an uploaded clip (WAV, MP3, FLAC, OGG, AAC, M4A) with the CNN and
+    shows the scores per genre. Below 70% confidence it says "Not sure" (that threshold was chosen on validation). It
+    runs on your own computer only, because the model weights and GTZAN audio cannot be published here:
+    <code>streamlit run app.py</code>.</p>
+</section>
+
+<section id="reproduce">
+  <h2>Reproduce</h2>
+  <pre>git clone https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier
+cd ES-335-Music-genre-classifier
+make setup data splits features tune     # download, audit, splits, features, tune everything (hours on a CPU)
+python scripts/evaluate_part.py --part valid
+python scripts/evaluate_part.py --part test     # refuses to run without the pre-test-freeze tag
+python scripts/export_site_data.py              # numbers for this page
+make tests</pre>
+  <p class="muted">Every number on this page is read from <code>data/site.json</code>, which
+    <code>scripts/export_site_data.py</code> writes from the result files. Design decisions and the rejected
+    alternatives are in <code>DECISIONS.md</code>; AI use is disclosed in <code>AI_USE.md</code>.</p>
+  <h3>References</h3>
+  <ul class="muted">
+    <li>G. Tzanetakis and P. Cook, "Musical genre classification of audio signals," IEEE Trans. Speech and Audio Processing, 2002.</li>
+    <li>B. L. Sturm, "The GTZAN dataset: its contents, its faults, their effects on evaluation, and its future use," arXiv:1306.1461, 2013.</li>
+    <li>C. Kereliuk, B. L. Sturm and J. Larsen, "Deep learning and music adversaries," IEEE Trans. Multimedia, 2015 (fault-filtered split).</li>
+  </ul>
+</section>
+</main>
+<footer>ES 335 · Data: GTZAN (not redistributed) · <span id="generated"></span></footer>
+<div class="tooltip" id="tip" role="tooltip"></div>
+
+<script>
+"use strict";
+const NS = "http://www.w3.org/2000/svg";
+const $ = (id) => document.getElementById(id);
+const fmt = (x, d = 3) => (x == null ? "–" : Number(x).toFixed(d));
+const pct = (x) => (x == null ? "–" : Math.round(100 * x) + "%");
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const SPLIT_ORDER = ["A", "B", "Bp", "D", "C"];
+const LADDER_MODELS = ["cnn", "svm", "xgb", "logreg", "knn"];
+let S = null;
+
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function html(tag, attrs = {}, text) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text != null) e.textContent = text;
+  return e;
+}
+const tip = $("tip");
+function showTip(evt, lines) {
+  tip.replaceChildren(...lines.map((l, i) => { const d = html("div", {}, l); if (i === 0) d.style.fontWeight = 600; return d; }));
+  const x = Math.min(evt.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+  const y = Math.min(evt.clientY + 14, window.innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px"; tip.style.opacity = 1;
+}
+function hideTip() { tip.style.opacity = 0; }
+function bindTip(node, lines) {
+  node.addEventListener("pointermove", (e) => showTip(e, lines));
+  node.addEventListener("pointerleave", hideTip);
+  node.addEventListener("focus", (e) => { const r = node.getBoundingClientRect(); showTip({ clientX: r.right, clientY: r.top }, lines); });
+  node.addEventListener("blur", hideTip);
+}
+function table(node, head, rows) {
+  node.replaceChildren();
+  const tr = html("tr"); head.forEach((h) => tr.appendChild(html("th", { scope: "col" }, h)));
+  const thead = html("thead"); thead.appendChild(tr); node.appendChild(thead);
+  const tb = html("tbody");
+  rows.forEach((r) => { const t = html("tr"); r.forEach((c) => t.appendChild(html("td", {}, c))); tb.appendChild(t); });
+  node.appendChild(tb);
+}
+const chartWidth = (node) => Math.max(300, Math.min(node.clientWidth || 600, 900));
+
+/* ---------- answer ---------- */
+function renderAnswer() {
+  const h = S.headline, c = S.c, test = S.part === "test";
+  $("partBanner").replaceChildren();
+  if (!test) {
+    const b = html("div", { class: "banner" });
+    b.textContent = "Preview: these are validation scores. The test set is still locked; this page will show test " +
+      "scores once the one-time test run is done.";
+    $("partBanner").appendChild(b);
+  }
+  $("heroLabel").textContent = `Clip-level macro-F1 of the CNN on the artist-disjoint split C (${test ? "test" : "validation"}, ${h.n_clips} clips)`;
+  $("heroValue").textContent = fmt(h.macro_f1, 2);
+  $("heroCI").textContent = `95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)} · mean of ${h.n_runs} training runs`;
+  $("heroText").textContent = `Macro-F1 runs from 0 to 1. A random guess that matches the genre frequencies scores about ${fmt(h.floor, 2)}. ` +
+    (S.fit_on_C === "train+valid" ? "Final models were refit on training plus validation clips before the single test run."
+      : "Models trained on the training part only.");
+  const svm = c.models.find((m) => m.model === "svm");
+  const strict = c.strict.cnn;
+  const ladB = S.ladder.cnn && S.ladder.cnn.B;
+  const tiles = [
+    ["Best classical model (RBF SVM)", fmt(svm.macro_f1, 2), `95% interval ${fmt(svm.ci_low, 2)} to ${fmt(svm.ci_high, 2)}`],
+    ["Chance-level floor", fmt(h.floor, 2), "stratified dummy on the same clips"],
+    ["CNN on C-strict", strict ? fmt(strict.macro_f1, 2) : "–", strict ? `${strict.n_clips} clips with no artist cluster in train` : ""],
+    ["CNN on a leaky random split (B)", ladB ? fmt(ladB.mean, 2) : "–", "same sizes, artists shared, train-only models"],
+  ];
+  const t = $("tiles"); t.replaceChildren();
+  tiles.forEach(([l, v, s]) => {
+    const d = html("div", { class: "card tile" });
+    d.append(html("div", { class: "label" }, l), html("div", { class: "value" }, v), html("div", { class: "sub" }, s));
+    t.appendChild(d);
+  });
+  const p = c.paired["cnn - svm"];
+  const dropBC = S.drops["cnn: Bp - C"];
+  $("answerText").textContent =
+    `On clips by artists it never heard, the CNN reaches a macro-F1 of ${fmt(h.macro_f1, 2)}: far above chance, far from perfect. ` +
+    (p ? `It beats the best classical model by ${fmt(p.diff, 2)} (paired 95% interval ${fmt(p.ci_low, 2)} to ${fmt(p.ci_high, 2)}). ` : "") +
+    (dropBC ? `Trained the same way on a random clip split of the same clean pool (B′), where artists are shared, the CNN scores ${fmt(dropBC.diff, 2)} higher than on C: that is how much a careless split would have flattered it.` : "");
+}
+
+/* ---------- ladder ---------- */
+let ladderModel = "cnn";
+function renderLadderButtons() {
+  const g = $("ladderModels"); g.replaceChildren();
+  LADDER_MODELS.filter((m) => S.ladder[m]).forEach((m) => {
+    const b = html("button", { type: "button", "aria-pressed": String(m === ladderModel) }, S.labels[m]);
+    b.addEventListener("click", () => { ladderModel = m; renderLadderButtons(); renderLadder(); });
+    g.appendChild(b);
+  });
+}
+function renderLadder() {
+  const node = $("ladderChart"), W = chartWidth(node), H = 340, m = { l: 44, r: 16, t: 16, b: 58 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+    "aria-label": `${S.labels[ladderModel]}: macro-F1 on each split, with 95% intervals and each run as a small dot` });
+  const lad = S.ladder[ladderModel], floor = S.ladder.dummy_stratified;
+  const x = (i) => m.l + (i + 0.5) * (W - m.l - m.r) / SPLIT_ORDER.length;
+  const y = (v) => m.t + (1 - v) * (H - m.t - m.b);
+  for (let v = 0; v <= 1.0001; v += 0.2) {
+    const g = el("g", { class: "tick" }, svg);
+    el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: v === 0 ? "baseline" : "gridline" }, g);
+    el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end" }, g).textContent = v.toFixed(1);
+  }
+  const fl = SPLIT_ORDER.map((s, i) => floor && floor[s] ? [x(i), y(floor[s].mean)] : null).filter(Boolean);
+  if (fl.length) {
+    el("polyline", { points: fl.map((p) => p.join(",")).join(" "), fill: "none", stroke: css("--muted"), "stroke-width": 1.5 }, svg);
+    el("text", { x: fl[fl.length - 1][0] + 6, y: fl[fl.length - 1][1] - 6, "text-anchor": "end" }, svg).textContent = "chance floor";
+  }
+  const pts = [];
+  SPLIT_ORDER.forEach((s, i) => {
+    const info = S.splits[s];
+    const lab = el("text", { x: x(i), y: H - m.b + 20, "text-anchor": "middle" }, svg);
+    lab.textContent = info.short; lab.style.fontWeight = 600; lab.style.fill = css("--ink");
+    el("text", { x: x(i), y: H - m.b + 36, "text-anchor": "middle" }, svg).textContent = info.name.split(",")[0];
+    const d = lad[s]; if (!d) return;
+    pts.push([x(i), y(d.mean)]);
+    el("line", { x1: x(i), x2: x(i), y1: y(d.ci_low), y2: y(d.ci_high), stroke: css("--s1"), "stroke-width": 2, "stroke-linecap": "round" }, svg);
+    [d.ci_low, d.ci_high].forEach((v) => el("line", { x1: x(i) - 6, x2: x(i) + 6, y1: y(v), y2: y(v), stroke: css("--s1"), "stroke-width": 2, "stroke-linecap": "round" }, svg));
+    d.runs.forEach((r, k) => {
+      const dot = el("circle", { cx: x(i) + 16 + (k % 3) * 7, cy: y(r.macro_f1), r: 4, fill: css("--s1-soft"),
+        stroke: css("--surface"), "stroke-width": 2, tabindex: 0 }, svg);
+      bindTip(dot, [`${info.short}, run ${r.seed}`, `macro-F1 ${fmt(r.macro_f1)}`]);
+    });
+  });
+  if (pts.length > 1) el("polyline", { points: pts.map((p) => p.join(",")).join(" "), fill: "none", stroke: css("--s1"), "stroke-width": 2, "stroke-linejoin": "round", opacity: 0.35 }, svg);
+  SPLIT_ORDER.forEach((s, i) => {
+    const d = lad[s]; if (!d) return;
+    const dot = el("circle", { cx: x(i), cy: y(d.mean), r: 6.5, fill: css("--s1"), stroke: css("--surface"), "stroke-width": 2, tabindex: 0 }, svg);
+    bindTip(dot, [`${S.splits[s].short}: ${S.splits[s].name}`, `macro-F1 ${fmt(d.mean)} (95% ${fmt(d.ci_low)} to ${fmt(d.ci_high)})`,
+      d.n_runs > 1 ? `mean of ${d.n_runs} runs, sd ${fmt(d.sd)}` : "one run",
+      `${pct(S.splits[s].test_share_artist_in_train)} of test clips share an artist cluster with train`]);
+    el("text", { x: x(i) - 10, y: y(d.mean) + 4, "text-anchor": "end" }, svg).textContent = fmt(d.mean, 2);
+  });
+  node.replaceChildren(svg);
+  $("ladderNote").textContent = "Big dot: mean over runs, with its 95% bootstrap interval. Small dots: the individual runs " +
+    "(different random splits for B, B′ and D; different CNN training seeds on C). Grey line: the chance floor.";
+  const rows = [["A", "B", "Within-clip leakage (a clip's own windows in train)"], ["B", "Bp", "Duplicates, mislabels, distortions"],
+    ["Bp", "D", "Artist leakage"], ["D", "C", "Published split vs random artist-disjoint draws"]]
+    .map(([a, b, what]) => { const d = S.drops[`${ladderModel}: ${a} - ${b}`];
+      return [`${S.splits[a].short} → ${S.splits[b].short}`, what, d ? fmt(-d.diff) : "–", d ? `${fmt(-d.ci_high)} to ${fmt(-d.ci_low)}` : "–"]; });
+  table($("dropTable"), ["Step", "What it removes", "Change in macro-F1", "95% interval"], rows);
+  table($("ladderTable"), ["Split", "Mean macro-F1", "95% interval", "Runs", "sd over runs"],
+    SPLIT_ORDER.filter((s) => lad[s]).map((s) => [S.splits[s].short + " " + S.splits[s].name, fmt(lad[s].mean),
+      `${fmt(lad[s].ci_low)} to ${fmt(lad[s].ci_high)}`, String(lad[s].n_runs), fmt(lad[s].sd)]));
+}
+function renderSplitTable() {
+  table($("splitTable"), ["Split", "How it is built", "Test clips sharing an artist with train"],
+    SPLIT_ORDER.map((s) => [S.splits[s].short, S.splits[s].description, pct(S.splits[s].test_share_artist_in_train)]));
+}
+
+/* ---------- models on C ---------- */
+function renderModels() {
+  const ms = S.c.models, node = $("modelChart"), W = chartWidth(node);
+  const rowH = 34, m = { l: Math.min(170, W * 0.38), r: 56, t: 8, b: 28 }, H = m.t + m.b + rowH * ms.length;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Macro-F1 of every model on split C with 95% intervals" });
+  const x = (v) => m.l + v * (W - m.l - m.r);
+  for (let v = 0; v <= 1.0001; v += 0.2) {
+    const g = el("g", { class: "tick" }, svg);
+    el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - m.b, class: v === 0 ? "baseline" : "gridline" }, g);
+    el("text", { x: x(v), y: H - m.b + 16, "text-anchor": "middle" }, g).textContent = v.toFixed(1);
+  }
+  ms.forEach((d, i) => {
+    const cy = m.t + i * rowH + rowH / 2, bh = 14;
+    el("text", { x: m.l - 10, y: cy + 4, "text-anchor": "end" }, svg).textContent = d.label;
+    const w = Math.max(0, x(d.macro_f1) - x(0));
+    const r = Math.min(4, w / 2);
+    el("path", { d: `M${x(0)},${cy - bh / 2} h${w - r} q${r},0 ${r},${r} v${bh - 2 * r} q0,${r} ${-r},${r} h${-(w - r)} z`,
+      fill: d.model.startsWith("dummy") ? css("--axis") : css("--s1") }, svg);
+    el("line", { x1: x(d.ci_low), x2: x(d.ci_high), y1: cy, y2: cy, stroke: css("--ink-2"), "stroke-width": 1.5 }, svg);
+    el("text", { x: x(Math.max(d.ci_high, d.macro_f1)) + 6, y: cy + 4 }, svg).textContent = fmt(d.macro_f1, 2);
+    const hit = el("rect", { x: m.l - 160, y: cy - rowH / 2, width: W - m.l + 160, height: rowH, fill: "transparent", tabindex: 0 }, svg);
+    bindTip(hit, [d.label, `macro-F1 ${fmt(d.macro_f1)}`, `95% interval ${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, d.n_runs > 1 ? `mean of ${d.n_runs} runs` : "one run"]);
+  });
+  node.replaceChildren(svg);
+  const test = S.part === "test";
+  $("modelsIntro").textContent = `${test ? "Test" : "Validation"} macro-F1 on split C, ${S.fit_on_C === "train+valid" ?
+    "every model refit on training plus validation clips with the settings chosen on validation" : "every model trained on the training part"}. ` +
+    "Bars are point estimates; the thin line through each bar is its 95% artist-bootstrap interval.";
+  const p = S.c.paired["cnn - svm"];
+  $("pairedNote").textContent = p ? `Paired comparison on the same resampled artists: CNN minus SVM = ${fmt(p.diff)}, 95% interval ` +
+    `${fmt(p.ci_low)} to ${fmt(p.ci_high)}; the CNN is ahead in ${pct(p.share_resamples_cnn_better)} of resamples.` : "";
+  table($("modelTable"), ["Model", "Macro-F1", "95% interval", "Runs"],
+    ms.map((d) => [d.label, fmt(d.macro_f1), `${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, String(d.n_runs)]));
+}
+
+/* ---------- confusion matrix ---------- */
+function renderCmSelect() {
+  const sel = $("cmModel"); sel.replaceChildren();
+  Object.entries(S.confusion).forEach(([k, v]) => sel.appendChild(html("option", { value: k }, v.label)));
+  sel.value = Object.keys(S.confusion).find((k) => k.startsWith("cnn")) || sel.options[0].value;
+  sel.addEventListener("change", renderCm);
+}
+function renderCm() {
+  const run = S.confusion[$("cmModel").value], G = S.genres, n = G.length;
+  const node = $("cmChart"), W = Math.min(chartWidth(node), 560), m = { l: 74, t: 74, r: 6, b: 6 };
+  const cs = (W - m.l - m.r) / n, H = m.t + m.b + cs * n;
+  const ramp = css("--seq").split(",").map((s) => s.trim());
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Confusion matrix of ${run.label}` });
+  G.forEach((g, i) => {
+    el("text", { x: m.l - 6, y: m.t + i * cs + cs / 2 + 4, "text-anchor": "end" }, svg).textContent = g;
+    const t = el("text", { x: 0, y: 0, "text-anchor": "start", transform: `translate(${m.l + i * cs + cs / 2 + 4},${m.t - 6}) rotate(-60)` }, svg);
+    t.textContent = g;
+  });
+  el("text", { x: m.l - 6, y: 12, "text-anchor": "end" }, svg).textContent = "true ↓  predicted →";
+  run.confusion.forEach((row, i) => {
+    const tot = row.reduce((a, b) => a + b, 0) || 1;
+    row.forEach((cnt, j) => {
+      const share = cnt / tot, step = Math.min(ramp.length - 1, Math.round(share * (ramp.length - 1)));
+      const g = el("g", { class: "cell", tabindex: 0, role: "button", "aria-label": `true ${G[i]}, predicted ${G[j]}: ${cnt} clips` }, svg);
+      el("rect", { x: m.l + j * cs + 1, y: m.t + i * cs + 1, width: cs - 2, height: cs - 2, rx: 3,
+        fill: cnt === 0 ? css("--surface") : ramp[step], stroke: i === j ? css("--ink-2") : "none", "stroke-width": i === j ? 1 : 0 }, g);
+      if (cnt > 0) {
+        const t = el("text", { x: m.l + j * cs + cs / 2, y: m.t + i * cs + cs / 2 + 4, "text-anchor": "middle" }, g);
+        t.textContent = cnt; t.style.fill = step >= 7 ? "#ffffff" : "#0b0b0b"; t.style.fontSize = Math.min(13, cs * 0.4) + "px";
+      }
+      const open = () => showCell(run, G[i], G[j], cnt, tot);
+      g.addEventListener("click", open);
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+      bindTip(g, [`true ${G[i]} → predicted ${G[j]}`, `${cnt} of ${tot} clips (${pct(share)})`, "click to list them"]);
+    });
+  });
+  node.replaceChildren(svg);
+  renderGenres(run);
+  const worst = [];
+  run.confusion.forEach((row, i) => row.forEach((c, j) => { if (i !== j) worst.push([c, i, j]); }));
+  worst.sort((a, b) => b[0] - a[0]);
+  const [c, i, j] = worst[0];
+  showCell(run, G[i], G[j], c, run.confusion[i].reduce((a, b) => a + b, 0));
+}
+function showCell(run, t, p, cnt, tot) {
+  const clips = run.cells[`${t}|${p}`] || [];
+  $("cellTitle").textContent = t === p ? `${t}: correct (${cnt} of ${tot})` : `${t} predicted as ${p} (${cnt} of ${tot})`;
+  $("cellNote").textContent = clips.length ? "Clip id and the model's top score, most confident first. Clip ids follow GTZAN's file names." : "No clips in this cell.";
+  const ol = $("cellList"); ol.replaceChildren();
+  clips.forEach(([id, conf]) => ol.appendChild(html("li", {}, `${id} · ${Math.round(100 * conf)}%`)));
+}
+function renderGenres(run) {
+  const node = $("genreChart"), W = chartWidth(node), G = S.genres, rowH = 26, m = { l: 120, r: 48, t: 4, b: 24 };
+  const H = m.t + m.b + rowH * G.length;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `F1 per genre for ${run.label}` });
+  const x = (v) => m.l + v * (W - m.l - m.r);
+  for (let v = 0; v <= 1.0001; v += 0.25) {
+    const g = el("g", { class: "tick" }, svg);
+    el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - m.b, class: v === 0 ? "baseline" : "gridline" }, g);
+    el("text", { x: x(v), y: H - m.b + 16, "text-anchor": "middle" }, g).textContent = v.toFixed(2);
+  }
+  G.forEach((g, i) => {
+    const f = run.per_genre_f1[g], cy = m.t + i * rowH + rowH / 2, bh = 12, w = Math.max(0, x(f) - x(0)), r = Math.min(4, w / 2);
+    el("text", { x: m.l - 8, y: cy + 4, "text-anchor": "end" }, svg).textContent = `${g} (${run.support[g]})`;
+    if (w > 0) el("path", { d: `M${x(0)},${cy - bh / 2} h${w - r} q${r},0 ${r},${r} v${bh - 2 * r} q0,${r} ${-r},${r} h${-(w - r)} z`, fill: css("--s1") }, svg);
+    el("text", { x: x(f) + 6, y: cy + 4 }, svg).textContent = fmt(f, 2);
+  });
+  node.replaceChildren(svg);
+}
+
+/* ---------- boot ---------- */
+function renderAll() {
+  renderAnswer(); renderLadderButtons(); renderLadder(); renderSplitTable(); renderModels(); renderCm();
+  const a = S.data;
+  $("dataAudit").textContent = `Audit: ${a.n_files} files, ${a.n_loadable} load (${a.failures.join(", ")} has no valid WAV header and is ` +
+    "excluded). Every file is checked for duration, clipping, loudness and byte-identical duplicates.";
+  $("generated").textContent = `Numbers generated ${S.generated} from the ${S.part === "test" ? "test" : "validation"} results.`;
+}
+$("theme").addEventListener("click", () => {
+  const root = document.documentElement, dark = root.dataset.theme ? root.dataset.theme === "dark"
+    : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("theme", root.dataset.theme); } catch (e) { /* storage blocked */ }
+  if (S) renderAll();
+});
+try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) { /* storage blocked */ }
+let resizeTimer;
+window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => S && renderAll(), 150); });
+fetch("data/site.json").then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then((d) => { S = d; renderCmSelect(); renderAll(); })
+  .catch((e) => { $("partBanner").replaceChildren(html("div", { class: "banner" }, "Could not load the results (" + e.message + ").")); });
+</script>
 </body>
 </html>

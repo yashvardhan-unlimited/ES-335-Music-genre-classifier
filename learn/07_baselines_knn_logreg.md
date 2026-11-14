@@ -360,7 +360,7 @@ which is exactly why the clip is the unit of prediction.
 
 ### `src/train_classical.py`
 
-- **L34–44 `load_windows`**:
+- **L34–45 `load_windows`**:
   - L37: `index.csv` row numbers become a `row` column, since row *i* of
     `index.csv` is row *i* of `handcrafted.npy`.
   - L39–40: `load_split` returns this part's windows. It raises
@@ -371,10 +371,10 @@ which is exactly why the clip is the unit of prediction.
   - L42–43: the feature matrix is indexed by `clip_id`. `ClipMacroF1Scorer`
     reads clip ids from `X.index`, and sklearn keeps a DataFrame's index when
     it slices rows inside `GridSearchCV`.
-- **L47–50 `param_grid`**: turns `{n_neighbors: [...]}` from config into
+- **L48–51 `param_grid`**: turns `{n_neighbors: [...]}` from config into
   `{clf__n_neighbors: [...]}`. Dummies get `{}`, which `GridSearchCV` treats
   as a single candidate.
-- **L73–103 `tune_and_score`**:
+- **L74–104 `tune_and_score`**:
   - L76–78: stack train then valid. The predefined split marks train rows
     `-1` (always trained on) and valid rows `0` (the one test fold).
   - L79–81: grid search; every candidate is fit on the 4,420 train windows
@@ -392,9 +392,9 @@ which is exactly why the clip is the unit of prediction.
     differently. The reported numbers are the refit model's; both are kept.
   - L96–103: the JSON content; majority-vote F1 and window accuracy are
     diagnostics only.
-- **L144 `plot_knn_k`**: one line per weighting, log-scaled k axis, y from 0 so
+- **L145 `plot_knn_k`**: one line per weighting, log-scaled k axis, y from 0 so
   small differences are not blown up, dashed stratified-dummy floor.
-- **L258 `main`**: parses the CLI, expands `dummy`, seeds, loads the two parts
+- **L259 `main`**: parses the CLI, expands `dummy`, seeds, loads the two parts
   once, loops over models, writes JSONs, plots, prints the table.
 
 ### `tests/test_models.py`

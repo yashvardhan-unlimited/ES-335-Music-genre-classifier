@@ -261,7 +261,7 @@ combination: the lock in code, the tag, the commit hash in `RUN.md`, and
 **`src/train_classical.py`** (unchanged in this step; the protocol it
 implements is the same for every `--split`):
 
-- **L73-103 `tune_and_score`**: L76-78 put train and valid side by side
+- **L74-104 `tune_and_score`**: L76-78 put train and valid side by side
   with a `PredefinedSplit` so the grid search has exactly one fold, train ->
   valid; L79-81 score every configuration with `ClipMacroF1Scorer` (clip
   macro-F1, soft vote); L83 takes the best (first of ties); L87-88 refit on
@@ -292,10 +292,10 @@ implements is the same for every `--split`):
 
 **`src/splits.py`, the lock**
 
-- **L104-110 `is_test_unlocked`**: runs `git tag -l pre-test-freeze` and
+- **L202-208 `is_test_unlocked`**: runs `git tag -l pre-test-freeze` and
   returns True only if git prints exactly that name. With no git installed
   it returns False, so the lock stays shut.
-- **L117-124 `load_split`**: a test part is returned only if the caller
+- **L216-223 `load_split`**: a test part is returned only if the caller
   passes `allow_test=True` **and** the tag exists; otherwise
   `PermissionError("test set locked until pre-test-freeze tag")`. Every
   loader in the project goes through this function.

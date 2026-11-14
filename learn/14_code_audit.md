@@ -124,8 +124,8 @@ script writes its JSON last, after training, so an interrupted run leaves no fil
 
 **`src/splits.py`**
 
-- **L104-110 `is_test_unlocked`**: L108 turns "git is not installed" into False.
-- **L117-124 `load_split`**: the lock is checked first, then L121-122 reject an
+- **L202-208 `is_test_unlocked`**: L108 turns "git is not installed" into False.
+- **L216-223 `load_split`**: the lock is checked first, then L121-122 reject an
   unknown part. A typo used to return an empty table and fail later, far from the cause.
 
 **`app.py`**

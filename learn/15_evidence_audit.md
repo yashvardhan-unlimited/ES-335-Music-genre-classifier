@@ -185,7 +185,7 @@ half written also exists. Writing to a temporary name and renaming makes "exists
 
 ## 4. Code walkthrough
 
-**`src/splits.py`, L143-163 `credit_clusters`**
+**`src/splits.py`, L242-262 `credit_clusters`**
 
 - `find` follows parent pointers to a root; `setdefault` makes a new name its own root.
 - `credits = ...` splits each credit into names. Missing values are dropped here.
@@ -193,7 +193,7 @@ half written also exists. Writing to a temporary name and renaming makes "exists
 - The last line maps every credit to its root and `reindex` restores the missing rows as NaN,
   which `_cluster_rows` then treats as a cluster of one.
 
-**`src/evaluate.py`, L124-136 `cluster_bootstrap_ci`** and **L139-152 `paired_bootstrap_diff`**:
+**`src/evaluate.py`, L124-136 `cluster_bootstrap_ci`** and **L159-172 `paired_bootstrap_diff`**:
 the signatures take `cluster_col="cluster"`, and `n`, `ci` and `seed` from config.
 
 **`src/utils.py`, L42-46 `write_json`**: writes `<path>.tmp`, then `Path.replace` swaps it in.

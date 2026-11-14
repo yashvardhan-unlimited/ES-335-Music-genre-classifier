@@ -330,18 +330,18 @@ over-confident window. Which wins is an empirical question.
 
 ### `src/evaluate.py`
 
-- **L155–168 `reliability`**: confidence = max probability; bins
+- **L175–188 `reliability`**: confidence = max probability; bins
   $(0, 0.1], \dots, (0.9, 1]$ via `np.digitize(..., right=True)`; per bin:
   count, mean confidence, accuracy.
-- **L171–175 `ece`**: the formula of 2.6 over non-empty bins.
-- **L178–181 `softmax_t`**: `scipy.special.softmax(logits / T)`.
-- **L184–193 `fit_temperature`**: minimises mean cross-entropy over
+- **L191–195 `ece`**: the formula of 2.6 over non-empty bins.
+- **L198–201 `softmax_t`**: `scipy.special.softmax(logits / T)`.
+- **L204–213 `fit_temperature`**: minimises mean cross-entropy over
   $\log T \in [-3, 3]$ (so $T \in [0.05, 20]$) with a bounded scalar search;
   optimising $\log T$ keeps $T$ positive.
 
 ### `src/splits.py`
 
-- **L127–131 `artist_groups`**, **L134–140 `sample_artists`**: draw
+- **L226–230 `artist_groups`**, **L233–239 `sample_artists`**: draw
   `round(fraction x n_groups)` groups with `np.random.default_rng(seed)` from
   the sorted group list (so the draw does not depend on clip order), return
   their clips in input order.

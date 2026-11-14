@@ -309,7 +309,7 @@ vs one always wrong gives (1, 1, 1, 1); a model vs itself gives (0, 0, 0, 0).
 - Lines 117-121, `_resamples`: each round draws `len(groups)` cluster indices
   with replacement and concatenates their rows; seeded `default_rng` makes
   intervals reproducible.
-- Lines 124-136, `cluster_bootstrap_ci`; lines 139-152, `paired_bootstrap_diff`:
+- Lines 124-136, `cluster_bootstrap_ci`; lines 159-172, `paired_bootstrap_diff`:
   the paired version evaluates both prediction columns on the **same** `r` in
   each round.
 

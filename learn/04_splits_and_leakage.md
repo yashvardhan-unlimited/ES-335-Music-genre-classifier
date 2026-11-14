@@ -226,11 +226,11 @@ were frozen before the test was opened).
   Windows of one clip end up in different parts: that is the point of A.
 - Lines 84-92, `make_split_Bprime`: same as B but only rows with
   `split_C` non-missing enter the draw.
-- Lines 95-101, `make_split_C`: `part = split_C`, with `unused` for the 70 clips
+- Lines 193-199, `make_split_C`: `part = split_C`, with `unused` for the 70 clips
   outside C. jazz.00054 is not among the usable clips, so it has no rows.
-- Lines 104-110, `is_test_unlocked`: runs `git tag -l pre-test-freeze`; any git
+- Lines 202-208, `is_test_unlocked`: runs `git tag -l pre-test-freeze`; any git
   error counts as locked. (Named `is_...` so pytest does not mistake it for a test.)
-- Lines 117-124, `load_split`: the lock is checked *before* the file is read.
+- Lines 216-223, `load_split`: the lock is checked *before* the file is read.
 
 `scripts/make_splits.py` → `summarise`: for each split, the set of clips per
 part (a clip is "in" a part if any of its windows is), genre counts, and three
