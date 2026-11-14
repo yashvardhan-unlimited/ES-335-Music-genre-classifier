@@ -18,8 +18,14 @@ Metric = Callable[[np.ndarray, np.ndarray], float]
 
 
 def macro_f1(y_true: Sequence, y_pred: Sequence) -> float:
-    """Unweighted mean of per-class F1 over the classes present in y_true or y_pred."""
-    return float(f1_score(y_true, y_pred, average="macro", zero_division=0))
+    """Unweighted mean of per-class F1 over the classes present in y_true.
+
+    A class that is only predicted (no true clip) would get F1 = 0 and drag the mean down; in an
+    artist bootstrap that happens whenever a resample misses every artist of a genre (C valid
+    hip-hop is one artist). Its false positives still count against the true classes' recall.
+    On any full valid or test part all genres are present, so the point estimate is unchanged.
+    """
+    return float(f1_score(y_true, y_pred, labels=np.unique(y_true), average="macro", zero_division=0))
 
 
 def aggregate_clips(window_probs: np.ndarray, clip_ids: Sequence, method: str = "soft"

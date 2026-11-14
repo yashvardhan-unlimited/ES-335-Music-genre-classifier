@@ -48,6 +48,15 @@ def test_bad_method_raises():
         aggregate_clips(np.ones((2, 2)) / 2, ["a", "a"], "median")
 
 
+def test_macro_f1_ignores_classes_with_no_true_clip():
+    # no true "c": a resample that missed that genre must not score a phantom F1 = 0 for it
+    y_true, y_pred = ["a", "a", "b", "b"], ["a", "c", "b", "b"]
+    assert macro_f1(y_true, y_pred) == pytest.approx((2 / 3 + 1.0) / 2)
+    # with every class present it equals sklearn's ordinary macro-F1
+    y_true, y_pred = [0, 0, 0, 1, 1, 2], [0, 0, 1, 1, 2, 2]
+    assert macro_f1(y_true, y_pred) == pytest.approx((0.8 + 0.5 + 2 / 3) / 3)
+
+
 def test_three_class_macro_f1_by_hand():
     # class 0: P=2/2, R=2/3, F1=0.8 | class 1: P=1/2, R=1/2, F1=0.5 | class 2: P=1/2, R=1/1, F1=2/3
     y_true = [0, 0, 0, 1, 1, 2]

@@ -706,3 +706,24 @@ across splits, not as strong as possible. Train-only ladder models are what was 
 headline (choosing the best of three on valid is optimistic); scaling the epoch or tree count
 up with the larger training set (one more rule invented without a way to check it); scoring
 test more than once.
+
+## 2026-11-14: Macro-F1 averages over the genres with a true clip (bootstrap fix, before the test freeze)
+
+**Decision.** `evaluate.macro_f1` averages per-genre F1 over the genres present in `y_true`
+(sklearn `labels=np.unique(y_true)`), not over genres present in `y_true` or `y_pred`.
+
+**Reason.** In an artist-cluster bootstrap, a resample can miss every artist of a genre. C valid
+hip-hop is a single credit cluster, and blues and jazz have three each, so 45% of resamples lack
+at least one genre. sklearn's default then gives the missing genre F1 = 0 whenever the model
+predicts it for some clip, which pulls the resampled scores down: on C valid the SVM's resamples
+averaged 0.434 against a point estimate of 0.458, and CNN seed 2's 0.581 against 0.635, so the
+intervals sat almost entirely below the point estimate. With the fix the SVM's resample mean is
+0.457. The false positives still count, as lost recall of the true genres. Every full valid
+part contains all 10 genres, so no stored score changes: 108 of the 109 rebuilt valid prediction
+files give the identical score, and the one exception was a draft file written before its SVM
+was retuned. Also: C's per-genre F1 for hip-hop measures one artist, and the CI widths reflect
+genres that rest on 1-3 artists. That is a limitation of the data, now stated on the site.
+
+**Rejected.** Bootstrapping within genre strata (with one hip-hop cluster that stratum would
+never vary, which understates uncertainty); keeping sklearn's default (a downward bias in every
+artist-grouped interval, worst on C).
