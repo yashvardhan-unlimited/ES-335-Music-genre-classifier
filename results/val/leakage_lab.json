@@ -6,10 +6,12 @@
    0.1,
    1,
    10,
-   100
+   100,
+   1000
   ],
   "gamma": [
    "scale",
+   0.0001,
    0.001,
    0.01,
    0.1
@@ -34,6 +36,11 @@
      "true_valid_clip_macro_f1": 0.4006305816702711
     },
     {
+     "params": "C=0.1, gamma=0.0001",
+     "selection_score": 0.37915343797686535,
+     "true_valid_clip_macro_f1": 0.37915343797686535
+    },
+    {
      "params": "C=0.1, gamma=0.001",
      "selection_score": 0.4566269718875596,
      "true_valid_clip_macro_f1": 0.4566269718875596
@@ -52,6 +59,11 @@
      "params": "C=1, gamma=scale",
      "selection_score": 0.4055725880679441,
      "true_valid_clip_macro_f1": 0.4055725880679441
+    },
+    {
+     "params": "C=1, gamma=0.0001",
+     "selection_score": 0.4499022097101835,
+     "true_valid_clip_macro_f1": 0.4499022097101835
     },
     {
      "params": "C=1, gamma=0.001",
@@ -74,6 +86,11 @@
      "true_valid_clip_macro_f1": 0.423677501872766
     },
     {
+     "params": "C=10, gamma=0.0001",
+     "selection_score": 0.445815677737901,
+     "true_valid_clip_macro_f1": 0.445815677737901
+    },
+    {
      "params": "C=10, gamma=0.001",
      "selection_score": 0.43982892388517225,
      "true_valid_clip_macro_f1": 0.43982892388517225
@@ -94,6 +111,11 @@
      "true_valid_clip_macro_f1": 0.433041775850125
     },
     {
+     "params": "C=100, gamma=0.0001",
+     "selection_score": 0.4470771413803126,
+     "true_valid_clip_macro_f1": 0.4470771413803126
+    },
+    {
      "params": "C=100, gamma=0.001",
      "selection_score": 0.4582016145841276,
      "true_valid_clip_macro_f1": 0.4582016145841276
@@ -107,6 +129,31 @@
      "params": "C=100, gamma=0.1",
      "selection_score": 0.40432900432900426,
      "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=1000, gamma=scale",
+     "selection_score": 0.433041775850125,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=1000, gamma=0.0001",
+     "selection_score": 0.45132335611110913,
+     "true_valid_clip_macro_f1": 0.45132335611110913
+    },
+    {
+     "params": "C=1000, gamma=0.001",
+     "selection_score": 0.4530918505613627,
+     "true_valid_clip_macro_f1": 0.4530918505613627
+    },
+    {
+     "params": "C=1000, gamma=0.01",
+     "selection_score": 0.43407382515011195,
+     "true_valid_clip_macro_f1": 0.43407382515011195
+    },
+    {
+     "params": "C=1000, gamma=0.1",
+     "selection_score": 0.40432900432900426,
+     "true_valid_clip_macro_f1": 0.40432900432900426
     }
    ]
   },
@@ -115,17 +162,22 @@
    "mistake": "StandardScaler fit on train+valid before the model",
    "selection_metric": "valid clip macro-F1 (leaky scaling)",
    "chosen_params": {
-    "C": 100,
-    "gamma": 0.001
+    "C": 1000,
+    "gamma": 0.0001
    },
-   "reported_score": 0.4516117839280831,
-   "true_valid_clip_macro_f1": 0.4582016145841276,
-   "spearman_selection_vs_true": 0.9617083946980853,
+   "reported_score": 0.45974087747676695,
+   "true_valid_clip_macro_f1": 0.45132335611110913,
+   "spearman_selection_vs_true": 0.9699421965317919,
    "grid": [
     {
      "params": "C=0.1, gamma=scale",
      "selection_score": 0.39254305516169197,
      "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.0001",
+     "selection_score": 0.3765071689115434,
+     "true_valid_clip_macro_f1": 0.37915343797686535
     },
     {
      "params": "C=0.1, gamma=0.001",
@@ -148,6 +200,11 @@
      "true_valid_clip_macro_f1": 0.4055725880679441
     },
     {
+     "params": "C=1, gamma=0.0001",
+     "selection_score": 0.45891447232308485,
+     "true_valid_clip_macro_f1": 0.4499022097101835
+    },
+    {
      "params": "C=1, gamma=0.001",
      "selection_score": 0.42216356388604154,
      "true_valid_clip_macro_f1": 0.42216356388604154
@@ -166,6 +223,11 @@
      "params": "C=10, gamma=scale",
      "selection_score": 0.4281642311012456,
      "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.0001",
+     "selection_score": 0.43603407372548225,
+     "true_valid_clip_macro_f1": 0.445815677737901
     },
     {
      "params": "C=10, gamma=0.001",
@@ -188,6 +250,11 @@
      "true_valid_clip_macro_f1": 0.433041775850125
     },
     {
+     "params": "C=100, gamma=0.0001",
+     "selection_score": 0.4478994846260571,
+     "true_valid_clip_macro_f1": 0.4470771413803126
+    },
+    {
      "params": "C=100, gamma=0.001",
      "selection_score": 0.4516117839280831,
      "true_valid_clip_macro_f1": 0.4582016145841276
@@ -199,6 +266,31 @@
     },
     {
      "params": "C=100, gamma=0.1",
+     "selection_score": 0.40880679334652575,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=1000, gamma=scale",
+     "selection_score": 0.4275623967535732,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=1000, gamma=0.0001",
+     "selection_score": 0.45974087747676695,
+     "true_valid_clip_macro_f1": 0.45132335611110913
+    },
+    {
+     "params": "C=1000, gamma=0.001",
+     "selection_score": 0.4593920036602963,
+     "true_valid_clip_macro_f1": 0.4530918505613627
+    },
+    {
+     "params": "C=1000, gamma=0.01",
+     "selection_score": 0.43407382515011195,
+     "true_valid_clip_macro_f1": 0.43407382515011195
+    },
+    {
+     "params": "C=1000, gamma=0.1",
      "selection_score": 0.40880679334652575,
      "true_valid_clip_macro_f1": 0.40432900432900426
     }
@@ -214,12 +306,17 @@
    },
    "reported_score": 0.9725040736720769,
    "true_valid_clip_macro_f1": 0.433041775850125,
-   "spearman_selection_vs_true": 0.25184094256259204,
+   "spearman_selection_vs_true": 0.06281310211946049,
    "grid": [
     {
      "params": "C=0.1, gamma=scale",
      "selection_score": 0.7748782624601465,
      "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.0001",
+     "selection_score": 0.40085988184089033,
+     "true_valid_clip_macro_f1": 0.37915343797686535
     },
     {
      "params": "C=0.1, gamma=0.001",
@@ -242,6 +339,11 @@
      "true_valid_clip_macro_f1": 0.4055725880679441
     },
     {
+     "params": "C=1, gamma=0.0001",
+     "selection_score": 0.6019473293657125,
+     "true_valid_clip_macro_f1": 0.4499022097101835
+    },
+    {
      "params": "C=1, gamma=0.001",
      "selection_score": 0.763782993405076,
      "true_valid_clip_macro_f1": 0.42216356388604154
@@ -260,6 +362,11 @@
      "params": "C=10, gamma=scale",
      "selection_score": 0.9710529058061977,
      "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.0001",
+     "selection_score": 0.7612287739215019,
+     "true_valid_clip_macro_f1": 0.445815677737901
     },
     {
      "params": "C=10, gamma=0.001",
@@ -282,6 +389,11 @@
      "true_valid_clip_macro_f1": 0.433041775850125
     },
     {
+     "params": "C=100, gamma=0.0001",
+     "selection_score": 0.8380344234189027,
+     "true_valid_clip_macro_f1": 0.4470771413803126
+    },
+    {
      "params": "C=100, gamma=0.001",
      "selection_score": 0.924571172259172,
      "true_valid_clip_macro_f1": 0.4582016145841276
@@ -293,6 +405,31 @@
     },
     {
      "params": "C=100, gamma=0.1",
+     "selection_score": 0.9508565355253047,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=1000, gamma=scale",
+     "selection_score": 0.9725040736720769,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=1000, gamma=0.0001",
+     "selection_score": 0.8925725318946254,
+     "true_valid_clip_macro_f1": 0.45132335611110913
+    },
+    {
+     "params": "C=1000, gamma=0.001",
+     "selection_score": 0.9469742981169853,
+     "true_valid_clip_macro_f1": 0.4530918505613627
+    },
+    {
+     "params": "C=1000, gamma=0.01",
+     "selection_score": 0.9670589987708663,
+     "true_valid_clip_macro_f1": 0.43407382515011195
+    },
+    {
+     "params": "C=1000, gamma=0.1",
      "selection_score": 0.9508565355253047,
      "true_valid_clip_macro_f1": 0.40432900432900426
     }
@@ -308,12 +445,17 @@
    },
    "reported_score": 0.4517766497461929,
    "true_valid_clip_macro_f1": 0.43982892388517225,
-   "spearman_selection_vs_true": 0.6204865354638167,
+   "spearman_selection_vs_true": 0.6062477699974702,
    "grid": [
     {
      "params": "C=0.1, gamma=scale",
      "selection_score": 0.40913705583756343,
      "true_valid_clip_macro_f1": 0.4006305816702711
+    },
+    {
+     "params": "C=0.1, gamma=0.0001",
+     "selection_score": 0.10152284263959391,
+     "true_valid_clip_macro_f1": 0.37915343797686535
     },
     {
      "params": "C=0.1, gamma=0.001",
@@ -336,6 +478,11 @@
      "true_valid_clip_macro_f1": 0.4055725880679441
     },
     {
+     "params": "C=1, gamma=0.0001",
+     "selection_score": 0.41624365482233505,
+     "true_valid_clip_macro_f1": 0.4499022097101835
+    },
+    {
      "params": "C=1, gamma=0.001",
      "selection_score": 0.4365482233502538,
      "true_valid_clip_macro_f1": 0.42216356388604154
@@ -354,6 +501,11 @@
      "params": "C=10, gamma=scale",
      "selection_score": 0.4152284263959391,
      "true_valid_clip_macro_f1": 0.423677501872766
+    },
+    {
+     "params": "C=10, gamma=0.0001",
+     "selection_score": 0.4416243654822335,
+     "true_valid_clip_macro_f1": 0.445815677737901
     },
     {
      "params": "C=10, gamma=0.001",
@@ -376,6 +528,11 @@
      "true_valid_clip_macro_f1": 0.433041775850125
     },
     {
+     "params": "C=100, gamma=0.0001",
+     "selection_score": 0.44619289340101526,
+     "true_valid_clip_macro_f1": 0.4470771413803126
+    },
+    {
      "params": "C=100, gamma=0.001",
      "selection_score": 0.43299492385786803,
      "true_valid_clip_macro_f1": 0.4582016145841276
@@ -387,6 +544,31 @@
     },
     {
      "params": "C=100, gamma=0.1",
+     "selection_score": 0.3284263959390863,
+     "true_valid_clip_macro_f1": 0.40432900432900426
+    },
+    {
+     "params": "C=1000, gamma=scale",
+     "selection_score": 0.4137055837563452,
+     "true_valid_clip_macro_f1": 0.433041775850125
+    },
+    {
+     "params": "C=1000, gamma=0.0001",
+     "selection_score": 0.42538071065989846,
+     "true_valid_clip_macro_f1": 0.45132335611110913
+    },
+    {
+     "params": "C=1000, gamma=0.001",
+     "selection_score": 0.4121827411167513,
+     "true_valid_clip_macro_f1": 0.4530918505613627
+    },
+    {
+     "params": "C=1000, gamma=0.01",
+     "selection_score": 0.4228426395939086,
+     "true_valid_clip_macro_f1": 0.43407382515011195
+    },
+    {
+     "params": "C=1000, gamma=0.1",
      "selection_score": 0.3284263959390863,
      "true_valid_clip_macro_f1": 0.40432900432900426
     }
@@ -402,7 +584,7 @@
    "min": 0.9367214704605357,
    "max": 1.2030800017028476
   },
-  "mistake1_inner_scaler_max_prob_diff": 0.0005466970916498948,
+  "mistake1_inner_scaler_max_prob_diff": 0.0007015210311757114,
   "mistake1_inner_scaler_changed_window_predictions": 0,
   "mistake2_heldout_windows_with_sibling_in_train_fold": 1.0,
   "n_train_windows": 4420,

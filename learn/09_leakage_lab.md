@@ -443,6 +443,24 @@ Diagnostics:
 Full grids (selection score -> true score) for each variant are in the
 JSON; the KFold grid is reproduced in 2.3.
 
+> **Update (2026-11-14, lesson 16): rerun on the widened 25-setting grid.** The table above and the
+> numbers in section 2 are from the old 16-setting grid. On the new grid
+> (C {0.1, ..., 1000} × gamma {scale, 0.0001, ..., 0.1}) `results/val/leakage_lab.json` gives:
+>
+> | variant | chosen C, gamma | reported | true | Spearman vs true |
+> |---|---|---|---|---|
+> | correct | 100, 0.001 | 0.458 | **0.458** | 1.000 |
+> | (1) scaler on train+valid | **1000, 0.0001** | 0.460 | 0.451 | 0.970 |
+> | (2) KFold over train windows | 100, scale | **0.973** | 0.433 | 0.063 |
+> | (3) select by window accuracy | 10, 0.001 | 0.452 | 0.440 | 0.606 |
+>
+> Two readings change. Mistake 1 now picks a *different* setting, reporting 0.460 when its true
+> score is 0.451: optimistic by 0.009, and 0.007 worse than the correct choice. That is the
+> setting-dependent bias of 2.5 in action, and it supports the point in 2.2 that leakage's sign
+> is luck. On the old grid it happened to be pessimistic. Mistake 2's ranking of settings is now
+> almost unrelated to the truth (Spearman 0.063, was 0.252). Diagnostics: an inner scaler still
+> cancels the leak (largest probability difference 0.0007, 0 window predictions changed).
+
 ---
 
 ## 7. Viva questions with model answers
