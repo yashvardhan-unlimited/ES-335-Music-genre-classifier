@@ -74,6 +74,7 @@ cnn:
   weight_decay: 0.0001
   epochs: 60
   patience: 8               # epochs without a better valid clip macro-F1
+  min_epochs: 20            # never stop earlier: valid macro-F1 swings between epochs
   seeds: [0, 1, 2]
   augment:
     freq_masks: 2

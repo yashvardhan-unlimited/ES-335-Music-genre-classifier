@@ -88,10 +88,12 @@ def train_epoch(model: nn.Module, loader: DataLoader, opt: torch.optim.Optimizer
 
 
 def fit(train_ids: list[str], train_y: np.ndarray, valid_ids: list[str] | None, valid_y: np.ndarray | None,
-        epochs: int, device: torch.device, patience: int = CNN["patience"], mel_dir: Path = MEL_DIR,
+        epochs: int, device: torch.device, patience: int = CNN["patience"], min_epochs: int = CNN["min_epochs"],
+        mel_dir: Path = MEL_DIR,
         train_windows: dict | None = None, valid_windows: dict | None = None) -> dict:
     """Train a GenreCNN. With a valid part: evaluate valid clip macro-F1 after every epoch, keep
-    the best weights, stop after `patience` epochs without improvement. Without one (refit):
+    the best weights, stop after `patience` epochs without improvement, but never before epoch
+    `min_epochs` (one noisy early peak must not end the run). Without one (refit):
     run exactly `epochs` epochs and keep the last weights. Seed the RNGs before calling.
     train_windows/valid_windows: window lists per clip for split A (see MelWindowDataset).
     """
@@ -128,7 +130,7 @@ def fit(train_ids: list[str], train_y: np.ndarray, valid_ids: list[str] | None, 
             bad = 0
         else:
             bad += 1
-            if bad >= patience:
+            if bad >= patience and epoch >= min_epochs:
                 log.info("early stop: no better valid clip macro-F1 for %d epochs", patience)
                 break
 
@@ -166,6 +168,7 @@ def run(split: str, seed: int, epochs: int, device: torch.device, refit_epochs: 
     secs = [h["seconds"] for h in out["history"]]
     result = {"split": split, "seed": seed, "model": "cnn" + suffix, "torch_seed": CFG["seed"] + seed,
               "device": str(device), "torch_threads": torch.get_num_threads(), "n_params": out["n_params"],
+              "patience": CNN["patience"], "min_epochs": CNN["min_epochs"],
               "best_epoch": out["best_epoch"], "epochs_run": len(out["history"]),
               "median_seconds_per_epoch": float(np.median(secs)), **(out["report"] or {}),
               "n_train_clips": len(both) if refit_epochs else len(train),

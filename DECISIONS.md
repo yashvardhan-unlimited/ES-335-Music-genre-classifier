@@ -672,8 +672,8 @@ sets of models, both already fixed:
 1. **Final models (the headline).** On split C, every model with its chosen settings refit on
    train+valid (639 clips). Classical models: the same hyperparameters, scaler refit on
    train+valid. XGBoost: the same hyperparameters and the same early-stopped tree count. CNN:
-   each run seed retrained (`src.train_cnn --refit_epochs`) for its own best epoch count (8, 26
-   and 13 for seeds 0, 1, 2), normalisation statistics from train+valid, torch seed = seed + run
+   each run seed retrained (`src.train_cnn --refit_epochs`) for its own best epoch count (see the
+   2026-11-14 entry on `min_epochs`; before it 8, 26 and 13 for seeds 0, 1, 2), normalisation statistics from train+valid, torch seed = seed + run
    seed as before. **Headline: the final CNN's clip macro-F1 on C test, mean over its three run
    seeds, with a 95% artist-cluster bootstrap CI** (2,000 resamples of credit clusters, the three
    runs averaged inside each resample). Beside it: the final SVM, and the paired difference
@@ -745,3 +745,25 @@ installed, the stored C seed 2 CNN rebuilt on CPU to exactly its stored valid ma
 **Rejected.** Continuing on CPU (hours more, with the same memory risk); Colab (the same
 non-reproducibility across devices, plus copying files back by hand); retraining the earlier
 CPU runs on GPU for uniformity (it would change the C runs the test protocol already fixed).
+
+## 2026-11-14: CNN early stopping never before epoch 20; every CNN run retrained on the GPU
+
+**Decision.** `cnn.min_epochs: 20`: training continues while `epoch < 20` even if valid clip
+macro-F1 has not improved for `patience` (8) epochs; after that the rule is unchanged, and the
+best-valid epoch is still kept. Every CNN run (A; B, B' and D seeds 0-4; C run seeds 0-2) and the
+three final C models (refit on train+valid for each run's new best epoch count) were retrained
+under it on the laptop GPU (`--device cuda`). Each result file records `patience`, `min_epochs`
+and `device`. This replaces the previous entry's plan to keep the CPU-trained C runs.
+
+**Reason.** Valid clip macro-F1 on 197 clips swings by up to 0.25 between consecutive epochs
+(B' seed 4: 0.33, 0.59, 0.34, 0.50, 0.34, ...). With patience 8 alone, one early lucky peak
+could end a run while the training loss was still falling: B' seed 4 kept epoch 2 (0.587) and
+stopped at epoch 10, D seed 3 kept epoch 6, C seed 0 kept epoch 8. Those runs measure an
+accident of the stopping rule, not the model. The test part is still locked, and the change
+applies to every split and seed alike, so the ladder keeps one protocol. The GPU makes the
+full retrain take about an hour instead of a day.
+
+**Rejected.** Keeping the runs and reporting the problem (it biases the ladder by chance, and
+the final C models' epoch counts come from these runs); patience 15 (an epoch-2 peak can still
+win if nothing beats it, and every run gets slower); selecting the epoch by valid loss (every
+other choice in the project is made on valid clip macro-F1, the reported metric).

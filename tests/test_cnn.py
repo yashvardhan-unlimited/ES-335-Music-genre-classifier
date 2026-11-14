@@ -78,11 +78,15 @@ def test_fit_early_stops_and_is_reproducible(mel_dir):
     for _ in range(2):
         set_seed(0)
         runs.append(fit(ids[:6], y[:6], ids[6:], y[6:], epochs=3, device=torch.device("cpu"), patience=1,
-                        mel_dir=mel_dir))
+                        min_epochs=1, mel_dir=mel_dir))
     a, b = runs
     assert [h["train_loss"] for h in a["history"]] == [h["train_loss"] for h in b["history"]]
     assert 1 <= a["best_epoch"] <= len(a["history"]) <= 3
     assert a["report"]["n_valid_clips"] == 2 and a["report"]["n_valid_windows"] == 20
+    # min_epochs: patience 1 may not stop the run before epoch 4, whatever the valid scores do
+    held = fit(ids[:6], y[:6], ids[6:], y[6:], epochs=4, device=torch.device("cpu"), patience=1, min_epochs=4,
+               mel_dir=mel_dir)
+    assert len(held["history"]) == 4
     refit = fit(ids, y, None, None, epochs=1, device=torch.device("cpu"), mel_dir=mel_dir)
     assert refit["best_epoch"] == 1 and refit["report"] is None and "valid_loss" not in refit["history"][0]
 
