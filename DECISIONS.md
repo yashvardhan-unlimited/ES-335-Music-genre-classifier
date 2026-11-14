@@ -727,3 +727,21 @@ genres that rest on 1-3 artists. That is a limitation of the data, now stated on
 **Rejected.** Bootstrapping within genre strata (with one hip-hop cluster that stratum would
 never vary, which understates uncertainty); keeping sklearn's default (a downward bias in every
 artist-grouped interval, worst on C).
+
+## 2026-11-14: Last nine ladder CNN runs trained on the laptop GPU
+
+**Decision.** The CNN runs on B' seeds 1-4 and D seeds 0-4 are trained on the laptop's RTX 4050
+(torch 2.15.0+cu132, `--device cuda`). All other CNN runs, including every C run and the three
+final C models refit on train+valid, were trained on CPU and are not retrained. Prediction
+(`src/predict.py`) always runs on CPU.
+
+**Reason.** Windows stopped the two CPU training jobs for low memory after about 2.5 hours,
+with 9 ladder runs left (roughly 4-6 more hours on CPU). Each run's device is in its result file,
+so the change is traceable. A GPU changes floating-point summation order, so a GPU run differs
+from what the CPU would have produced for the same seed by about as much as a different seed
+does; these runs are single draws of a split and seed either way. After the CUDA build was
+installed, the stored C seed 2 CNN rebuilt on CPU to exactly its stored valid macro-F1 (0.634843).
+
+**Rejected.** Continuing on CPU (hours more, with the same memory risk); Colab (the same
+non-reproducibility across devices, plus copying files back by hand); retraining the earlier
+CPU runs on GPU for uniformity (it would change the C runs the test protocol already fixed).

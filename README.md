@@ -20,6 +20,13 @@ python3.11 -m venv .venv          # Windows: py -3.11 -m venv .venv
 ```
 or `make setup`.
 
+Optional NVIDIA GPU for CNN training (same torch version, CUDA build; prediction always runs on CPU):
+```bash
+.venv/bin/pip install --no-deps --force-reinstall "torch==2.15.0+cu132" --index-url https://download.pytorch.org/whl/cu132
+```
+Every CNN result file records its `device`. GPU and CPU training give slightly different weights, so a
+retrained run matches its stored score only on the device it was trained on.
+
 ## Data access
 GTZAN (Tzanetakis & Cook 2002) is downloaded from the Kaggle mirror
 `andradaolteanu/gtzan-dataset-music-genre-classification` (1.2 GB) into
