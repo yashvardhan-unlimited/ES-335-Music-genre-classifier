@@ -71,8 +71,11 @@ python scripts/check_lesson_refs.py            # lesson line references still po
 `tune_all.sh` resumes: runs with a result file are skipped. After changing a grid or the
 model, delete the old files in `results/val` first. All constants are in `config.yaml`.
 
-## Web app (local)
-Upload audio (WAV, MP3, FLAC, OGG, AAC, M4A), try sample clips, and browse the results dashboard:
+## Web app
+One Streamlit app holds the whole write-up and the demo. The **Project** tab is the full reasoning (question, data,
+preprocessing, models, evaluation, results with the interactive leakage ladder and confusion matrix, error analysis,
+limitations, reproduction steps); it reads `docs/data/site.json` only. **Classify** and **Validation details** need the
+trained CNN, log-mels and GTZAN audio. Upload audio (WAV, MP3, FLAC, OGG, AAC, M4A), try sample clips, and browse the results dashboard:
 
 ```bash
 .venv/Scripts/python.exe -m streamlit run app.py    # Linux/macOS: .venv/bin/python

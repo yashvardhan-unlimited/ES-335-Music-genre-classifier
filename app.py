@@ -14,6 +14,7 @@ import streamlit as st
 
 os.chdir(Path(__file__).resolve().parent)  # config.yaml and every path in it are relative to the repo root
 from src import webapp as w  # noqa: E402
+from src.projectpage import project_tab  # noqa: E402
 from src.splits import is_test_unlocked  # noqa: E402
 
 BLUE, GREY, INK, GRID = "#2a78d6", "#8a8984", "#52514e", "#e4e3df"
@@ -238,15 +239,15 @@ def results_tab() -> None:
 
 
 st.title("GTZAN genre classifier")
-try:
-    classifier()
-    classify, dashboard = st.tabs(["Classify", "Results"])
-    with classify:
-        classify_tab()
-    with dashboard:
-        results_tab()
-except FileNotFoundError as e:
-    st.error(f"A required file is missing: {e.filename}. See the Web app section of the README.")
+project, classify, dashboard = st.tabs(["Project", "Classify", "Validation details"])
+with project:
+    project_tab()  # reads docs/data/site.json only, so it works without models or audio
+for tab, render in ((classify, lambda: (classifier(), classify_tab())), (dashboard, results_tab)):
+    with tab:
+        try:
+            render()
+        except FileNotFoundError as e:
+            st.error(f"A required file is missing: {e.filename}. See the Web app section of the README.")
 
 
 # chainging the code to add a new feature to the app
