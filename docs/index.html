@@ -104,12 +104,26 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
   <div id="partBanner"></div>
 </header>
 <nav aria-label="Sections"><ul>
-  <li><a href="#answer">Answer</a></li><li><a href="#ladder">Leakage ladder</a></li>
-  <li><a href="#models">Models</a></li><li><a href="#errors">Errors</a></li>
+  <li><a href="#question">Question</a></li><li><a href="#answer">Answer</a></li>
   <li><a href="#data">Data</a></li><li><a href="#method">Method</a></li>
-  <li><a href="#limits">Limitations</a></li><li><a href="#reproduce">Reproduce</a></li>
+  <li><a href="#ladder">Leakage ladder</a></li><li><a href="#models">Models</a></li>
+  <li><a href="#errors">Errors</a></li><li><a href="#limits">Limitations</a></li>
+  <li><a href="#reproduce">Reproduce</a></li>
 </ul></nav>
 <main>
+
+<section id="question">
+  <h2>The question, and what one row is</h2>
+  <p><strong>Question.</strong> How well can a model predict a 30-second clip's genre from the audio alone, and how much
+    of that accuracy survives when the test set contains no artist the model heard in training?</p>
+  <p><strong>One row.</strong> We predict one <strong>30 s clip</strong> (the unit of every reported score). A model
+    trains on one <strong>3 s window</strong> of audio with its clip's genre as the label: 10 rows per clip, so 4,420
+    training rows from 442 training clips. All ten windows of a clip always stay in the same part, so a clip is never
+    split between train and test.</p>
+  <p><strong>Why it matters.</strong> GTZAN is the standard benchmark for this task, yet it holds several clips per
+    artist and some repeated recordings. A random split can therefore reward recognising a performer or a recording
+    instead of a genre. The rest of this page measures that gap.</p>
+</section>
 
 <section id="answer">
   <h2>The answer in one number</h2>
@@ -123,6 +137,98 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
     <div class="tiles" id="tiles"></div>
   </div>
   <p id="answerText"></p>
+</section>
+
+<section id="data">
+  <h2>Data</h2>
+  <p><strong>GTZAN</strong> (Tzanetakis &amp; Cook, 2002): 1,000 clips of 30 s, 100 per genre, 22,050 Hz mono, in
+    10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. We downloaded it from a
+    Kaggle mirror. The audio is not republished here.</p>
+  <h3>Size and key variables</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Variable</th><th>What it is</th></tr>
+    <tr><td>Clip (1,000 files; 999 readable)</td><td>30 s of audio at 22,050 Hz mono, about 660,000 samples. Clip length varies by under 0.7 s.</td></tr>
+    <tr><td>Genre (target)</td><td>One of 10 labels, 100 clips each (99 for jazz, because one file is unreadable).</td></tr>
+    <tr><td>Artist (grouping variable)</td><td>321 distinct artist names from <code>gtzan-bind</code>; 14 clips have no artist label. Used only to build splits and bootstrap intervals, never as a model input.</td></tr>
+    <tr><td>Window (training row)</td><td>A 3 s slice: 57 handcrafted features for the classical models, or a 128-band log-mel image for the CNN.</td></tr>
+    <tr><td>Split part</td><td>train, valid or test, assigned per clip. Split C has 442 / 197 / 290 usable clips.</td></tr>
+  </table></div>
+  <h3>Quality issues</h3>
+  <ul>
+    <li id="dataAudit"></li>
+    <li><strong>Exact duplicates:</strong> 14 groups of clips have byte-identical audio (for example metal.00034 and
+      metal.00094). Under a random split one copy can sit in train and the other in test.</li>
+    <li><strong>Faults found by listening</strong> (Sturm, 2013): the same song in several clips, mislabelled genres, and
+      distorted clips. Removing them leaves 929 usable clips for splits B&prime; and D.</li>
+    <li><strong>Many clips per artist:</strong> a random split puts the same artist, and sometimes the same recording,
+      on both sides. This is the leakage the page measures.</li>
+    <li><strong>Uneven lengths:</strong> clips run from 29.93 s to 30.65 s (nine are under 30 s). We zero-pad short
+      clips and trim long ones to exactly 30 s, so every clip gives ten equal windows.</li>
+    <li>Artist names come from <code>gtzan-bind</code>, matched automatically, not by listening. Credits that share a
+      performer ("Bob Marley &amp; The Wailers" and "Bob Marley") count as one artist cluster.</li>
+  </ul>
+  <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
+    <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+  <h3>Preprocessing, and why</h3>
+  <ul>
+    <li><strong>Mono, 22,050 Hz, 3 s windows:</strong> GTZAN's native format. A 3 s window is long enough to hear rhythm
+      and timbre and gives ten rows per clip, so more training rows for the classical models. Other window lengths were
+      compared on validation only.</li>
+    <li><strong>Unreadable and faulty clips removed:</strong> one clip (jazz.00054) cannot be decoded, and split C uses the
+      published fault-filtered list (Kereliuk et al.) so repeated and distorted recordings do not inflate scores.</li>
+    <li><strong>Scalers and normalisation fitted on training data only,</strong> so nothing about validation or test
+      leaks into training.</li>
+    <li><strong>Log-mel in dB with a fixed reference,</strong> not per-clip normalisation, so loudness, which differs
+      by genre, is kept (see Limitations).</li>
+  </ul>
+  <h3>Baselines and models compared</h3>
+  <p>Each model answers a different question about how much structure the task needs. The two dummies set the floor, so
+    a real model must beat them to show any skill.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Model</th><th>Role</th></tr>
+    <tr><td>Dummy, most frequent</td><td>Baseline: always predicts one genre (about chance, 10% accuracy).</td></tr>
+    <tr><td>Dummy, stratified</td><td>Baseline: guesses genres at random in proportion to class frequency.</td></tr>
+    <tr><td>k-nearest neighbours</td><td>Simple, no training: copies the genre of the nearest windows.</td></tr>
+    <tr><td>Logistic regression</td><td>Linear model on the 57 features, the simplest learned boundary.</td></tr>
+    <tr><td>RBF SVM</td><td>Non-linear boundary on the same features.</td></tr>
+    <tr><td>XGBoost</td><td>Boosted trees on the same features, strong on tabular data.</td></tr>
+    <tr><td>CNN on log-mels</td><td>Learns its own features from the spectrogram; trained from scratch, 3 seeds.</td></tr>
+  </table></div>
+  <p class="muted">Measured scores for every model on split C are in the results below.</p>
+  <h3>Evaluation: splits and metrics</h3>
+  <p>Five splits keep the same sizes (442 / 197 / 290 clips) and change only the leakage: <strong>A</strong> shuffles
+    windows (a clip sits on both sides), <strong>B</strong> shuffles whole clips, <strong>B&prime;</strong> does the same
+    after removing faulty clips, <strong>D</strong> keeps each artist in one part (random), and <strong>C</strong> is the
+    published artist-disjoint split, our main result. Validation picks hyperparameters; test is scored once. Scores are
+    clip-level macro-F1 (primary), with accuracy, per-genre F1 and confusion matrices as secondary views.</p>
+  <h3>Steps</h3>
+  <ol class="steps">
+    <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
+      every window and the clip's prediction is the average of its ten probability vectors (soft vote).</li>
+    <li><strong>Features.</strong> 57 handcrafted numbers per window (20 MFCC means and variances, chroma, spectral
+      shape, zero-crossing rate, loudness, harmonic/percussive energy, clip tempo) for the classical models; a
+      128-band log-mel spectrogram for the CNN.</li>
+    <li><strong>Models.</strong> Two dummy floors (most frequent; random by class frequency), k-nearest neighbours,
+      logistic regression, an RBF SVM, XGBoost, and a small 4-block CNN trained from scratch with random crops and
+      SpecAugment.</li>
+    <li><strong>Tuning.</strong> Every hyperparameter grid is scored on the validation part only, by clip macro-F1,
+      never by k-fold over windows (which would put a clip's windows on both sides). Scalers and normalisation
+      statistics are fitted on training data only.</li>
+    <li><strong>Metric.</strong> Clip-level macro-F1: F1 per genre, averaged, so every genre counts equally. 95%
+      intervals come from a bootstrap that resamples <em>artists</em>, because clips by one artist are not
+      independent.</li>
+    <li><strong>Test lock.</strong> Code refuses to read the test part until a git tag, <code>pre-test-freeze</code>,
+      exists. The tag is created only after every choice, including which models count as final, is written down,
+      and test is then scored once.</li>
+  </ol>
+  <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
+    <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
+  <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
+    <figcaption>More training artists, better scores on new artists: neither model has levelled off at 442 clips.</figcaption></figure>
 </section>
 
 <section id="ladder">
@@ -169,67 +275,6 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
     <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
       clip moves a genre's F1 by several points, so read small differences as noise.</p>
   </div>
-</section>
-
-<section id="data">
-  <h2>Data</h2>
-  <p><strong>GTZAN</strong> (Tzanetakis &amp; Cook, 2002): 1,000 clips of 30 s, 100 per genre, 22,050 Hz mono, in
-    10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. We downloaded it from a
-    Kaggle mirror. The audio is not republished here.</p>
-  <ul>
-    <li id="dataAudit"></li>
-    <li>Sturm (2013) listened to every clip and found exact duplicates, the same song in several clips, mislabels,
-      distorted clips, and many clips per artist. A random split puts the same artist, and sometimes the same
-      recording, on both sides.</li>
-    <li>Artist names come from <code>gtzan-bind</code>. Credits that share a performer ("Bob Marley &amp; The
-      Wailers" and "Bob Marley") count as one artist cluster.</li>
-  </ul>
-  <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
-    <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
-</section>
-
-<section id="method">
-  <h2>Method</h2>
-  <h3>What one row is</h3>
-  <p>The thing we predict is one <strong>30 s clip</strong>. The thing a model trains on is one <strong>3 s window</strong>
-    (10 per clip, so 4,420 training rows from 442 training clips), carrying its clip's genre label. All ten windows of a
-    clip always sit in the same part, so no clip is split across train and test.</p>
-  <h3>Preprocessing, and why</h3>
-  <ul>
-    <li><strong>Mono, 22,050 Hz, 3 s windows:</strong> GTZAN's native format. A 3 s window is long enough to hear rhythm
-      and timbre and gives ten rows per clip, so more training rows for the classical models. Other window lengths were
-      compared on validation only.</li>
-    <li><strong>Unreadable and faulty clips removed:</strong> one clip (jazz.00054) cannot be decoded, and split C uses the
-      published fault-filtered list (Kereliuk et al.) so repeated and distorted recordings do not inflate scores.</li>
-    <li><strong>Scalers and normalisation fitted on training data only,</strong> so nothing about validation or test
-      leaks into training.</li>
-    <li><strong>Log-mel in dB with a fixed reference,</strong> not per-clip normalisation, so loudness, which differs
-      by genre, is kept (see Limitations).</li>
-  </ul>
-  <h3>Steps</h3>
-  <ol class="steps">
-    <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
-      every window and the clip's prediction is the average of its ten probability vectors (soft vote).</li>
-    <li><strong>Features.</strong> 57 handcrafted numbers per window (20 MFCC means and variances, chroma, spectral
-      shape, zero-crossing rate, loudness, harmonic/percussive energy, clip tempo) for the classical models; a
-      128-band log-mel spectrogram for the CNN.</li>
-    <li><strong>Models.</strong> Two dummy floors (most frequent; random by class frequency), k-nearest neighbours,
-      logistic regression, an RBF SVM, XGBoost, and a small 4-block CNN trained from scratch with random crops and
-      SpecAugment.</li>
-    <li><strong>Tuning.</strong> Every hyperparameter grid is scored on the validation part only, by clip macro-F1,
-      never by k-fold over windows (which would put a clip's windows on both sides). Scalers and normalisation
-      statistics are fitted on training data only.</li>
-    <li><strong>Metric.</strong> Clip-level macro-F1: F1 per genre, averaged, so every genre counts equally. 95%
-      intervals come from a bootstrap that resamples <em>artists</em>, because clips by one artist are not
-      independent.</li>
-    <li><strong>Test lock.</strong> Code refuses to read the test part until a git tag, <code>pre-test-freeze</code>,
-      exists. The tag is created only after every choice, including which models count as final, is written down,
-      and test is then scored once.</li>
-  </ol>
-  <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
-    <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
-  <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
-    <figcaption>More training artists, better scores on new artists: neither model has levelled off at 442 clips.</figcaption></figure>
 </section>
 
 <section id="limits">
