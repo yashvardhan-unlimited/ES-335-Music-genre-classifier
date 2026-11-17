@@ -17,6 +17,13 @@ def test_windows_shape_and_order():
     assert w[1, 0] == N_WIN and w[-1, -1] == N_CLIP - 1  # consecutive, non-overlapping
 
 
+def test_resample_windows_to_32k():
+    from src.features import resample_windows
+    w = windows(np.sin(np.arange(N_CLIP, dtype=np.float32) / 50))
+    r = resample_windows(w, 32000)
+    assert r.shape == (10, 96000) and r.dtype == np.float32  # 3 s at 32 kHz, windows kept apart
+
+
 def test_feature_names():
     names = feature_names()
     assert len(names) == 57 and len(set(names)) == 57

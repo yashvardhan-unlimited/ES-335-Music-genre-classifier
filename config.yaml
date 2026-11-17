@@ -110,3 +110,10 @@ app:
 # file audit (src/data.py)
 audit:
   clip_threshold: 0.999   # |x| at or above this counts as a clipped sample
+
+# exploratory, after the test run (scripts/pretrained_embeddings.py): AudioSet-pretrained PANNs CNN14
+# embeddings of each 3 s window + the logistic-regression grid above; split C train -> valid only
+pretrained:
+  checkpoint: models/pretrained/Cnn14_mAP=0.431.pth
+  url: https://zenodo.org/records/3987831/files/Cnn14_mAP%3D0.431.pth?download=1
+  sr: 32000               # CNN14's input rate; windows are resampled from 22,050 Hz

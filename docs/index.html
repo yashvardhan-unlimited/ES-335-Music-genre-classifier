@@ -143,6 +143,10 @@ th { position: sticky; top: 0; background: var(--surface); }
   pointer-events: none; transition: opacity 0.2s; }
 #toTop.show { opacity: 1; pointer-events: auto; }
 @media print { nav, #progress, #toTop, .theme-toggle { display: none; } }
+/* figures are white "paper" panels; dimmed in dark mode so they do not glare */
+figure img { padding: 8px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) figure img { filter: brightness(0.85); } }
+:root[data-theme="dark"] figure img { filter: brightness(0.85); }
 </style>
 </head>
 <body>
@@ -489,14 +493,39 @@ th { position: sticky; top: 0; background: var(--surface); }
     <li><strong>The labels are fuzzy.</strong> Zydeco (Clifton Chenier, Buckwheat Zydeco) is labelled blues, and rock
       and country genuinely overlap.</li>
   </ul>
-  <details><summary>What would help: five ideas for future work (none run)</summary>
-  <p class="muted">None of this was tried: the test part has been scored once, and any change made now would be chosen
-    after seeing it.</p>
+  <h3>Checked after the test run: a pretrained model (validation only)</h3>
+  <p>If the limit is that 442 clips cover too few artists, a model that already knows a lot of music should do much
+    better. We checked this once, after the test run, on the validation part only. Each 3 s window goes through PANNs
+    CNN14, a network pretrained on about two million AudioSet clips. The same logistic regression, grid and soft vote
+    as before are then fitted on its 2,048-number embeddings. The test part was not used, and the headline does not
+    change.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th scope="col">Model (split C validation, trained on C train)</th><th scope="col">Macro-F1 (95% interval)</th><th scope="col">Pretrained minus this (paired 95% interval)</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Pretrained embeddings + logistic regression</strong></td><td><strong>0.76</strong> (0.65 to 0.82)</td><td>–</td></tr>
+    <tr><td>CNN on log-mels (mean of 3 runs)</td><td>0.62 (0.51 to 0.67)</td><td>+0.14 (+0.08 to +0.23)</td></tr>
+    <tr><td>Logistic regression on the 57 handcrafted features</td><td>0.47 (0.38 to 0.59)</td><td>+0.30 (+0.15 to +0.38)</td></tr>
+    <tr><td>RBF SVM on the 57 handcrafted features</td><td>0.46 (0.37 to 0.57)</td><td>+0.31 (+0.17 to +0.39)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Every regularisation setting tried scored 0.72 to 0.76, so the gain does not come from picking a lucky
+    setting on validation. The largest gains over logistic regression on handcrafted features are in blues (F1 0.32 →
+    0.91) and hip-hop (0.17 → 0.80). Country (0.49), rock (0.57) and pop (0.58) stay the weakest genres. Code:
+    <code>scripts/pretrained_embeddings.py</code>; results: <code>results/val/exploratory/</code>.</p>
+  <div class="callout read"><p class="tag">Read with care</p>
+    <p>This is not a rival to the headline, for two reasons. It is a validation score from a model added after the test
+      run, never scored on test. And AudioSet comes from YouTube and is labelled with music genres, so the network may
+      have heard these very artists, or even these recordings, during pretraining. Split C's artist-disjoint guarantee
+      does not extend to pretraining data, and we cannot check it. The result supports the diagnosis (knowledge of more
+      music helps a lot), but it does not measure performance on truly unheard artists.</p></div>
+  <details><summary>What would help: five ideas for future work</summary>
+  <p class="muted">Apart from the validation-only check above, none of this was tried: the test part has been scored
+    once, and any change made now would be chosen after seeing it.</p>
   <ol>
     <li><strong>Pretrained audio embeddings</strong> (networks trained on large music collections, such as OpenL3,
       PANNs, CLAP or MERT) with a simple classifier on top. They bring knowledge of thousands of artists, which is what
-      442 clips lack. Caveat: their training data may overlap with GTZAN's sources, so the result would answer a
-      different question.</li>
+      442 clips lack. A first check on validation (above) scores 0.76. The next step is a test that excludes, or at
+      least measures, overlap between the pretraining data and GTZAN's artists.</li>
     <li><strong>More artists per genre</strong>, from a larger dataset with artist information (for example FMA) under an
       artist-disjoint split. This attacks the main bottleneck directly.</li>
     <li><strong>A steadier CNN:</strong> average several seeds' predictions, decay the learning rate or average weights
@@ -615,6 +644,9 @@ make tests</pre>
     <li>C. Kereliuk, B. L. Sturm and J. Larsen, "Deep learning and music adversaries," IEEE Trans. Multimedia, 2015 (fault-filtered split).</li>
     <li>S. Doh, <a href="https://huggingface.co/datasets/seungheondoh/gtzan-bind">gtzan-bind</a>, Hugging Face dataset
       (artist names and the fault-filtered split assignment for every GTZAN clip).</li>
+    <li>Q. Kong et al., "PANNs: Large-scale pretrained audio neural networks for audio pattern recognition," IEEE/ACM
+      Trans. Audio, Speech, and Language Processing, 2020 (CNN14, exploratory check only); J. F. Gemmeke et al.,
+      "Audio Set," ICASSP 2017 (its pretraining data).</li>
     <li>Software: librosa, scikit-learn, XGBoost, PyTorch, NumPy, pandas (exact versions in
       <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/requirements.txt">requirements.txt</a>).</li>
   </ul>

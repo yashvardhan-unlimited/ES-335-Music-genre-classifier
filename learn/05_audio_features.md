@@ -296,21 +296,21 @@ The figure shows window 0 (0–3 s) of blues.00000.
   end with `np.pad` or slices to 661,500 samples. Returns float32 and the flag.
 - Lines 27-34, `windows`: `reshape(10, 66150)` is a view (no copy). The assert
   guards against an unpadded input.
-- Lines 37-40, `clip_tempo`: `beat_track` on the full clip; `np.atleast_1d`
+- Lines 42-45, `clip_tempo`: `beat_track` on the full clip; `np.atleast_1d`
   because recent librosa versions return tempo as a 1-element array.
-- Lines 43-48, `feature_names`: the 57 names, built in the same order as the
+- Lines 48-53, `feature_names`: the 57 names, built in the same order as the
   feature vector; a test checks length, uniqueness and the first/last names.
-- Lines 65-85, `handcrafted_features`: one STFT magnitude `S` reused for
+- Lines 70-90, `handcrafted_features`: one STFT magnitude `S` reused for
   chroma, centroid, bandwidth and roll-off (computed once). MFCC rows are
   appended as mean, var pairs (40 values); line 75 gives chroma the power
   spectrum `S**2` (librosa's convention); line 79 uses the same frame length
   and hop for ZCR and RMS as for the STFT; line 84 appends the clip tempo.
-- Lines 88-91, `clip_mel`: mel power spectrogram of the full clip, dB with
+- Lines 93-96, `clip_mel`: mel power spectrogram of the full clip, dB with
   `ref` from config, cast to float16.
-- Lines 94-101, `clip_handcrafted`: HPSS once (line 97), tempo once (line 98),
+- Lines 99-106, `clip_handcrafted`: HPSS once (line 97), tempo once (line 98),
   then iterates over the windows of the signal and of its harmonic and
   percussive parts together with `zip`.
-- Lines 104-107, `clip_features`: loads the clip once and calls
+- Lines 109-112, `clip_features`: loads the clip once and calls
   `clip_handcrafted` for the 10 windows, then `clip_mel`.
 
 `scripts/extract_features.py`: `Parallel(n_jobs=-1, return_as="generator")`

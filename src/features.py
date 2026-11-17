@@ -34,6 +34,11 @@ def windows(y: np.ndarray, n_windows: int = N_WINDOWS) -> np.ndarray:
     return y.reshape(n_windows, N_CLIP // n_windows)
 
 
+def resample_windows(win: np.ndarray, sr_out: int, sr_in: int = SR) -> np.ndarray:
+    """(n, samples at sr_in) -> (n, samples at sr_out) float32, e.g. 3 s at 22,050 -> 96,000 at 32 kHz."""
+    return librosa.resample(win, orig_sr=sr_in, target_sr=sr_out, axis=-1).astype(np.float32)
+
+
 def clip_tempo(y: np.ndarray, sr: int = SR) -> float:
     """Tempo (BPM) of the full clip from librosa's beat tracker."""
     tempo, _ = librosa.beat.beat_track(y=y, sr=sr, hop_length=STFT["hop_length"])

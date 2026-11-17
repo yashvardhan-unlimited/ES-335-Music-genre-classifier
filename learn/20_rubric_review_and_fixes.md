@@ -114,14 +114,14 @@ data for that objective to find a good answer. Worked from the table now on the 
 
 All changes are static HTML except one string:
 
-- **Line 182**: the "At prediction time" paragraph.
-- **Line 273**: the window-length result (0.435, 0.458, 0.477, 0.449) and the reason for 3 s.
-- **Line 287**: the four-column models table; values from `config.yaml` (`grids`, `cnn`) and
+- **Line 186**: the "At prediction time" paragraph.
+- **Line 277**: the window-length result (0.435, 0.458, 0.477, 0.449) and the reason for 3 s.
+- **Line 291**: the four-column models table; values from `config.yaml` (`grids`, `cnn`) and
   `results/chosen_params.json` (`C` → `"0"`).
-- **Line 308**: the macro-F1 paragraph; numbers from `site.json` (`c.models`, dummy most frequent and
+- **Line 312**: the macro-F1 paragraph; numbers from `site.json` (`c.models`, dummy most frequent and
   CNN).
-- **Line 383**: the multiple-comparisons note under the paired-difference chart.
-- **Line 690** (in `renderAnswer`): the hero's interval sentence now says "A possible reason, not
+- **Line 387**: the multiple-comparisons note under the paired-difference chart.
+- **Line 722** (in `renderAnswer`): the hero's interval sentence now says "A possible reason, not
   tested".
 
 ## 5. Pitfalls

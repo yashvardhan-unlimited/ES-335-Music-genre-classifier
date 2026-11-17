@@ -322,11 +322,11 @@ over-confident window. Which wins is an empirical question.
 
 - **L27–34 `windows(y, n_windows)`**: `y.reshape(n, 661500 // n)` after
   asserting that `n` divides the clip (1, 3, 5, 10 s give 30, 10, 6, 3).
-- **L51–58 `feature_group`**: strips `_mean`/`_var` and trailing digits
+- **L56–63 `feature_group`**: strips `_mean`/`_var` and trailing digits
   (`mfcc12_var` -> `mfcc`) and looks the stem up in config; raises if it is
   in zero or several groups (tested: 40 + 2 + 6 + 4 + 4 + 1 = 57).
-- **L94–101 `clip_handcrafted`**: one HPSS and one tempo per clip, then the
-  57 features for each requested window count. **L104–107 `clip_features`**
+- **L99–106 `clip_handcrafted`**: one HPSS and one tempo per clip, then the
+  57 features for each requested window count. **L109–112 `clip_features`**
   (the main pipeline) calls it with 10, so the ablation's 3 s features and
   the main features come from the same code.
 

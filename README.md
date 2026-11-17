@@ -71,6 +71,15 @@ python scripts/check_lesson_refs.py            # lesson line references still po
 `tune_all.sh` resumes: runs with a result file are skipped. After changing a grid or the
 model, delete the old files in `results/val` first. All constants are in `config.yaml`.
 
+Exploratory check added after the test run (split C validation only; never touches test):
+
+```bash
+mkdir -p models/pretrained ~/panns_data
+curl -L -o "models/pretrained/Cnn14_mAP=0.431.pth" "https://zenodo.org/records/3987831/files/Cnn14_mAP%3D0.431.pth?download=1"
+curl -L -o ~/panns_data/class_labels_indices.csv http://storage.googleapis.com/us_audioset/youtube_corpus/v1/csv/class_labels_indices.csv
+python scripts/pretrained_embeddings.py        # results/val/exploratory/; about 1 minute on a GPU
+```
+
 ## Web app
 One Streamlit app holds the whole write-up and the demo. The **Project** tab is the full reasoning (question, data,
 preprocessing, models, evaluation, results with the interactive leakage ladder and confusion matrix, error analysis,
@@ -118,3 +127,8 @@ outputs are checked: [AI_USE.md](AI_USE.md).
 - Software (versions pinned in `requirements.txt`): librosa (McFee et al., 2015),
   scikit-learn (Pedregosa et al., *JMLR* 12, 2011), XGBoost (Chen & Guestrin, *KDD* 2016),
   PyTorch (Paszke et al., *NeurIPS* 2019), NumPy, pandas, Streamlit.
+- Q. Kong, Y. Cao, T. Iqbal, Y. Wang, W. Wang and M. D. Plumbley, "PANNs: Large-scale pretrained
+  audio neural networks for audio pattern recognition," *IEEE/ACM Trans. Audio, Speech, and
+  Language Processing*, 28, 2020 (CNN14 checkpoint, exploratory check only).
+- J. F. Gemmeke et al., "Audio Set: An ontology and human-labeled dataset for audio events,"
+  *ICASSP* 2017 (CNN14's pretraining data).

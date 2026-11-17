@@ -18,6 +18,8 @@
 
 **Atomic write.** Replacing a file in one step: write a temporary file, then rename it over the target. A crash or a reader sees the old file or the new one, never half of one.
 
+**AudioSet.** About two million 10-second YouTube clips labelled with 527 sound classes, including music genres. CNN14's pretraining data; it may contain GTZAN's artists, which we cannot check.
+
 **Backpropagation.** Computing the gradient of the loss with respect to every weight of a network by applying the chain rule layer by layer from the output back to the input.
 
 **Baseline.** A simple, well-understood model (here kNN and logistic regression) that any more complex model must beat to justify its complexity.
@@ -49,6 +51,8 @@
 **Clipping.** Distortion when a signal exceeds the largest representable value and its peaks are cut flat. We count samples with |x| >= 0.999 (`clip_share`).
 
 **Cluster bootstrap.** A bootstrap that resamples whole clusters (here artists) with replacement, keeping correlated clips together.
+
+**CNN14 (PANNs).** A 14-layer convolutional network pretrained on AudioSet (Kong et al. 2020). Its 2,048-number embedding of a sound is used in the exploratory check.
 
 **Cold start.** In recommendation, a new song or artist with no listening history, so only its content (here its audio) can describe it. An artist-disjoint split imitates this case.
 
@@ -176,9 +180,9 @@
 
 **k-nearest neighbours (kNN).** Classifies a point by a vote among the k training points closest to it; no model is fitted.
 
-**Kernel trick.** Replacing every dot product in an algorithm by a kernel, so a linear method works in a much richer feature space and draws non-linear boundaries in the original space.
-
 **Kernel.** A function K(x, x') returning the dot product of two points after a (possibly infinite-dimensional) feature map, without computing that map. Acts as a similarity measure.
+
+**Kernel trick.** Replacing every dot product in an algorithm by a kernel, so a linear method works in a much richer feature space and draws non-linear boundaries in the original space.
 
 **KFold.** sklearn splitter dividing rows into k folds, each used once for validation. With several rows per source and no grouping it leaks; with shuffle=True every window of a clip lands in a random fold.
 
@@ -195,6 +199,8 @@
 **Learning curve.** Validation score as a function of training-set size. Still rising at full size means the model is data-limited (variance); flat means more of the same data will not help (bias). We grow the training set by artists, not clips.
 
 **Learning rate (shrinkage).** In boosting, the factor (0.05 or 0.1 here) multiplying each new tree's contribution. Smaller values regularise but need more trees; halving it roughly doubled the trees early stopping chose.
+
+**Linear probe.** A linear classifier trained on a frozen network's embeddings. It measures how much task information the pretrained features already contain, with only one hyperparameter to choose.
 
 **Log-mel spectrogram.** A time-frequency picture of audio: short-time Fourier magnitudes pooled into mel-spaced bands and converted to dB.
 
@@ -300,9 +306,9 @@
 
 **Sampling rate.** Number of samples stored per second of audio; GTZAN uses 22,050 Hz.
 
-**Seed variance.** The spread of results when only the random seed changes (initial weights, crops, augmentation, batch order); 0.580 to 0.635 valid macro-F1 for our three CNN seeds.
-
 **Seed.** The starting state of a pseudo-random number generator; the same seed produces the same sequence of "random" numbers.
+
+**Seed variance.** The spread of results when only the random seed changes (initial weights, crops, augmentation, batch order); 0.580 to 0.635 valid macro-F1 for our three CNN seeds.
 
 **Selection bias (in model selection).** The optimism of a score that was itself used to choose among candidates: the best of many noisy scores is likely to be lucky. Also called the winner's curse.
 
@@ -344,9 +350,9 @@
 
 **Streamlit.** A Python library that turns a script into a web app and reruns the script on every interaction. Our app.py uses it, on localhost only.
 
-**Support vector machine (SVM).** A maximum-margin classifier: minimises ||w||^2/2 plus C times the hinge losses; with a kernel it draws non-linear boundaries.
-
 **Support vector.** A training point with a non-zero dual multiplier: on or inside the margin, or misclassified. The SVM's decision function depends only on these points (2,113 of 4,420 windows in our best SVM).
+
+**Support vector machine (SVM).** A maximum-margin classifier: minimises ||w||^2/2 plus C times the hinge losses; with a kernel it draws non-linear boundaries.
 
 **Temperature scaling.** Dividing all logits by one learned number T before the softmax (T > 1 softens, T < 1 sharpens). It changes confidences but never which class has the highest score of a single window.
 
@@ -357,6 +363,8 @@
 **Training row.** One example the model is fit on; here one 3 s window, labelled with its clip's genre.
 
 **Training-serving skew.** Input prepared differently in the deployed app than during training. The model still answers, so nothing fails visibly, but measured performance stops applying.
+
+**Transfer learning.** Reusing what a model learned on a large dataset for a different, smaller task, for example genre from AudioSet embeddings.
 
 **Translation equivariance.** Shifting the input shifts a convolution's output by the same amount, because the same filter is used everywhere. Natural along time in a spectrogram, only partly along frequency.
 

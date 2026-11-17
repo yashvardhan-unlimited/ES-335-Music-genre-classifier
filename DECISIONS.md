@@ -861,3 +861,24 @@ the source of every artist label, was used without a citation.
 re-analysis (a new post-test analysis; stating that comparisons are uncorrected is enough);
 regenerating the figures with dark backgrounds (re-runs analysis scripts for a cosmetic gain).
 
+## 2026-11-18 (post-freeze, exploratory): Pretrained embeddings checked on validation only
+
+**Decision.** `scripts/pretrained_embeddings.py` embeds each 3 s window of C train and C valid with
+the AudioSet-pretrained PANNs CNN14 (2,048 numbers), and fits logistic regression with the same grid,
+scaler, scorer and soft vote as the handcrafted models. Result on C valid: macro-F1 0.764 (0.650 to
+0.824), against 0.620 for the CNN (paired difference +0.144, +0.076 to +0.230) and 0.468 for
+logistic regression on handcrafted features (+0.296). Every grid value scores 0.716 to 0.764. It is
+reported on the website as exploratory and is never scored on test. The test part is not read.
+Figures on the website are also dimmed in dark mode.
+
+**Reason.** The plateau diagnosis (each genre is learned from few artists) predicts that a model
+that knows much more music should do much better. This checks that prediction without touching the
+test part.
+
+**Rejected.** Scoring it on test (a model added after the test run would be chosen after seeing
+test). Replacing the headline (validation number; and AudioSet, drawn from YouTube and labelled
+with genres, may contain these artists, so split C's artist-disjoint guarantee does not cover
+pretraining). Fine-tuning CNN14 or trying several pretrained models (more choices made on 197
+validation clips). Embedding all 999 clips (harmless, as embedding is a fixed transform, but
+unnecessary; the test part is never even read).
+
