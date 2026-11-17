@@ -158,6 +158,8 @@ th { position: sticky; top: 0; background: var(--surface); }
     <li><b>5</b> splits with growing leakage control</li><li><b>1</b> locked test run</li>
   </ul>
   <div id="partBanner"></div>
+  <noscript><div class="banner">This page draws its numbers and charts with JavaScript. Please enable it, or read the
+    results directly in the repository's <code>results/test/</code> folder.</div></noscript>
   <div id="tldr"></div>
 </div></header>
 <nav aria-label="Sections"><ul>
@@ -180,6 +182,11 @@ th { position: sticky; top: 0; background: var(--surface); }
   <p><strong>Why it matters.</strong> GTZAN is the standard benchmark for this task, yet it holds several clips per
     artist and some repeated recordings. A random split can therefore reward recognising a performer or a recording
     instead of a genre. The rest of this page measures that gap.</p>
+  <p><strong>Where this would be used.</strong> Streaming services suggest music partly from what a song sounds like,
+    and this matters most for new releases and new artists that nobody has listened to yet (the "cold-start" case).
+    Genre tags inferred from audio are one input to such systems. That use only works if the model recognises genre in
+    artists it has never heard, which is exactly what split C tests. We do not build or evaluate a recommender: a
+    macro-F1 near 0.55 on ten coarse genres would be one weak signal among many, not a recommendation engine.</p>
   <div class="callout why"><p class="tag">In plain words</p>
     <p>Imagine a quiz where the same singer appears in both the practice questions and the exam. A student could pass by
       memorising the voice, without learning what "jazz" sounds like. Our test asks: how well does the model do when the
@@ -310,7 +317,9 @@ th { position: sticky; top: 0; background: var(--surface); }
   <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
     <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
   <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
-    <figcaption>More training artists, better scores on new artists: neither model has levelled off at 442 clips.</figcaption></figure>
+    <figcaption>Validation macro-F1 against the share of training artists used. The SVM still gains from more artists.
+      The CNN gains little between 75% and 100% of them, less than its run-to-run spread, so more data alone may not
+      help it much.</figcaption></figure>
 </section>
 
 <section id="ladder">
@@ -339,8 +348,16 @@ th { position: sticky; top: 0; background: var(--surface); }
   <div class="card"><div id="modelChart"></div>
     <p class="note" id="pairedNote"></p>
     <div class="callout take" id="modelsTake" hidden></div>
-    <details><summary>Table view</summary><div class="table-wrap"><table id="modelTable"></table></div></details>
+    <details open><summary>Table: accuracy, validation score and the score before refitting</summary>
+      <div class="table-wrap"><table id="modelTable"></table></div></details>
   </div>
+  <h3>Refitting on training plus validation</h3>
+  <p id="refitNote"></p>
+  <figure><img src="img/permutation_importance.png" alt="Permutation importance of feature groups and single features for the SVM and XGBoost on split C validation" loading="lazy">
+    <figcaption>What the classical models rely on (split C validation): shuffling a feature group and measuring the
+      drop in macro-F1. Timbre (MFCC) matters most for both, then percussive and harmonic energy (HPSS). Shuffling
+      zero-crossing rate and loudness (zcr_rms) costs the SVM about 0.03 and XGBoost nothing, so loudness is not their
+      main cue. The CNN is not covered by this figure.</figcaption></figure>
 </section>
 
 <section id="errors">
@@ -359,6 +376,24 @@ th { position: sticky; top: 0; background: var(--surface); }
       </div>
     </div>
     <div class="callout take" id="errTake" hidden></div>
+    <h3>What the errors have in common</h3>
+    <p>Read from the test predictions of the final models, with artist names from gtzan-bind (shown in the clip list
+      above):</p>
+    <ul>
+      <li><strong>Errors come in whole artists.</strong> For the CNN (seed 0), 15 of the 20 rock clips called country
+        are by Led Zeppelin (9 of their 11) or the Rolling Stones (6 of 7). Every Tony Williams clip (8) and every Dexter
+        Gordon clip (6), both jazz, is called country. When a model misreads one artist's sound, it misreads all of that
+        artist's clips together.</li>
+      <li><strong>Some genres are only a few artists.</strong> C's test blues is three artists: Robert Johnson (17
+        clips), Clifton Chenier (12) and Albert Collins (2). The classical models call most of it jazz (SVM: 18 of 31,
+        logistic regression: 17 of 31), so their blues F1 is under 0.1; the three CNN runs reach 0.36 to 0.68.</li>
+      <li><strong>One confusion is about the genre, not an artist.</strong> The CNN's 15 disco clips called blues come
+        from 15 different artists, so that mistake is spread across the genre.</li>
+      <li><strong>The three CNN runs disagree.</strong> Per-genre F1 swings between training seeds (classical 0.98 vs
+        0.72; disco 0.17 vs 0.67), so read any single run's matrix with care. Switch runs with the menu above.</li>
+    </ul>
+    <p class="note">This is why every interval on this page resamples artists rather than clips: one artist's clips
+      succeed or fail together, so they are not independent evidence.</p>
     <h3>F1 per genre</h3>
     <div id="genreChart"></div>
     <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
@@ -369,6 +404,8 @@ th { position: sticky; top: 0; background: var(--surface); }
 <section id="limits">
   <h2>Limitations: what this does not show</h2>
   <ul>
+    <li><strong>Genre tagging, not recommendation.</strong> We test whether audio predicts a genre label. No
+      listening data or user preferences are used, so nothing here measures how good a recommendation would be.</li>
     <li><strong>One small, old dataset.</strong> GTZAN is about 1,000 clips, mostly from around 2000, partly from radio
       and CDs of uneven quality. A score here says little about today's streaming catalogue.</li>
     <li><strong>One label per clip, ten Western genres.</strong> Real songs mix genres, and the labels themselves are
@@ -380,7 +417,13 @@ th { position: sticky; top: 0; background: var(--surface); }
       quality, mastering and era all differ by genre in GTZAN. The model may use them; we have not separated those
       cues from genre.</li>
     <li><strong>The validation part made many choices</strong> (hyperparameters, CNN epochs, XGBoost trees, window
-      length, voting), so validation scores are optimistic. That is why the headline is a test score.</li>
+      length, voting), so validation scores are expected to be optimistic, and the headline is a test score. Measured,
+      the CNN's validation score is above its test score, but the classical models score higher on test than on
+      validation (see the table under "Every model on split C"), so C's validation and test parts also differ in
+      difficulty.</li>
+    <li><strong>Refitting is a second choice the test could not check.</strong> The final models were refit on 639
+      clips with settings tuned for 442. It helped the classical models and hurt the CNN, so "which model is best"
+      depends on that choice.</li>
     <li><strong>Unequal runs.</strong> The CNN has three training runs on C; the classical models are deterministic,
       one run each. The random splits B, B′ and D have five draws each; C is one published draw.</li>
     <li><strong>One fixed split is noisy.</strong> The five random artist-disjoint draws (D) differ a lot from each
@@ -422,6 +465,11 @@ th { position: sticky; top: 0; background: var(--surface); }
     shows the scores per genre. Below 70% confidence it says "Not sure" (that threshold was chosen on validation). It
     runs on your own computer only, because the model weights and GTZAN audio cannot be published here:
     <code>streamlit run app.py</code>.</p>
+  <figure><img src="img/analysis_calibration.png" alt="Reliability diagrams on split C validation for the SVM, XGBoost and CNN seed 0" loading="lazy">
+    <figcaption>Do the scores mean what they say? Clips grouped by confidence (validation). For CNN seed 0, clips
+      under about 0.6 confidence are right only about a third of the time (33-39% per bin), which is why the demo says "Not sure" at low
+      confidence. Temperature scaling made its calibration worse (ECE 0.065 to 0.134), so the demo shows raw
+      scores.</figcaption></figure>
 </section>
 
 <section id="reproduce">
@@ -439,9 +487,15 @@ python scripts/evaluate_part.py --part valid
 python scripts/evaluate_part.py --part test     # refuses to run without the pre-test-freeze tag
 python scripts/export_site_data.py              # numbers for this page
 make tests</pre>
-  <p class="muted">Every number on this page is read from <code>data/site.json</code>, which
-    <code>scripts/export_site_data.py</code> writes from the result files. Design decisions and the rejected
-    alternatives are in <code>DECISIONS.md</code>; AI use is disclosed in <code>AI_USE.md</code>.</p>
+  <p class="muted">Every chart, table and computed sentence on this page is read from <code>data/site.json</code>,
+    which <code>scripts/export_site_data.py</code> writes from the result files; the written error analysis quotes the
+    same test predictions (<code>results/test/predictions/</code>). Design decisions and the rejected alternatives are in
+    <code>DECISIONS.md</code>; AI use is disclosed in <code>AI_USE.md</code>.</p>
+  <h3>Who did what</h3>
+  <p>Yashvardhan Gupta chose the research question, the main split and the evaluation metric, directed every step,
+    read every change before committing it, and checked results against the files the code wrote. Claude Code, an AI
+    coding assistant, wrote most of the code and documentation under that direction. Details:
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/AI_USE.md">AI_USE.md</a>.</p>
   <h3>References</h3>
   <ul class="muted">
     <li>G. Tzanetakis and P. Cook, "Musical genre classification of audio signals," IEEE Trans. Speech and Audio Processing, 2002.</li>
@@ -515,13 +569,18 @@ function renderAnswer() {
   $("heroValue").textContent = fmt(h.macro_f1, 2);
   $("heroCI").textContent = `95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)} · mean of ${h.n_runs} training runs`;
   $("heroText").textContent = `Macro-F1 runs from 0 to 1. A random guess that matches the genre frequencies scores about ${fmt(h.floor, 2)}. ` +
-    (S.fit_on_C === "train+valid" ? "Final models were refit on training plus validation clips before the single test run."
-      : "Models trained on the training part only.");
+    (S.fit_on_C === "train+valid" ? "Final models were refit on training plus validation clips before the single test run. "
+      : "Models trained on the training part only. ") +
+    "The interval is lopsided most likely because each genre rests on few artists: resamples that repeat a hard artist " +
+    "pull the score down further than resamples that repeat an easy one push it up.";
   const svm = c.models.find((m) => m.model === "svm");
+  const best = bestClassical();
   const strict = c.strict.cnn;
   const ladB = S.ladder.cnn && S.ladder.cnn.B;
+  const ci2 = (m) => `95% interval ${fmt(m.ci_low, 2)} to ${fmt(m.ci_high, 2)}`;
   const tiles = [
-    ["Best classical model (RBF SVM)", fmt(svm.macro_f1, 2), `95% interval ${fmt(svm.ci_low, 2)} to ${fmt(svm.ci_high, 2)}`],
+    [`Best classical model on test (${best.label})`, fmt(best.macro_f1, 2), ci2(best)],
+    ...(best.model === "svm" ? [] : [["RBF SVM (comparator fixed before the test run)", fmt(svm.macro_f1, 2), ci2(svm)]]),
     ["Chance-level floor", fmt(h.floor, 2), "stratified dummy on the same clips"],
     ["CNN on C-strict", strict ? fmt(strict.macro_f1, 2) : "–", strict ? `${strict.n_clips} clips with no artist cluster in train` : ""],
     ["CNN on a leaky random split (B)", ladB ? fmt(ladB.mean, 2) : "–", "same sizes, artists shared, train-only models"],
@@ -532,12 +591,40 @@ function renderAnswer() {
     d.append(html("div", { class: "label" }, l), html("div", { class: "value" }, v), html("div", { class: "sub" }, s));
     t.appendChild(d);
   });
-  const p = c.paired["cnn - svm"];
-  const dropBC = S.drops["cnn: Bp - C"];
+  const p = c.paired["cnn - svm"], pb = c.paired[`cnn - ${best.model}`];
+  const tiedWith = tiedModels();
   $("answerText").textContent =
-    `On clips by artists it never heard, the CNN reaches a macro-F1 of ${fmt(h.macro_f1, 2)}: far above chance, far from perfect. ` +
-    (p ? `It beats the best classical model by ${fmt(p.diff, 2)} (paired 95% interval ${fmt(p.ci_low, 2)} to ${fmt(p.ci_high, 2)}). ` : "") +
-    (dropBC ? `Trained the same way on a random clip split of the same clean pool (B′), where artists are shared, the CNN scores ${fmt(dropBC.diff, 2)} higher than on C: that is how much a careless split would have flattered it.` : "");
+    `On clips by artists it never heard, the CNN reaches a macro-F1 of ${fmt(h.macro_f1, 2)}: far above chance (${fmt(h.floor, 2)}), far from perfect. ` +
+    (p ? `Against the RBF SVM, the comparator fixed before the test run, the paired difference is ${signed(p.diff)} ` +
+      `(95% interval ${signed(p.ci_low)} to ${signed(p.ci_high)}). ` : "") +
+    (pb && best.model !== "svm" ? `${best.label} scores ${fmt(best.macro_f1, 2)}; CNN minus ${best.label.toLowerCase()} is ` +
+      `${signed(pb.diff)} (${signed(pb.ci_low)} to ${signed(pb.ci_high)}). ` : "") +
+    (tiedWith.length ? `The CNN's paired interval includes zero against ${listText(tiedWith)}, so no model is a clear winner on this test set. ` : "") +
+    ladderSentence();
+}
+/* Shared by the answer, the summary and the takeaways, so all three always agree. */
+const CLASSICAL = ["knn", "logreg", "svm", "xgb"];
+const signed = (x) => (x == null ? "–" : (x < 0 ? "−" : "+") + fmt(Math.abs(x), 2));
+function bestClassical() {
+  return S.c.models.filter((m) => CLASSICAL.includes(m.model)).reduce((a, b) => (b.macro_f1 > a.macro_f1 ? b : a));
+}
+function tiedModels() {
+  return CLASSICAL.filter((m) => { const q = S.c.paired[`cnn - ${m}`]; return q && q.ci_low < 0 && q.ci_high > 0; })
+    .map((m) => S.labels[m]);
+}
+/* "a, b and c", with "Logistic regression" lower-cased mid-sentence but "RBF SVM" and "XGBoost" kept. */
+function listText(labels) {
+  const l = labels.map((s) => (s[1] === s[1].toUpperCase() ? s : s[0].toLowerCase() + s.slice(1)));
+  return l.length < 2 ? l.join("") : `${l.slice(0, -1).join(", ")} and ${l[l.length - 1]}`;
+}
+function ladderSentence() {
+  const L = S.ladder.cnn, a = S.drops["cnn: Bp - D"], b = S.drops["cnn: D - C"];
+  if (!L || !L.Bp || !L.D || !L.C || !a || !b) return "";
+  return `Trained on the training part only, the same CNN scores ${fmt(L.Bp.mean, 2)} when artists are shared between ` +
+    `train and test (B′), ${fmt(L.D.mean, 2)} on random artist-disjoint splits (D) and ${fmt(L.C.mean, 2)} on C. ` +
+    `Removing artist leakage (B′ → D) costs ${fmt(a.diff, 2)} (95% interval ${fmt(a.ci_low, 2)} to ${fmt(a.ci_high, 2)}); ` +
+    `the published split C is a further ${fmt(b.diff, 2)} harder than random artist-disjoint draws ` +
+    `(${signed(b.ci_low)} to ${signed(b.ci_high)}${b.ci_low < 0 ? ", within noise" : ""}).`;
 }
 
 /* ---------- ladder ---------- */
@@ -630,7 +717,8 @@ function renderModels() {
     el("line", { x1: x(d.ci_low), x2: x(d.ci_high), y1: cy, y2: cy, stroke: css("--ink-2"), "stroke-width": 1.5 }, svg);
     el("text", { x: x(Math.max(d.ci_high, d.macro_f1)) + 6, y: cy + 4 }, svg).textContent = fmt(d.macro_f1, 2);
     const hit = el("rect", { x: m.l - 160, y: cy - rowH / 2, width: W - m.l + 160, height: rowH, fill: "transparent", tabindex: 0 }, svg);
-    bindTip(hit, [d.label, `macro-F1 ${fmt(d.macro_f1)}`, `95% interval ${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, d.n_runs > 1 ? `mean of ${d.n_runs} runs` : "one run"]);
+    bindTip(hit, [d.label, `macro-F1 ${fmt(d.macro_f1)}`, `95% interval ${fmt(d.ci_low)} to ${fmt(d.ci_high)}`,
+      `accuracy ${fmt(d.accuracy)}`, d.n_runs > 1 ? `mean of ${d.n_runs} runs` : "one run"]);
   });
   node.replaceChildren(svg);
   const test = S.part === "test";
@@ -640,8 +728,28 @@ function renderModels() {
   const p = S.c.paired["cnn - svm"];
   $("pairedNote").textContent = p ? `Paired comparison on the same resampled artists: CNN minus SVM = ${fmt(p.diff)}, 95% interval ` +
     `${fmt(p.ci_low)} to ${fmt(p.ci_high)}; the CNN is ahead in ${pct(p.share_resamples_cnn_better)} of resamples.` : "";
-  table($("modelTable"), ["Model", "Macro-F1", "95% interval", "Runs"],
-    ms.map((d) => [d.label, fmt(d.macro_f1), `${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, String(d.n_runs)]));
+  const refit = S.fit_on_C === "train+valid";
+  table($("modelTable"), ["Model", `${test ? "Test" : "Valid"} macro-F1`, "95% interval", "Accuracy",
+    "Valid macro-F1 (train only)", ...(refit ? ["Test macro-F1 (train only)"] : []), "Runs"],
+    ms.map((d) => [d.label, fmt(d.macro_f1), `${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, fmt(d.accuracy),
+      fmt(d.valid_macro_f1), ...(refit ? [fmt(d.train_only_macro_f1)] : []), String(d.n_runs)]));
+  renderRefit();
+}
+function renderRefit() {
+  const node = $("refitNote"), pt = S.c.paired_train_only && S.c.paired_train_only["cnn - svm"], p = S.c.paired["cnn - svm"];
+  const by = (m) => S.c.models.find((d) => d.model === m);
+  const [cnn, svm, lr] = ["cnn", "svm", "logreg"].map(by);
+  if (S.fit_on_C !== "train+valid" || !pt || !cnn || cnn.train_only_macro_f1 == null) {
+    node.textContent = "All models on this page were trained on the training part only."; return;
+  }
+  const move = (d) => `${fmt(d.train_only_macro_f1, 2)} → ${fmt(d.macro_f1, 2)}`;
+  node.textContent = `The final models were refit on training plus validation clips (639 instead of 442) with the settings ` +
+    `chosen on validation. That helped the classical models (SVM ${move(svm)}, logistic regression ${move(lr)}) but not ` +
+    `the CNN (${move(cnn)}). Trained on the training part only, the CNN beats the SVM clearly (CNN minus SVM ` +
+    `${signed(pt.diff)}, 95% interval ${signed(pt.ci_low)} to ${signed(pt.ci_high)}); after refitting it does not ` +
+    `(${signed(p.diff)}, ${signed(p.ci_low)} to ${signed(p.ci_high)}). A likely reason, not tested: each CNN's number of ` +
+    `epochs was chosen on validation for 442 training clips and reused unchanged for 639. The refit models stay the ` +
+    `headline because that rule was fixed before the test run; the leakage ladder above uses the train-only models.`;
 }
 
 /* ---------- confusion matrix ---------- */
@@ -691,9 +799,10 @@ function renderCm() {
 function showCell(run, t, p, cnt, tot) {
   const clips = run.cells[`${t}|${p}`] || [];
   $("cellTitle").textContent = t === p ? `${t}: correct (${cnt} of ${tot})` : `${t} predicted as ${p} (${cnt} of ${tot})`;
-  $("cellNote").textContent = clips.length ? "Clip id and the model's top score, most confident first. Clip ids follow GTZAN's file names." : "No clips in this cell.";
+  $("cellNote").textContent = clips.length ? "Clip id, the model's top score and the artist (gtzan-bind), most confident first. Clip ids follow GTZAN's file names." : "No clips in this cell.";
   const ol = $("cellList"); ol.replaceChildren();
-  clips.forEach(([id, conf]) => ol.appendChild(html("li", {}, `${id} · ${Math.round(100 * conf)}%`)));
+  clips.forEach(([id, conf, artist]) => ol.appendChild(html("li", {}, `${id} · ${Math.round(100 * conf)}%` +
+    (artist === undefined ? "" : ` · ${artist || "artist unknown"}`))));
 }
 function renderGenres(run) {
   const node = $("genreChart"), W = chartWidth(node), G = S.genres, rowH = 26, m = { l: 120, r: 48, t: 4, b: 24 };
@@ -733,12 +842,11 @@ function takeLadder() {
       `${fmt(d, 2)} of macro-F1 lies between a careless benchmark and a fair one.`);
 }
 function takeModels() {
-  const ms = S.c.models, cnn = ms.find((m) => m.model === "cnn");
-  const overlap = ms.filter((m) => m !== cnn && !m.model.startsWith("dummy") && m.ci_low <= cnn.ci_high && m.ci_high >= cnn.ci_low)
-    .map((m) => m.label);
+  const tied = tiedModels(), ahead = CLASSICAL.map((m) => S.labels[m]).filter((l) => !tied.includes(l));
   say("modelsTake", `Every trained model is far above the dummy floors. ` +
-    (overlap.length ? `The CNN's interval overlaps with ${overlap.join(", ")}, so with ${cnn.n_runs} runs on one test split we cannot call a winner among them.`
-      : "The CNN's interval overlaps with no other trained model."));
+    (tied.length ? `On the same resampled artists, the CNN's difference from ${listText(tied)} has an interval that includes zero, ` +
+      `so on one test split we cannot call a winner among them. ` : "") +
+    (ahead.length ? `The CNN is clearly ahead of ${listText(ahead)}.` : ""));
 }
 function takeErrors() {
   const run = S.confusion[$("cmModel").value]; if (!run) return;
@@ -750,13 +858,16 @@ function takeErrors() {
     `Weakest genre: ${g[0][0]} (F1 ${fmt(g[0][1], 2)}); strongest: ${g[g.length - 1][0]} (F1 ${fmt(g[g.length - 1][1], 2)}).`);
 }
 function tldr() {
-  const h = S.headline, d = S.drops["cnn: Bp - C"];
+  const h = S.headline, L = S.ladder.cnn, d = S.drops["cnn: Bp - D"], tied = tiedModels();
   const n = $("tldr"); n.replaceChildren();
   n.className = "callout take";
   n.append(html("p", { class: "tag" }, "In one paragraph"), html("p", {},
     `The CNN identifies the genre of ${h.n_clips} test clips from unseen artists with a macro-F1 of ${fmt(h.macro_f1, 2)} ` +
-    `(95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)}), against ${fmt(h.floor, 2)} for random guessing. ` +
-    (d ? `On a random split of the same clean clips, where artists are shared, the same model scores ${fmt(d.diff, 2)} higher: that gap is leakage, not genre skill.` : "")));
+    `(95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)}), against ${fmt(h.floor, 2)} for random guessing` +
+    (tied.length ? `, and is not clearly better than ${listText(tied)}. ` : ". ") +
+    (d && L && L.Bp && L.D ? `Trained the same way, it scores ${fmt(L.Bp.mean, 2)} when artists are shared between train ` +
+      `and test and ${fmt(L.D.mean, 2)} when they are not: about ${fmt(d.diff, 2)} of a careless benchmark's score is ` +
+      `artist leakage, not genre skill.` : "")));
 }
 const _rl = renderLadder, _rm = renderModels, _rc = renderCm;
 renderLadder = () => { _rl(); takeLadder(); };

@@ -249,7 +249,7 @@ def errors(S: dict) -> None:
         total = int(cm.loc[t].sum())
         st.markdown(f"**{t} predicted as {p}:** {len(clips)} of {total} clips")
         if clips:
-            st.dataframe(pd.DataFrame(clips, columns=["clip id", "top score"]), hide_index=True, width="stretch")
+            st.dataframe(pd.DataFrame(clips, columns=["clip id", "top score", "artist"]), hide_index=True, width="stretch")
         else:
             st.caption("No clips in this cell.")
     st.subheader("F1 per genre")

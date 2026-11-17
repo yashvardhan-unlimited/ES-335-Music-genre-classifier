@@ -60,10 +60,20 @@ def ladder(scores: pd.DataFrame, head: dict) -> dict:
     return out
 
 
-def c_block(summary: dict) -> dict:
+def c_extras(scores: pd.DataFrame, head: dict, final: bool) -> dict:
+    """model -> accuracy (mean of runs), valid macro-F1 (mean of runs) and train-only macro-F1 on C."""
+    rows = scores[(scores["split"] == "C") & scores["set"].eq("final" if final else "ladder")]
+    val = pd.read_csv(RESULTS / "val" / "summary.csv").query("split == 'C'")
+    return {m: {"accuracy": r3(rows.loc[rows["model"] == m, "accuracy"].mean()),
+                "valid_macro_f1": r3(val.loc[val["model"] == m, "valid_macro_f1"].mean()),
+                "train_only_macro_f1": r3(head["ladder"][f"C/{m}"]["macro_f1"])}
+            for m in LABELS if f"C/{m}" in head["ladder"]}
+
+
+def c_block(summary: dict, extras: dict) -> dict:
     """Models on C (mean of runs), paired CNN comparisons and C-strict, rounded."""
     models = [{"model": m, "label": LABELS[m], **{k: r3(v[k]) for k in ("macro_f1", "ci_low", "ci_high")},
-               "n_runs": v["n_runs"]}
+               "n_runs": v["n_runs"], **extras.get(m, {})}
               for key, v in summary["ladder"].items() for split, m in [key.split("/")] if split == "C"]
     return {"models": sorted(models, key=lambda d: -d["macro_f1"]),
             "paired": {k: {kk: r3(vv) for kk, vv in v.items()} for k, v in summary["paired_on_C"].items()},
@@ -72,7 +82,9 @@ def c_block(summary: dict) -> dict:
 
 
 def confusion_runs(pred_dir: Path, prefix: str, details: dict) -> dict:
-    """For each run on C: confusion counts, per-genre F1, support, and the clips in every cell."""
+    """For each run on C: confusion counts, per-genre F1, support, and the clips in every cell
+    as [clip id, top score, artist] (gtzan-bind name, "" when unknown)."""
+    artist = pd.read_csv(Path(CFG["paths"]["splits"]) / "metadata.csv").set_index("clip_id")["artist"].fillna("")
     out = {}
     for path in sorted(pred_dir.glob(f"{prefix}C_s*_*.csv")):
         model = path.stem.split("_", 3 if prefix else 2)[-1]
@@ -84,7 +96,7 @@ def confusion_runs(pred_dir: Path, prefix: str, details: dict) -> dict:
         df["conf"] = probs.max(axis=1)
         cells: dict = {}
         for (t, p), g in df.groupby(["y_true", "y_pred"]):
-            cells[f"{t}|{p}"] = [[c, round(float(x), 3)] for c, x in
+            cells[f"{t}|{p}"] = [[c, round(float(x), 3), artist.get(c, "")] for c, x in
                                  g.sort_values("conf", ascending=False)[["clip_id", "conf"]].itertuples(index=False)]
         d = details[f"{model}_s{seed}"]
         out[f"{model}_s{seed}"] = {"model": model, "seed": seed, "label": LABELS[model] + (
@@ -113,7 +125,9 @@ def main() -> None:
     scores = pd.read_csv(src / "scores.csv")
     final = part == "test" and "final_on_C" in head
     c_summary = head["final_on_C"] if final else head
-    c = c_block(c_summary)
+    c = c_block(c_summary, c_extras(scores, head, final))
+    if final:  # train-only models on C, so the site can show what refitting on train+valid changed
+        c["paired_train_only"] = {k: {kk: r3(vv) for kk, vv in v.items()} for k, v in head["paired_on_C"].items()}
     cnn = next(m for m in c["models"] if m["model"] == "cnn")
     floor = next(m for m in c["models"] if m["model"] == "dummy_stratified")
     data = json.loads((RESULTS / "data_summary.json").read_text())

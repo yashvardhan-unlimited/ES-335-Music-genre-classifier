@@ -33,6 +33,9 @@ published split also makes our numbers comparable with prior work.
 All four splits use the same 443/197/290 clip counts, so differences between
 them come from leakage, not from training-set size.
 
+*Superseded in part:* the sizes became 442/197/290 (entry "All splits use 442/197/290
+clips" below), and split D was added on 2026-11-14, so there are five splits.
+
 ## 2026-10-29: Corrupt file jazz.00054 is recorded, then excluded
 
 **Decision.** Every file gets an audit row in `splits/metadata.csv` (1000 rows).
@@ -784,3 +787,38 @@ from its stored score, so the headline numbers always come from the saved weight
 
 **Rejected.** Editing the stored score by hand or loosening the check (it would hide real
 mismatches); keeping the old B seed 3 run (it would stop the validation rebuild).
+
+## 2026-11-17 (post-freeze): Website corrections and the refit result; no number changed
+
+**Decision.** After the one test run, the website's wording was corrected and the refit result is
+reported. No model, setting, prediction or score changed; `scripts/export_site_data.py` now also
+exports, per model on C, the test accuracy, the C valid macro-F1, the train-only test macro-F1, the
+train-only paired comparisons, and the artist of every clip in the confusion-matrix lists.
+
+- The SVM was labelled "best classical model". It was the comparator named in the test protocol,
+  but logistic regression scored higher on C valid (0.468 vs 0.458) and on C test (0.568 vs 0.541).
+  The site now names the SVM as the pre-registered comparator and shows the best classical model on
+  test separately.
+- The site said the CNN "beats" the SVM. The paired difference is +0.011 (95% CI -0.083 to +0.076),
+  and the CNN's intervals against logistic regression and XGBoost also include zero: no clear winner.
+- The site called the whole B' - C gap (0.153 for the CNN) leakage. Split D exists to separate it:
+  B' - D (artist leakage) is 0.094 (0.060 to 0.159); D - C (the published partition) is 0.060
+  (-0.042 to +0.153). The headline paragraph now quotes those, using train-only models on both sides.
+- **Refit result.** Refitting on train+valid raised the classical models (SVM 0.488 -> 0.541,
+  logistic regression 0.515 -> 0.568) and lowered the CNN (0.594 -> 0.552). Train-only, CNN - SVM is
+  +0.107 (+0.022 to +0.197); refit, +0.011. A likely cause, not tested: each CNN's epoch count was
+  chosen for 442 training clips and reused for 639. The refit models stay the headline, as the
+  protocol fixed before the tag says; the site reports both.
+- Error analysis written from the final models' test predictions and gtzan-bind artist names:
+  errors cluster by artist (CNN seed 0: 15 of 20 rock-as-country clips are Led Zeppelin or the
+  Rolling Stones; every Tony Williams and Dexter Gordon clip is jazz-as-country), while disco-as-blues
+  (15 clips) is spread over 15 artists.
+
+**Reason.** The protocol says a problem found after the test run is fixed in a commit marked
+post-freeze and both versions are reported. These were reporting errors, not code errors, so only
+the text changed; the overclaims would have misled a reader about which model is better and how much
+of the gap is leakage.
+
+**Rejected.** Switching the headline to the train-only CNN (0.594) because it scores higher: that
+is choosing after seeing test. Re-running the CNN refit with a scaled epoch count: a new choice made
+after test, and test would no longer be untouched.
