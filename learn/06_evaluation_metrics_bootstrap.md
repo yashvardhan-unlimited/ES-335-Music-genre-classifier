@@ -282,7 +282,7 @@ vs one always wrong gives (1, 1, 1, 1); a model vs itself gives (0, 0, 0, 0).
 
 ## 4. Code walkthrough (`src/evaluate.py`)
 
-- Lines 25-49, `aggregate_clips`:
+- Lines 31-55, `aggregate_clips`:
   - `np.unique(..., return_inverse=True)` gives the sorted clip ids and, for
     each window, the index of its clip (`inv`).
   - Line 35: `np.add.at(mean_probs, inv, window_probs)` sums window rows into
@@ -292,24 +292,24 @@ vs one always wrong gives (1, 1, 1, 1); a model vs itself gives (0, 0, 0, 0).
   - Line 44: classes that are not tied for most votes get `-inf`, so the
     argmax over mean probabilities chooses only among the tied classes; with no
     tie it picks the single winner.
-- Lines 52-70, `clip_scores`: `f1_score(..., average=None, labels=labels)` gives
+- Lines 58-76, `clip_scores`: `f1_score(..., average=None, labels=labels)` gives
   per-class F1 in a fixed order; macro-F1 is their mean, so a class with no
   true and no predicted clips counts as 0 when it is in `labels` (test
   `test_absent_class_counts_as_zero_and_empty_row_is_zero`). Row normalisation
   uses `np.divide(..., where=rows > 0)` so an empty row gives zeros, not NaN.
-- Lines 78-84, `make_predefined_split`: maps `train → -1` (never a validation
+- Lines 84-90, `make_predefined_split`: maps `train → -1` (never a validation
   row) and `valid → 0` (fold 0); anything else, notably `test`, raises.
-- Lines 87-106, `ClipMacroF1Scorer.__call__(estimator, X, y)`: the signature
+- Lines 93-112, `ClipMacroF1Scorer.__call__(estimator, X, y)`: the signature
   `GridSearchCV` expects. sklearn slices the DataFrame `X` by rows but keeps its
   index, so the clip id of every validation row is recovered through
   `X.index` (or a `clip_ids` Series indexed like `X`). It soft-votes, checks
   that every clip's windows share one label, maps predicted column indices back
   to `estimator.classes_` and returns macro-F1 over all classes.
-- Lines 109-114, `_cluster_rows`: missing artist → a unique key `__solo_<row>`.
-- Lines 117-121, `_resamples`: each round draws `len(groups)` cluster indices
+- Lines 115-120, `_cluster_rows`: missing artist → a unique key `__solo_<row>`.
+- Lines 123-127, `_resamples`: each round draws `len(groups)` cluster indices
   with replacement and concatenates their rows; seeded `default_rng` makes
   intervals reproducible.
-- Lines 124-136, `cluster_bootstrap_ci`; lines 159-172, `paired_bootstrap_diff`:
+- Lines 130-142, `cluster_bootstrap_ci`; lines 165-178, `paired_bootstrap_diff`:
   the paired version evaluates both prediction columns on the **same** `r` in
   each round.
 

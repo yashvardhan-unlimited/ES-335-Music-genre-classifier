@@ -460,7 +460,7 @@ make that acceptable. The valid loss is logged too, so we can see both.
   off), no gradients, softmax probabilities for every valid window in order.
 - **L75–87 `train_epoch`**: the standard loop: zero gradients, forward,
   cross-entropy, backward, Adam step; returns the mean loss per crop.
-- **L90–139 `fit`**:
+- **L90–141 `fit`**:
   - L98–102: stats from the training clips, training dataset, shuffled
     loader (batch 64), model, Adam (lr 1e-3, weight decay 1e-4).
   - L103–107: valid dataset in eval mode **with the training stats**, and
@@ -471,14 +471,14 @@ make that acceptable. The valid loss is logged too, so we can see both.
   - L125–133: keep a copy of the weights when clip macro-F1 improves
     (strictly), otherwise count; stop after 8 epochs without improvement.
   - Refit mode (no valid): run all epochs, keep the last weights.
-- **L142–175 `run`**: L144 seeds everything with 42 + run seed; L145–155
+- **L144–178 `run`**: L144 seeds everything with 42 + run seed; L145–155
   loads the parts and trains (refit: train+valid together); L158 saves the
   weights to `models/`; L160 saves the normalisation stats (needed to
   preprocess test clips identically); then the result JSON with the
   best-epoch report and the full history.
-- **L178–207 `plot_curves`**, **L210–228 `summarise`**: the figure and the
+- **L181–210 `plot_curves`**, **L213–231 `summarise`**: the figure and the
   summary JSON over the config seeds; L219 is the median best epoch.
-- **L231 `main`**: the CLI (`--split`, `--seed`, `--epochs`, `--device`,
+- **L234 `main`**: the CLI (`--split`, `--seed`, `--epochs`, `--device`,
   `--refit_epochs`, `--summary`).
 
 ### `tests/test_cnn.py`

@@ -1,0 +1,889 @@
+clip_id,cluster,y_true,y_pred,p_blues,p_classical,p_country,p_disco,p_hiphop,p_jazz,p_metal,p_pop,p_reggae,p_rock
+blues.00000,John Lee Hooker,blues,blues,0.6854192538344925,0.0,0.0,0.3145807461655076,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00001,John Lee Hooker,blues,blues,0.6756225303123894,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3243774696876107,0.0
+blues.00002,John Lee Hooker,blues,blues,0.7099098917679642,0.0,0.29009010823203585,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00003,John Lee Hooker,blues,blues,0.7104135347964355,0.0,0.1413370180185411,0.0,0.0,0.0,0.0,0.0,0.0,0.1482494471850233
+blues.00004,John Lee Hooker,blues,blues,0.7805353161020054,0.21946468389799456,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00006,John Lee Hooker,blues,blues,0.5,0.0,0.3321239050847604,0.0,0.0,0.0,0.0,0.0,0.16787609491523955,0.0
+blues.00007,Oscar P,blues,blues,0.6910068912465188,0.0,0.30899310875348107,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00008,John Lee Hooker,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00009,John Lee Hooker,blues,blues,0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.0,0.0
+blues.00010,John Lee Hooker,blues,disco,0.0,0.16611491084411303,0.1627304577370619,0.342563178995131,0.0,0.16570283700789942,0.0,0.0,0.0,0.16288861541579464
+blues.00011,John Lee Hooker,blues,blues,0.5576191230135368,0.0,0.12000149695360418,0.0,0.0,0.0,0.0,0.0,0.3223793800328591,0.0
+blues.00012,Robert Johnson,blues,blues,0.6724547096941891,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.32754529030581087,0.0
+blues.00013,Robert Johnson,blues,blues,0.6863565899001076,0.0,0.0,0.0,0.0,0.3136434100998923,0.0,0.0,0.0,0.0
+blues.00014,Robert Johnson,blues,blues,0.8397443099605453,0.0,0.07852611503443556,0.0,0.0,0.0,0.0,0.0,0.08172957500501928,0.0
+blues.00015,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00016,Robert Johnson,blues,blues,0.8899546404981152,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.11004535950188478,0.0
+blues.00017,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00018,Robert Johnson,blues,blues,0.333416853020197,0.1704494796836911,0.0,0.0,0.0,0.32955052031630894,0.0,0.0,0.166583146979803,0.0
+blues.00019,Robert Johnson,blues,blues,0.6950879993739307,0.0,0.15653634600079244,0.0,0.0,0.1483756546252767,0.0,0.0,0.0,0.0
+blues.00020,Robert Johnson,blues,blues,0.4637111106938642,0.0,0.0,0.0,0.08068351739460276,0.3758749433720048,0.0,0.0,0.0797304285395283,0.0
+blues.00022,Robert Johnson,blues,blues,0.9214631945347748,0.0,0.07853680546522518,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00023,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00024,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00025,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00026,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00027,Robert Johnson,blues,blues,0.6728720390864942,0.0,0.3271279609135058,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00028,Robert Johnson,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00030,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00031,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00032,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00035,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00036,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00037,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00038,Kelly Joe Phelps,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00039,Tobi Kreis,blues,blues,0.6663597057947259,0.3336402942052741,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00040,Stevie Ray Vaughan,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00042,Stevie Ray Vaughan,blues,blues,0.6968805482755512,0.0,0.0,0.0,0.0,0.30311945172444876,0.0,0.0,0.0,0.0
+blues.00043,Stevie Ray Vaughan,blues,blues,0.9345835881389087,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.06541641186109129
+blues.00044,Stevie Ray Vaughan,blues,blues,0.689725148232406,0.0,0.0,0.11136169261077596,0.09126374639761327,0.0,0.0,0.0,0.0,0.10764941275920487
+blues.00046,Stevie Ray Vaughan,blues,blues,0.6666666666666666,0.0,0.10875950910616743,0.0,0.0,0.0,0.0,0.0,0.1134945280687185,0.11107929615844743
+blues.00048,Stevie Ray Vaughan,blues,blues,0.8417723137272062,0.0,0.0,0.0,0.15822768627279388,0.0,0.0,0.0,0.0,0.0
+blues.00049,Stevie Ray Vaughan,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00050,Magic Slim,blues,blues,0.8737442666083184,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.1262557333916817
+blues.00051,Magic Slim,blues,blues,0.8194933122739566,0.0,0.09979014559245714,0.08071654213358624,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00052,Magic Slim,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00055,Magic Slim,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00056,Magic Slim,blues,blues,0.665453513879291,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.16612213662614508,0.16842434949456395
+blues.00057,Magic Slim,blues,country,0.3309254177592682,0.0,0.6690745822407318,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00058,Magic Slim,blues,blues,0.5924162629406267,0.0,0.13452488701182191,0.06651363809124168,0.20654521195630973,0.0,0.0,0.0,0.0,0.0
+blues.00059,Magic Slim,blues,blues,0.8898833501806444,0.0,0.1101166498193556,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00060,Magic Slim,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00062,Clifton Chenier,blues,blues,0.5,0.0,0.16814706152248696,0.0,0.0,0.16581370287138594,0.0,0.0,0.0,0.16603923560612713
+blues.00063,Clifton Chenier,blues,blues,0.9320389402832638,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.06796105971673608
+blues.00064,Clifton Chenier,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00065,Clifton Chenier,blues,blues,0.7537064724684814,0.0,0.0,0.0858800642527733,0.0,0.0,0.0,0.0,0.0,0.16041346327874528
+blues.00066,Clifton Chenier,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00067,Clifton Chenier,blues,blues,0.922544969628992,0.0,0.0,0.0,0.0,0.0,0.07745503037100801,0.0,0.0,0.0
+blues.00068,Clifton Chenier,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00069,Clifton Chenier,blues,blues,0.5,0.0,0.16518274131971966,0.0,0.0,0.1692711516595614,0.16554610702071898,0.0,0.0,0.0
+blues.00070,Clifton Chenier,blues,blues,0.7491824127796409,0.0,0.0,0.12806433487341,0.0,0.0,0.0,0.0,0.0,0.12275325234694902
+blues.00071,Clifton Chenier,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00072,Clifton Chenier,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00073,Buckwheat Zydeco Ils Sont Partis,blues,blues,0.7067282395294345,0.0,0.0,0.0,0.2157480063703743,0.0,0.0,0.0,0.0,0.07752375410019115
+blues.00074,Buckwheat Zydeco Ils Sont Partis,blues,blues,0.6804594481246254,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.31954055187537456
+blues.00075,Buckwheat Zydeco,blues,blues,0.5642088777378956,0.0,0.0,0.10245778892877101,0.21841116371337788,0.0,0.11492216961995545,0.0,0.0,0.0
+blues.00076,Buckwheat Zydeco,blues,blues,0.7926701712972776,0.0,0.0,0.0,0.057348047424047144,0.0,0.14998178127867534,0.0,0.0,0.0
+blues.00077,Buckwheat Zydeco,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00078,Buckwheat Zydeco,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00080,Buckwheat Zydeco,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00081,Buckwheat Zydeco,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00082,Buckwheat Zydeco,blues,blues,0.8442828247676785,0.0,0.1557171752323215,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00084,Buckwheat Zydeco,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00085,Hot Toddy,blues,blues,0.7095780397673336,0.0,0.09630896815619439,0.09665090034353664,0.0,0.09746209173293534,0.0,0.0,0.0,0.0
+blues.00086,Hot Toddy,blues,blues,0.6653551125211565,0.0,0.0,0.0,0.10911499386320833,0.0,0.0,0.0,0.17006401402158242,0.05546587959405274
+blues.00087,Hot Toddy,blues,blues,0.6812539864785214,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.31874601352147863,0.0
+blues.00088,Hot Toddy,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00089,Hot Toddy,blues,blues,0.8330574972336497,0.0,0.16694250276635025,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00090,Hot Toddy,blues,reggae,0.3362175795978868,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.6637824204021132,0.0
+blues.00091,Hot Toddy,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00092,Hot Toddy,blues,reggae,0.33084673834460376,0.0,0.1621128473772333,0.0,0.0,0.0,0.0,0.0,0.5070404142781629,0.0
+blues.00093,Hot Toddy,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00094,Hot Toddy,blues,blues,0.6666666666666666,0.0,0.11069837011961071,0.11488015110233013,0.0,0.0,0.0,0.0,0.0,0.1077548121113925
+blues.00095,Hot Toddy,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00096,Quiet Resonance,blues,blues,0.3594739831861717,0.32428343076816524,0.10304134421161514,0.0,0.0,0.21320124183404796,0.0,0.0,0.0,0.0
+blues.00097,Hot Toddy,blues,country,0.41503255485259927,0.0,0.43506260204545005,0.0,0.0,0.0,0.0,0.0,0.0,0.14990484310195065
+blues.00098,Albert Collins,blues,blues,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+blues.00099,Albert Collins,blues,country,0.32493859780370105,0.0,0.34295714267447325,0.0,0.0,0.0,0.0,0.0,0.0,0.33210425952182565
+classical.00000,Heinz Holliger,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00001,Melodía Derelajación,classical,classical,0.0,0.835675596603888,0.0,0.0,0.0,0.16432440339611193,0.0,0.0,0.0,0.0
+classical.00002,Heinz Holliger,classical,classical,0.0,0.7620510630901979,0.0,0.0,0.0,0.23794893690980212,0.0,0.0,0.0,0.0
+classical.00003,Heinz Holliger,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00004,Heinz Holliger,classical,classical,0.0,0.7837866103537187,0.0,0.0,0.0,0.21621338964628137,0.0,0.0,0.0,0.0
+classical.00005,Heinz Holliger,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00006,Heinz Holliger,classical,classical,0.0,0.9210380883029619,0.0,0.0,0.0,0.07896191169703821,0.0,0.0,0.0,0.0
+classical.00007,Heinz Holliger,classical,jazz,0.0,0.3296496886550484,0.0,0.0,0.0,0.33802016433313387,0.0,0.0,0.0,0.33233014701181773
+classical.00008,Heinz Holliger,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00009,Heinz Holliger,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00010,Heinz Holliger,classical,classical,0.0,0.7779194037167878,0.0,0.0,0.0,0.11065247083217052,0.0,0.0,0.11142812545104175,0.0
+classical.00012,Gunther Hasselmann,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00013,Gunther Hasselmann,classical,classical,0.0,0.3441783097867386,0.33717142426428204,0.0,0.0,0.3186502659489794,0.0,0.0,0.0,0.0
+classical.00014,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00015,Gunther Hasselmann,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00016,Gunther Hasselmann,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00019,Gunther Hasselmann,classical,classical,0.0,0.6685087220124407,0.08149127798755926,0.0,0.0,0.25,0.0,0.0,0.0,0.0
+classical.00020,Gunther Hasselmann,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00021,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00022,Academy of St Martin in the Fields,classical,classical,0.0,0.6729954502821799,0.0,0.0,0.0,0.3270045497178202,0.0,0.0,0.0,0.0
+classical.00024,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00025,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00026,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00027,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00028,Academy of St Martin in the Fields,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00029,Claudio Abbado,classical,classical,0.0,0.8266845950847146,0.0,0.0,0.0,0.1733154049152854,0.0,0.0,0.0,0.0
+classical.00030,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00031,Juilliard String Quartet,classical,classical,0.0,0.7396440660848425,0.0,0.0,0.0,0.26035593391515754,0.0,0.0,0.0,0.0
+classical.00032,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00033,Juilliard String Quartet,classical,classical,0.0,0.7503836754293801,0.0,0.0,0.0,0.24961632457061983,0.0,0.0,0.0,0.0
+classical.00034,Juilliard String Quartet,classical,classical,0.0,0.6560644469710207,0.0,0.0,0.0,0.3439355530289793,0.0,0.0,0.0,0.0
+classical.00035,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00036,Juilliard String Quartet,classical,classical,0.0,0.7755542687256014,0.0,0.0,0.0,0.22444573127439868,0.0,0.0,0.0,0.0
+classical.00037,Juilliard String Quartet,classical,classical,0.22880783861671328,0.7711921613832867,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00038,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00039,Juilliard String Quartet,classical,classical,0.0,0.8352223041482228,0.0,0.0,0.0,0.08242513233545272,0.08235256351632445,0.0,0.0,0.0
+classical.00040,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00041,Juilliard String Quartet,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00042,E. Power Biggs,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00043,Gitti Pirner,classical,jazz,0.0,0.25116921447750323,0.08338890270963616,0.0,0.0,0.6654418828128605,0.0,0.0,0.0,0.0
+classical.00044,Udo Wachtveitl,classical,classical,0.0,0.5615321909657206,0.21688278738705957,0.0,0.0,0.22158502164721994,0.0,0.0,0.0,0.0
+classical.00045,Gitti Pirner,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00046,Kazimierz Kord,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00047,Leonard Bernstein,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00048,Dame Joan Sutherland,classical,classical,0.0,0.7809411870406081,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.21905881295939186
+classical.00049,Gewandhausorchester,classical,classical,0.0,0.6728555910513038,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3271444089486963
+classical.00050,Leonard Bernstein,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00051,Chicago Symphony Orchestra,classical,jazz,0.0,0.40069573787327956,0.0,0.0,0.0,0.5993042621267205,0.0,0.0,0.0,0.0
+classical.00052,Leonard Bernstein,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00053,Empire Brass,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00054,Dame Joan Sutherland,classical,classical,0.14235006561358124,0.5378052912979134,0.0,0.0,0.0,0.25,0.0,0.0,0.06984464308850533,0.0
+classical.00055,Leonard Bernstein,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00056,Taverner Choir,classical,classical,0.07702974576598748,0.6152908342572694,0.07465241377638272,0.0,0.0,0.23302700620036043,0.0,0.0,0.0,0.0
+classical.00057,Leonard Bernstein,classical,classical,0.0,0.6814558544996315,0.0,0.0,0.0,0.3185441455003685,0.0,0.0,0.0,0.0
+classical.00058,Erik Satie,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00059,,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00060,Federico Procopio,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00061,LTN,classical,classical,0.0,0.5,0.16692103708210002,0.1661312273705458,0.0,0.0,0.0,0.0,0.16694773554735418,0.0
+classical.00063,Alfred Brendel,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00065,Radu Lupu,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00066,Javier Perianes,classical,classical,0.0,0.8350878678059137,0.0,0.0,0.0,0.16491213219408626,0.0,0.0,0.0,0.0
+classical.00067,Matthias Kirschnereit,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00068,Bihler,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00069,Nicholas Ward,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00070,Nicholas Ward,classical,classical,0.0,0.8909244805766864,0.0,0.0,0.0,0.10907551942331373,0.0,0.0,0.0,0.0
+classical.00071,Nicholas Ward,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00072,Nicholas Ward,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00073,Nicholas Ward,classical,classical,0.0,0.6759791827260714,0.0,0.0,0.0,0.3240208172739286,0.0,0.0,0.0,0.0
+classical.00074,Nicholas Ward,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00075,Nicholas Ward,classical,classical,0.0,0.8080690130358275,0.0,0.0,0.0,0.19193098696417252,0.0,0.0,0.0,0.0
+classical.00076,Nicholas Ward,classical,classical,0.0,0.8379929927529663,0.0,0.0,0.0,0.16200700724703357,0.0,0.0,0.0,0.0
+classical.00077,Chicago Symphony Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00078,Chicago Symphony Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00079,Steve Reich,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00080,Chicago Symphony Orchestra,classical,classical,0.0,0.8415198544090077,0.0,0.0,0.0,0.15848014559099236,0.0,0.0,0.0,0.0
+classical.00082,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00083,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00084,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00085,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00086,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00087,Timothy Reynish,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00089,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00090,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00091,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00092,Maurice André,classical,classical,0.0,0.7343865643261991,0.0,0.0,0.0,0.26561343567380097,0.0,0.0,0.0,0.0
+classical.00093,Mothers Pride,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00094,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00095,English Chamber Orchestra,classical,classical,0.0,0.3383012181200132,0.0,0.33035954784979976,0.0,0.3313392340301871,0.0,0.0,0.0,0.0
+classical.00096,Takako Nishizaki,classical,classical,0.0,0.7333745497218048,0.0,0.12666826072537954,0.0,0.0,0.0,0.0,0.0,0.13995718955281558
+classical.00097,Maurice André,classical,classical,0.0,0.6705003035465471,0.0,0.0,0.0,0.3294996964534529,0.0,0.0,0.0,0.0
+classical.00098,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+classical.00099,English Chamber Orchestra,classical,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00000,Faith Hill,country,country,0.0,0.0,0.49568337665696804,0.0,0.0,0.0,0.0,0.17023817661207685,0.0,0.33407844673095516
+country.00001,Patty Loveless,country,country,0.0,0.0,0.9051174311856256,0.0,0.0,0.0948825688143743,0.0,0.0,0.0,0.0
+country.00002,Skream,country,country,0.0,0.0,0.8990269042501174,0.0,0.0,0.0,0.0,0.1009730957498826,0.0,0.0
+country.00003,Garth Brooks,country,disco,0.0,0.0,0.3502553882323727,0.49280994197055067,0.0,0.1569346697970766,0.0,0.0,0.0,0.0
+country.00004,Suzy Bogguss,country,country,0.0,0.0,0.8548613834168672,0.0,0.0,0.14513861658313273,0.0,0.0,0.0,0.0
+country.00005,Babyface,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00006,John Anderson,country,country,0.0,0.0,0.7957302296028795,0.10454351673868077,0.0,0.0,0.0,0.09972625365843975,0.0,0.0
+country.00007,Travis Tritt,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00008,Vince Gill,country,country,0.0,0.0,0.7658457374856376,0.08527502199632712,0.0,0.07081596536448309,0.0,0.0,0.0,0.07806327515355219
+country.00009,The Clark Family Experience,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00010,Johnny Tillotson,country,country,0.0,0.0,0.7722811168941507,0.0,0.0,0.0,0.0,0.11618950025296222,0.11152938285288712,0.0
+country.00011,Patsy Cline,country,country,0.0,0.0,0.3512609280054276,0.0,0.31526390462582216,0.0,0.0,0.3334751673687502,0.0,0.0
+country.00012,Bobby Bare,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00013,Loretta Lynn,country,country,0.0,0.0,0.7314828231174295,0.0,0.0,0.0,0.0,0.2685171768825706,0.0,0.0
+country.00014,Nina Martinique,country,country,0.0,0.0,0.6040934253379673,0.19915356930507538,0.06674445000378804,0.0641666994201444,0.0,0.0,0.0,0.06584185593302491
+country.00015,Waylon Jennings,country,country,0.0,0.0,0.7814541886444242,0.0,0.0,0.21854581135557585,0.0,0.0,0.0,0.0
+country.00017,Floyd Cramer,country,country,0.0,0.31177709851516594,0.688222901484834,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00019,Willie Nelson,country,country,0.0,0.10789016011987596,0.7751302599995845,0.0,0.0,0.11697957988053942,0.0,0.0,0.0,0.0
+country.00020,Ray Peterson,country,country,0.0,0.0,0.6797295487442331,0.0,0.0,0.0,0.0,0.0,0.15914229649547598,0.16112815476029088
+country.00021,B.J. Thomas,country,country,0.0,0.0,0.900989359581248,0.0,0.0,0.09901064041875186,0.0,0.0,0.0,0.0
+country.00024,Hank Williams,country,country,0.0,0.0,0.935926987837149,0.06407301216285091,0.0,0.0,0.0,0.0,0.0,0.0
+country.00026,Willie Nelson,country,country,0.0,0.0,0.8544945760749985,0.0,0.0,0.0,0.0,0.0,0.14550542392500154,0.0
+country.00027,Billy Joe Shaver,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00028,Jerry Lee Lewis,country,country,0.0,0.22340235367089345,0.6666666666666666,0.0,0.0,0.10993097966243986,0.0,0.0,0.0,0.0
+country.00029,Johnny Rodriguez,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00030,,country,jazz,0.07618456196167435,0.2462904326422978,0.0824030184184345,0.0,0.0,0.5146232075966959,0.0,0.08049877938089756,0.0,0.0
+country.00031,,country,country,0.0,0.0,0.6671615628610172,0.0,0.0,0.16686481413744156,0.0,0.0,0.1659736230015412,0.0
+country.00032,Sonny Throckmorton,country,country,0.0,0.0,0.25390947872975506,0.08313098869870107,0.08287181912128619,0.08461360843638067,0.0,0.08425200401714211,0.24563279644556285,0.1655893045511721
+country.00034,Armin van Buuren,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00035,The Statler Brothers,country,country,0.0,0.0,0.843288800254407,0.0,0.0,0.0,0.0,0.15671119974559297,0.0,0.0
+country.00036,Johnny Paycheck,country,country,0.0,0.12981098390428206,0.40169120474675934,0.0,0.0,0.13293508858367356,0.0,0.0,0.33556272276528504,0.0
+country.00037,Larry Boone,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00038,,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00040,The Kentucky Headhunters,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00041,Johnny Cash,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00042,Normaltown Flyers,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00043,Sammy Kershaw,country,country,0.0,0.0,0.8900132715549122,0.10998672844508776,0.0,0.0,0.0,0.0,0.0,0.0
+country.00044,Wesley Dennis,country,country,0.0,0.0,0.6624230722296811,0.0,0.16653868460408253,0.0,0.0,0.0,0.0,0.17103824316623645
+country.00045,Babyface,country,country,0.0,0.0,0.34695324327260013,0.31336102108905556,0.0,0.0,0.0,0.0,0.33968573563834425,0.0
+country.00046,Jimmie Skinner,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00047,Connie Hall,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00048,Johnny Preston,country,country,0.0,0.0,0.5066006382073835,0.0,0.0,0.0,0.0,0.0,0.3265510518344573,0.16684830995815908
+country.00049,George Jones,country,country,0.0,0.09036400685653978,0.9096359931434602,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00050,Vince Gill,country,country,0.0,0.0,0.6729879801754942,0.0,0.0,0.0,0.0,0.0,0.0,0.3270120198245058
+country.00051,Vince Gill,country,country,0.0,0.0,0.6642505179964353,0.16733631637130467,0.0,0.0,0.0,0.0,0.16841316563226014,0.0
+country.00052,Vince Gill,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00054,Vince Gill,country,country,0.0,0.0,0.6749458833985532,0.10602470016988652,0.0,0.1068414178895211,0.0,0.0,0.0,0.1121879985420392
+country.00055,Vince Gill,country,country,0.10625967834166533,0.0,0.5784660834892353,0.0,0.0,0.0,0.0,0.0,0.0,0.3152742381690992
+country.00056,Vince Gill,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00057,Reba McEntire,country,country,0.0,0.0,0.5585761667868074,0.3238305707524367,0.0,0.0,0.0,0.0,0.0,0.11759326246075578
+country.00058,Vince Gill,country,country,0.0,0.0,0.6670794142944385,0.0,0.0,0.0,0.0,0.0,0.0,0.3329205857055615
+country.00059,Vince Gill,country,reggae,0.0,0.0,0.33094376604785314,0.0,0.0,0.0,0.0,0.0,0.6690562339521469,0.0
+country.00060,Vince Gill,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00061,Vince Gill,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00062,Vince Gill,country,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.6743134557201222,0.0,0.0,0.3256865442798777
+country.00063,Vince Gill,country,country,0.32174285928541485,0.0,0.3495031125371599,0.0,0.0,0.0,0.0,0.0,0.32875402817742516,0.0
+country.00064,Dolly Parton,country,disco,0.0,0.0,0.0,0.6720870936505411,0.0,0.3279129063494588,0.0,0.0,0.0,0.0
+country.00065,Willie Nelson,country,reggae,0.0,0.0,0.32679045713253796,0.0,0.0,0.32326387217289937,0.0,0.0,0.3499456706945626,0.0
+country.00066,Willie Nelson,country,country,0.0,0.0,0.690433759462286,0.3095662405377139,0.0,0.0,0.0,0.0,0.0,0.0
+country.00067,Willie Nelson,country,country,0.0,0.0,0.6790520838043793,0.0,0.0,0.21812354630948713,0.0,0.0,0.0,0.10282436988613353
+country.00068,Willie Nelson,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00069,Willie Nelson,country,classical,0.0,0.3409248904190975,0.17037589480619791,0.16701890077994297,0.16260520441385917,0.15907510958090243,0.0,0.0,0.0,0.0
+country.00070,Willie Nelson,country,country,0.18033358800404037,0.0,0.5688221977643855,0.0,0.06360643983708883,0.0,0.0,0.0,0.0,0.18723777439448525
+country.00071,Willie Nelson,country,country,0.0,0.0,0.8417133821794855,0.0,0.0,0.0,0.0,0.0,0.07939629659575743,0.07889032122475705
+country.00072,Willie Nelson,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00073,Willie Nelson,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00074,Willie Nelson,country,country,0.1091847369434565,0.0,0.45882687403387123,0.10236221467073275,0.11836040077620319,0.0,0.0,0.0,0.2112657735757364,0.0
+country.00075,Willie Nelson,country,country,0.0,0.0,0.7004090515937065,0.0,0.29959094840629363,0.0,0.0,0.0,0.0,0.0
+country.00076,Willie Nelson,country,country,0.0,0.0,0.5709829882177395,0.0,0.0,0.0,0.0,0.0,0.0,0.4290170117822605
+country.00077,Willie Nelson,country,country,0.06566646283093211,0.0,0.9343335371690678,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00078,Willie Nelson,country,country,0.09857531322005174,0.0,0.568091353446615,0.0,0.0,0.0,0.0,0.0,0.3333333333333333,0.0
+country.00079,Willie Nelson,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00080,Willie Nelson,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00083,Brad Paisley,country,country,0.3727425065227415,0.0,0.6272574934772586,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00084,Brad Paisley,country,country,0.10663778396849176,0.0,0.7806233545020653,0.0,0.0,0.0,0.0,0.0,0.0,0.112738861529443
+country.00085,Brad Paisley,country,country,0.10396936893785315,0.0,0.8960306310621468,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00086,Brad Paisley,country,country,0.0,0.0,0.6686931936821378,0.25,0.0,0.0,0.0,0.0,0.0,0.0813068063178622
+country.00087,Brad Paisley,country,country,0.06391009977796933,0.0,0.3879594285206486,0.06658446957718346,0.06662974990005034,0.0,0.0,0.0,0.3457784495076622,0.06913780271648605
+country.00088,Brad Paisley,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00089,Brad Paisley,country,country,0.0,0.0,0.6766440118552945,0.0,0.3233559881447055,0.0,0.0,0.0,0.0,0.0
+country.00090,Brad Paisley,country,country,0.0,0.0,0.6892945442854705,0.15521575174455007,0.0,0.0,0.0,0.0,0.0,0.1554897039699794
+country.00091,Brad Paisley,country,country,0.22119619433047455,0.0,0.3333333333333333,0.11040135614781453,0.11213713900285877,0.0,0.0,0.0,0.0,0.22293197718551883
+country.00092,Brad Paisley,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00093,Brad Paisley,country,country,0.16946843436151737,0.0,0.5028056565231727,0.08164296729620482,0.08159422943032595,0.0,0.0,0.0,0.0,0.1644887123887792
+country.00095,George Strait,country,country,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+country.00096,George Strait,country,country,0.0,0.0,0.6885583455435405,0.0,0.0,0.0,0.0,0.0,0.0,0.31144165445645955
+country.00097,George Strait,country,rock,0.0,0.0,0.3235332907776868,0.0,0.0,0.3329265860510279,0.0,0.0,0.0,0.34354012317128524
+country.00098,George Strait,country,jazz,0.0,0.0,0.3341947472409841,0.0,0.0,0.6658052527590159,0.0,0.0,0.0,0.0
+country.00099,George Strait,country,country,0.0,0.0,0.5744238646654504,0.0,0.0,0.0,0.11016999364923008,0.0,0.0,0.3154061416853195
+disco.00000,Boz Scaggs,disco,disco,0.0,0.0,0.0,0.6666666666666666,0.0,0.0,0.0,0.1182782374445721,0.21505509588876126,0.0
+disco.00001,Gloria Gaynor,disco,disco,0.0,0.0,0.0,0.8327357037890699,0.0,0.0,0.0,0.0,0.0,0.16726429621093017
+disco.00002,Archie Bell,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00003,Don Armando's 2nd Ave. Rhumba Band,disco,disco,0.0,0.0,0.0,0.8385357352418202,0.10269279448684801,0.0,0.0,0.0,0.0,0.05877147027133175
+disco.00004,Carl Douglas,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00005,Odyssey,disco,country,0.0,0.0,0.6729206517544762,0.32707934824552387,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00006,Alec Costandinos,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00007,Miquel Brown,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00008,Ashford,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00010,Cheryl Lynn,disco,disco,0.0,0.0,0.301663702747352,0.6983362972526481,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00011,Billy Ocean,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00012,Carl Carlton,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00013,Donna Summer,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00014,Bee Gees,disco,disco,0.0,0.0,0.1808064718576208,0.8191935281423791,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00015,Heatwave,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00016,Earth,disco,disco,0.0,0.0,0.0,0.8421222895760986,0.0,0.0,0.0,0.0,0.0,0.15787771042390145
+disco.00017,Ottawan,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00019,New York City,disco,disco,0.0,0.0,0.0,0.9046726223308873,0.0,0.0,0.0,0.0,0.09532737766911277,0.0
+disco.00020,Clarence Carter,disco,disco,0.0,0.0,0.13912775036123867,0.5665013873123987,0.0,0.0,0.0,0.0,0.0,0.29437086232636256
+disco.00021,Gloria Gaynor,disco,disco,0.0,0.0,0.0,0.5842642121414484,0.3373337556819486,0.07840203217660299,0.0,0.0,0.0,0.0
+disco.00022,Gibson Brothers,disco,disco,0.0,0.0,0.0,0.7402209283345393,0.0,0.0,0.0,0.25977907166546066,0.0,0.0
+disco.00023,LaToya Jackson,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00024,Ottawan,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00025,Evelyn Thomas,disco,disco,0.0,0.0,0.22456772733530142,0.7754322726646986,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00026,LaToya Jackson,disco,disco,0.0,0.0,0.1484860844662332,0.5171675067498253,0.0,0.0,0.0,0.16175992222538463,0.0,0.1725864865585568
+disco.00027,The Sugarhill Gang,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00028,Gibson Brothers,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00029,Evelyn Thomas,disco,disco,0.0,0.0,0.16661556131913238,0.8333844386808676,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00030,Gibson Brothers,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00031,The Three Degrees,disco,disco,0.0,0.0,0.0,0.7798135682003958,0.0,0.0,0.0,0.22018643179960418,0.0,0.0
+disco.00032,David Christie,disco,disco,0.0,0.0,0.0,0.6938931817182739,0.14547085529511886,0.0,0.0,0.1606359629866074,0.0,0.0
+disco.00033,The Tymes,disco,disco,0.0,0.0,0.10729172058245103,0.546463703613209,0.0,0.11765620332646644,0.0,0.0,0.0,0.22858837247787353
+disco.00034,Evelyn Thomas,disco,disco,0.0,0.0,0.0,0.5055506071899959,0.0,0.0,0.0,0.4944493928100041,0.0,0.0
+disco.00035,Gibson Brothers,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00036,The Exciters,disco,disco,0.0,0.0,0.0,0.888844180699587,0.0,0.0,0.0,0.0,0.0,0.11115581930041292
+disco.00037,Gibson Brothers,disco,disco,0.0,0.0,0.0,0.8430381450513675,0.0,0.0,0.0,0.0,0.0,0.15696185494863238
+disco.00038,Gloria Gaynor,disco,disco,0.0,0.0,0.1664935597311816,0.33265261670626267,0.0,0.0,0.0,0.15130148207293848,0.2676613999465491,0.08189094154306813
+disco.00039,George McCrae,disco,disco,0.0,0.0,0.0,0.6972961592261603,0.0,0.10578786636333044,0.0,0.08740644460334969,0.10950952980715957,0.0
+disco.00040,David Christie,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00041,Heatwave,disco,rock,0.0,0.0,0.0,0.33876480433867484,0.0,0.0,0.0,0.0,0.0,0.6612351956613253
+disco.00043,Harold Melvin,disco,disco,0.0,0.0,0.0,0.5676799891070768,0.11117001390989241,0.0,0.0,0.21249543038211058,0.1086545666009201,0.0
+disco.00044,Ottawan,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00045,Ottawan,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00046,Donna Summer,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00047,Barbra Streisand,disco,classical,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00048,Carl Douglas,disco,hiphop,0.0,0.0,0.0,0.0,0.6614872630261062,0.0,0.33851273697389395,0.0,0.0,0.0
+disco.00050,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00051,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00052,Village People,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00053,Amii Stewart,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00054,Chic,disco,disco,0.0,0.0,0.0,0.5869862116172033,0.0,0.0,0.10695544278117715,0.0,0.0,0.30605834560161954
+disco.00055,The Trammps,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00056,Earth,disco,disco,0.0,0.0,0.0,0.7056288010188506,0.0,0.0,0.0,0.0,0.0,0.29437119898114944
+disco.00058,Earth,disco,disco,0.0,0.0,0.0,0.6693467526065511,0.0,0.0,0.0,0.0,0.0,0.3306532473934488
+disco.00059,Earth,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00060,The Trammps,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00061,Anita Ward,disco,disco,0.0,0.0,0.0,0.8582910257728014,0.0,0.0,0.07026700533823538,0.0,0.0,0.07144196888896331
+disco.00062,Peter Brown,disco,disco,0.10847166743043975,0.0,0.0,0.8915283325695602,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00063,Boney M. 2000,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00064,Lipps,disco,disco,0.0,0.0,0.0,0.9228401602870427,0.0,0.0,0.0,0.0,0.07715983971295713,0.0
+disco.00065,"Evelyn ""Champagne"" King",disco,disco,0.0,0.0,0.0,0.9135962134422718,0.08640378655772822,0.0,0.0,0.0,0.0,0.0
+disco.00066,Peaches,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00067,ABBA,disco,disco,0.07936312688408968,0.0,0.0,0.669766006800953,0.0,0.0,0.08197476393655533,0.0,0.0,0.1688961023784021
+disco.00068,ABBA,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00069,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00070,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00071,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,0.6855982344047262,0.0,0.0,0.3144017655952737,0.0,0.0,0.0
+disco.00072,ABBA,disco,disco,0.0,0.0,0.0,0.690634745650096,0.0,0.0,0.0,0.0,0.0,0.30936525434990403
+disco.00073,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00074,KC and the Sunshine Band,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00075,Village People,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00077,Tavares,disco,hiphop,0.31587725487237367,0.0,0.0,0.3420188034483532,0.34210394167927316,0.0,0.0,0.0,0.0,0.0
+disco.00078,Gloria Gaynor,disco,disco,0.0,0.0,0.0,0.8376652865102978,0.0,0.0,0.0,0.0,0.16233471348970213,0.0
+disco.00079,Peter Brown,disco,disco,0.0,0.0,0.0,0.792198019573959,0.09520391797800393,0.0,0.0,0.0,0.0,0.11259806244803704
+disco.00080,Dazzle,disco,disco,0.0,0.0,0.0,0.9048110915556985,0.0,0.0,0.0,0.0,0.0,0.09518890844430156
+disco.00081,Today,disco,disco,0.0,0.0,0.16516733038192857,0.34174857040327555,0.0,0.0,0.17458931252080717,0.0,0.24003240209595403,0.0784623845980347
+disco.00082,G.Q.,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00083,Rick Dees And His Cast Of Idiots,disco,disco,0.0,0.0,0.18018786457153713,0.6617429951278379,0.0,0.0,0.0,0.0,0.0,0.15806914030062502
+disco.00084,,disco,disco,0.0,0.0,0.0,0.581547754207984,0.2057748008667036,0.09466209662679619,0.11801534829851622,0.0,0.0,0.0
+disco.00088,Meco,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00089,The Trammps,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00091,Silver Convention,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00092,Blondie,disco,disco,0.0,0.0,0.0,0.7683299731218192,0.0,0.0,0.0,0.0,0.0,0.23167002687818083
+disco.00093,Van McCoy,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00094,Bronski Beat,disco,disco,0.0,0.0,0.0,0.7805151692700356,0.0,0.0,0.0,0.0,0.0,0.2194848307299644
+disco.00095,Donna Summer,disco,reggae,0.0,0.0,0.16636740382907325,0.17264761845670715,0.0,0.0,0.0,0.0,0.6609849777142196,0.0
+disco.00097,Patrick Cowley,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00098,Boney M.,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+disco.00099,Boney M.,disco,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00000,Afrika Bambaataa,hiphop,disco,0.0,0.0,0.0,0.5679284549580559,0.3493994574448915,0.0,0.0,0.0,0.0,0.08267208759705268
+hiphop.00001,Wu-Tang Clan,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00002,De La Soul,hiphop,reggae,0.0,0.0,0.0,0.320318752276754,0.0,0.0,0.0,0.0,0.679681247723246,0.0
+hiphop.00003,Ice Cube,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00005,The Prodigy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00006,Ice Cube,hiphop,hiphop,0.0,0.0,0.0,0.09505023846858655,0.8008378514435899,0.0,0.0,0.0,0.10411191008782367,0.0
+hiphop.00007,Wu-Tang Clan,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00008,Beastie Boys,hiphop,disco,0.0,0.0,0.0,0.6588378511933735,0.3411621488066265,0.0,0.0,0.0,0.0,0.0
+hiphop.00009,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.26983715689746424,0.7301628431025358,0.0,0.0,0.0,0.0,0.0
+hiphop.00010,Beastie Boys,hiphop,hiphop,0.23573306672937286,0.0,0.0,0.0,0.5000495967414602,0.0,0.0,0.0,0.0,0.26421733652916696
+hiphop.00012,Beastie Boys,hiphop,hiphop,0.11292291973807506,0.0,0.0,0.10496406361072448,0.6762217056943175,0.0,0.10589131095688302,0.0,0.0,0.0
+hiphop.00013,Beastie Boys,hiphop,country,0.0,0.0,0.5777557341733897,0.0,0.4222442658266103,0.0,0.0,0.0,0.0,0.0
+hiphop.00014,Beastie Boys,hiphop,hiphop,0.0,0.0,0.21700220861929106,0.0,0.34596058254184664,0.0,0.32706152412364514,0.0,0.0,0.10997568471521722
+hiphop.00015,Beastie Boys,hiphop,hiphop,0.0,0.0,0.16648903441680826,0.0,0.8335109655831918,0.0,0.0,0.0,0.0,0.0
+hiphop.00016,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00017,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00018,Beastie Boys,hiphop,metal,0.0,0.0,0.12990453815403424,0.12703471028827518,0.25445638529228415,0.0,0.28093313004777565,0.0,0.14292181111496707,0.06474942510266365
+hiphop.00019,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00022,Beastie Boys,hiphop,hiphop,0.0,0.0,0.14292899319533714,0.0,0.8570710068046629,0.0,0.0,0.0,0.0,0.0
+hiphop.00023,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6969521012223535,0.0,0.1460464340803733,0.0,0.0,0.15700146469727316
+hiphop.00024,DJ's Z-Trip,hiphop,hiphop,0.0,0.0,0.0,0.14170592664017675,0.7128654030379225,0.0,0.14542867032190088,0.0,0.0,0.0
+hiphop.00025,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00026,3LW featuring NAS,hiphop,hiphop,0.0,0.0,0.0,0.08171106629547714,0.6756858221026765,0.0,0.0,0.24260311160184636,0.0,0.0
+hiphop.00028,Dirt featuring Epsilon,hiphop,hiphop,0.0,0.0,0.0,0.10999452101629804,0.890005478983702,0.0,0.0,0.0,0.0,0.0
+hiphop.00030,ram jam world,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00031,Christina Aguilera,hiphop,hiphop,0.0,0.0,0.0,0.0,0.8451726705475704,0.0,0.0,0.15482732945242966,0.0,0.0
+hiphop.00032,De La Soul,hiphop,hiphop,0.0,0.0,0.0,0.06446382564726849,0.739007655933676,0.0,0.0,0.0,0.19652851841905544,0.0
+hiphop.00033,Dr. Dre,hiphop,jazz,0.0,0.0,0.0,0.16253961941179762,0.0,0.6695291720577059,0.0,0.0,0.0,0.16793120853049648
+hiphop.00034,DJ 20,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00035,Cru Thik,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00036,Beastie Boys,hiphop,classical,0.0,0.25337243496386547,0.1006286622400756,0.21597518171988797,0.21183277884305138,0.0,0.10407517428581779,0.0,0.11411576794730176,0.0
+hiphop.00037,Beastie Boys,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00038,2Pac,hiphop,hiphop,0.0,0.0,0.0,0.17110413841011973,0.75,0.0,0.0,0.0,0.0,0.07889586158988028
+hiphop.00039,Lauryn Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6782009044766537,0.0,0.0,0.3217990955233464,0.0,0.0
+hiphop.00040,Lauryn Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,0.3440087428517676,0.3271363042909615,0.0,0.0,0.0,0.32885495285727084
+hiphop.00041,Wu-Tang Clan,hiphop,hiphop,0.0,0.0,0.0,0.16935407977711864,0.5166323409275324,0.0,0.0,0.314013579295349,0.0,0.0
+hiphop.00043,Wyclef Jean,hiphop,rock,0.0,0.0,0.11127204938415586,0.33049200983120836,0.16428197854407847,0.0,0.0,0.0,0.0,0.39395396224055723
+hiphop.00044,Wyclef Jean,hiphop,hiphop,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.16597024134399438,0.3340297586560056,0.0
+hiphop.00045,Lauryn Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,0.9999999623891185,0.0,0.0,0.0,3.76108814849498e-08,0.0
+hiphop.00046,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6030645053600998,0.0,0.0,0.39693549463990024,0.0,0.0
+hiphop.00047,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00048,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00049,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,0.9179496300870891,0.0,0.0,0.08205036991291097,0.0,0.0
+hiphop.00050,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00051,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00052,Temper Temper,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6169108331610654,0.0,0.0,0.0,0.15965800482372844,0.2234311620152061
+hiphop.00053,Young MC,hiphop,hiphop,0.0,0.0,0.0,0.13276826040576786,0.7204963910190765,0.0,0.0,0.0,0.14673534857515555,0.0
+hiphop.00055,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.16354159018606437,0.8364584098139356,0.0,0.0,0.0,0.0,0.0
+hiphop.00056,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00057,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00058,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00059,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00060,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,0.734894372741955,0.0,0.0,0.0,0.265105627258045,0.0
+hiphop.00061,Cypress Hill,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00062,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00063,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00064,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00065,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,0.777934788169368,0.0,0.0,0.222065211830632,0.0,0.0
+hiphop.00066,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.3311167757888597,0.0,0.6688832242111402,0.0,0.0,0.0,0.0,0.0
+hiphop.00067,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00068,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00069,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00070,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00071,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00072,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6705092633148549,0.0,0.0,0.32949073668514517,0.0,0.0
+hiphop.00073,A Tribe Called Quest,hiphop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+hiphop.00074,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00075,A Tribe Called Quest,hiphop,hiphop,0.0,0.0,0.0,0.0,0.8432238818756213,0.0,0.0,0.1567761181243788,0.0,0.0
+hiphop.00076,50 Cent,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00077,Busta Rhymes,hiphop,hiphop,0.0,0.0,0.0,0.11006619178703174,0.79631199079601,0.0,0.0,0.0936218174169582,0.0,0.0
+hiphop.00078,50 Cent,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00079,Eminem,hiphop,pop,0.0,0.0,0.0,0.0,0.3511336081458424,0.0,0.0,0.4908382281526704,0.15802816370148715,0.0
+hiphop.00080,Eminem,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00081,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,0.6819672553312489,0.0,0.0,0.0,0.31803274466875103,0.0
+hiphop.00082,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00083,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00085,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00087,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00088,Public Enemy,hiphop,hiphop,0.0,0.0,0.10929677994352283,0.0,0.6666666666666666,0.0,0.1165449269289182,0.0,0.10749162646089232,0.0
+hiphop.00089,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00091,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00093,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,0.563325179173312,0.0,0.11177688654649699,0.0,0.0,0.3248979342801909
+hiphop.00094,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00095,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00096,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,0.8449554903070389,0.0,0.0,0.0,0.0,0.15504450969296105
+hiphop.00097,Public Enemy,hiphop,metal,0.0,0.0,0.0,0.0,0.4601996355393609,0.0,0.5398003644606392,0.0,0.0,0.0
+hiphop.00098,Public Enemy,hiphop,hiphop,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0
+hiphop.00099,Run-DMC,hiphop,hiphop,0.0,0.0,0.0,0.0,0.8375430159092194,0.0,0.0,0.0,0.0,0.16245698409078058
+jazz.00000,Leonard Bernstein,jazz,jazz,0.0,0.43675104690985983,0.0,0.0,0.0,0.5632489530901402,0.0,0.0,0.0,0.0
+jazz.00001,Leonard Bernstein,jazz,classical,0.0,0.6374342800958019,0.0,0.0,0.0,0.36256571990419806,0.0,0.0,0.0,0.0
+jazz.00002,James Carter,jazz,jazz,0.0,0.3339819938175589,0.0,0.0,0.0,0.49439138652314074,0.0,0.0,0.1716266196593004,0.0
+jazz.00003,James Carter,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.7107154102464404,0.0,0.0,0.0,0.28928458975355964
+jazz.00004,James Carter,jazz,jazz,0.0,0.307004670074654,0.0,0.0,0.0,0.6929953299253461,0.0,0.0,0.0,0.0
+jazz.00005,James Carter,jazz,jazz,0.0,0.0,0.0,0.1591096582431092,0.0,0.8408903417568908,0.0,0.0,0.0,0.0
+jazz.00006,James Carter,jazz,jazz,0.0,0.22761797413587048,0.10887766140980071,0.11108796994031817,0.0,0.5524163945140107,0.0,0.0,0.0,0.0
+jazz.00007,James Carter,jazz,jazz,0.0,0.3342960285766041,0.0,0.0,0.0,0.6657039714233958,0.0,0.0,0.0,0.0
+jazz.00008,James Carter,jazz,reggae,0.16038314615555455,0.0,0.1721694631286753,0.0,0.0,0.3278305368713247,0.0,0.0,0.3396168538444454,0.0
+jazz.00009,James Carter,jazz,jazz,0.0,0.16076654328849907,0.14757483586477324,0.0,0.0,0.6916586208467277,0.0,0.0,0.0,0.0
+jazz.00010,James Carter,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00012,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00014,Joe Lovano,jazz,classical,0.0,0.8891045751902894,0.0,0.0,0.0,0.11089542480971049,0.0,0.0,0.0,0.0
+jazz.00015,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00016,Joe Lovano,jazz,jazz,0.32257197620518147,0.0,0.0,0.0,0.0,0.6774280237948185,0.0,0.0,0.0,0.0
+jazz.00017,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.7168047107528805,0.0,0.0,0.0,0.28319528924711945
+jazz.00018,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00019,Joe Lovano,jazz,jazz,0.0,0.1529302892759271,0.0,0.0,0.0,0.8470697107240729,0.0,0.0,0.0,0.0
+jazz.00020,Joe Lovano,jazz,jazz,0.22614920599948485,0.21416077223237476,0.0,0.0,0.0,0.5596900217681404,0.0,0.0,0.0,0.0
+jazz.00021,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00023,Joe Lovano,jazz,jazz,0.0,0.16467734033091308,0.0,0.0,0.0,0.6701271929132387,0.1651954667558482,0.0,0.0,0.0
+jazz.00024,Joe Lovano,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.712296128228,0.0,0.0,0.28770387177199996,0.0
+jazz.00025,Branford Marsalis,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00026,Branford Marsalis Trio,jazz,classical,0.0,0.6616545992730003,0.0,0.0,0.0,0.33834540072699976,0.0,0.0,0.0,0.0
+jazz.00027,Branford Marsalis Trio,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00028,Branford Marsalis Trio,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00030,Branford Marsalis Trio,jazz,jazz,0.11113499469524991,0.0,0.0,0.0,0.0,0.7774632180847026,0.0,0.0,0.0,0.11140178722004745
+jazz.00031,Branford Marsalis Trio,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00032,Branford Marsalis Trio,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00033,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00035,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00036,Fletcher Henderson,jazz,jazz,0.0,0.41196148364257357,0.0,0.0,0.0,0.5880385163574264,0.0,0.0,0.0,0.0
+jazz.00038,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.6802323625104674,0.1521158252616695,0.0,0.0,0.1676518122278631
+jazz.00039,Lionel Hampton,jazz,jazz,0.1405369856848874,0.0,0.0,0.0,0.0,0.8594630143151126,0.0,0.0,0.0,0.0
+jazz.00041,Coleman Hawkins,jazz,jazz,0.07500700251531049,0.07990008502390242,0.0,0.0,0.075680646001835,0.6864462516900833,0.0,0.0,0.0829660147688687,0.0
+jazz.00042,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00043,Coleman Hawkins,jazz,jazz,0.0,0.0,0.32411395260816106,0.0,0.0,0.675886047391839,0.0,0.0,0.0,0.0
+jazz.00045,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00046,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00047,,jazz,jazz,0.0,0.0,0.0,0.16319624350525036,0.0,0.8368037564947497,0.0,0.0,0.0,0.0
+jazz.00048,,jazz,classical,0.0,0.6319090964991094,0.0,0.0,0.0,0.36809090350089047,0.0,0.0,0.0,0.0
+jazz.00049,Sarah Vaughan,jazz,blues,0.3410212795349221,0.0,0.0,0.0,0.0,0.33078756482341565,0.0,0.3281911556416623,0.0,0.0
+jazz.00051,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00052,Terell Stafford,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.6916272603266381,0.0,0.30837273967336176,0.0,0.0
+jazz.00053,Lionel Hampton,jazz,jazz,0.0,0.3293553352415532,0.0,0.0,0.0,0.6706446647584468,0.0,0.0,0.0,0.0
+jazz.00055,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00056,Joris Teepe Quintet,jazz,jazz,0.0,0.0,0.35595328830238226,0.0,0.0,0.6440467116976176,0.0,0.0,0.0,0.0
+jazz.00058,Fletcher Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00059,Charles Lloyd,jazz,country,0.0,0.0,0.336047735004879,0.0,0.33104047322056424,0.0,0.0,0.0,0.33291179177455665,0.0
+jazz.00060,"Henry ""Red"" Allen",jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.9148355132850899,0.0,0.08516448671491005,0.0,0.0
+jazz.00061,Johnny O'Neal,jazz,jazz,0.0,0.0,0.19849866013477277,0.0,0.0,0.8015013398652272,0.0,0.0,0.0,0.0
+jazz.00062,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00063,Ahmed Abdullah,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00064,Lester Young,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00065,Lionel Hampton,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00066,,jazz,jazz,0.06564908625185441,0.1322526756763444,0.0,0.06476394034550151,0.0,0.6020982380718012,0.0,0.06539563906363167,0.0,0.06984042059086683
+jazz.00067,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00068,Coleman Hawkins,jazz,jazz,0.04184576305456363,0.0,0.04234221983095883,0.0,0.0,0.9158120171144775,0.0,0.0,0.0,0.0
+jazz.00069,Coleman Hawkins,jazz,jazz,0.0,0.0,0.16219564772723086,0.0,0.0,0.8378043522727692,0.0,0.0,0.0,0.0
+jazz.00070,"Henry ""Red"" Allen",jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.9340101266832199,0.0,0.06598987331678004,0.0,0.0
+jazz.00071,Coleman Hawkins,jazz,jazz,0.0,0.1378809875355025,0.06099207567835434,0.0,0.0,0.8011269367861431,0.0,0.0,0.0,0.0
+jazz.00072,Coleman Hawkins,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00073,Dexter Gordon,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00075,Dexter Gordon,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00076,Dexter Gordon,jazz,jazz,0.0,0.0,0.0797874747882225,0.0,0.0,0.9202125252117775,0.0,0.0,0.0,0.0
+jazz.00077,Dexter Gordon,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.8372161741944357,0.0,0.0,0.0,0.16278382580556425
+jazz.00078,Dexter Gordon,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00079,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.0,0.5
+jazz.00080,Tony Williams,jazz,jazz,0.0,0.0,0.21792960641402237,0.10790571237196322,0.0,0.5703361990258228,0.0,0.0,0.0,0.10382848218819161
+jazz.00081,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.12366421341380289,0.0,0.8763357865861972,0.0,0.0,0.0,0.0
+jazz.00082,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00083,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00084,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00085,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00086,Tony Williams,jazz,jazz,0.0,0.0,0.0,0.13488912891163807,0.0,0.7262496087393542,0.0,0.0,0.1388612623490079,0.0
+jazz.00087,Miles Davis,jazz,jazz,0.0,0.0,0.23769449967168654,0.0,0.0,0.7623055003283135,0.0,0.0,0.0,0.0
+jazz.00089,Miles Davis,jazz,jazz,0.0,0.33618649345466617,0.0,0.0,0.0,0.4899005238639492,0.0,0.17391298268138464,0.0,0.0
+jazz.00090,Miles Davis,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00091,Miles Davis,jazz,jazz,0.0,0.0,0.2527427677647835,0.0,0.0,0.49894712064234953,0.0,0.08491281805178368,0.0,0.1633972935410833
+jazz.00092,Miles Davis,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00093,Bob Mintzer Big Band,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00094,Joe Henderson,jazz,jazz,0.0,0.33748314086899583,0.0,0.0,0.0,0.6625168591310041,0.0,0.0,0.0,0.0
+jazz.00095,Joe Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00096,Joe Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00097,Joe Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00098,Joe Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+jazz.00099,Joe Henderson,jazz,jazz,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
+metal.00000,Falconer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00002,Iron Maiden,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00003,Anthrax,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00004,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00005,Iron Maiden,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00006,Blind Guardian,metal,metal,0.0,0.0,0.0,0.08207311864312687,0.0,0.0,0.9179268813568731,0.0,0.0,0.0
+metal.00007,Coroner,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00008,Accept,metal,metal,0.0,0.0,0.0,0.0,0.0,0.08410004663599008,0.91589995336401,0.0,0.0,0.0
+metal.00009,Tvangeste,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00010,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00011,,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00012,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00013,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.12449691997336683,0.0,0.0,0.8755030800266331,0.0,0.0,0.0
+metal.00014,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00015,Dark Tranquillity,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00016,Slayer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00017,Slayer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00018,Slayer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00019,Slayer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.9332863701666125,0.0,0.0,0.06671362983338748
+metal.00020,Slayer,metal,metal,0.0,0.0,0.0,0.10655608502099945,0.0,0.0,0.6666666666666666,0.0,0.0,0.22677724831233392
+metal.00021,Anthrax,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00022,Ozzy Osbourne,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00023,,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00024,Jacob's Dream,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00026,Anthrax,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.7065746004786814,0.0,0.0,0.2934253995213186
+metal.00027,Anthrax,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00028,Motörhead,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00030,Megadeth,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00031,Motörhead,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00032,Scorpions,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.6899841926844517,0.0,0.0,0.31001580731554834
+metal.00033,Motörhead,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00034,Iron Maiden,metal,metal,0.0,0.0,0.0,9.85040969175223e-09,0.0,0.0,0.9999999901495903,0.0,0.0,0.0
+metal.00035,Slayer,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00037,Saxon,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00038,Metallica,metal,metal,0.0,0.07685119924017018,0.08084736238723478,0.0,0.0877897348880884,0.0,0.5964906087830989,0.0,0.15802109470140768,0.0
+metal.00039,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00040,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00041,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00043,Dio,metal,metal,0.0,0.0,0.0,0.15490862192892266,7.4104839643823095e-09,0.0,0.770752800663132,0.0,0.0,0.07433856999746137
+metal.00044,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00045,Dio,metal,metal,0.0,0.0,0.0,0.3289581123796651,0.0,0.0,0.6710418876203349,0.0,0.0,0.0
+metal.00046,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00047,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00048,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00049,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00050,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00051,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00052,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00053,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00054,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00055,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00056,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00057,New Bomb Turks,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00058,Queen,metal,rock,0.0,0.0,0.0,0.0,0.0,0.0,3.8874949779709236e-08,0.0,0.0,0.9999999611250503
+metal.00059,Queen,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.7021992829835488,0.0,0.0,0.29780071701645106
+metal.00060,Queen,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00061,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00062,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00063,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00064,Dio,metal,metal,0.0,0.0,0.0,1.6289860882398526e-08,0.0,0.0,0.7918404929437233,0.0,0.0,0.20815949076641582
+metal.00065,Dio,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00066,Dio,metal,metal,0.0,0.0,0.0,0.18995150063195698,0.0,0.0,0.7504660295234423,0.0,0.0,0.05958246984460066
+metal.00067,AC/DC,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00069,Black Sabbath,metal,metal,0.0,0.0,0.1664536862686634,0.0,0.0,0.0,0.8335463137313366,0.0,0.0,0.0
+metal.00071,Def Leppard,metal,disco,0.0,0.0,0.06801302817697318,0.377768824625578,0.19772315750604527,0.0,0.3564949896914036,0.0,0.0,0.0
+metal.00072,Deep Purple,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00073,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00074,Johnny Crass,metal,metal,0.0,0.0,0.0,0.0,0.19242162221786138,0.0,0.5828990974380895,0.0,0.0,0.22467928034404908
+metal.00075,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00076,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00077,Judas Priest,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00078,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00079,Def Leppard,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00080,Def Leppard,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00081,Guns N' Roses,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00082,Guns N' Roses,metal,metal,0.0,0.0,0.0,0.0682196076026248,0.0,0.0,0.9317803923973752,0.0,0.0,0.0
+metal.00083,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00084,Coal Chamber,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00085,Ozzy Osbourne,metal,metal,0.0,0.0,0.1554283332523782,0.23615473049905805,0.0,0.0,0.44636773649667155,0.0,0.0,0.16204919975189214
+metal.00086,Bon Jovi,metal,disco,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0
+metal.00087,Metallica,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00090,Black Sabbath,metal,metal,0.0,0.0,0.0,0.26550728568725096,0.0,0.0,0.734492714312749,0.0,0.0,0.0
+metal.00091,Black Sabbath,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.7329006084872364,0.0,0.0,0.2670993915127635
+metal.00092,Iron Maiden,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00093,Iron Maiden,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,0.9163056387374933,0.0,0.0,0.08369436126250666
+metal.00096,Rage Against the Machine,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00097,Rage Against the Machine,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00098,Rage Against the Machine,metal,metal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0
+metal.00099,Rage Against the Machine,metal,metal,0.08364677533204284,0.0,0.0,0.17423564778426223,0.09323204397766384,0.0,0.6488855329060311,0.0,0.0,0.0
+pop.00000,Mandy Moore,pop,pop,0.0,0.0,0.0,0.11233745412567618,0.0,0.0,0.0,0.6666666666666666,0.22099587920765715,0.0
+pop.00001,Spice Girls,pop,pop,0.0,0.0,0.0,0.0,0.0820589318770197,0.0,0.0,0.9179410681229803,0.0,0.0
+pop.00002,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00003,Alanis Morissette,pop,pop,0.0,0.0,0.16819118582794926,0.1564943224752581,0.0,0.0,0.0,0.4323113025969233,0.16119437492781857,0.08180881417205076
+pop.00004,Alanis Morissette,pop,pop,0.0,0.0,0.17258211399122309,0.1704916036233491,0.0,0.0,0.0,0.6569262823854278,0.0,0.0
+pop.00005,Alanis Morissette,pop,pop,0.0,0.0,0.10664463192774998,0.0,0.0,0.0,0.0,0.89335536807225,0.0,0.0
+pop.00006,Alanis Morissette,pop,pop,0.0,0.0,0.164585556672989,0.0,0.0,0.0,0.0,0.6625977925685826,0.0,0.1728166507584284
+pop.00007,Alanis Morissette,pop,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3324961891348817,0.32764817231287724,0.3398556385522411
+pop.00008,Alanis Morissette,pop,pop,0.0,0.0,0.14289949805170082,0.0,0.0,0.1400509464789813,0.0,0.7170495554693178,0.0,0.0
+pop.00009,Alanis Morissette,pop,pop,0.0,0.0,0.0,0.1711154664321,0.0,0.0,0.0,0.8288845335679,0.0,0.0
+pop.00011,Babyface,pop,pop,0.0,0.28780197249761313,0.0,0.0,0.0,0.0,0.0,0.4100877915363491,0.0,0.3021102359660377
+pop.00012,Babyface,pop,pop,0.0,0.0,0.34371779980841044,0.0,0.0,0.0,0.0,0.5457561620319152,0.11052603815967436,0.0
+pop.00013,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00014,,pop,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.46585422778475094,0.5341457722152492,0.0
+pop.00016,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00017,Britney Spears,pop,rock,0.0,0.0,0.16081553994149175,0.1678149698296585,0.0,0.0,0.0,0.1790853050319204,0.0,0.4922841851969293
+pop.00018,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00019,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00021,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00022,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00023,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.698000045839731,0.3019999541602691,0.0
+pop.00024,Britney Spears,pop,pop,0.0,0.0,0.0,0.22062218535004507,0.0,0.0,0.0,0.7793778146499549,0.0,0.0
+pop.00025,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.31287201620503385,0.0,0.0,0.6871279837949662,0.0,0.0
+pop.00027,Britney Spears,pop,disco,0.0,0.0,0.0,0.5,0.2695218572659567,0.0,0.0,0.2304781427340433,0.0,0.0
+pop.00029,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00030,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00031,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00032,Britney Spears,pop,pop,0.0,0.0,0.0,0.15850002928717644,0.08233445325629588,0.0,0.0,0.5096460563786589,0.24951946107786876,0.0
+pop.00033,Britney Spears,pop,rock,0.0,0.0,0.0,0.3302755593706505,0.0,0.0,0.0,0.28766513814544864,0.0,0.38205930248390085
+pop.00035,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00036,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.6622252683748729,0.33777473162512717,0.0
+pop.00037,Britney Spears,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00038,Britney Spears,pop,pop,0.0,0.0,0.0,0.14892261736456822,0.0,0.0,0.0,0.8510773826354318,0.0,0.0
+pop.00039,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.13183001137189213,0.0,0.0,0.8681699886281079,0.0,0.0
+pop.00040,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.08482718063567267,0.0,0.0,0.75,0.08152689873648783,0.0836459206278395
+pop.00041,Regina Belle,pop,reggae,0.1734978593323996,0.0,0.0,0.1587541889694284,0.0,0.0,0.0,0.3265021406676004,0.3412458110305716,0.0
+pop.00042,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00043,Cher,pop,pop,0.0,0.0,0.0,0.11097024310517245,0.11707507021910585,0.0,0.0,0.7719546866757216,0.0,0.0
+pop.00044,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00045,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.13070122702341683,0.0,0.0,0.801274145420372,0.06802462755621125,0.0
+pop.00046,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.1093598853924136,0.0,0.0,0.7776380846624521,0.1130020299451343,0.0
+pop.00047,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00048,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.05847356915264633,0.0,0.0,0.9415264308473537,0.0,0.0
+pop.00049,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.1614481450613635,0.0,0.0,0.0,0.5163110509497871,0.32224080398884936,0.0
+pop.00050,Christina Aguilera,pop,hiphop,0.0,0.0,0.0,0.0,0.6780933668159576,0.0,0.0,0.32190663318404233,0.0,0.0
+pop.00051,Christina Aguilera,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.7767033477657764,0.22329665223422365,0.0
+pop.00052,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00053,Destiny's Child,pop,pop,0.32766279580803614,0.0,0.0,0.0,0.0,0.0,0.0,0.6723372041919637,0.0,0.0
+pop.00054,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00055,Luke Miltenburg,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00056,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00057,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00059,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.2916713467893431,0.0,0.0,0.7083286532106569,0.0,0.0
+pop.00060,Destiny's Child,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00063,Diana Ross,pop,pop,0.0,0.0,0.10760855468167009,0.0,0.0,0.0,0.0,0.804669744566019,0.0877217007523109,0.0
+pop.00064,Abigail,pop,pop,0.0,0.0,0.0,0.04898241723691162,0.0,0.0,0.0,0.9510175827630883,0.0,0.0
+pop.00065,Jxctis,pop,disco,0.0,0.0,0.10654696724614694,0.4294198985779243,0.0,0.22777644607098713,0.0,0.12714050445035618,0.10911618365458543,0.0
+pop.00066,Whitney Houston And Enrique Iglesias,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00067,Janet Jackson,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00068,Janet Jackson,pop,pop,0.0,0.0,0.0,0.0,0.12385943826739114,0.0,0.0,0.8761405617326088,0.0,0.0
+pop.00070,Janet Jackson,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00072,Janet Jackson,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00073,Janet Jackson,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00074,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.2013470380188914,0.0,0.0,0.7986529619811085,0.0,0.0
+pop.00075,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00076,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00077,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00078,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.22400973009373584,0.0,0.0,0.7759902699062642,0.0,0.0
+pop.00079,Kate Bush,pop,country,0.0,0.0880146124964556,0.4859589932599164,0.0,0.0,0.07499310492964646,0.0,0.35103328931398153,0.0,0.0
+pop.00082,Jennifer Lopez,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.8076501489669342,0.0,0.1923498510330656
+pop.00083,Madonna,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00084,Madonna,pop,pop,0.0,0.0,0.0,0.16978388409497008,0.32418644014389897,0.0,0.0,0.3399876703589533,0.0,0.1660420054021777
+pop.00085,Madonna,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00086,Madonna,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00087,Mandy Moore,pop,pop,0.0,0.0,0.0,0.0787729240325821,0.05830805808041371,0.0,0.0,0.8629190178870042,0.0,0.0
+pop.00088,Mandy Moore,pop,pop,0.0,0.0,0.0,0.0,0.15780358207421225,0.0,0.0,0.8421964179257877,0.0,0.0
+pop.00089,Mandy Moore,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00090,Mandy Moore,pop,pop,0.0,0.0,0.0,0.03125873220351148,0.0,0.0,0.0,0.9687412677964886,0.0,0.0
+pop.00091,Lubo Kirov,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00092,Emilio Estefan,pop,pop,0.0,0.0,0.0,0.0,0.08310982123704266,0.0,0.0,0.9168901787629573,0.0,0.0
+pop.00093,Mandy Moore,pop,pop,0.0,0.0,0.0,0.1686153793102737,0.0,0.0,0.0,0.8313846206897263,0.0,0.0
+pop.00094,Mandy Moore,pop,disco,0.0,0.0,0.0,0.6686300444589733,0.0,0.0,0.0,0.1657256206856635,0.0,0.16564433485536312
+pop.00095,Mandy Moore,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00096,Mandy Moore,pop,pop,0.0,0.0,0.0,0.11363443925161594,0.0,0.0,0.0,0.7787130002077579,0.10765256054062618,0.0
+pop.00098,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0
+pop.00099,Babyface,pop,pop,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.8281583965197244,0.17184160348027552,0.0
+reggae.00000,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.15126188112851957,0.0,0.0,0.0,0.6914243333934009,0.15731378547807945
+reggae.00001,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.11063648603904026,0.0,0.0,0.0,0.0,0.8893635139609598,0.0
+reggae.00002,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00003,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00004,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00005,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00006,Bob Marley,reggae,reggae,0.16054257363738128,0.0,0.0842155371993606,0.08349690072846276,0.08228756207217663,0.0,0.0,0.0,0.5894574263626187,0.0
+reggae.00007,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.10659250893894608,0.0,0.0,0.0,0.0,0.8934074910610539,0.0
+reggae.00009,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00011,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00012,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00013,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00014,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00015,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00016,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.20681421036205272,0.0,0.6921949049622739,0.10099088467567341
+reggae.00017,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00018,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00019,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00020,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00022,Bob Marley,reggae,reggae,0.10723523355817809,0.0,0.0,0.0,0.0,0.0,0.10576284498354227,0.0,0.7870019214582796,0.0
+reggae.00023,Bob Marley,reggae,reggae,0.046227660677984,0.0,0.08221483129932268,0.33730401478997163,0.0,0.0,0.0,0.0,0.45339770897997794,0.08085578425274374
+reggae.00024,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00025,Bob Marley,reggae,reggae,0.10932271701371447,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.7920520023836913,0.09862528060259418
+reggae.00026,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00027,Bob Marley,reggae,reggae,0.33072547697210286,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.6692745230278971,0.0
+reggae.00028,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00029,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00030,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00032,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.3256835620270004,0.0,0.0,0.0,0.6743164379729996,0.0
+reggae.00033,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00034,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00035,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00037,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00038,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00039,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00041,Desmond Dekker,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00042,Burning Spear,reggae,reggae,0.0,0.0,0.3218076017050344,0.07932717148454489,0.0,0.0,0.0,0.0,0.513891483579223,0.08497374323119761
+reggae.00043,The Ethiopians,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00045,The Heptones,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00046,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00047,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.32652395026940084,0.0,0.0,0.0,0.3701916119700528,0.30328443776054637
+reggae.00048,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.18922656342993216,0.0,0.0,0.0,0.8107734365700678,0.0
+reggae.00049,Desmond Dekker,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00050,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00051,David Morales,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00052,Pras,reggae,reggae,0.0,0.0,0.0,0.0,0.3333333333333333,0.0,0.0,0.0,0.6666666666666666,0.0
+reggae.00053,Hugh Mundell,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00055,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00056,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00057,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.0,0.33454704871578306,0.0,0.0,0.0,0.6654529512842169,0.0
+reggae.00058,Bob Marley,reggae,reggae,0.0,0.0,0.0,0.33174279677441976,0.0,0.0,0.0,0.0,0.6682572032255802,0.0
+reggae.00059,Bob Marley,reggae,reggae,0.0,0.0,0.11065276382370663,0.0,0.2160666549549223,0.0,0.0,0.0,0.5605886273557344,0.11269195386563664
+reggae.00060,Bob Marley,reggae,reggae,0.0,0.0,0.10440965750272217,0.0,0.0,0.0,0.0,0.0,0.8955903424972779,0.0
+reggae.00061,Barrington Levy,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00062,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00063,Burning Spear,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00064,Junia Walker AllStars,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00065,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.28518975789980394,0.0,0.0,0.0,0.7148102421001961,0.0
+reggae.00066,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00067,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00068,Big Youth,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00070,Freddie McGregor,reggae,reggae,0.11185581456604586,0.0,0.0,0.09169731113706464,0.22147751876728747,0.0,0.0,0.0,0.574969355529602,0.0
+reggae.00071,Freddie McGregor,reggae,reggae,0.0,0.0,0.0,0.0,0.32538477401584137,0.0,0.0,0.0,0.6746152259841587,0.0
+reggae.00072,Freddie McGregor,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.32670484473795197,0.673295155262048,0.0
+reggae.00073,Barrington Levy,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00074,Barrington Levy,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00075,Peter Tosh,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00076,Simply Red,reggae,reggae,0.0,0.0,0.0,0.0,0.30961384667539826,0.0,0.0,0.33051858818791424,0.3598675651366874,0.0
+reggae.00077,Freddie McGregor,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.8983465938846674,0.10165340611533251
+reggae.00078,Freddie McGregor,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00079,King Tubby,reggae,reggae,0.0,0.0,0.0,0.3397938846916944,0.0,0.0,0.0,0.0,0.5,0.16020611530830553
+reggae.00080,Ini Kamoze,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00081,Ini Kamoze,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00082,Ini Kamoze,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00083,Jimmy Cliff,reggae,blues,0.34089496450123835,0.0,0.0,0.0,0.16166894460072725,0.15910503549876168,0.0,0.0,0.3383310553992727,0.0
+reggae.00084,Jimmy Cliff,reggae,reggae,0.0,0.0,0.0,0.0997093104512302,0.0,0.0,0.0,0.0,0.9002906895487698,0.0
+reggae.00085,Prince Buster,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00086,King Tubby,reggae,reggae,0.0,0.0,0.0,0.08235731345696815,0.3351840064878886,0.0,0.0,0.0,0.5824586800551432,0.0
+reggae.00087,Bob Marley,reggae,pop,0.0,0.0,0.0,0.0,0.21921303449456883,0.0,0.0,0.44015125482332085,0.34063571068211035,0.0
+reggae.00088,Marcia Griffiths,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2967153647232015,0.7032846352767985,0.0
+reggae.00089,Peter Tosh,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00090,Peter Tosh,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00091,Peter Tosh,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00092,Peter Tosh,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00093,Peter Tosh,reggae,reggae,0.0,0.0,0.1608668295065703,0.0,0.0,0.0,0.0,0.0,0.8391331704934297,0.0
+reggae.00094,Prince Buster,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00095,Prince Buster,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+reggae.00096,Prince Buster,reggae,reggae,0.0,0.0,0.0,0.0,0.05192656233062207,0.0,0.0,0.0,0.9480734376693779,0.0
+reggae.00097,Prince Buster,reggae,classical,0.0,0.677632643513812,0.0,0.0,0.0,0.0,0.0,0.0,0.3223673564861879,0.0
+reggae.00099,Prince Buster,reggae,reggae,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0
+rock.00001,George S. Clinton,rock,rock,0.32859973120646396,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.6714002687935361
+rock.00002,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00003,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00004,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00005,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00006,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00007,George S. Clinton,rock,rock,0.0,0.0,0.16377899510738772,0.0,0.0,0.0,0.0,0.0,0.0,0.8362210048926123
+rock.00008,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00009,George S. Clinton,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00010,Ani DiFranco,rock,rock,0.10558312713929491,0.0,0.0,0.10657375004049746,0.0,0.0,0.0,0.0,0.0,0.7878431228202075
+rock.00011,Ani DiFranco,rock,rock,0.0,0.0,0.0,0.3183904562893692,0.0,0.3267229519071062,0.0,0.0,0.0,0.35488659180352455
+rock.00012,Ani DiFranco,rock,rock,0.06907043219808676,0.0,0.0,0.22064721738272214,0.0,0.0,0.0,0.0,0.0,0.7102823504191911
+rock.00013,Ani DiFranco,rock,rock,0.0,0.0,0.0,0.14630329505749118,0.0,0.0,0.0,0.0,0.0,0.8536967049425088
+rock.00014,Ani DiFranco,rock,rock,0.0,0.0,0.0,0.0,0.06401688142022584,0.0,0.0,0.0,0.19364689125330814,0.742336227326466
+rock.00015,Ani DiFranco,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.21390953061858128,0.7860904693814187
+rock.00016,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.42791703632331796,0.0,0.0,0.572082963676682
+rock.00017,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.1107371246649257,0.0,0.0,0.8892628753350743
+rock.00018,Queen,rock,rock,0.0,0.0,0.0,0.21226964326962483,0.0,0.0,0.0,0.0,0.0,0.7877303567303752
+rock.00019,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.32262321793469784,0.0,0.0,0.6773767820653023
+rock.00020,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00021,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00022,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00023,Queen,rock,rock,0.0,0.0,0.33661303138069404,0.0,0.0,0.0,0.0,0.0,0.0,0.6633869686193059
+rock.00026,Queen,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00027,The Beach Boys,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00028,The Rolling Stones,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.16552287313292305,0.30143253940714465,0.5330445874599322
+rock.00030,The Rolling Stones,rock,rock,0.0,0.0,0.0,0.2997611287344465,0.0,0.0,0.0,0.0,0.0,0.7002388712655535
+rock.00031,The Rolling Stones,rock,rock,0.0,0.0,0.0,0.45748011443066017,0.0,0.0,0.0,0.0,0.0,0.5425198855693398
+rock.00032,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00033,The Rolling Stones,rock,reggae,0.0,0.167327677054268,0.16584715803365493,0.0,0.0,0.16704256281051635,0.0,0.0,0.33415284196634504,0.16562976013521566
+rock.00034,David Bowie,rock,rock,0.0,0.0,0.0,0.2292896625414035,0.0,0.32174077585181377,0.0,0.0,0.0,0.44896956160678264
+rock.00036,Billy Joel,rock,country,0.0,0.0,0.6671640386988595,0.33283596130114046,0.0,0.0,0.0,0.0,0.0,0.0
+rock.00037,The Rolling Stones,rock,rock,0.0,0.0,0.0,0.3848685064070548,0.0,0.0,0.0,0.0,0.0,0.6151314935929452
+rock.00038,Guns N' Roses,rock,disco,0.0,0.0,0.10925359162893573,0.32864049105099213,0.11542381559501946,0.0,0.0,0.22332587280332047,0.0,0.2233562289217322
+rock.00039,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00040,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.2022657889055112,0.0,0.0,0.0,0.1225554597033863,0.0,0.6751787513911026
+rock.00041,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00042,Led Zeppelin,rock,rock,0.0,0.0,0.10586390478213044,0.0,0.0,0.0,0.0,0.0,0.0,0.8941360952178696
+rock.00043,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.16373507112229893,0.0,0.0,0.0,0.1663969835482471,0.0,0.669867945329454
+rock.00045,Led Zeppelin,rock,rock,0.0,0.10943756897331723,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.8905624310266828
+rock.00046,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.32771420807750457,0.0,0.0,0.0,0.0,0.0,0.6722857919224955
+rock.00047,Led Zeppelin,rock,rock,0.0,0.0,0.0,0.0,0.3076712254864243,0.0,0.0,0.0,0.0,0.6923287745135758
+rock.00048,Led Zeppelin,rock,rock,0.0,0.28889985847868294,0.15735145256256494,0.0,0.0,0.0,0.0,0.0,0.0,0.5537486889587521
+rock.00049,Gabriel Marchisio,rock,classical,0.0,0.3333333333333333,0.0,0.3333333333333333,0.0,0.0,0.0,0.0,0.3333333333333333,0.0
+rock.00050,Simple Minds,rock,rock,0.0,0.0,0.0,0.2829286367717067,0.0,0.0,0.0,0.0,0.0,0.7170713632282932
+rock.00051,Simple Minds,rock,rock,0.0,0.0,0.07363675896191565,0.24618326307523472,0.0,0.0,0.0,0.16215577100132755,0.06691211374215505,0.451112093219367
+rock.00052,Simple Minds,rock,rock,0.0,0.0,0.20901399308881174,0.08212403055393062,0.0,0.0,0.0,0.223699956346723,0.10963337698661035,0.37552864302392425
+rock.00053,Simple Minds,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00054,Simple Minds,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00055,Simple Minds,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00056,Simple Minds,rock,disco,0.0,0.0,0.0,0.6218876467248066,0.0,0.0,0.0,0.0,0.0,0.37811235327519344
+rock.00057,Sting,rock,rock,0.0,0.0,0.0,0.3754077650094815,0.0,0.0,0.0,0.0,0.0,0.6245922349905184
+rock.00058,Sting,rock,jazz,0.0,0.0,0.0,0.0,0.0,0.6179556921855446,0.0,0.0,0.0,0.38204430781445536
+rock.00059,Sting,rock,rock,0.0,0.0,0.15762963930871077,0.0,0.0,0.0,0.0,0.0,0.0,0.8423703606912892
+rock.00060,Sting,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00062,Sting,rock,rock,0.0,0.0,0.08993992732317019,0.0,0.0,0.0,0.0,0.0,0.0,0.9100600726768299
+rock.00063,Sting,rock,reggae,0.0,0.0,0.083636420922883,0.0,0.0,0.0,0.0,0.08282039383728283,0.5771729827744796,0.2563702024653547
+rock.00064,Jethro Tull,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00065,Jethro Tull,rock,disco,0.0,0.0,0.0,0.5064237682802128,0.0,0.0,0.16999670945287904,0.0,0.0,0.3235795222669081
+rock.00066,Jethro Tull,rock,disco,0.0,0.0,0.0,0.6840242018725562,0.0,0.0,0.0,0.0,0.0,0.31597579812744375
+rock.00067,Jethro Tull,rock,rock,0.0,0.0,0.0,0.2926628096038059,0.0,0.0,0.0,0.0,0.0,0.707337190396194
+rock.00068,Jethro Tull,rock,rock,0.0,0.0,0.0,0.15465350347419593,0.0,0.0,0.0,0.0,0.0,0.8453464965258042
+rock.00069,Jethro Tull,rock,rock,0.0,0.3336175852191339,0.0,0.0,0.0,0.3325273921963392,0.0,0.0,0.0,0.3338550225845268
+rock.00070,Jethro Tull,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00071,Simply Red,rock,rock,0.0,0.0,0.0,0.08949278947724028,0.0,0.0,0.0,0.0,0.0,0.9105072105227597
+rock.00072,Simply Red,rock,rock,0.0,0.0,0.15655550619362196,0.0,0.0,0.0,0.0,0.0,0.0,0.8434444938063781
+rock.00073,Simply Red,rock,rock,0.0,0.0,0.0,0.16760893672337757,0.0,0.0,0.0,0.0,0.0,0.8323910632766225
+rock.00074,Simply Red,rock,rock,0.0,0.0,0.0,0.0,0.0,0.3171427180000728,0.0,0.0,0.0,0.6828572819999272
+rock.00075,Simply Red,rock,rock,0.0,0.0,0.0,0.3294462196905337,0.110873446615482,0.0,0.11085555268816107,0.0,0.0,0.44882478100582307
+rock.00076,Simply Red,rock,rock,0.0,0.0,0.0,0.30083552055883034,0.309396291933559,0.0,0.0,0.0,0.0,0.38976818750761066
+rock.00077,Simply Red,rock,rock,0.0,0.0,0.10249998767949432,0.0,0.0,0.0,0.0,0.0,0.0,0.8975000123205056
+rock.00079,Survivor,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00080,Survivor,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00081,Survivor,rock,rock,0.0,0.0,0.29580184180732977,0.3014089553033452,0.0,0.0,0.0,0.0,0.0,0.402789202889325
+rock.00082,Survivor,rock,rock,0.15101564864359632,0.0,0.0,0.1686587023052585,0.0,0.0,0.3198769991595084,0.0,0.0,0.3604486498916367
+rock.00083,Survivor,rock,rock,0.0,0.0,0.052490901962628594,0.11600750814687678,0.0,0.0,0.045371748762390605,0.0,0.0,0.786129841128104
+rock.00084,Survivor,rock,rock,0.0,0.0,0.0,0.11658999540777498,0.0,0.0,0.0,0.0,0.0,0.883410004592225
+rock.00085,Survivor,rock,classical,0.0,0.6823158318958173,0.0,0.0,0.0,0.3176841681041827,0.0,0.0,0.0,0.0
+rock.00086,Rick Springfield,rock,reggae,0.0,0.0,0.0,0.3223761514105174,0.0,0.0,0.0,0.0,0.5,0.17762384858948263
+rock.00087,Neil Young,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.31875629500008823,0.0,0.0,0.6812437049999118
+rock.00088,Billy Squier,rock,rock,0.0,0.0,0.0,0.2959781970274913,0.0,0.0,0.1652455065984405,0.0,0.0,0.5387762963740682
+rock.00089,Bob Seger,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00090,The Tokens,rock,country,0.0,0.0,0.5955214154898231,0.0,0.0,0.0,0.0,0.0,0.0,0.4044785845101769
+rock.00091,The Stone Roses,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00092,The Stone Roses,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00093,The Stone Roses,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00094,Keppra,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00095,The Stone Roses,rock,rock,0.0,0.0,0.0,0.1594053524629185,0.0,0.08365335104268008,0.0,0.0,0.0,0.7569412964944014
+rock.00096,The Stone Roses,rock,rock,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0
+rock.00097,The Stone Roses,rock,rock,0.0,0.0,0.0,0.15910523294628307,0.0,0.0,0.0,0.0,0.0,0.8408947670537169
+rock.00099,The Stone Roses,rock,jazz,0.12369595371326751,0.10912779445623533,0.0,0.0,0.0,0.3187541662519433,0.10494303117663745,0.0,0.10469434844342841,0.23878470595848808

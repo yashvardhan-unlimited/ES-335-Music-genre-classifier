@@ -330,12 +330,12 @@ over-confident window. Which wins is an empirical question.
 
 ### `src/evaluate.py`
 
-- **L175–188 `reliability`**: confidence = max probability; bins
+- **L181–194 `reliability`**: confidence = max probability; bins
   $(0, 0.1], \dots, (0.9, 1]$ via `np.digitize(..., right=True)`; per bin:
   count, mean confidence, accuracy.
-- **L191–195 `ece`**: the formula of 2.6 over non-empty bins.
-- **L198–201 `softmax_t`**: `scipy.special.softmax(logits / T)`.
-- **L204–213 `fit_temperature`**: minimises mean cross-entropy over
+- **L197–201 `ece`**: the formula of 2.6 over non-empty bins.
+- **L204–207 `softmax_t`**: `scipy.special.softmax(logits / T)`.
+- **L210–219 `fit_temperature`**: minimises mean cross-entropy over
   $\log T \in [-3, 3]$ (so $T \in [0.05, 20]$) with a bounded scalar search;
   optimising $\log T$ keeps $T$ positive.
 

@@ -56,9 +56,9 @@ Without `make`, from the repo root
 python scripts/make_splits.py                  # splits A, B, B', D, C
 python scripts/extract_features.py             # features
 bash scripts/tune_all.sh                       # all models on all splits; several hours
-python -m src.train_cnn --split C --seed 0 --refit_epochs 8    # final CNNs on train+valid
-python -m src.train_cnn --split C --seed 1 --refit_epochs 26   # (epochs = each seed's best
-python -m src.train_cnn --split C --seed 2 --refit_epochs 13   #  validation epoch)
+python -m src.train_cnn --split C --seed 0 --refit_epochs 14   # final CNNs on train+valid
+python -m src.train_cnn --split C --seed 1 --refit_epochs 14   # (epochs = each seed's best
+python -m src.train_cnn --split C --seed 2 --refit_epochs 25   #  validation epoch)
 python scripts/analysis_val.py                 # validation analyses
 python scripts/analysis_errors.py --parts 4
 python scripts/leakage_lab.py

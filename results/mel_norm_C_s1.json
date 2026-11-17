@@ -3,6 +3,7 @@
  "seed": 1,
  "fit_on": "train",
  "n_clips": 442,
+ "window_level": false,
  "mean": [
   -4.596269130706787,
   4.793211460113525,

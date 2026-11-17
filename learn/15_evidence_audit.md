@@ -193,7 +193,7 @@ half written also exists. Writing to a temporary name and renaming makes "exists
 - The last line maps every credit to its root and `reindex` restores the missing rows as NaN,
   which `_cluster_rows` then treats as a cluster of one.
 
-**`src/evaluate.py`, L124-136 `cluster_bootstrap_ci`** and **L159-172 `paired_bootstrap_diff`**:
+**`src/evaluate.py`, L130-142 `cluster_bootstrap_ci`** and **L165-178 `paired_bootstrap_diff`**:
 the signatures take `cluster_col="cluster"`, and `n`, `ci` and `seed` from config.
 
 **`src/utils.py`, L42-46 `write_json`**: writes `<path>.tmp`, then `Path.replace` swaps it in.

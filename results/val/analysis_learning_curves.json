@@ -1,5 +1,5 @@
 {
- "cnn_epochs": 13,
+ "cnn_epochs": 14,
  "n_artist_groups_in_train": 146,
  "runs": [
   {
@@ -20,9 +20,9 @@
    "n_artist_groups": 36,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.25423742275140676,
-   "seconds": 214.81673580000643
+   "epochs": 14,
+   "valid_macro_f1": 0.2856521381019399,
+   "seconds": 16.769640599988634
   },
   {
    "fraction": 0.25,
@@ -42,9 +42,9 @@
    "n_artist_groups": 36,
    "n_genres": 9,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.24097296301902366,
-   "seconds": 230.44934469999862
+   "epochs": 14,
+   "valid_macro_f1": 0.39289687419244623,
+   "seconds": 17.384462800007896
   },
   {
    "fraction": 0.25,
@@ -64,9 +64,9 @@
    "n_artist_groups": 36,
    "n_genres": 9,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.20275462088946816,
-   "seconds": 162.33748980000382
+   "epochs": 14,
+   "valid_macro_f1": 0.22904829560649334,
+   "seconds": 12.446427299990319
   },
   {
    "fraction": 0.5,
@@ -86,9 +86,9 @@
    "n_artist_groups": 73,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.3394338933088933,
-   "seconds": 407.83692489998066
+   "epochs": 14,
+   "valid_macro_f1": 0.35936854955102604,
+   "seconds": 31.391120400003274
   },
   {
    "fraction": 0.5,
@@ -108,9 +108,9 @@
    "n_artist_groups": 73,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.5157308435620342,
-   "seconds": 418.50655469999765
+   "epochs": 14,
+   "valid_macro_f1": 0.3419423493144088,
+   "seconds": 30.66069140000036
   },
   {
    "fraction": 0.5,
@@ -130,9 +130,9 @@
    "n_artist_groups": 73,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.47306463317718883,
-   "seconds": 316.2372496999742
+   "epochs": 14,
+   "valid_macro_f1": 0.4362119564744398,
+   "seconds": 24.606779099995038
   },
   {
    "fraction": 0.75,
@@ -152,9 +152,9 @@
    "n_artist_groups": 110,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.42443146370961865,
-   "seconds": 511.9127038999868
+   "epochs": 14,
+   "valid_macro_f1": 0.4736388661616517,
+   "seconds": 39.620539700001245
   },
   {
    "fraction": 0.75,
@@ -174,9 +174,9 @@
    "n_artist_groups": 110,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.48468979314525795,
-   "seconds": 649.0914488000271
+   "epochs": 14,
+   "valid_macro_f1": 0.6042387122403239,
+   "seconds": 48.66430099999707
   },
   {
    "fraction": 0.75,
@@ -196,9 +196,9 @@
    "n_artist_groups": 110,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.49386268746542816,
-   "seconds": 532.0254099000013
+   "epochs": 14,
+   "valid_macro_f1": 0.5087887785579223,
+   "seconds": 38.03177820000565
   },
   {
    "fraction": 1.0,
@@ -218,9 +218,9 @@
    "n_artist_groups": 146,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.5743326704004044,
-   "seconds": 828.999859500007
+   "epochs": 14,
+   "valid_macro_f1": 0.5960776136302217,
+   "seconds": 60.18107489999966
   },
   {
    "fraction": 1.0,
@@ -240,9 +240,9 @@
    "n_artist_groups": 146,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.5625925295894336,
-   "seconds": 824.639903800009
+   "epochs": 14,
+   "valid_macro_f1": 0.43218975772968904,
+   "seconds": 59.98310099999071
   },
   {
    "fraction": 1.0,
@@ -262,38 +262,38 @@
    "n_artist_groups": 146,
    "n_genres": 10,
    "model": "cnn",
-   "epochs": 13,
-   "valid_macro_f1": 0.4457048793173966,
-   "seconds": 827.9096982000046
+   "epochs": 14,
+   "valid_macro_f1": 0.5753411221673217,
+   "seconds": 58.380593599998974
   }
  ],
  "summary": [
   {
    "model": "cnn",
    "fraction": 0.25,
-   "mean": 0.23265500221996618,
-   "sd": 0.02673033998623847,
+   "mean": 0.30253243596695983,
+   "sd": 0.0832183724796883,
    "mean_clips": 100.33333333333333
   },
   {
    "model": "cnn",
    "fraction": 0.5,
-   "mean": 0.44274312334937216,
-   "sd": 0.09197662276806212,
+   "mean": 0.37917428511329154,
+   "sd": 0.05015864909861939,
    "mean_clips": 207.0
   },
   {
    "model": "cnn",
    "fraction": 0.75,
-   "mean": 0.4676613147734349,
-   "sd": 0.03771803964685939,
+   "mean": 0.5288887856532992,
+   "sd": 0.06758023130227413,
    "mean_clips": 309.6666666666667
   },
   {
    "model": "cnn",
    "fraction": 1.0,
-   "mean": 0.5275433597690782,
-   "sd": 0.07111687836614847,
+   "mean": 0.5345361645090775,
+   "sd": 0.08923895312606918,
    "mean_clips": 442.0
   },
   {

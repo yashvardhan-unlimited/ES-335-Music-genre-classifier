@@ -767,3 +767,20 @@ full retrain take about an hour instead of a day.
 the final C models' epoch counts come from these runs); patience 15 (an epoch-2 peak can still
 win if nothing beats it, and every run gets slower); selecting the epoch by valid loss (every
 other choice in the project is made on valid clip macro-F1, the reported metric).
+
+## 2026-11-17: Retrain complete; B seed 3 retrained again; final C models refit on the GPU
+
+**Decision.** B' seeds 1-4 and D seeds 0-4 were retrained under `min_epochs: 20` on the laptop GPU,
+so all 19 ladder CNN runs now use one rule. The three final C models were refit on train+valid on
+the GPU for each run's best epoch (14, 14, 25), replacing the CPU refits (8, 26, 13 epochs).
+B seed 3 was retrained once more: its stored score (0.8146, GPU) differed from the CPU rebuild
+(0.8196) because one valid clip has a top-two margin of 0.0005 that flips between devices. The
+new run (best epoch 26, 0.7903) rebuilds to the same score. B CNN mean: 0.787 -> 0.782. The other
+18 runs rebuild exactly. The validation tables, summaries and analyses were rebuilt; the test
+part was not touched.
+
+**Reason.** `scripts/evaluate_part.py --part valid` refuses any run whose rebuilt score differs
+from its stored score, so the headline numbers always come from the saved weights.
+
+**Rejected.** Editing the stored score by hand or loosening the check (it would hide real
+mismatches); keeping the old B seed 3 run (it would stop the validation rebuild).
