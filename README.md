@@ -111,3 +111,10 @@ outputs are checked: [AI_USE.md](AI_USE.md).
   evaluation, and its future use," arXiv:1306.1461, 2013.
 - C. Kereliuk, B. L. Sturm and J. Larsen, "Deep learning and music adversaries,"
   *IEEE Trans. Multimedia*, 17(11), 2015 (fault-filtered split).
+- S. Doh, *gtzan-bind*, Hugging Face dataset,
+  <https://huggingface.co/datasets/seungheondoh/gtzan-bind> (artist names and the
+  fault-filtered split assignment; fetched by `python -m src.fetch_meta` into
+  `splits/gtzan_bind.csv`).
+- Software (versions pinned in `requirements.txt`): librosa (McFee et al., 2015),
+  scikit-learn (Pedregosa et al., *JMLR* 12, 2011), XGBoost (Chen & Guestrin, *KDD* 2016),
+  PyTorch (Paszke et al., *NeurIPS* 2019), NumPy, pandas, Streamlit.

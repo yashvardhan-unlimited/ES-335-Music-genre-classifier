@@ -155,28 +155,28 @@ included.
 
 ## 4. Code walkthrough (`docs/index.html`)
 
-- **L925-931 `xGrid`**: draws vertical grid lines and tick labels for horizontal charts. The line at
+- **L946-952 `xGrid`**: draws vertical grid lines and tick labels for horizontal charts. The line at
   0 gets the darker `baseline` class.
-- **L932 `range`**: tick values from `a` to `b` in steps `s`, rounded to four decimals so 0.1 + 0.2
+- **L953 `range`**: tick values from `a` to `b` in steps `s`, rounded to four decimals so 0.1 + 0.2
   does not print as 0.30000000000000004.
-- **L933 `label`**: one SVG text node; a `weight` makes it bold and full ink colour. Text never uses
+- **L954 `label`**: one SVG text node; a `weight` makes it bold and full ink colour. Text never uses
   a series colour, so it stays readable in both themes.
-- **L939 `renderScale`**: the 0-1 track is a thick rounded line; the 95% interval is a lighter
+- **L960 `renderScale`**: the 0-1 track is a thick rounded line; the 95% interval is a lighter
   segment drawn over it; three dots mark chance (`headline.floor`), the headline and split A
   (`ladder.cnn.A`). The headline label sits above the track and the others below, so labels cannot
   collide even on a phone.
-- **L959-960 `STEPS`, `renderFall`**: `cols` lists A, the four steps and C. For a step, the bar runs
+- **L980-981 `STEPS`, `renderFall`**: `cols` lists A, the four steps and C. For a step, the bar runs
   from the previous mean to the next (`hi`, `lo`); its colour is orange when the score falls and light
   blue when it rises. The dashed line joins each bar's end level to the next bar. The tooltip reads
   the interval from `S.drops`, and negates it because a drop is a negative change.
-- **L994 `renderPairs`**: the axis limits are the interval ends rounded outward to 0.05 and always
+- **L1015 `renderPairs`**: the axis limits are the interval ends rounded outward to 0.05 and always
   include −0.05 to 0.05, so zero is never at the edge. The verdict text uses the same rule as
   `tiedModels`. A transparent full-width `rect` per row is the hover and keyboard target, larger than
   the dot.
-- **L1020 `renderRefitChart`**: hidden when the page shows validation results (`fit_on_C` is not
+- **L1041 `renderRefitChart`**: hidden when the page shows validation results (`fit_on_C` is not
   `train+valid`), because there is then no refit to compare. The legend is drawn inside the SVG
   because two series need one.
-- **L1048-1056 `HEAT_COLS`, `genreMean`, `renderGenreHeat`**: `genreMean` reproduces the plateau
+- **L1069-1077 `HEAT_COLS`, `genreMean`, `renderGenreHeat`**: `genreMean` reproduces the plateau
   table's averaging; rows are sorted by it. Each cell's colour step is
   `round(F1 × (steps − 1))` on the page's existing 13-step blue ramp (`--seq`), and the text turns white
   on the darker steps for contrast. Numbers are hidden only when cells are narrower than 30 px; the

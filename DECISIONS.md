@@ -843,3 +843,21 @@ segments cannot be labelled on a phone). Overlapping per-model intervals as the 
 wrong test; the paired interval is the right one). A colour per model (adds a legend for no extra
 information). A charting library (a dependency for five small charts the page can draw itself).
 
+## 2026-11-18 (post-freeze): Rubric review; gaps closed by reporting existing results
+
+**Decision.** After a strict review of the published site against the ES 335 rubric, the website
+now states prediction-time information; links and cites gtzan-bind (also in the README, with the
+main libraries); gives artists per genre; reports the window-length comparison and why 3 s was kept;
+gives each model's objective, key assumption, searched grid and chosen setting on C; justifies
+macro-F1 with the dummy example; notes that the paired comparisons are not corrected for multiple
+comparisons; labels the hero's explanation of the lopsided interval as untested; and folds the
+pipeline steps and future-work list into collapsible blocks to shorten the page.
+
+**Reason.** The brief grades understanding from the website alone. These choices were made and
+recorded (DECISIONS.md, config.yaml, chosen_params.json) but not shown on the page, and gtzan-bind,
+the source of every artist label, was used without a citation.
+
+**Rejected.** New experiments (any choice made now would follow the test run); a Bonferroni
+re-analysis (a new post-test analysis; stating that comparisons are uncorrected is enough);
+regenerating the figures with dark backgrounds (re-runs analysis scripts for a cosmetic gain).
+

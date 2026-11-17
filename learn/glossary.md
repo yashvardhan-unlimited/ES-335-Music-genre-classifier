@@ -30,6 +30,8 @@
 
 **BLAS thread count.** How many CPU threads the linear-algebra library uses. It changes floating-point summation order, so iterative solvers such as lbfgs can stop at slightly different points; we fix it to 1 for reproducible results.
 
+**Bonferroni correction.** Testing m comparisons at level 0.05/m each, so the chance of any false alarm stays near 0.05. It widens every interval.
+
 **Boosting.** Building an ensemble sequentially, each new weak model (here a shallow tree) correcting the errors of the sum of the previous ones. It mainly reduces bias, unlike bagging, which averages independent models to reduce variance.
 
 **Bootstrap.** Estimating the uncertainty of a statistic by recomputing it on many datasets drawn with replacement from the observed one; the spread of those values gives a confidence interval.
@@ -261,6 +263,8 @@
 **Precision.** Of the clips predicted as a class, the share that truly belong to it: TP / (TP + FP).
 
 **PredefinedSplit.** sklearn splitter with a fixed train/validation assignment (-1 = always train, 0 = validation fold).
+
+**Prediction-time information.** What the model can see at the moment it predicts. Here only the clip's audio; the artist and the file name (which contains the genre) are never inputs.
 
 **Preprocessing leakage.** Fitting a learned preprocessing step (scaler, PCA, feature selection, oversampling) on data that includes the evaluation rows, so their information shapes the model.
 
