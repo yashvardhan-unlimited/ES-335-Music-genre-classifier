@@ -121,7 +121,7 @@ All changes are static HTML except one string:
 - **Line 312**: the macro-F1 paragraph; numbers from `site.json` (`c.models`, dummy most frequent and
   CNN).
 - **Line 387**: the multiple-comparisons note under the paired-difference chart.
-- **Line 722** (in `renderAnswer`): the hero's interval sentence now says "A possible reason, not
+- **Line 727** (in `renderAnswer`): the hero's interval sentence now says "A possible reason, not
   tested".
 
 ## 5. Pitfalls

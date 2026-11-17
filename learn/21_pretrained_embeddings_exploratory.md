@@ -21,7 +21,7 @@ never loaded.
 | `config.yaml` | `pretrained:` checkpoint path, download URL, sample rate |
 | `requirements.txt` | `panns-inference==0.1.1`, `torchlibrosa==0.1.0` |
 | `results/val/exploratory/` | `C_panns_logreg.json` (scores, grid, per-genre F1, paired comparisons) and the clip predictions |
-| `docs/index.html` | new subsection "Checked after the test run" in "Why the scores stop near 0.55"; the first future-work item now points to it; figures dimmed in dark mode |
+| `docs/index.html` | new subsection "Checked after the test run" in "Why the scores stop near 0.55"; the first future-work item now points to it; figures dimmed in dark mode; the Reproduce block lists the script, its note says which tables quote result files directly (not `site.json`), and "Pretrained embedding" is a key term |
 
 Commands (repo root; downloads are about 330 MB):
 

@@ -594,6 +594,8 @@ figure img { padding: 8px; }
       handcrafted features.</dd></div>
     <div><dt>Validation vs test</dt><dd>Validation clips are used to choose settings, so their score is slightly optimistic. Test
       clips are scored once at the end, so the test score is the honest one.</dd></div>
+    <div><dt>Pretrained embedding</dt><dd>The numbers a network trained on a much larger dataset (here AudioSet, about two
+      million clips) produces for a sound. A simple classifier on top reuses what that network already learned.</dd></div>
     <div><dt>Baseline (dummy)</dt><dd>A model that ignores the audio. A real model must beat it to show any skill.</dd></div>
     <div><dt>Confusion matrix</dt><dd>A table of true genre against predicted genre; the diagonal is correct answers, off-diagonal
       cells are mistakes.</dd></div>
@@ -627,10 +629,13 @@ make setup data splits features tune     # download, audit, splits, features, tu
 python scripts/evaluate_part.py --part valid
 python scripts/evaluate_part.py --part test     # refuses to run without the pre-test-freeze tag
 python scripts/export_site_data.py              # numbers for this page
+python scripts/pretrained_embeddings.py         # exploratory check, validation only (README: checkpoint download)
 make tests</pre>
-  <p class="muted">Every chart, table and computed sentence on this page is read from <code>data/site.json</code>,
-    which <code>scripts/export_site_data.py</code> writes from the result files; the written error analysis quotes the
-    same test predictions (<code>results/test/predictions/</code>). Design decisions and the rejected alternatives are in
+  <p class="muted">Every chart and computed sentence on this page is read from <code>data/site.json</code>, which
+    <code>scripts/export_site_data.py</code> writes from the result files. The hand-written tables and the error
+    analysis quote result files directly: the test predictions (<code>results/test/predictions/</code>), the chosen
+    settings (<code>results/chosen_params.json</code>) and the pretrained check
+    (<code>results/val/exploratory/</code>). Design decisions and the rejected alternatives are in
     <code>DECISIONS.md</code>; AI use is disclosed in <code>AI_USE.md</code>.</p>
   <h3>Who did what</h3>
   <p>Yashvardhan Gupta chose the research question, the main split and the evaluation metric, directed every step,
