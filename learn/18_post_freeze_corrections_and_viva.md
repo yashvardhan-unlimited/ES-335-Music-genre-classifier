@@ -176,6 +176,45 @@ shows both: the SVM labelled as the pre-registered comparator, and the best clas
 test* labelled as such. Calling whichever model wins on test "the comparator" would be the winner's
 curse (lesson 13): the best of several noisy scores is biased upward.
 
+### 2.7 Why the scores plateau near 0.55
+
+**Intuition.** Logistic regression, the SVM, XGBoost and the CNN are very different learners, yet
+they land between 0.52 and 0.57 on C test. When different models stop at the same place, suspect
+the data. Here the data gives each genre very few *artists*: what a model calls "rock" is the sound
+of the bands it was shown.
+
+| genre | artists in C train | C test is mostly | mean F1 (5 models) |
+|---|---|---|---|
+| rock | 7 (Queen, Morphine, The Stone Roses, Sting, Jethro Tull, ...) | Led Zeppelin, the Rolling Stones, Ani DiFranco | 0.16 |
+| blues | 7 (Hot Toddy, Kelly Joe Phelps, Stevie Ray Vaughan, Buckwheat Zydeco, ...) | Robert Johnson, Clifton Chenier | 0.17 |
+| jazz | 15 (mostly Joe Lovano, Coleman Hawkins) | Tony Williams, Dexter Gordon, Miles Davis, Joe Henderson | 0.47 |
+| classical | 29 | many performers | 0.94 |
+
+Counts are distinct gtzan-bind names in `splits/metadata.csv` (credit variants separately); mean F1
+is the final models' per-genre test F1 averaged over kNN, logistic regression, SVM, XGBoost and the
+CNN's three-run mean.
+
+**Checking the claim instead of trusting it.** If "few artists" were the whole story, F1 would rise
+with the number of training artists across all genres. Spearman's rank correlation measures that:
+
+```latex
+\rho_s = 1 - \frac{6 \sum_{g} d_g^2}{n (n^2 - 1)}, \qquad
+d_g = \operatorname{rank}(\text{artists}_g) - \operatorname{rank}(\text{F1}_g), \quad n = 10
+```
+
+Measured: $\rho_s = 0.50$ for the five-model mean ($p = 0.14$), 0.58 for the SVM, 0.36 for the CNN.
+Positive but weak, and with only 10 genres not significant. Disco has 25 training artists and is
+middling (0.44); classical is easy partly because it sounds unlike every other genre. So the honest
+claim is: few artists is a likely main cause for rock and blues, not a law across genres.
+
+Supporting evidence: the CNN scores 0.75 with artists shared (B′) and 0.65 without (D); errors
+arrive in whole artists (2.5); the SVM's learning curve still rises with more training artists.
+
+**What would help (not run, test is frozen):** pretrained audio embeddings (knowledge of many more
+artists; possible overlap with GTZAN's sources), more artists per genre from a larger dataset,
+a steadier CNN (seed averaging, learning-rate decay, artist-grouped CV for epochs, refit by steps),
+augmentation that hides recording sound, richer temporal features.
+
 ---
 
 ## 3. Why this choice, and the alternatives we rejected
@@ -339,6 +378,13 @@ choices were yours (question, main split, metric, decisions), and how you checke
 **Q13. What if the test set had been used to pick the CNN's epoch?**
 The test score would be optimistic in the same way the validation score is (CNN valid 0.620 vs test
 0.594, train-only), and there would be no untouched data left to measure it.
+
+**Q14. Why are your models stuck around 0.55, and what would you do next?**
+Different model families tie at the same level, which points at the data: each genre is learned
+from few artists (rock and blues from 7 each), and the test part has different ones; those two
+genres score worst (mean F1 0.16 and 0.17). The link across all ten genres is weak (Spearman 0.50,
+not significant), so it is a main cause, not the only one. Next: pretrained audio embeddings and
+more artists per genre; for the CNN, seed averaging and a steadier training schedule.
 
 ---
 

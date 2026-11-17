@@ -166,7 +166,7 @@ th { position: sticky; top: 0; background: var(--surface); }
   <li><a href="#question">Question</a></li><li><a href="#answer">Answer</a></li>
   <li><a href="#data">Data</a></li><li><a href="#method">Method</a></li>
   <li><a href="#ladder">Leakage ladder</a></li><li><a href="#models">Models</a></li>
-  <li><a href="#errors">Errors</a></li><li><a href="#limits">Limitations</a></li>
+  <li><a href="#errors">Errors</a></li><li><a href="#plateau">Why ~0.55</a></li><li><a href="#limits">Limitations</a></li>
   <li><a href="#terms">Key terms</a></li><li><a href="#reproduce">Reproduce</a></li>
 </ul></nav>
 <main>
@@ -409,6 +409,75 @@ th { position: sticky; top: 0; background: var(--surface); }
     <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
       clip moves a genre's F1 by several points, so read small differences as noise.</p>
   </div>
+</section>
+
+<section id="plateau">
+  <h2>Why the scores stop near 0.55, and what would help</h2>
+  <p>Four very different kinds of model (a linear model, a kernel SVM, boosted trees and a CNN) land between 0.52 and
+    0.57 on C test, and the CNN is statistically tied with the other three. When different models hit the same ceiling, the limit is usually in the
+    data rather than in the model. The clearest evidence points at one thing: <strong>each genre is learned from a
+    handful of artists</strong>, and the test part has different ones.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th scope="col">Genre</th><th scope="col">Artists in C train</th><th scope="col">C test is mostly</th><th scope="col">Mean F1</th></tr></thead>
+    <tbody>
+    <tr><td>rock</td><td>7: Queen, Morphine, The Stone Roses, Sting, Jethro Tull, …</td><td>Led Zeppelin, the Rolling Stones, Ani DiFranco</td><td>0.16</td></tr>
+    <tr><td>blues</td><td>7: Hot Toddy, Kelly Joe Phelps, Stevie Ray Vaughan, Buckwheat Zydeco, …</td><td>Robert Johnson, Clifton Chenier</td><td>0.17</td></tr>
+    <tr><td>jazz</td><td>15, mostly Joe Lovano and Coleman Hawkins</td><td>Tony Williams, Dexter Gordon, Miles Davis, Joe Henderson</td><td>0.47</td></tr>
+    <tr><td>classical</td><td>29</td><td>many performers, few clips each</td><td>0.94</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Artist names from gtzan-bind (credit variants counted separately). Mean F1: per-genre test F1
+    averaged over kNN, logistic regression, the SVM, XGBoost and the CNN (mean of its three runs), final models.</p>
+  <div class="callout why"><p class="tag">In plain words</p>
+    <p>With seven example bands, "rock" means those seven bands to the model. Led Zeppelin's blues-based guitar rock
+      sounds like none of Queen, Morphine or The Stone Roses, so it lands nearer the country artists. The model has
+      learned the bands it was shown, not the genre.</p></div>
+  <p>Other results point the same way:</p>
+  <ul>
+    <li>The same CNN scores 0.75 when test artists also appear in training and 0.65 when they do not (the leakage
+      ladder above): much of what it learns is how particular artists sound.</li>
+    <li>Errors arrive in whole artists (see "What the errors have in common").</li>
+    <li>The SVM still improves as training artists are added (learning curve in Method).</li>
+  </ul>
+  <p><strong>The honest caveat:</strong> across all ten genres, the link between the number of training artists and
+    F1 is weak (Spearman correlation 0.50 over 10 genres, not significant). Disco has 25 training artists and is only
+    middling; classical is easy partly because it sounds unlike everything else. Few artists is a likely main cause for
+    rock and blues, not the whole story.</p>
+  <h3>Other limits we can see</h3>
+  <ul>
+    <li><strong>The CNN's training is unstable.</strong> Its validation score swings by up to 0.25 between consecutive
+      epochs, its three seeds disagree (disco F1 0.17 vs 0.67), and refitting on more data lowered it. Any single run
+      is partly a lucky or unlucky draw.</li>
+    <li><strong>The handcrafted features mostly describe timbre and production.</strong> MFCCs dominate the permutation
+      importance, and a 3 s mean and variance discard how the music develops over time.</li>
+    <li><strong>Selection is close to noise.</strong> With 197 validation clips and some genres resting on one to three
+      artists, logistic regression and the SVM were 0.010 apart on validation: settings chosen there are near coin
+      flips.</li>
+    <li><strong>The labels are fuzzy.</strong> Zydeco (Clifton Chenier, Buckwheat Zydeco) is labelled blues, and rock
+      and country genuinely overlap.</li>
+  </ul>
+  <h3>What would help (future work, not run)</h3>
+  <p class="muted">None of this was tried: the test part has been scored once, and any change made now would be chosen
+    after seeing it.</p>
+  <ol>
+    <li><strong>Pretrained audio embeddings</strong> (networks trained on large music collections, such as OpenL3,
+      PANNs, CLAP or MERT) with a simple classifier on top. They bring knowledge of thousands of artists, which is what
+      442 clips lack. Caveat: their training data may overlap with GTZAN's sources, so the result would answer a
+      different question.</li>
+    <li><strong>More artists per genre</strong>, from a larger dataset with artist information (for example FMA) under an
+      artist-disjoint split. This attacks the main bottleneck directly.</li>
+    <li><strong>A steadier CNN:</strong> average several seeds' predictions, decay the learning rate or average weights
+      so the epoch-to-epoch swings settle, choose epochs by artist-grouped cross-validation instead of one 197-clip
+      validation part, and refit for the same number of training steps rather than epochs.</li>
+    <li><strong>Augmentation that hides recording sound</strong> (random EQ, pitch and tempo shifts, mixing clips,
+      random loudness), pushing the model towards musical content and away from production cues.</li>
+    <li><strong>Richer features:</strong> changes over time (deltas), percentiles, longer windows (5 s scored 0.477 vs
+      0.458 at 3 s on validation), or a model over the sequence of windows.</li>
+  </ol>
+  <div class="callout read"><p class="tag">Is 0.55 bad?</p>
+    <p>Not in context: it is six times the chance floor (0.09), on ten genres, judged only on artists the model never
+      heard, after training on 442 clips. A large drop from the random-split scores common in tutorials is expected,
+      and measuring that drop is the point of this project.</p></div>
 </section>
 
 <section id="limits">
