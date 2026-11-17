@@ -214,6 +214,9 @@ th { position: sticky; top: 0; background: var(--surface); }
     </div>
     <div class="tiles" id="tiles"></div>
   </div>
+  <div class="card"><div id="scaleChart"></div>
+    <p class="note">Where the result sits on the 0 to 1 scale; the light band is its 95% interval. "Leaky split A" is the
+      same CNN, trained on the training part only, tested on windows whose clips it also trained on.</p></div>
   <p id="answerText"></p>
 </section>
 
@@ -346,7 +349,11 @@ th { position: sticky; top: 0; background: var(--surface); }
     <div id="ladderChart"></div>
     <p class="note" id="ladderNote"></p>
     <div class="callout take" id="ladderTake" hidden></div>
-    <div class="table-wrap"><table id="dropTable"></table></div>
+    <h3>Where the score goes, step by step</h3>
+    <div id="fallChart"></div>
+    <p class="note">Start from the leakiest split (A, left) and remove one kind of leakage per step. Orange bars are what
+      each step takes away; a light blue bar means the score went up. Hover or tap a bar for its 95% interval.</p>
+    <details><summary>Table: each step with its 95% interval</summary><div class="table-wrap"><table id="dropTable"></table></div></details>
     <details><summary>Table view of the chart</summary><div class="table-wrap"><table id="ladderTable"></table></div></details>
   </div>
   <div class="table-wrap"><table id="splitTable"></table></div>
@@ -356,12 +363,15 @@ th { position: sticky; top: 0; background: var(--surface); }
   <h2>Every model on split C</h2>
   <p id="modelsIntro"></p>
   <div class="card"><div id="modelChart"></div>
+    <h3>Is the CNN really ahead? Paired differences</h3>
+    <div id="pairChart"></div>
     <p class="note" id="pairedNote"></p>
     <div class="callout take" id="modelsTake" hidden></div>
     <details open><summary>Table: accuracy, validation score and the score before refitting</summary>
       <div class="table-wrap"><table id="modelTable"></table></div></details>
   </div>
   <h3>Refitting on training plus validation</h3>
+  <div class="card"><div id="refitChart"></div></div>
   <p id="refitNote"></p>
   <figure><img src="img/permutation_importance.png" alt="Permutation importance of feature groups and single features for the SVM and XGBoost on split C validation" loading="lazy">
     <figcaption>What the classical models rely on (split C validation): shuffling a feature group and measuring the
@@ -417,6 +427,12 @@ th { position: sticky; top: 0; background: var(--surface); }
     0.57 on C test, and the CNN is statistically tied with the other three. When different models hit the same ceiling, the limit is usually in the
     data rather than in the model. The clearest evidence points at one thing: <strong>each genre is learned from a
     handful of artists</strong>, and the test part has different ones.</p>
+  <div class="card"><div id="genreHeat"></div>
+    <p class="note">Test F1 for every genre (rows, hardest first) and every final model (columns; the CNN's three
+      training runs shown separately). Darker is better. The last column is the mean used in the table below: the four
+      classical models and the CNN's three-run average, weighted equally. Rock is pale for every model, and classical
+      and metal are dark for every model, so much of the difficulty belongs to the genre, not to one model. Blues is the
+      exception: hard for the four classical models, much less so for the CNN.</p></div>
   <div class="table-wrap"><table>
     <thead><tr><th scope="col">Genre</th><th scope="col">Artists in C train</th><th scope="col">C test is mostly</th><th scope="col">Mean F1</th></tr></thead>
     <tbody>
@@ -681,6 +697,7 @@ function renderAnswer() {
       `${signed(pb.diff)} (${signed(pb.ci_low)} to ${signed(pb.ci_high)}). ` : "") +
     (tiedWith.length ? `The CNN's paired interval includes zero against ${listText(tiedWith)}, so no model is a clear winner on this test set. ` : "") +
     ladderSentence();
+  renderScale();
 }
 /* Shared by the answer, the summary and the takeaways, so all three always agree. */
 const CLASSICAL = ["knn", "logreg", "svm", "xgb"];
@@ -770,6 +787,7 @@ function renderLadder() {
   table($("ladderTable"), ["Split", "Mean macro-F1", "95% interval", "Runs", "sd over runs"],
     SPLIT_ORDER.filter((s) => lad[s]).map((s) => [S.splits[s].short + " " + S.splits[s].name, fmt(lad[s].mean),
       `${fmt(lad[s].ci_low)} to ${fmt(lad[s].ci_high)}`, String(lad[s].n_runs), fmt(lad[s].sd)]));
+  renderFall();
 }
 function renderSplitTable() {
   table($("splitTable"), ["Split", "How it is built", "Test clips sharing an artist with train"],
@@ -813,7 +831,7 @@ function renderModels() {
     "Valid macro-F1 (train only)", ...(refit ? ["Test macro-F1 (train only)"] : []), "Runs"],
     ms.map((d) => [d.label, fmt(d.macro_f1), `${fmt(d.ci_low)} to ${fmt(d.ci_high)}`, fmt(d.accuracy),
       fmt(d.valid_macro_f1), ...(refit ? [fmt(d.train_only_macro_f1)] : []), String(d.n_runs)]));
-  renderRefit();
+  renderPairs(); renderRefit(); renderRefitChart();
 }
 function renderRefit() {
   const node = $("refitNote"), pt = S.c.paired_train_only && S.c.paired_train_only["cnn - svm"], p = S.c.paired["cnn - svm"];
@@ -903,9 +921,168 @@ function renderGenres(run) {
   node.replaceChildren(svg);
 }
 
+/* ---------- extra views: scale, waterfall, paired differences, refit, genre heatmap ---------- */
+function xGrid(svg, x, top, bottom, ticks, f) {
+  ticks.forEach((v) => {
+    const g = el("g", { class: "tick" }, svg);
+    el("line", { x1: x(v), x2: x(v), y1: top, y2: bottom, class: Math.abs(v) < 1e-9 ? "baseline" : "gridline" }, g);
+    el("text", { x: x(v), y: bottom + 16, "text-anchor": "middle" }, g).textContent = f(v);
+  });
+}
+const range = (a, b, s) => Array.from({ length: Math.round((b - a) / s) + 1 }, (_, i) => +(a + i * s).toFixed(4));
+const label = (svg, x, y, text, anchor = "middle", weight) => {
+  const t = el("text", { x, y, "text-anchor": anchor }, svg); t.textContent = text;
+  if (weight) { t.style.fontWeight = weight; t.style.fill = css("--ink"); } return t;
+};
+
+/* Hero: chance, this result and the leaky score on one 0-1 line. */
+function renderScale() {
+  const node = $("scaleChart"), W = chartWidth(node), H = 92, m = { l: 14, r: 14 }, cy = 40;
+  const h = S.headline, A = S.ladder.cnn && S.ladder.cnn.A, x = (v) => m.l + v * (W - m.l - m.r);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+    "aria-label": `Macro-F1 scale: chance ${fmt(h.floor, 2)}, this result ${fmt(h.macro_f1, 2)}` + (A ? `, leaky split A ${fmt(A.mean, 2)}` : "") });
+  el("line", { x1: x(0), x2: x(1), y1: cy, y2: cy, stroke: css("--grid"), "stroke-width": 8, "stroke-linecap": "round" }, svg);
+  el("line", { x1: x(h.ci_low), x2: x(h.ci_high), y1: cy, y2: cy, stroke: css("--s1-soft"), "stroke-width": 8 }, svg);
+  label(svg, x(0), cy - 16, "0", "start"); label(svg, x(1), cy - 16, "1 = perfect", "end");
+  const marks = [[h.floor, `chance ${fmt(h.floor, 2)}`, css("--muted"), cy + 26],
+    [h.macro_f1, `this result ${fmt(h.macro_f1, 2)}`, css("--s1"), cy - 16],
+    ...(A ? [[A.mean, `leaky split A ${fmt(A.mean, 2)}`, css("--ink-2"), cy + 26]] : [])];
+  marks.forEach(([v, text, color, ty], i) => {
+    const dot = el("circle", { cx: x(v), cy, r: i === 1 ? 8 : 6, fill: color, stroke: css("--surface"), "stroke-width": 2, tabindex: 0 }, svg);
+    label(svg, x(v), ty, text, "middle", i === 1 ? 600 : null);
+    bindTip(dot, i === 1 ? [text, `95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)}`, `${h.n_clips} test clips, unseen artists`] : [text]);
+  });
+  node.replaceChildren(svg);
+}
+
+/* Waterfall: start at split A, subtract each kind of leakage, end at split C. */
+const STEPS = [["A", "B", "clip"], ["B", "Bp", "faults"], ["Bp", "D", "artist"], ["D", "C", "split"]];
+function renderFall() {
+  const L = S.ladder[ladderModel], node = $("fallChart");
+  if (!L || !SPLIT_ORDER.every((s) => L[s])) { node.replaceChildren(); return; }
+  const W = chartWidth(node), H = 300, m = { l: 44, r: 16, t: 24, b: 46 };
+  const cols = [{ b: "A", top: "A", sub: "start" },
+    ...STEPS.map(([a, b, sub]) => ({ a, b, top: `${S.splits[a].short}→${S.splits[b].short}`, sub })),
+    { b: "C", top: "C", sub: "end" }];
+  const bw = (W - m.l - m.r) / cols.length, x = (i) => m.l + i * bw, y = (v) => m.t + (1 - v) * (H - m.t - m.b);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img",
+    "aria-label": `${S.labels[ladderModel]}: macro-F1 from split A to split C, with the change at each step` });
+  range(0, 1, 0.2).forEach((v) => {
+    const g = el("g", { class: "tick" }, svg);
+    el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: v === 0 ? "baseline" : "gridline" }, g);
+    el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end" }, g).textContent = v.toFixed(1);
+  });
+  cols.forEach((c, i) => {
+    const end = L[c.b].mean, start = c.a ? L[c.a].mean : 0, drop = start - end;
+    const hi = Math.max(start, end), lo = Math.min(start, end);
+    const fill = !c.a ? css("--s1") : drop >= 0 ? css("--accent") : css("--s1-soft");
+    const bar = el("rect", { x: x(i) + bw * 0.2, y: y(hi), width: bw * 0.6, height: Math.max(2, y(lo) - y(hi)), rx: 3, fill, tabindex: 0 }, svg);
+    label(svg, x(i) + bw / 2, y(hi) - 7, c.a ? signed(-drop) : fmt(end, 2), "middle", c.a ? null : 600);
+    label(svg, x(i) + bw / 2, H - m.b + 18, c.top, "middle", 600);
+    label(svg, x(i) + bw / 2, H - m.b + 34, c.sub);
+    if (i < cols.length - 1) el("line", { x1: x(i) + bw * 0.8, x2: x(i + 1) + bw * 0.2, y1: y(end), y2: y(end),
+      stroke: css("--muted"), "stroke-dasharray": "3 3" }, svg);
+    const d = c.a && S.drops[`${ladderModel}: ${c.a} - ${c.b}`];
+    bindTip(bar, c.a ? [`${S.splits[c.a].short} → ${S.splits[c.b].short}`, `${fmt(start)} → ${fmt(end)}`,
+      d ? `change ${signed(-d.diff)}, 95% interval ${signed(-d.ci_high)} to ${signed(-d.ci_low)}` : ""]
+      : [`${S.splits[c.b].short}: ${S.splits[c.b].name}`, `macro-F1 ${fmt(end)}`]);
+  });
+  node.replaceChildren(svg);
+}
+
+/* Forest plot: CNN minus each classical model, on the same resampled artists. */
+function renderPairs() {
+  const node = $("pairChart"), rows = CLASSICAL.map((k) => [k, S.c.paired[`cnn - ${k}`]]).filter((r) => r[1]);
+  if (!rows.length) { node.replaceChildren(); return; }
+  const W = chartWidth(node), rowH = 36, m = { l: Math.min(170, W * 0.36), r: 84, t: 28, b: 28 }, H = m.t + m.b + rowH * rows.length;
+  const lo = Math.floor(Math.min(-0.05, ...rows.map((r) => r[1].ci_low)) * 20) / 20;
+  const hi = Math.ceil(Math.max(0.05, ...rows.map((r) => r[1].ci_high)) * 20) / 20;
+  const x = (v) => m.l + (v - lo) / (hi - lo) * (W - m.l - m.r);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "CNN minus each classical model, with 95% paired intervals" });
+  xGrid(svg, x, m.t, H - m.b, range(lo, hi, W < 520 ? 0.1 : 0.05), (v) => signed(v).replace("+0.00", "0").replace("−0.00", "0"));
+  el("line", { x1: x(0), x2: x(0), y1: m.t - 4, y2: H - m.b, stroke: css("--ink-2"), "stroke-width": 1.5 }, svg);
+  label(svg, x(0) - 6, m.t - 10, "← other model better", "end"); label(svg, x(0) + 6, m.t - 10, "CNN better →", "start");
+  rows.forEach(([k, p], i) => {
+    const cy = m.t + i * rowH + rowH / 2;
+    const verdict = p.ci_low > 0 ? "CNN ahead" : p.ci_high < 0 ? "CNN behind" : "tie";
+    label(svg, m.l - 10, cy + 4, S.labels[k], "end");
+    el("line", { x1: x(p.ci_low), x2: x(p.ci_high), y1: cy, y2: cy, stroke: css("--s1"), "stroke-width": 2, "stroke-linecap": "round" }, svg);
+    el("circle", { cx: x(p.diff), cy, r: 6, fill: css("--s1"), stroke: css("--surface"), "stroke-width": 2 }, svg);
+    label(svg, W - m.r + 10, cy + 4, verdict, "start", verdict === "tie" ? null : 600);
+    const hit = el("rect", { x: 0, y: cy - rowH / 2, width: W, height: rowH, fill: "transparent", tabindex: 0 }, svg);
+    bindTip(hit, [`CNN minus ${S.labels[k]}`, `${signed(p.diff)} (95% interval ${signed(p.ci_low)} to ${signed(p.ci_high)})`,
+      `CNN ahead in ${pct(p.share_resamples_cnn_better)} of resamples`]);
+  });
+  node.replaceChildren(svg);
+}
+
+/* Dumbbell: each model trained on 442 clips vs refit on 639. */
+function renderRefitChart() {
+  const node = $("refitChart"), by = (k) => S.c.models.find((d) => d.model === k);
+  const ms = [...CLASSICAL, "cnn"].map(by).filter((d) => d && d.train_only_macro_f1 != null);
+  if (S.fit_on_C !== "train+valid" || !ms.length) { node.parentElement.hidden = true; return; }
+  const W = chartWidth(node), rowH = 34, m = { l: Math.min(170, W * 0.36), r: 70, t: 34, b: 28 }, H = m.t + m.b + rowH * ms.length;
+  const vals = ms.flatMap((d) => [d.macro_f1, d.train_only_macro_f1]);
+  const lo = Math.floor(Math.min(...vals) * 20) / 20, hi = Math.ceil(Math.max(...vals) * 20) / 20;
+  const x = (v) => m.l + (v - lo) / (hi - lo) * (W - m.l - m.r);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Test macro-F1 of each model trained on 442 clips and refit on 639 clips" });
+  xGrid(svg, x, m.t, H - m.b, range(lo, hi, 0.05), (v) => v.toFixed(2));
+  el("circle", { cx: m.l + 6, cy: 12, r: 5, fill: css("--surface"), stroke: css("--muted"), "stroke-width": 2 }, svg);
+  label(svg, m.l + 16, 16, "trained on 442 clips", "start");
+  el("circle", { cx: m.l + 160, cy: 12, r: 5, fill: css("--s1") }, svg);
+  label(svg, m.l + 170, 16, "refit on 639 (headline)", "start");
+  ms.forEach((d, i) => {
+    const cy = m.t + i * rowH + rowH / 2, a = d.train_only_macro_f1, b = d.macro_f1;
+    label(svg, m.l - 10, cy + 4, d.label, "end");
+    el("line", { x1: x(a), x2: x(b), y1: cy, y2: cy, stroke: css("--axis"), "stroke-width": 3 }, svg);
+    el("circle", { cx: x(a), cy, r: 6, fill: css("--surface"), stroke: css("--muted"), "stroke-width": 2 }, svg);
+    el("circle", { cx: x(b), cy, r: 6, fill: css("--s1"), stroke: css("--surface"), "stroke-width": 2 }, svg);
+    label(svg, x(Math.max(a, b)) + 10, cy + 4, signed(b - a), "start");
+    const hit = el("rect", { x: 0, y: cy - rowH / 2, width: W, height: rowH, fill: "transparent", tabindex: 0 }, svg);
+    bindTip(hit, [d.label, `trained on 442 clips: ${fmt(a)}`, `refit on 639 clips: ${fmt(b)}`]);
+  });
+  node.replaceChildren(svg);
+}
+
+/* Heatmap: per-genre test F1 for every final model, hardest genre first. */
+const HEAT_COLS = [["knn_s0", "kNN"], ["logreg_s0", "LogReg"], ["svm_s0", "SVM"], ["xgb_s0", "XGBoost"],
+  ["cnn_s0", "CNN run 1"], ["cnn_s1", "CNN run 2"], ["cnn_s2", "CNN run 3"]];
+function genreMean(g) {
+  const f = (k) => S.confusion[k].per_genre_f1[g], ks = HEAT_COLS.map((c) => c[0]).filter((k) => S.confusion[k]);
+  const cnn = ks.filter((k) => k.startsWith("cnn")), v = ks.filter((k) => !k.startsWith("cnn")).map(f);
+  if (cnn.length) v.push(cnn.reduce((a, k) => a + f(k), 0) / cnn.length);
+  return v.reduce((a, b) => a + b, 0) / v.length;
+}
+function renderGenreHeat() {
+  const cols = HEAT_COLS.filter(([k]) => S.confusion[k]), node = $("genreHeat");
+  if (!cols.length) { node.parentElement.hidden = true; return; }
+  const G = [...S.genres].sort((a, b) => genreMean(a) - genreMean(b)), sup = S.confusion[cols[0][0]].support;
+  const W = Math.min(chartWidth(node), 680), m = { l: 92, t: 76, r: 56, b: 40 }, cw = (W - m.l - m.r) / cols.length, rh = 28;
+  const H = m.t + m.b + rh * G.length, ramp = css("--seq").split(",").map((s) => s.trim());
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Test F1 per genre for every final model, hardest genre first" });
+  cols.forEach(([, name], j) => el("text", { x: 0, y: 0, "text-anchor": "start",
+    transform: `translate(${m.l + j * cw + cw / 2 + 4},${m.t - 6}) rotate(-55)` }, svg).textContent = name);
+  label(svg, W - m.r + 28, m.t - 8, "mean", "middle", 600);
+  G.forEach((g, i) => {
+    const cy = m.t + i * rh;
+    label(svg, m.l - 8, cy + rh / 2 + 4, `${g} (${sup[g]})`, "end");
+    cols.forEach(([k, name], j) => {
+      const v = S.confusion[k].per_genre_f1[g], step = Math.min(ramp.length - 1, Math.round(v * (ramp.length - 1)));
+      const r = el("rect", { x: m.l + j * cw + 1, y: cy + 1, width: cw - 2, height: rh - 2, rx: 3, fill: ramp[step], tabindex: 0 }, svg);
+      if (cw >= 30) { const t = label(svg, m.l + j * cw + cw / 2, cy + rh / 2 + 4, fmt(v, 2)); t.style.fill = step >= 7 ? "#ffffff" : "#0b0b0b"; t.style.fontSize = "11px"; }
+      bindTip(r, [`${g}, ${name}`, `F1 ${fmt(v)}`, `${sup[g]} test clips`]);
+    });
+    label(svg, W - m.r + 28, cy + rh / 2 + 4, fmt(genreMean(g), 2), "middle", 600);
+  });
+  const lw = Math.min(160, W - m.l - m.r), sw = lw / ramp.length, ly = H - 22;
+  ramp.forEach((c, i) => el("rect", { x: m.l + i * sw, y: ly, width: sw, height: 10, fill: c }, svg));
+  label(svg, m.l - 6, ly + 9, "F1 0", "end"); label(svg, m.l + lw + 6, ly + 9, "1", "start");
+  node.replaceChildren(svg);
+}
+
 /* ---------- boot ---------- */
 function renderAll() {
-  renderAnswer(); renderLadderButtons(); renderLadder(); renderSplitTable(); renderModels(); renderCm();
+  renderAnswer(); renderLadderButtons(); renderLadder(); renderSplitTable(); renderModels(); renderCm(); renderGenreHeat();
   const a = S.data;
   $("dataAudit").textContent = `Audit: ${a.n_files} files, ${a.n_loadable} load (${a.failures.join(", ")} has no valid WAV header and is ` +
     "excluded). Every file is checked for duration, clipping, loudness and byte-identical duplicates.";

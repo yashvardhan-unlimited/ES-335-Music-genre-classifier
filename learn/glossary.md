@@ -106,6 +106,8 @@
 
 **Dual problem.** The SVM optimisation rewritten in terms of one multiplier alpha_i per training point, bounded by 0 and C. Data enter it only through dot products, which is what makes the kernel trick possible.
 
+**Dumbbell chart.** Two dots per row (a before and an after value) joined by a line, so the direction and size of each change are read at once. Used on the website for train-only vs refit test scores.
+
 **Dummy classifier.** A model that ignores the features (always the most frequent class, or random draws with the training class frequencies); it gives the score floor.
 
 **Early stopping.** Stopping iterative training when a validation loss has not improved for a set number of rounds (patience; 50 here) and keeping the model from the best round. Turns the number of trees into a quantity chosen from data.
@@ -131,6 +133,8 @@
 **Fixed transform.** A feature computation that uses only the clip itself and preset constants; it cannot leak between splits.
 
 **Floor.** The score a model with no information reaches under the chosen metric; measured here with dummy classifiers (valid macro-F1 0.018 and 0.128 on split C).
+
+**Forest plot.** One row per comparison: a dot at the estimated difference and a line for its interval, with a vertical line at zero. An interval that crosses zero means the data cannot tell the two apart.
 
 **Frame.** A short slice of audio (here 2048 samples, 93 ms) analysed as one spectrum; frames advance by the hop length (512 samples).
 
@@ -302,6 +306,8 @@
 
 **Selective prediction.** Letting a classifier hold back an answer when its confidence is low, trading coverage for accuracy on what it does answer. The web app says "Not sure" under a top score of 0.7.
 
+**Sequential colour scale.** One hue running from light to dark, for a magnitude with no meaningful midpoint (here F1 from 0 to 1). A diverging scale (two hues around a neutral centre) is only right when the centre means something.
+
 **Slack variable.** xi_i >= 0 in the soft-margin SVM: how far training point i violates the margin. Their sum, multiplied by C, is added to the objective.
 
 **Soft margin.** An SVM that allows margin violations at a cost C per unit of slack, so it works on overlapping classes. Small C tolerates violations (simpler boundary), large C punishes them (closer fit).
@@ -350,6 +356,8 @@
 
 **Translation equivariance.** Shifting the input shifts a convolution's output by the same amount, because the same filter is used everywhere. Natural along time in a spectrogram, only partly along frequency.
 
+**Truncated axis.** An axis that does not start at zero. Wrong for bars, which encode value by length; acceptable for dots, which encode by position, as long as the range is labelled.
+
 **Union-find.** A simple structure for connected components: each item points to a parent, following parents reaches the component's root, and joining two components points one root at the other.
 
 **Unit of prediction.** The object a prediction and its score refer to; here one 30 s clip.
@@ -357,6 +365,8 @@
 **Validation part.** The part of a split used to choose hyperparameters, epochs and design options by clip macro-F1; the chosen model's validation score is therefore optimistic.
 
 **Virtual environment (venv).** A self-contained Python installation for one project, isolating its packages from others.
+
+**Waterfall chart.** A start total, one floating bar per step (down or up), and an end total, so the parts of a change add up visibly. Used for the leakage ladder from split A to split C.
 
 **Weight decay.** Adding lambda times each weight to its gradient (an L2 penalty, lambda = 0.0001 here) so the weights stay small.
 

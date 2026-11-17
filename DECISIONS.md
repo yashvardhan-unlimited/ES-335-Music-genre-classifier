@@ -822,3 +822,24 @@ of the gap is leakage.
 **Rejected.** Switching the headline to the train-only CNN (0.594) because it scores higher: that
 is choosing after seeing test. Re-running the CNN refit with a scaled epoch count: a new choice made
 after test, and test would no longer be untouched.
+
+## 2026-11-17 (post-freeze): Five more charts on the website, one per reader question
+
+**Decision.** `docs/index.html` gains five SVG charts drawn from `docs/data/site.json`, with no new
+numbers: a 0-1 score scale (chance, headline with interval, split A); a waterfall of the train-only
+CNN (or any ladder model) from split A to C, one bar per leakage step; a forest plot of the paired
+differences CNN minus each classical model; a dumbbell of train-only vs refit test macro-F1; and a
+heatmap of per-genre test F1 for every final model, rows sorted by the plateau table's mean. The step
+table under the ladder moves into a collapsible block, since the waterfall shows the same values.
+
+**Reason.** The page's key claims (most of the leaky score is artist leakage; no clear winner among
+the trained models; refitting helped some models and hurt others; rock and blues are hard for every
+model) were stated in sentences and tables. Each chart puts one claim on position or length, which
+readers compare more accurately than numbers in text. One hue throughout, numbers printed on every
+mark, hover and keyboard tooltips, and table views kept.
+
+**Rejected.** A stacked bar for the leakage decomposition (breaks when a step is positive; thin
+segments cannot be labelled on a phone). Overlapping per-model intervals as the comparison (the
+wrong test; the paired interval is the right one). A colour per model (adds a legend for no extra
+information). A charting library (a dependency for five small charts the page can draw itself).
+
