@@ -190,6 +190,23 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
 
 <section id="method">
   <h2>Method</h2>
+  <h3>What one row is</h3>
+  <p>The thing we predict is one <strong>30 s clip</strong>. The thing a model trains on is one <strong>3 s window</strong>
+    (10 per clip, so 4,420 training rows from 442 training clips), carrying its clip's genre label. All ten windows of a
+    clip always sit in the same part, so no clip is split across train and test.</p>
+  <h3>Preprocessing, and why</h3>
+  <ul>
+    <li><strong>Mono, 22,050 Hz, 3 s windows:</strong> GTZAN's native format. A 3 s window is long enough to hear rhythm
+      and timbre and gives ten rows per clip, so more training rows for the classical models. Other window lengths were
+      compared on validation only.</li>
+    <li><strong>Unreadable and faulty clips removed:</strong> one clip (jazz.00054) cannot be decoded, and split C uses the
+      published fault-filtered list (Kereliuk et al.) so repeated and distorted recordings do not inflate scores.</li>
+    <li><strong>Scalers and normalisation fitted on training data only,</strong> so nothing about validation or test
+      leaks into training.</li>
+    <li><strong>Log-mel in dB with a fixed reference,</strong> not per-clip normalisation, so loudness, which differs
+      by genre, is kept (see Limitations).</li>
+  </ul>
+  <h3>Steps</h3>
   <ol class="steps">
     <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
       every window and the clip's prediction is the average of its ten probability vectors (soft vote).</li>
@@ -250,6 +267,12 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
 
 <section id="reproduce">
   <h2>Reproduce</h2>
+  <p><a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier">Repository</a> ·
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/README.md">README (setup, data access)</a> ·
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/DECISIONS.md">DECISIONS.md</a> ·
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/AI_USE.md">AI-use disclosure</a> ·
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/tree/main/results">Full results</a> ·
+    <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/tree/main/learn">Study notes</a></p>
   <pre>git clone https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier
 cd ES-335-Music-genre-classifier
 make setup data splits features tune     # download, audit, splits, features, tune everything (hours on a CPU)
