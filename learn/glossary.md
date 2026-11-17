@@ -276,6 +276,8 @@
 
 **Pretrained embedding.** The output of a network trained on a large, different dataset, used as ready-made features for a new task with a simple classifier on top. It brings knowledge the small dataset lacks; here it is future work, not used.
 
+**Progressive disclosure.** Showing the main points first and putting supporting detail behind a click (here HTML `<details>` blocks whose summary line names what is inside).
+
 **PYTHONHASHSEED.** Environment variable fixing the randomisation of Python's string hashing; read at interpreter start.
 
 **Random crop.** A training window taken at a random start position in the clip (any of 1,163 offsets for our 130-frame crops), so the model sees a different slice of each clip every epoch.

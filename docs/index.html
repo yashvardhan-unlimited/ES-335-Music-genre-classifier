@@ -85,10 +85,6 @@ details summary { cursor: pointer; color: var(--ink-2); font-size: 0.9rem; margi
 .cliplist li { font-variant-numeric: tabular-nums; }
 figure { margin: 1.2rem 0; }
 figure img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
-.steps { counter-reset: s; list-style: none; padding: 0; }
-.steps li { counter-increment: s; position: relative; padding-left: 2.2rem; margin: 0.6rem 0; }
-.steps li::before { content: counter(s); position: absolute; left: 0; top: 0.05rem; width: 1.6rem; height: 1.6rem;
-  border-radius: 50%; background: var(--wash); color: var(--s1); font-weight: 600; text-align: center; line-height: 1.6rem; font-size: 0.85rem; }
 footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
 .theme-toggle { float: right; font: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border);
   color: var(--ink-2); border-radius: 999px; padding: 0.2rem 0.7rem; cursor: pointer; }
@@ -121,12 +117,6 @@ main > section:first-child > h2 { border-top: none; margin-top: 2rem; }
 .callout.read .tag { color: var(--ink-2); }
 .callout.take { border-left-color: var(--accent); }
 .callout.take .tag { color: var(--accent); }
-.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 0.6rem; margin: 1.2rem 0; padding: 0;
-  list-style: none; counter-reset: f; }
-.flow li { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 0.6rem 0.7rem 0.6rem 2.1rem; font-size: 0.86rem; color: var(--ink-2); max-width: none; counter-increment: f; }
-.flow li::before { content: counter(f); position: absolute; left: 0.6rem; top: 0.55rem; color: var(--s1); font-weight: 700; }
-.flow b { display: block; color: var(--ink); font-size: 0.92rem; }
 .card { box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
 tbody tr:hover td { background: var(--wash); }
 th { position: sticky; top: 0; background: var(--surface); }
@@ -186,28 +176,16 @@ figure img { padding: 8px; }
   <p><strong>At prediction time</strong> the model receives only the clip's 30 s of audio. The artist, the file name
     (which contains the genre) and every other piece of metadata are never inputs; artists are used only to build the
     splits and the confidence intervals.</p>
-  <p><strong>Why it matters.</strong> GTZAN is the standard benchmark for this task, yet it holds several clips per
-    artist and some repeated recordings. A random split can therefore reward recognising a performer or a recording
-    instead of a genre. The rest of this page measures that gap.</p>
-  <p><strong>Where this would be used.</strong> Streaming services suggest music partly from what a song sounds like,
-    and this matters most for new releases and new artists that nobody has listened to yet (the "cold-start" case).
-    Genre tags inferred from audio are one input to such systems. That use only works if the model recognises genre in
-    artists it has never heard, which is exactly what split C tests. We do not build or evaluate a recommender: a
-    macro-F1 near 0.55 on ten coarse genres would be one weak signal among many, not a recommendation engine.</p>
+  <p><strong>Why it matters.</strong> GTZAN, the standard dataset for this task, has several clips per artist and some
+    repeated recordings. A random split can reward recognising a performer instead of a genre. This page measures that
+    gap.</p>
+  <p><strong>Where it would be used.</strong> Streaming services tag new songs by how they sound, most usefully for new
+    artists nobody has listened to yet (the "cold-start" case). That only works if the model recognises genre in
+    artists it has never heard, which is what split C tests. We do not build a recommender: a macro-F1 near 0.55 would
+    be one weak signal among many.</p>
   <div class="callout why"><p class="tag">In plain words</p>
-    <p>Imagine a quiz where the same singer appears in both the practice questions and the exam. A student could pass by
-      memorising the voice, without learning what "jazz" sounds like. Our test asks: how well does the model do when the
-      singers in the exam are new?</p></div>
-  <h3>How the page is organised</h3>
-  <ol class="flow">
-    <li><b>Question</b>what we predict</li>
-    <li><b>Data</b>GTZAN and its faults</li>
-    <li><b>Method</b>preprocessing, models, splits</li>
-    <li><b>Ladder</b>leakage removed step by step</li>
-    <li><b>Models</b>all models, one fair test</li>
-    <li><b>Errors</b>what gets confused with what</li>
-    <li><b>Limits</b>what this does not show</li>
-  </ol>
+    <p>If the same singer appears in the practice questions and the exam, a student can pass by memorising the voice
+      without learning what "jazz" sounds like. We ask how well the model does when the singers in the exam are new.</p></div>
 </section>
 
 <section id="answer">
@@ -222,48 +200,44 @@ figure img { padding: 8px; }
     <div class="tiles" id="tiles"></div>
   </div>
   <div class="card"><div id="scaleChart"></div>
-    <p class="note">Where the result sits on the 0 to 1 scale; the light band is its 95% interval. "Leaky split A" is the
-      same CNN, trained on the training part only, tested on windows whose clips it also trained on.</p></div>
+    <p class="note">The light band is the 95% interval. "Leaky split A" is the same CNN (trained on the training part
+      only) tested on windows whose clips it also trained on.</p></div>
   <p id="answerText"></p>
 </section>
 
 <section id="data">
   <h2>Data</h2>
   <p><strong>GTZAN</strong> (Tzanetakis &amp; Cook, 2002): 1,000 clips of 30 s, 100 per genre, 22,050 Hz mono, in
-    10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. We downloaded it from a
-    Kaggle mirror (a free Kaggle account is needed). The clips are excerpts of commercial recordings, so the audio is
-    not republished here or in the repository; only numbers, clip ids and figures are.</p>
+    10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. It comes from a Kaggle
+    mirror (a free Kaggle account is needed). The clips are cut from commercial recordings, so we publish only numbers,
+    clip ids and figures, never the audio.</p>
   <h3>Size and key variables</h3>
   <div class="table-wrap"><table>
     <tr><th>Variable</th><th>What it is</th></tr>
     <tr><td>Clip (1,000 files; 999 readable)</td><td>30 s of audio at 22,050 Hz mono, about 660,000 samples. Clip length varies by under 0.7 s.</td></tr>
     <tr><td>Genre (target)</td><td>One of 10 labels, 100 clips each (99 for jazz, because one file is unreadable).</td></tr>
     <tr><td>Artist (grouping variable)</td><td>321 distinct artist names from <a href="https://huggingface.co/datasets/seungheondoh/gtzan-bind">gtzan-bind</a>; 14 clips have no artist label. Genres differ a lot: from 14 artists (blues) to 62 (disco) per 100 clips. Used only to build splits and bootstrap intervals, never as a model input.</td></tr>
-    <tr><td>Window (training row)</td><td>A 3 s slice: 57 handcrafted features for the classical models, or a 128-band log-mel image for the CNN.</td></tr>
+    <tr><td>Window (training row)</td><td>A 3 s slice. For the classical models: 57 handcrafted numbers (20 MFCC means and variances, chroma, spectral shape, zero-crossing rate, loudness, harmonic/percussive energy, clip tempo). For the CNN: a 128-band log-mel image.</td></tr>
     <tr><td>Split part</td><td>train, valid or test, assigned per clip. Split C has 442 / 197 / 290 usable clips.</td></tr>
   </table></div>
   <h3>Quality issues</h3>
+  <p>Each issue below lets a model score by <em>recognising</em> audio it has already heard; the splits in Method remove
+    them one at a time.</p>
   <ul>
     <li id="dataAudit"></li>
     <li><strong>Exact duplicates:</strong> 14 groups of clips have byte-identical audio (for example metal.00034 and
-      metal.00094). Under a random split one copy can sit in train and the other in test.</li>
-    <li><strong>Faults found by listening</strong> (Sturm, 2013): the same song in several clips, mislabelled genres, and
+      metal.00094), so a random split can put one copy in train and the other in test.</li>
+    <li><strong>Faults found by listening</strong> (Sturm, 2013): the same song in several clips, wrong genre labels and
       distorted clips. Removing them leaves 929 usable clips for splits B&prime; and D.</li>
-    <li><strong>Many clips per artist:</strong> a random split puts the same artist, and sometimes the same recording,
-      on both sides. This is the leakage the page measures.</li>
-    <li><strong>Uneven lengths:</strong> clips run from 29.93 s to 30.65 s (nine are under 30 s). We zero-pad short
-      clips and trim long ones to exactly 30 s, so every clip gives ten equal windows.</li>
-    <li>Artist names come from <code>gtzan-bind</code>, matched automatically, not by listening. Credits that share a
-      performer ("Bob Marley &amp; The Wailers" and "Bob Marley") count as one artist cluster.</li>
+    <li><strong>Many clips per artist:</strong> a random split puts the same artist, sometimes the same recording, on
+      both sides. This is the leakage the page measures. Artist names are matched automatically (gtzan-bind), and
+      credits sharing a performer ("Bob Marley &amp; The Wailers", "Bob Marley") count as one artist cluster.</li>
+    <li><strong>Uneven lengths:</strong> 29.93 s to 30.65 s (nine clips under 30 s). We pad or trim every clip to
+      exactly 30 s, so each gives ten equal windows.</li>
   </ul>
-  <div class="callout why"><p class="tag">Why these faults matter</p>
-    <p>A model that has heard a clip, a duplicate of it, or another clip by the same band during training can score well
-      by recognition instead of by understanding genre. Each fault above is one way that can happen, and the splits
-      below remove them one at a time.</p></div>
   <figure><img src="img/rms_by_genre.png" alt="Box plot of clip loudness (RMS level in dBFS) for each genre" loading="lazy">
-    <figcaption>Loudness differs by genre: classical clips sit around −28 dBFS, pop and hip-hop around −13 to −14. A
-      model can partly tell genres apart by level alone, which is a recording property rather than musical content
-      (see Limitations).</figcaption></figure>
+    <figcaption>Loudness differs by genre: classical sits around −28 dBFS, pop and hip-hop around −13 to −14. Level
+      alone partly separates genres, but it is a recording property, not musical content (see Limitations).</figcaption></figure>
   <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
     <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
 </section>
@@ -272,21 +246,20 @@ figure img { padding: 8px; }
   <h2>Method</h2>
   <h3>Preprocessing, and why</h3>
   <ul>
-    <li><strong>Mono, 22,050 Hz, 3 s windows:</strong> GTZAN's native format. A 3 s window is long enough to hear rhythm
-      and timbre and gives ten rows per clip, so more training rows for the classical models. On validation (SVM,
-      split C), 1, 3, 5 and 10 s windows scored 0.435, 0.458, 0.477 and 0.449. We kept 3 s: the 0.019 gain for 5 s is
-      a few of the 197 clips, the settings had been tuned at 3 s, and switching after seeing validation scores would
-      be choosing on noise.</li>
-    <li><strong>Unreadable and faulty clips removed:</strong> one clip (jazz.00054) cannot be decoded, and split C uses the
-      published fault-filtered list (Kereliuk et al.) so repeated and distorted recordings do not inflate scores.</li>
-    <li><strong>Scalers and normalisation fitted on training data only,</strong> so nothing about validation or test
-      leaks into training.</li>
-    <li><strong>Log-mel in dB with a fixed reference,</strong> not per-clip normalisation, so loudness, which differs
-      by genre, is kept (see Limitations).</li>
+    <li><strong>Mono, 22,050 Hz, 3 s windows:</strong> GTZAN's own format. 3 s is long enough to hear rhythm and timbre
+      and gives ten training rows per clip. On validation (SVM, split C), 1, 3, 5 and 10 s windows scored 0.435, 0.458,
+      0.477 and 0.449. We kept 3 s: the 0.019 gain for 5 s is a few of 197 clips, the settings were tuned at 3 s, and
+      switching after seeing validation scores would be choosing on noise.</li>
+    <li><strong>Unreadable and faulty clips removed:</strong> jazz.00054 cannot be decoded, and split C uses the published
+      fault-filtered list (Kereliuk et al.), so repeated and distorted recordings do not inflate scores.</li>
+    <li><strong>Scalers and normalisation fitted on training data only,</strong> so nothing from validation or test leaks
+      into training.</li>
+    <li><strong>Log-mel in dB with a fixed reference,</strong> not normalised per clip, so loudness, which differs by
+      genre, is kept (see Limitations).</li>
   </ul>
   <h3>Baselines and models compared</h3>
-  <p>Each model answers a different question about how much structure the task needs. The two dummies set the floor, so
-    a real model must beat them to show any skill.</p>
+  <p>The two dummies ignore the audio and set the floor: a real model must beat them to show any skill. The others go
+    from simple (kNN, a straight-line boundary) to flexible (trees, a CNN that learns its own features).</p>
   <div class="table-wrap"><table>
     <thead><tr><th scope="col">Model</th><th scope="col">What it learns (objective)</th><th scope="col">Key assumption</th><th scope="col">Searched on validation → chosen (split C)</th></tr></thead>
     <tbody>
@@ -303,16 +276,7 @@ figure img { padding: 8px; }
     model, not the input. Exact grids: <code>config.yaml</code>; every chosen setting on every split:
     <code>results/chosen_params.json</code>. Measured scores are in the results below.</p>
   <h3>Evaluation: splits and metrics</h3>
-  <p>Five splits keep the same sizes (442 / 197 / 290 clips) and change only the leakage: <strong>A</strong> shuffles
-    windows (a clip sits on both sides), <strong>B</strong> shuffles whole clips, <strong>B&prime;</strong> does the same
-    after removing faulty clips, <strong>D</strong> keeps each artist in one part (random), and <strong>C</strong> is the
-    published artist-disjoint split, our main result. Validation picks hyperparameters; test is locked in code and
-    scored once. Scores are clip-level macro-F1 (primary), with accuracy, per-genre F1 and confusion matrices as
-    secondary views.</p>
-  <p><strong>Why macro-F1 and not only accuracy?</strong> It punishes a model that gives up on a genre: the
-    most-frequent dummy gets 10.7% accuracy on C test but a macro-F1 of 0.02. Because test genres are close to
-    balanced (26 to 32 clips each), the two measures agree closely for real models (CNN: accuracy 0.58, macro-F1
-    0.55), so we report both.</p>
+  <p>Five splits keep the same sizes (442 / 197 / 290 clips) and change only what can leak:</p>
   <div class="compare">
     <div class="card"><h4>A · window-random</h4><ul><li>Windows shuffled</li><li>Same clip in train and test</li><li>Most leakage</li></ul></div>
     <div class="card"><h4>B · clip-random</h4><ul><li>Whole clips shuffled</li><li>Same artist, duplicates remain</li><li>Faulty clips included</li></ul></div>
@@ -320,47 +284,40 @@ figure img { padding: 8px; }
     <div class="card"><h4>D · artist-grouped</h4><ul><li>Each artist in one part</li><li>Random draw, 5 seeds</li></ul></div>
     <div class="card"><h4>C · published</h4><ul><li>Artist-disjoint, fault-filtered</li><li>Main result; test scored once</li></ul></div>
   </div>
-  <details><summary>The full pipeline in six steps: unit, features, models, tuning, metric, test lock</summary>
-  <ol class="steps">
-    <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
-      every window and the clip's prediction is the average of its ten probability vectors (soft vote).</li>
-    <li><strong>Features.</strong> 57 handcrafted numbers per window (20 MFCC means and variances, chroma, spectral
-      shape, zero-crossing rate, loudness, harmonic/percussive energy, clip tempo) for the classical models; a
-      128-band log-mel spectrogram for the CNN.</li>
-    <li><strong>Models.</strong> Two dummy floors (most frequent; random by class frequency), k-nearest neighbours,
-      logistic regression, an RBF SVM, XGBoost, and a small 4-block CNN trained from scratch with random crops and
-      SpecAugment.</li>
-    <li><strong>Tuning.</strong> Every hyperparameter grid is scored on the validation part only, by clip macro-F1,
-      never by k-fold over windows (which would put a clip's windows on both sides). Scalers and normalisation
-      statistics are fitted on training data only.</li>
-    <li><strong>Metric.</strong> Clip-level macro-F1: F1 per genre, averaged, so every genre counts equally. 95%
-      intervals come from a bootstrap that resamples <em>artists</em>, because clips by one artist are not
-      independent.</li>
-    <li><strong>Test lock.</strong> Code refuses to read the test part until a git tag, <code>pre-test-freeze</code>,
-      exists. The tag is created only after every choice, including which models count as final, is written down,
-      and test is then scored once.</li>
-  </ol></details>
+  <ul>
+    <li><strong>Tuning:</strong> every setting is chosen on the validation part only, by clip macro-F1. Never by k-fold
+      over windows, which would put windows of one clip on both sides.</li>
+    <li><strong>Test lock:</strong> the code refuses to read the test part until a git tag, <code>pre-test-freeze</code>,
+      exists. The tag was made only after every choice was written down; then test was scored once.</li>
+    <li><strong>Clip prediction (soft vote):</strong> a model scores all ten windows and the clip gets the genre with the
+      highest average probability.</li>
+    <li><strong>Metric: clip-level macro-F1</strong> (F1 per genre, averaged), with accuracy, per-genre F1 and confusion
+      matrices as secondary views. Macro-F1 punishes a model that gives up on a genre: the most-frequent dummy gets
+      10.7% accuracy on C test but macro-F1 0.02. Test genres are nearly balanced (26 to 32 clips), so for real models
+      the two agree closely (CNN: accuracy 0.58, macro-F1 0.55).</li>
+    <li><strong>Uncertainty:</strong> 95% intervals come from a bootstrap that resamples <em>artists</em>, because clips
+      by one artist succeed or fail together.</li>
+  </ul>
   <figure><img src="img/leakage_lab.png" alt="Bar chart: score each SVM tuning procedure reports versus its true validation clip macro-F1" loading="lazy">
     <figcaption>Why the protocol matters (validation only, SVM on split C). Three common mistakes, one at a time:
-      fitting the scaler on train plus validation, k-fold over windows, and selecting by window accuracy. k-fold over
-      windows reports 0.973 because every held-out window has sibling windows of the same clip in training; the setting
-      it picks really scores 0.433. The correct protocol reports what it gets (0.458).</figcaption></figure>
+      fitting the scaler on train plus validation, k-fold over windows, and choosing by window accuracy. k-fold over
+      windows reports 0.973, because each held-out window has sibling windows of its clip in training; the setting it
+      picks really scores 0.433. The correct protocol reports what it gets (0.458).</figcaption></figure>
+  <details><summary>Two more figures: the SVM's tuning grid, and learning curves</summary>
   <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
     <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
   <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
     <figcaption>Validation macro-F1 against the share of training artists used. The SVM still gains from more artists.
       The CNN gains little between 75% and 100% of them, less than its run-to-run spread, so more data alone may not
-      help it much.</figcaption></figure>
+      help it much.</figcaption></figure></details>
 </section>
 
 <section id="ladder">
   <h2>The leakage ladder: same models, same sizes, less leakage</h2>
-  <p>Every split below has exactly 442 training, 197 validation and 290 test clips, and every model is tuned the same
-    way on each. Only what can leak from training into the test set changes, one step at a time. So the fall from one
+  <p>Same sizes, same tuning on every split; only what can leak changes, one step at a time. So each fall from one
     rung to the next estimates how much that kind of leakage was inflating the score.</p>
   <div class="callout read"><p class="tag">How to read this chart</p>
-    <p>Each point is a model's macro-F1 on one split; the bar is its 95% interval and small dots are individual runs.
-      Left is the leakiest split, right is the cleanest. <strong>Click a model</strong> to compare. A steep fall to the
+    <p>Left is the leakiest split, right the cleanest. <strong>Click a model</strong> to switch. A steep fall to the
       right means that model was leaning on leakage.</p></div>
   <div class="card">
     <div class="controls" id="ladderModels" role="group" aria-label="Choose a model"></div>
@@ -369,8 +326,8 @@ figure img { padding: 8px; }
     <div class="callout take" id="ladderTake" hidden></div>
     <h3>Where the score goes, step by step</h3>
     <div id="fallChart"></div>
-    <p class="note">Start from the leakiest split (A, left) and remove one kind of leakage per step. Orange bars are what
-      each step takes away; a light blue bar means the score went up. Hover or tap a bar for its 95% interval.</p>
+    <p class="note">Orange bars are what each step takes away; a light blue bar would mean the score went up. Hover or tap
+      a bar for its 95% interval.</p>
     <details><summary>Table: each step with its 95% interval</summary><div class="table-wrap"><table id="dropTable"></table></div></details>
     <details><summary>Table view of the chart</summary><div class="table-wrap"><table id="ladderTable"></table></div></details>
   </div>
@@ -384,11 +341,11 @@ figure img { padding: 8px; }
     <h3>Is the CNN really ahead? Paired differences</h3>
     <div id="pairChart"></div>
     <p class="note" id="pairedNote"></p>
-    <p class="note">These are several comparisons on one test set, with no correction for multiple comparisons, so read
-      them as descriptive. A correction would only widen the intervals: the ties stay ties, and the CNN's lead over
-      kNN, whose interval starts at 0.028, could become uncertain.</p>
+    <p class="note">These comparisons are not corrected for multiple comparisons, so read them as descriptive. A
+      correction would only widen the intervals: the ties stay ties, and the lead over kNN (interval from 0.028) could
+      become uncertain.</p>
     <div class="callout take" id="modelsTake" hidden></div>
-    <details open><summary>Table: accuracy, validation score and the score before refitting</summary>
+    <details><summary>Table: accuracy, validation score and the score before refitting</summary>
       <div class="table-wrap"><table id="modelTable"></table></div></details>
   </div>
   <h3>Refitting on training plus validation</h3>
@@ -403,9 +360,8 @@ figure img { padding: 8px; }
 
 <section id="errors">
   <h2>Where the model goes wrong</h2>
-  <p>Rows are the true genre, columns the predicted genre; each row is coloured by the share of that genre's clips.
-    <strong>Click or tap a cell</strong> to list the clips in it, most confident first. Confident mistakes are the
-    interesting ones.</p>
+  <p>Rows are the true genre, columns the prediction. <strong>Click or tap a cell</strong> to list its clips and their
+    artists, most confident first.</p>
   <div class="card">
     <div class="controls"><label for="cmModel" class="muted">Model&nbsp;</label><select id="cmModel"></select></div>
     <div class="two">
@@ -418,42 +374,38 @@ figure img { padding: 8px; }
     </div>
     <div class="callout take" id="errTake" hidden></div>
     <h3>What the errors have in common</h3>
-    <p>Read from the test predictions of the final models, with artist names from gtzan-bind (shown in the clip list
-      above):</p>
+    <p>From the final models' test predictions (artists from gtzan-bind):</p>
     <ul>
-      <li><strong>Errors come in whole artists.</strong> For the CNN (seed 0), 15 of the 20 rock clips called country
-        are by Led Zeppelin (9 of their 11) or the Rolling Stones (6 of 7). Every Tony Williams clip (8) and every Dexter
-        Gordon clip (6), both jazz, is called country. When a model misreads one artist's sound, it misreads all of that
-        artist's clips together.</li>
-      <li><strong>Some genres are only a few artists.</strong> C's test blues is three artists: Robert Johnson (17
-        clips), Clifton Chenier (12) and Albert Collins (2). The classical models call most of it jazz (SVM: 18 of 31,
-        logistic regression: 17 of 31), so the classical models' blues F1 is 0.10 or lower; the three CNN runs reach 0.36 to 0.68.</li>
+      <li><strong>Errors come in whole artists.</strong> CNN seed 0: 15 of the 20 rock clips called country are Led
+        Zeppelin (9 of their 11) or the Rolling Stones (6 of 7). Every Tony Williams (8) and Dexter Gordon (6) clip,
+        both jazz, is called country. When a model misreads an artist, it misreads all their clips. This is why the
+        intervals resample artists, not clips.</li>
+      <li><strong>Some genres are only a few artists.</strong> Test blues is three: Robert Johnson (17 clips), Clifton
+        Chenier (12) and Albert Collins (2). The classical models call most of it jazz (SVM 18 of 31, logistic
+        regression 17 of 31), so their blues F1 is 0.10 or lower; the three CNN runs reach 0.36 to 0.68.</li>
       <li><strong>One confusion is about the genre, not an artist.</strong> The CNN's 15 disco clips called blues come
-        from 15 different artists, so that mistake is spread across the genre.</li>
-      <li><strong>The three CNN runs disagree.</strong> Per-genre F1 swings between training seeds (classical 0.98 vs
-        0.72; disco 0.17 vs 0.67), so read any single run's matrix with care. Switch runs with the menu above.</li>
+        from 15 different artists.</li>
+      <li><strong>The three CNN runs disagree</strong> (classical F1 0.98 vs 0.72; disco 0.17 vs 0.67), so read any one
+        run with care. Switch runs with the menu above.</li>
     </ul>
-    <p class="note">This is why every interval on this page resamples artists rather than clips: one artist's clips
-      succeed or fail together, so they are not independent evidence.</p>
     <h3>F1 per genre</h3>
     <div id="genreChart"></div>
-    <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
-      clip moves a genre's F1 by several points, so read small differences as noise.</p>
+    <p class="note">The number after each genre is its test clip count (26 to 32), so one clip moves a genre's F1 by
+      several points: read small differences as noise.</p>
   </div>
 </section>
 
 <section id="plateau">
   <h2>Why the scores stop near 0.55, and what would help</h2>
-  <p>Four very different kinds of model (a linear model, a kernel SVM, boosted trees and a CNN) land between 0.52 and
-    0.57 on C test, and the CNN is statistically tied with the other three. When different models hit the same ceiling, the limit is usually in the
-    data rather than in the model. The clearest evidence points at one thing: <strong>each genre is learned from a
-    handful of artists</strong>, and the test part has different ones.</p>
+  <p>Four very different models (linear, kernel SVM, boosted trees, CNN) land between 0.52 and 0.57 on C test, and the
+    CNN is statistically tied with the other three. When different models hit the same ceiling, the limit is usually
+    in the data. The clearest evidence points at one thing: <strong>each genre is learned from a handful of
+    artists</strong>, and the test part has different ones.</p>
   <div class="card"><div id="genreHeat"></div>
-    <p class="note">Test F1 for every genre (rows, hardest first) and every final model (columns; the CNN's three
-      training runs shown separately). Darker is better. The last column is the mean used in the table below: the four
-      classical models and the CNN's three-run average, weighted equally. Rock is pale for every model, and classical
-      and metal are dark for every model, so much of the difficulty belongs to the genre, not to one model. Blues is the
-      exception: hard for the four classical models, much less so for the CNN.</p></div>
+    <p class="note">Test F1 per genre (rows, hardest first) for every final model; darker is better. The "mean" column
+      averages the four classical models and the CNN's three runs (as one), as in the table below. Rock is pale and
+      classical and metal dark for every model, so much of the difficulty belongs to the genre. Blues is the exception:
+      hard for the classical models, much less so for the CNN.</p></div>
   <div class="table-wrap"><table>
     <thead><tr><th scope="col">Genre</th><th scope="col">Artists in C train</th><th scope="col">C test is mostly</th><th scope="col">Mean F1</th></tr></thead>
     <tbody>
@@ -469,36 +421,18 @@ figure img { padding: 8px; }
     <p>With seven example bands, "rock" means those seven bands to the model. Led Zeppelin's blues-based guitar rock
       sounds like none of Queen, Morphine or The Stone Roses, so it lands nearer the country artists. The model has
       learned the bands it was shown, not the genre.</p></div>
-  <p>Other results point the same way:</p>
-  <ul>
-    <li>The same CNN scores 0.75 when test artists also appear in training and 0.65 when they do not (the leakage
-      ladder above): much of what it learns is how particular artists sound.</li>
-    <li>Errors arrive in whole artists (see "What the errors have in common").</li>
-    <li>The SVM still improves as training artists are added (learning curve in Method).</li>
-  </ul>
-  <p><strong>The honest caveat:</strong> across all ten genres, the link between the number of training artists and
-    F1 is weak (Spearman correlation 0.50 over 10 genres, not significant). Disco has 25 training artists and is only
-    middling; classical is easy partly because it sounds unlike everything else. Few artists is a likely main cause for
-    rock and blues, not the whole story.</p>
-  <h3>Other limits we can see</h3>
-  <ul>
-    <li><strong>The CNN's training is unstable.</strong> Its validation score swings by up to 0.25 between consecutive
-      epochs, its three seeds disagree (disco F1 0.17 vs 0.67), and refitting on more data lowered it. Any single run
-      is partly a lucky or unlucky draw.</li>
-    <li><strong>The handcrafted features mostly describe timbre and production.</strong> MFCCs dominate the permutation
-      importance, and a 3 s mean and variance discard how the music develops over time.</li>
-    <li><strong>Selection is close to noise.</strong> With 197 validation clips and some genres resting on one to three
-      artists, logistic regression and the SVM were 0.010 apart on validation: settings chosen there are near coin
-      flips.</li>
-    <li><strong>The labels are fuzzy.</strong> Zydeco (Clifton Chenier, Buckwheat Zydeco) is labelled blues, and rock
-      and country genuinely overlap.</li>
-  </ul>
+  <p>Other results agree: the same CNN scores 0.75 when test artists also appear in training and 0.65 when they do not
+    (leakage ladder), errors arrive in whole artists (Errors), and the SVM still improves as training artists are added
+    (learning curves in Method).</p>
+  <p><strong>The honest caveat:</strong> across all ten genres the link between training artists and F1 is weak
+    (Spearman 0.50, not significant). Disco has 25 training artists and is only middling; classical is easy partly
+    because it sounds unlike everything else. Few artists is a likely main cause for rock and blues, not the whole
+    story. Other limits (unstable CNN training, timbre-heavy features, fuzzy labels) are under Limitations.</p>
   <h3>Checked after the test run: a pretrained model (validation only)</h3>
-  <p>If the limit is that 442 clips cover too few artists, a model that already knows a lot of music should do much
-    better. We checked this once, after the test run, on the validation part only. Each 3 s window goes through PANNs
-    CNN14, a network pretrained on about two million AudioSet clips. The same logistic regression, grid and soft vote
-    as before are then fitted on its 2,048-number embeddings. The test part was not used, and the headline does not
-    change.</p>
+  <p>If too few artists is the limit, a model that already knows a lot of music should do much better. We checked this
+    once, after the test run, on validation only: each 3 s window goes through PANNs CNN14, a network pretrained on
+    about two million AudioSet clips, and the same logistic regression, grid and soft vote are fitted on its
+    2,048-number embeddings. Test was not used; the headline does not change.</p>
   <div class="table-wrap"><table>
     <thead><tr><th scope="col">Model (split C validation, trained on C train)</th><th scope="col">Macro-F1 (95% interval)</th><th scope="col">Pretrained minus this (paired 95% interval)</th></tr></thead>
     <tbody>
@@ -508,19 +442,18 @@ figure img { padding: 8px; }
     <tr><td>RBF SVM on the 57 handcrafted features</td><td>0.46 (0.37 to 0.57)</td><td>+0.31 (+0.17 to +0.39)</td></tr>
     </tbody>
   </table></div>
-  <p class="note">Every regularisation setting tried scored 0.72 to 0.76, so the gain does not come from picking a lucky
-    setting on validation. The largest gains over logistic regression on handcrafted features are in blues (F1 0.32 →
-    0.91) and hip-hop (0.17 → 0.80). Country (0.49), rock (0.57) and pop (0.58) stay the weakest genres. Code:
-    <code>scripts/pretrained_embeddings.py</code>; results: <code>results/val/exploratory/</code>.</p>
+  <p class="note">Every setting tried scored 0.72 to 0.76, so the gain is not a lucky pick. Biggest gains over the
+    handcrafted features: blues (F1 0.32 → 0.91) and hip-hop (0.17 → 0.80); country (0.49), rock (0.57) and pop (0.58)
+    stay weakest. Code: <code>scripts/pretrained_embeddings.py</code>; results: <code>results/val/exploratory/</code>.</p>
   <div class="callout read"><p class="tag">Read with care</p>
-    <p>This is not a rival to the headline, for two reasons. It is a validation score from a model added after the test
-      run, never scored on test. And AudioSet comes from YouTube and is labelled with music genres, so the network may
-      have heard these very artists, or even these recordings, during pretraining. Split C's artist-disjoint guarantee
-      does not extend to pretraining data, and we cannot check it. The result supports the diagnosis (knowledge of more
-      music helps a lot), but it does not measure performance on truly unheard artists.</p></div>
+    <p>Not a rival to the headline, for two reasons. It is a validation score from a model added after the test run.
+      And AudioSet comes from YouTube with genre labels, so the network may have heard these very artists, even these
+      recordings, during pretraining; split C's artist separation does not cover that, and we cannot check it. It
+      supports the diagnosis (knowing more music helps a lot) but does not measure performance on truly unheard
+      artists.</p></div>
   <details><summary>What would help: five ideas for future work</summary>
-  <p class="muted">Apart from the validation-only check above, none of this was tried: the test part has been scored
-    once, and any change made now would be chosen after seeing it.</p>
+  <p class="muted">Apart from the check above, none of this was tried: any change made now would be chosen after
+    seeing the test score.</p>
   <ol>
     <li><strong>Pretrained audio embeddings</strong> (networks trained on large music collections, such as OpenL3,
       PANNs, CLAP or MERT) with a simple classifier on top. They bring knowledge of thousands of artists, which is what
@@ -537,46 +470,48 @@ figure img { padding: 8px; }
       0.458 at 3 s on validation), or a model over the sequence of windows.</li>
   </ol></details>
   <div class="callout read"><p class="tag">Is 0.55 bad?</p>
-    <p>Not in context: it is six times the chance floor (0.09), on ten genres, judged only on artists the model never
-      heard, after training on 442 clips. A large drop from the random-split scores common in tutorials is expected,
-      and measuring that drop is the point of this project.</p></div>
+    <p>Not in context: six times the chance floor (0.09), on ten genres, judged only on unheard artists, after training
+      on 442 clips. A big drop from the random-split scores in tutorials is expected; measuring it is the point.</p></div>
 </section>
 
 <section id="limits">
   <h2>Limitations: what this does not show</h2>
   <ul>
-    <li><strong>Genre tagging, not recommendation.</strong> We test whether audio predicts a genre label. No
-      listening data or user preferences are used, so nothing here measures how good a recommendation would be.</li>
-    <li><strong>One small, old dataset.</strong> GTZAN is about 1,000 clips, mostly from around 2000, partly from radio
-      and CDs of uneven quality. A score here says little about today's streaming catalogue.</li>
-    <li><strong>One label per clip, ten Western genres.</strong> Real songs mix genres, and the labels themselves are
-      one person's judgement; some are wrong (Sturm 2013).</li>
-    <li><strong>Artist labels are matched automatically.</strong> They come from gtzan-bind, not from listening, so
-      some links between clips may be missed. Split C still shares artist clusters between train and test for a few
-      test clips by these names; the C-strict figure above removes them.</li>
-    <li><strong>"Audio alone" can still mean shortcuts.</strong> We keep absolute loudness on purpose, and recording
-      quality, mastering and era all differ by genre in GTZAN. The model may use them; we have not separated those
-      cues from genre.</li>
-    <li><strong>The validation part made many choices</strong> (hyperparameters, CNN epochs, XGBoost trees, window
-      length, voting), so validation scores are expected to be optimistic, and the headline is a test score. Measured,
-      the CNN's validation score is above its test score, but the classical models score higher on test than on
-      validation (see the table under "Every model on split C"), so C's validation and test parts also differ in
-      difficulty.</li>
-    <li><strong>Refitting is a second choice the test could not check.</strong> The final models were refit on 639
-      clips with settings tuned for 442. It helped the classical models and hurt the CNN, so "which model is best"
-      depends on that choice.</li>
-    <li><strong>Unequal runs.</strong> The CNN has three training runs on C; the classical models are deterministic,
-      one run each. The random splits B, B′ and D have five draws each; C is one published draw.</li>
-    <li><strong>One fixed split is noisy.</strong> The five random artist-disjoint draws (D) differ a lot from each
-      other, so a single split, including C, can land anywhere in that range.</li>
-    <li><strong>Some genres rest on very few artists.</strong> In C's validation part all hip-hop clips are one
-      artist, and blues and jazz have three artists each, so a per-genre score there describes a handful of
-      musicians. The intervals resample artists, which is why they are wide.</li>
+    <li><strong>Genre tagging, not recommendation.</strong> No listening data or user preferences are used, so nothing
+      here measures how good a recommendation would be.</li>
+    <li><strong>One small, old dataset.</strong> About 1,000 clips, mostly from around 2000, partly from radio and CDs
+      of uneven quality. It says little about today's streaming catalogue.</li>
+    <li><strong>Fuzzy labels.</strong> One label per clip, ten Western genres, chosen by one person; some are wrong
+      (Sturm 2013). Zydeco (Clifton Chenier, Buckwheat Zydeco) is labelled blues, and rock and country overlap.</li>
+    <li><strong>Artist links can be missed.</strong> Names are matched automatically (gtzan-bind), not by listening.
+      By these names, a few C test clips still share an artist cluster with train; the C-strict tile above removes
+      them.</li>
+    <li><strong>"Audio alone" can still mean shortcuts.</strong> We keep loudness on purpose, and recording quality,
+      mastering and era differ by genre. The handcrafted features mostly describe timbre and production (MFCCs matter
+      most), and a 3 s mean and variance ignore how music develops over time. We have not separated these cues from
+      genre.</li>
+    <li><strong>Choices made on 197 validation clips are close to noise.</strong> Hyperparameters, CNN epochs, tree
+      counts, window length and voting were all chosen there; logistic regression and the SVM were only 0.010 apart.
+      Validation scores are therefore optimistic, which is why the headline is a test score. C's two parts also differ
+      in difficulty: the CNN scores higher on validation than test, the classical models the other way round.</li>
+    <li><strong>Refitting is a choice the test could not check.</strong> The final models were refit on 639 clips with
+      settings tuned for 442. It helped the classical models and hurt the CNN, so "which model is best" depends on it.</li>
+    <li><strong>The CNN is unstable.</strong> Its validation score swings by up to 0.25 between epochs and its three runs
+      disagree (disco F1 0.17 vs 0.67), so any one run is partly luck. The classical models are deterministic, one
+      run each.</li>
+    <li><strong>One fixed split is noisy.</strong> The five random artist-disjoint draws (D) differ a lot, so a single
+      split, including C, can land anywhere in that range. B, B′ and D have five draws each; C is one published draw.</li>
+    <li><strong>Some genres rest on very few artists.</strong> In C's validation part all hip-hop is one artist, and
+      blues and jazz three each, so those per-genre scores describe a handful of musicians. Resampling artists is why
+      the intervals are wide.</li>
   </ul>
 </section>
 
 <section id="terms">
   <h2>Key terms in plain language</h2>
+  <details><summary>Eleven terms used on this page, each in one or two sentences: leakage, artist-disjoint split, macro-F1,
+    soft vote, artist-cluster bootstrap, log-mel spectrogram, MFCC, validation vs test, pretrained embedding, baseline,
+    confusion matrix</summary>
   <dl class="glossary">
     <div><dt>Leakage</dt><dd>Information from the test set reaching training, here through the same clip, duplicate or artist
       sitting on both sides. It makes a score look better than the model really is.</dd></div>
@@ -599,20 +534,18 @@ figure img { padding: 8px; }
     <div><dt>Baseline (dummy)</dt><dd>A model that ignores the audio. A real model must beat it to show any skill.</dd></div>
     <div><dt>Confusion matrix</dt><dd>A table of true genre against predicted genre; the diagonal is correct answers, off-diagonal
       cells are mistakes.</dd></div>
-  </dl>
+  </dl></details>
 </section>
 
 <section id="demo">
   <h2>Local demo app</h2>
   <p>A Streamlit app in the repository classifies an uploaded clip (WAV, MP3, FLAC, OGG, AAC, M4A) with the CNN and
-    shows the scores per genre. Below 70% confidence it says "Not sure" (that threshold was chosen on validation). It
-    runs on your own computer only, because the model weights and GTZAN audio cannot be published here:
-    <code>streamlit run app.py</code>.</p>
+    shows the score per genre; below 70% confidence (a threshold chosen on validation) it says "Not sure". It runs on
+    your own computer only, because the model weights and GTZAN audio cannot be published: <code>streamlit run app.py</code>.</p>
   <figure><img src="img/analysis_calibration.png" alt="Reliability diagrams on split C validation for the SVM, XGBoost and CNN seed 0" loading="lazy">
-    <figcaption>Do the scores mean what they say? Clips grouped by confidence (validation). For CNN seed 0, clips
-      under about 0.6 confidence are right only about a third of the time (33-39% per bin), which is why the demo says "Not sure" at low
-      confidence. Temperature scaling made its calibration worse (ECE 0.065 to 0.134), so the demo shows raw
-      scores.</figcaption></figure>
+    <figcaption>Do the scores mean what they say? (validation). For CNN seed 0, clips under about 0.6 confidence are right
+      only about a third of the time (33-39% per bin), hence "Not sure". Temperature scaling made calibration worse (ECE
+      0.065 to 0.134), so the demo shows raw scores.</figcaption></figure>
 </section>
 
 <section id="reproduce">
@@ -642,7 +575,7 @@ make tests</pre>
     read every change before committing it, and checked results against the files the code wrote. Claude Code, an AI
     coding assistant, wrote most of the code and documentation under that direction. Details:
     <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/AI_USE.md">AI_USE.md</a>.</p>
-  <h3>References</h3>
+  <details><summary>References: GTZAN, its faults, the fault-filtered split, gtzan-bind, PANNs and AudioSet, software</summary>
   <ul class="muted">
     <li>G. Tzanetakis and P. Cook, "Musical genre classification of audio signals," IEEE Trans. Speech and Audio Processing, 2002.</li>
     <li>B. L. Sturm, "The GTZAN dataset: its contents, its faults, their effects on evaluation, and its future use," arXiv:1306.1461, 2013.</li>
@@ -654,7 +587,7 @@ make tests</pre>
       "Audio Set," ICASSP 2017 (its pretraining data).</li>
     <li>Software: librosa, scikit-learn, XGBoost, PyTorch, NumPy, pandas (exact versions in
       <a href="https://github.com/yashvardhan-unlimited/ES-335-Music-genre-classifier/blob/main/requirements.txt">requirements.txt</a>).</li>
-  </ul>
+  </ul></details>
 </section>
 </main>
 <footer>ES 335 · Data: GTZAN (not redistributed) · <span id="generated"></span></footer>
@@ -721,11 +654,11 @@ function renderAnswer() {
   $("heroLabel").textContent = `Clip-level macro-F1 of the CNN on the artist-disjoint split C (${test ? "test" : "validation"}, ${h.n_clips} clips)`;
   $("heroValue").textContent = fmt(h.macro_f1, 2);
   $("heroCI").textContent = `95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)} · mean of ${h.n_runs} training runs`;
-  $("heroText").textContent = `Macro-F1 runs from 0 to 1. A random guess that matches the genre frequencies scores about ${fmt(h.floor, 2)}. ` +
-    (S.fit_on_C === "train+valid" ? "Final models were refit on training plus validation clips before the single test run. "
+  $("heroText").textContent = `Macro-F1 runs from 0 (useless) to 1 (perfect); random guessing scores about ${fmt(h.floor, 2)}. ` +
+    (S.fit_on_C === "train+valid" ? "Final models were refit on training plus validation before the single test run. "
       : "Models trained on the training part only. ") +
-    "The interval is lopsided (the score sits near its top end). A possible reason, not tested: each genre rests on few " +
-    "artists, so resamples that repeat a hard artist pull the score down further than resamples that repeat an easy one push it up.";
+    "The interval is lopsided. A possible reason, not tested: each genre rests on few artists, so repeating a hard " +
+    "artist in a resample pulls the score down more than repeating an easy one pushes it up.";
   const svm = c.models.find((m) => m.model === "svm");
   const best = bestClassical();
   const strict = c.strict.cnn;
@@ -745,15 +678,13 @@ function renderAnswer() {
     d.append(html("div", { class: "label" }, l), html("div", { class: "value" }, v), html("div", { class: "sub" }, s));
     t.appendChild(d);
   });
-  const p = c.paired["cnn - svm"], pb = c.paired[`cnn - ${best.model}`];
+  const p = c.paired["cnn - svm"];
   const tiedWith = tiedModels();
   $("answerText").textContent =
-    `On clips by artists it never heard, the CNN reaches a macro-F1 of ${fmt(h.macro_f1, 2)}: far above chance (${fmt(h.floor, 2)}), far from perfect. ` +
+    `On artists it never heard, the CNN reaches ${fmt(h.macro_f1, 2)}: far above chance (${fmt(h.floor, 2)}), far from perfect. ` +
     (p ? `Against the RBF SVM, the comparator fixed before the test run, the paired difference is ${signed(p.diff)} ` +
       `(95% interval ${signed(p.ci_low)} to ${signed(p.ci_high)}). ` : "") +
-    (pb && best.model !== "svm" ? `${best.label} scores ${fmt(best.macro_f1, 2)}; CNN minus ${best.label.toLowerCase()} is ` +
-      `${signed(pb.diff)} (${signed(pb.ci_low)} to ${signed(pb.ci_high)}). ` : "") +
-    (tiedWith.length ? `The CNN's paired interval includes zero against ${listText(tiedWith)}, so no model is a clear winner on this test set. ` : "") +
+    (tiedWith.length ? `Its paired interval includes zero against ${listText(tiedWith)}, so no model is a clear winner (see Models). ` : "") +
     ladderSentence();
   renderScale();
 }
@@ -775,11 +706,9 @@ function listText(labels) {
 function ladderSentence() {
   const L = S.ladder.cnn, a = S.drops["cnn: Bp - D"], b = S.drops["cnn: D - C"];
   if (!L || !L.Bp || !L.D || !L.C || !a || !b) return "";
-  return `Trained on the training part only, the same CNN scores ${fmt(L.Bp.mean, 2)} when artists are shared between ` +
-    `train and test (B′), ${fmt(L.D.mean, 2)} on random artist-disjoint splits (D) and ${fmt(L.C.mean, 2)} on C. ` +
-    `Removing artist leakage (B′ → D) costs ${fmt(a.diff, 2)} (95% interval ${fmt(a.ci_low, 2)} to ${fmt(a.ci_high, 2)}); ` +
-    `the published split C is a further ${fmt(b.diff, 2)} harder than random artist-disjoint draws ` +
-    `(${signed(b.ci_low)} to ${signed(b.ci_high)}${b.ci_low < 0 ? ", within noise" : ""}).`;
+  return `Removing artist leakage (B′ → D) costs the CNN ${fmt(a.diff, 2)} (95% interval ${fmt(a.ci_low, 2)} to ` +
+    `${fmt(a.ci_high, 2)}); split C is a further ${fmt(b.diff, 2)} harder than random artist-disjoint draws` +
+    `${b.ci_low < 0 ? ", within noise" : ""} (see the leakage ladder).`;
 }
 
 /* ---------- ladder ---------- */
@@ -893,19 +822,16 @@ function renderModels() {
 }
 function renderRefit() {
   const node = $("refitNote"), pt = S.c.paired_train_only && S.c.paired_train_only["cnn - svm"], p = S.c.paired["cnn - svm"];
-  const by = (m) => S.c.models.find((d) => d.model === m);
-  const [cnn, svm, lr] = ["cnn", "svm", "logreg"].map(by);
+  const cnn = S.c.models.find((d) => d.model === "cnn");
   if (S.fit_on_C !== "train+valid" || !pt || !cnn || cnn.train_only_macro_f1 == null) {
     node.textContent = "All models on this page were trained on the training part only."; return;
   }
-  const move = (d) => `${fmt(d.train_only_macro_f1, 2)} → ${fmt(d.macro_f1, 2)}`;
-  node.textContent = `The final models were refit on training plus validation clips (639 instead of 442) with the settings ` +
-    `chosen on validation. That helped the classical models (SVM ${move(svm)}, logistic regression ${move(lr)}) but not ` +
-    `the CNN (${move(cnn)}). Trained on the training part only, the CNN beats the SVM clearly (CNN minus SVM ` +
-    `${signed(pt.diff)}, 95% interval ${signed(pt.ci_low)} to ${signed(pt.ci_high)}); after refitting it does not ` +
-    `(${signed(p.diff)}, ${signed(p.ci_low)} to ${signed(p.ci_high)}). A likely reason, not tested: each CNN's number of ` +
-    `epochs was chosen on validation for 442 training clips and reused unchanged for 639. The refit models stay the ` +
-    `headline because that rule was fixed before the test run; the leakage ladder above uses the train-only models.`;
+  node.textContent = `The final models were refit on training plus validation (639 clips instead of 442) with the ` +
+    `settings chosen on validation. The chart shows it helped the classical models but not the CNN. Before refitting, ` +
+    `the CNN clearly beats the SVM (CNN minus SVM ${signed(pt.diff)}, 95% interval ${signed(pt.ci_low)} to ` +
+    `${signed(pt.ci_high)}); after, it does not (${signed(p.diff)}, ${signed(p.ci_low)} to ${signed(p.ci_high)}). A likely, ` +
+    `untested reason: each CNN's epoch count was tuned for 442 clips and reused for 639. The refit models stay the ` +
+    `headline because that rule was fixed before the test run; the leakage ladder uses the train-only models.`;
 }
 
 /* ---------- confusion matrix ---------- */

@@ -882,3 +882,19 @@ pretraining). Fine-tuning CNN14 or trying several pretrained models (more choice
 validation clips). Embedding all 999 clips (harmless, as embedding is a fixed transform, but
 unnecessary; the test part is never even read).
 
+## 2026-11-18 (post-freeze): Shorter website, same evidence
+
+**Decision.** The page was shortened by removing repeats and moving supporting material into
+click-to-open blocks whose summary names their contents. Claims, results, limitations and the
+contribution statement stay visible. Visible prose fell from 4,921 to about 3,880 words; all prose
+from 5,372 to 4,620. The two limitation lists were merged. A note was corrected: test genres have
+26 to 32 clips, not 13 to 32.
+
+**Reason.** The brief asks for a clear and concise site that still carries the full reasoning. A
+number-by-number comparison of the rendered page before and after showed one value moved to a tooltip
+and a table (the lower end of the D -> C interval) and none lost.
+
+**Rejected.** Deleting the glossary, future work or the second figures (evidence a grader may want);
+a separate details page (the grader should judge from one website); cutting Limitations to a few
+items (graded directly).
+
