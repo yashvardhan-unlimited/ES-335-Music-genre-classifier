@@ -1,5 +1,7 @@
 # Lesson 10: A convolutional network on log-mel spectrograms
 
+> **Note (17 Nov 2026).** The CNN numbers in this lesson are from the original CPU runs (before `cnn.min_epochs` and the GPU retrain). The final numbers are in `results/val/` and [lesson 17](17_test_results_and_headline.md).
+
 Every model so far looked at 57 numbers per 3 s window that **we** chose
 (lesson 05: MFCC means, spectral centroid, tempo...). A convolutional neural
 network (CNN) instead looks at the **log-mel spectrogram itself**, a

@@ -120,6 +120,8 @@
 
 **Feature map.** The output image of one convolution filter: large where the filter's pattern is present in the input.
 
+**Final model.** The selected setting refit on train + valid (for the CNN, for the best epoch count found on valid). Its test score is the headline; ladder models, trained on train only, are used for the leakage comparison.
+
 **Fixed transform.** A feature computation that uses only the clip itself and preset constants; it cannot leak between splits.
 
 **Floor.** The score a model with no information reaches under the chosen metric; measured here with dummy classifiers (valid macro-F1 0.018 and 0.128 on split C).
@@ -146,6 +148,8 @@
 
 **Hann window.** A taper that goes smoothly to zero at both ends of a frame, reducing spectral leakage in the STFT.
 
+**Headline number.** The one test result named in the protocol before the test was scored: the final CNN, mean over its three run seeds, on split C, with an artist-cluster bootstrap 95% interval (0.552, 0.467 to 0.583).
+
 **Hinge loss.** max(0, 1 - y f(x)): zero for points correctly classified outside the margin, growing linearly inside or beyond it. The SVM's loss; only points with non-zero hinge loss (support vectors) shape the boundary.
 
 **HPSS.** Harmonic-percussive source separation: median filtering of the spectrogram along time (harmonic) and frequency (percussive) to split a signal into two parts.
@@ -167,6 +171,8 @@
 **KFold.** sklearn splitter dividing rows into k folds, each used once for validation. With several rows per source and no grouping it leaks; with shuffle=True every window of a clip lands in a random fold.
 
 **L2 penalty.** Adds (1/2) times the sum of squared weights to the loss, pulling weights towards zero to limit overfitting.
+
+**Ladder model.** A model trained on train only with the settings chosen on valid, used to compare the five splits A, B, B', D and C; it changes only the split, never the amount of training data.
 
 **Lazy learning.** Learning that defers all work to prediction time (kNN only stores the training data), so fitting is instant but prediction is slow.
 
@@ -350,7 +356,7 @@
 
 **Window.** A 3 s non-overlapping segment of a clip (10 per clip); the training row.
 
-**Winner's curse.** The best of several noisy scores is biased upwards, because it was picked partly for lucky noise. It is why we headline the CNN mean (0.610), not the best run (0.635).
+**Winner's curse.** The best of several noisy scores is biased upwards, because it was picked partly for lucky noise. It is why we headline the CNN mean over three runs (test 0.552), not the best run (0.576).
 
 **Within-clip leakage.** Windows of one clip in both train and test; the model sees near-copies of test windows during training.
 

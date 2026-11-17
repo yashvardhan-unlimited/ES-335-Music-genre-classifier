@@ -1,5 +1,7 @@
 # Lesson 13: Serving the model in a local web app
 
+> **Note (17 Nov 2026).** The CNN numbers in this lesson are from the original CPU runs (before `cnn.min_epochs` and the GPU retrain). The final numbers are in `results/val/` and [lesson 17](17_test_results_and_headline.md).
+
 A model in a results file helps nobody. This step wraps the CNN in a small web
 app: upload audio or pick a sample clip, get a genre, and browse every
 validation result on a dashboard. Building it raises questions that training

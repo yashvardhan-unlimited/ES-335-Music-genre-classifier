@@ -16,5 +16,6 @@
 14. [14_code_audit.md](14_code_audit.md): a whole-code audit: downmixing and why a 3 dB error is a skew, why a passing check can prove nothing, reproducing a bug before fixing it, failing safe, resumable pipelines.
 15. [15_evidence_audit.md](15_evidence_audit.md): auditing by evidence, not by reading: rebuilding artefacts, why a stub test missed a real bug, clusters of performers and why the bootstrap needs them, connected components, silence thresholds in dBFS, atomic writes.
 16. [16_split_D_and_svm_grid.md](16_split_D_and_svm_grid.md): confounding and why one comparison must change one thing, split D (random artist-grouped), credit clusters as groups, group splitting to exact sizes as packing, genre quotas, balance vs randomness, grid edges and the widened SVM grid, the C x gamma ridge, the B' -> D -> C numbers.
+17. [17_test_results_and_headline.md](17_test_results_and_headline.md): the one-time test run: the two kinds of final model (ladder, train-only; final, train + valid), why the headline is the final CNN's three-seed mean, paired bootstrap differences, test against validation, why a mismatching stored score is retrained and not edited, what the numbers do and do not show.
 
 Terms: [glossary.md](glossary.md)

@@ -1,5 +1,7 @@
 # Lesson 11: Validation analyses: learning curves, ablations, calibration, voting
 
+> **Note (17 Nov 2026).** The CNN numbers in this lesson are from the original CPU runs (before `cnn.min_epochs` and the GPU retrain). The final numbers are in `results/val/` and [lesson 17](17_test_results_and_headline.md).
+
 By now every model has a tuned valid score. This lesson asks *why* the scores
 are what they are, using five controlled experiments, all on **split C train
 and valid only**:
