@@ -92,23 +92,80 @@ figure img { max-width: 100%; height: auto; border-radius: 8px; border: 1px soli
 footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
 .theme-toggle { float: right; font: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--border);
   color: var(--ink-2); border-radius: 999px; padding: 0.2rem 0.7rem; cursor: pointer; }
+
+/* ---- layout polish ---- */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+#progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--s1); z-index: 20; }
+header.top { max-width: none; padding: 0; background: linear-gradient(135deg, var(--wash), transparent 70%);
+  border-bottom: 1px solid var(--border); }
+header.top .inner { max-width: 60rem; margin: 0 auto; padding: 2.2rem 16px 1.6rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.chips li { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.25rem 0.8rem;
+  font-size: 0.85rem; color: var(--ink-2); max-width: none; }
+.chips b { color: var(--ink); }
+nav { backdrop-filter: blur(6px); }
+nav a { padding: 0.25rem 0; border-bottom: 2px solid transparent; text-decoration: none !important; }
+nav a.on { color: var(--ink); border-bottom-color: var(--s1); font-weight: 600; }
+main { counter-reset: sec; }
+main > section { counter-increment: sec; padding-top: 0.5rem; }
+main > section > h2::before { content: counter(sec, decimal-leading-zero); display: block; font-size: 0.8rem; letter-spacing: 0.12em;
+  color: var(--s1); font-weight: 600; margin-bottom: 0.15rem; }
+h2 { padding-top: 0.5rem; border-top: 1px solid var(--border); }
+main > section:first-child > h2 { border-top: none; margin-top: 2rem; }
+.callout { border-left: 4px solid var(--s1); background: var(--wash); border-radius: 0 10px 10px 0; padding: 0.7rem 1rem;
+  margin: 1rem 0; max-width: 46rem; }
+.callout p { margin: 0.2rem 0; }
+.callout .tag { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--s1); }
+.callout.read { border-left-color: var(--muted); background: var(--surface); }
+.callout.read .tag { color: var(--ink-2); }
+.callout.take { border-left-color: var(--accent); }
+.callout.take .tag { color: var(--accent); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 0.6rem; margin: 1.2rem 0; padding: 0;
+  list-style: none; counter-reset: f; }
+.flow li { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.6rem 0.7rem 0.6rem 2.1rem; font-size: 0.86rem; color: var(--ink-2); max-width: none; counter-increment: f; }
+.flow li::before { content: counter(f); position: absolute; left: 0.6rem; top: 0.55rem; color: var(--s1); font-weight: 700; }
+.flow b { display: block; color: var(--ink); font-size: 0.92rem; }
+.card { box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+tbody tr:hover td { background: var(--wash); }
+th { position: sticky; top: 0; background: var(--surface); }
+.glossary dt { font-weight: 600; margin-top: 0.8rem; }
+.glossary dd { margin: 0.1rem 0 0; color: var(--ink-2); max-width: 44rem; }
+.glossary { columns: 2 22rem; column-gap: 2rem; }
+.glossary div { break-inside: avoid; }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.8rem; margin: 1rem 0; }
+.compare .card { margin: 0; }
+.compare h4 { margin: 0 0 0.3rem; font-size: 1rem; }
+.compare ul { margin: 0.3rem 0 0; padding-left: 1.1rem; font-size: 0.9rem; color: var(--ink-2); }
+#toTop { position: fixed; right: 16px; bottom: 16px; z-index: 6; font: inherit; font-size: 0.85rem; border: 1px solid var(--border);
+  background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 0.35rem 0.8rem; cursor: pointer; opacity: 0;
+  pointer-events: none; transition: opacity 0.2s; }
+#toTop.show { opacity: 1; pointer-events: auto; }
+@media print { nav, #progress, #toTop, .theme-toggle { display: none; } }
 </style>
 </head>
 <body>
-<header class="top">
+<div id="progress" aria-hidden="true"></div>
+<header class="top"><div class="inner">
   <button class="theme-toggle" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
   <p class="muted">ES 335 course project · GTZAN music genre classification</p>
   <h1>How much of a genre classifier's accuracy is really about genre?</h1>
   <p class="lede">We predict the genre of a 30-second music clip from its audio alone, then ask how much of that
     accuracy survives once the test set contains no artist the model heard in training.</p>
+  <ul class="chips" aria-label="Project at a glance">
+    <li><b>999</b> readable clips</li><li><b>10</b> genres</li><li><b>7</b> models, 2 of them baselines</li>
+    <li><b>5</b> splits with growing leakage control</li><li><b>1</b> locked test run</li>
+  </ul>
   <div id="partBanner"></div>
-</header>
+  <div id="tldr"></div>
+</div></header>
 <nav aria-label="Sections"><ul>
   <li><a href="#question">Question</a></li><li><a href="#answer">Answer</a></li>
   <li><a href="#data">Data</a></li><li><a href="#method">Method</a></li>
   <li><a href="#ladder">Leakage ladder</a></li><li><a href="#models">Models</a></li>
   <li><a href="#errors">Errors</a></li><li><a href="#limits">Limitations</a></li>
-  <li><a href="#reproduce">Reproduce</a></li>
+  <li><a href="#terms">Key terms</a></li><li><a href="#reproduce">Reproduce</a></li>
 </ul></nav>
 <main>
 
@@ -123,6 +180,20 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
   <p><strong>Why it matters.</strong> GTZAN is the standard benchmark for this task, yet it holds several clips per
     artist and some repeated recordings. A random split can therefore reward recognising a performer or a recording
     instead of a genre. The rest of this page measures that gap.</p>
+  <div class="callout why"><p class="tag">In plain words</p>
+    <p>Imagine a quiz where the same singer appears in both the practice questions and the exam. A student could pass by
+      memorising the voice, without learning what "jazz" sounds like. Our test asks: how well does the model do when the
+      singers in the exam are new?</p></div>
+  <h3>How the page is organised</h3>
+  <ol class="flow">
+    <li><b>Question</b>what we predict</li>
+    <li><b>Data</b>GTZAN and its faults</li>
+    <li><b>Method</b>preprocessing, models, splits</li>
+    <li><b>Ladder</b>leakage removed step by step</li>
+    <li><b>Models</b>all models, one fair test</li>
+    <li><b>Errors</b>what gets confused with what</li>
+    <li><b>Limits</b>what this does not show</li>
+  </ol>
 </section>
 
 <section id="answer">
@@ -167,6 +238,10 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
     <li>Artist names come from <code>gtzan-bind</code>, matched automatically, not by listening. Credits that share a
       performer ("Bob Marley &amp; The Wailers" and "Bob Marley") count as one artist cluster.</li>
   </ul>
+  <div class="callout why"><p class="tag">Why these faults matter</p>
+    <p>A model that has heard a clip, a duplicate of it, or another clip by the same band during training can score well
+      by recognition instead of by understanding genre. Each fault above is one way that can happen, and the splits
+      below remove them one at a time.</p></div>
   <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
     <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
 </section>
@@ -190,7 +265,7 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
     a real model must beat them to show any skill.</p>
   <div class="table-wrap"><table>
     <tr><th>Model</th><th>Role</th></tr>
-    <tr><td>Dummy, most frequent</td><td>Baseline: always predicts one genre (about chance, 10% accuracy).</td></tr>
+    <tr><td>Dummy, most frequent</td><td>Baseline: always predicts one genre. It is right only for that genre's clips, so its macro-F1 is near zero.</td></tr>
     <tr><td>Dummy, stratified</td><td>Baseline: guesses genres at random in proportion to class frequency.</td></tr>
     <tr><td>k-nearest neighbours</td><td>Simple, no training: copies the genre of the nearest windows.</td></tr>
     <tr><td>Logistic regression</td><td>Linear model on the 57 features, the simplest learned boundary.</td></tr>
@@ -205,6 +280,13 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
     after removing faulty clips, <strong>D</strong> keeps each artist in one part (random), and <strong>C</strong> is the
     published artist-disjoint split, our main result. Validation picks hyperparameters; test is scored once. Scores are
     clip-level macro-F1 (primary), with accuracy, per-genre F1 and confusion matrices as secondary views.</p>
+  <div class="compare">
+    <div class="card"><h4>A · window-random</h4><ul><li>Windows shuffled</li><li>Same clip in train and test</li><li>Most leakage</li></ul></div>
+    <div class="card"><h4>B · clip-random</h4><ul><li>Whole clips shuffled</li><li>Same artist, duplicates remain</li><li>Faulty clips included</li></ul></div>
+    <div class="card"><h4>B&prime; · fault-filtered</h4><ul><li>As B, faults removed</li><li>Same artist still on both sides</li></ul></div>
+    <div class="card"><h4>D · artist-grouped</h4><ul><li>Each artist in one part</li><li>Random draw, 5 seeds</li></ul></div>
+    <div class="card"><h4>C · published</h4><ul><li>Artist-disjoint, fault-filtered</li><li>Main result; test scored once</li></ul></div>
+  </div>
   <h3>Steps</h3>
   <ol class="steps">
     <li><strong>Unit.</strong> One prediction per 30 s clip. Each clip is cut into ten 3 s windows; a model scores
@@ -236,10 +318,15 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
   <p>Every split below has exactly 442 training, 197 validation and 290 test clips, and every model is tuned the same
     way on each. Only what can leak from training into the test set changes, one step at a time. So the fall from one
     rung to the next estimates how much that kind of leakage was inflating the score.</p>
+  <div class="callout read"><p class="tag">How to read this chart</p>
+    <p>Each point is a model's macro-F1 on one split; the bar is its 95% interval and small dots are individual runs.
+      Left is the leakiest split, right is the cleanest. <strong>Click a model</strong> to compare. A steep fall to the
+      right means that model was leaning on leakage.</p></div>
   <div class="card">
     <div class="controls" id="ladderModels" role="group" aria-label="Choose a model"></div>
     <div id="ladderChart"></div>
     <p class="note" id="ladderNote"></p>
+    <div class="callout take" id="ladderTake" hidden></div>
     <div class="table-wrap"><table id="dropTable"></table></div>
     <details><summary>Table view of the chart</summary><div class="table-wrap"><table id="ladderTable"></table></div></details>
   </div>
@@ -251,6 +338,7 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
   <p id="modelsIntro"></p>
   <div class="card"><div id="modelChart"></div>
     <p class="note" id="pairedNote"></p>
+    <div class="callout take" id="modelsTake" hidden></div>
     <details><summary>Table view</summary><div class="table-wrap"><table id="modelTable"></table></div></details>
   </div>
 </section>
@@ -270,6 +358,7 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
         <ol class="cliplist" id="cellList"></ol>
       </div>
     </div>
+    <div class="callout take" id="errTake" hidden></div>
     <h3>F1 per genre</h3>
     <div id="genreChart"></div>
     <p class="note">The number after each genre is how many test clips it has. With 13 to 32 clips per genre, one
@@ -300,6 +389,31 @@ footer { max-width: 60rem; margin: 0 auto; padding: 2rem 16px; color: var(--mute
       artist, and blues and jazz have three artists each, so a per-genre score there describes a handful of
       musicians. The intervals resample artists, which is why they are wide.</li>
   </ul>
+</section>
+
+<section id="terms">
+  <h2>Key terms in plain language</h2>
+  <dl class="glossary">
+    <div><dt>Leakage</dt><dd>Information from the test set reaching training, here through the same clip, duplicate or artist
+      sitting on both sides. It makes a score look better than the model really is.</dd></div>
+    <div><dt>Artist-disjoint split</dt><dd>A split where no artist has clips in both training and test, so the model must
+      generalise to new performers.</dd></div>
+    <div><dt>Macro-F1</dt><dd>F1 (balance of precision and recall) computed per genre and averaged, so a rare or hard genre
+      counts as much as an easy one. 0 is useless, 1 is perfect.</dd></div>
+    <div><dt>Soft vote</dt><dd>The clip's genre is the one with the highest average probability across its ten windows,
+      rather than a count of window winners.</dd></div>
+    <div><dt>Artist-cluster bootstrap</dt><dd>Re-score the test set thousands of times, each time resampling whole artists
+      with replacement. The 2.5th and 97.5th percentiles give the 95% interval.</dd></div>
+    <div><dt>Log-mel spectrogram</dt><dd>An image of sound: time across, pitch (on the perceptual mel scale) up, loudness as
+      brightness on a decibel scale. The CNN's input.</dd></div>
+    <div><dt>MFCC</dt><dd>Mel-frequency cepstral coefficients: a compact summary of a sound's timbre, used in the
+      handcrafted features.</dd></div>
+    <div><dt>Validation vs test</dt><dd>Validation clips are used to choose settings, so their score is slightly optimistic. Test
+      clips are scored once at the end, so the test score is the honest one.</dd></div>
+    <div><dt>Baseline (dummy)</dt><dd>A model that ignores the audio. A real model must beat it to show any skill.</dd></div>
+    <div><dt>Confusion matrix</dt><dd>A table of true genre against predicted genre; the diagonal is correct answers, off-diagonal
+      cells are mistakes.</dd></div>
+  </dl>
 </section>
 
 <section id="demo">
@@ -338,6 +452,7 @@ make tests</pre>
 </main>
 <footer>ES 335 · Data: GTZAN (not redistributed) · <span id="generated"></span></footer>
 <div class="tooltip" id="tip" role="tooltip"></div>
+<button id="toTop" type="button" aria-label="Back to top">↑ Top</button>
 
 <script>
 "use strict";
@@ -607,6 +722,63 @@ function renderAll() {
     "excluded). Every file is checked for duration, clipping, loudness and byte-identical duplicates.";
   $("generated").textContent = `Numbers generated ${S.generated} from the ${S.part === "test" ? "test" : "validation"} results.`;
 }
+/* ---------- plain-language takeaways, computed from the same numbers as the charts ---------- */
+function say(id, text) { const n = $(id); n.replaceChildren(html("p", { class: "tag" }, "What to take from this"), html("p", {}, text)); n.hidden = false; }
+function takeLadder() {
+  const L = S.ladder[ladderModel]; if (!L || !L.A || !L.C) return;
+  const name = S.labels[ladderModel], d = L.A.mean - L.C.mean;
+  say("ladderTake", ladderModel.startsWith("dummy")
+    ? `${name} ignores the audio, so its score barely moves across splits (${fmt(L.A.mean, 2)} on A, ${fmt(L.C.mean, 2)} on C). That flat line is what "no leakage effect" looks like.`
+    : `${name} scores ${fmt(L.A.mean, 2)} on the leakiest split (A) and ${fmt(L.C.mean, 2)} on the artist-disjoint split (C): ` +
+      `${fmt(d, 2)} of macro-F1 lies between a careless benchmark and a fair one.`);
+}
+function takeModels() {
+  const ms = S.c.models, cnn = ms.find((m) => m.model === "cnn");
+  const overlap = ms.filter((m) => m !== cnn && !m.model.startsWith("dummy") && m.ci_low <= cnn.ci_high && m.ci_high >= cnn.ci_low)
+    .map((m) => m.label);
+  say("modelsTake", `Every trained model is far above the dummy floors. ` +
+    (overlap.length ? `The CNN's interval overlaps with ${overlap.join(", ")}, so with ${cnn.n_runs} runs on one test split we cannot call a winner among them.`
+      : "The CNN's interval overlaps with no other trained model."));
+}
+function takeErrors() {
+  const run = S.confusion[$("cmModel").value]; if (!run) return;
+  const G = S.genres; let best = null;
+  run.confusion.forEach((row, i) => row.forEach((c, j) => { if (i !== j && (!best || c > best[0])) best = [c, i, j]; }));
+  const f = run.per_genre_f1, g = Object.entries(f).sort((a, b) => a[1] - b[1]);
+  say("errTake", `For ${run.label}, the most frequent mistake is ${G[best[1]]} predicted as ${G[best[2]]} ` +
+    `(${best[0]} of ${run.confusion[best[1]].reduce((a, b) => a + b, 0)} ${G[best[1]]} clips). ` +
+    `Weakest genre: ${g[0][0]} (F1 ${fmt(g[0][1], 2)}); strongest: ${g[g.length - 1][0]} (F1 ${fmt(g[g.length - 1][1], 2)}).`);
+}
+function tldr() {
+  const h = S.headline, d = S.drops["cnn: Bp - C"];
+  const n = $("tldr"); n.replaceChildren();
+  n.className = "callout take";
+  n.append(html("p", { class: "tag" }, "In one paragraph"), html("p", {},
+    `The CNN identifies the genre of ${h.n_clips} test clips from unseen artists with a macro-F1 of ${fmt(h.macro_f1, 2)} ` +
+    `(95% interval ${fmt(h.ci_low, 2)} to ${fmt(h.ci_high, 2)}), against ${fmt(h.floor, 2)} for random guessing. ` +
+    (d ? `On a random split of the same clean clips, where artists are shared, the same model scores ${fmt(d.diff, 2)} higher: that gap is leakage, not genre skill.` : "")));
+}
+const _rl = renderLadder, _rm = renderModels, _rc = renderCm;
+renderLadder = () => { _rl(); takeLadder(); };
+renderModels = () => { _rm(); takeModels(); };
+renderCm = () => { _rc(); takeErrors(); };
+const _ra = renderAll;
+renderAll = () => { _ra(); tldr(); };
+
+/* ---------- scroll progress, active section, back to top ---------- */
+(function () {
+  const bar = $("progress"), top = $("toTop");
+  const links = [...document.querySelectorAll("nav a")], secs = links.map((a) => document.querySelector(a.getAttribute("href")));
+  function onScroll() {
+    const h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (100 * h.scrollTop) / max : 0) + "%";
+    top.classList.toggle("show", h.scrollTop > 600);
+    let cur = 0; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 120) cur = i; });
+    links.forEach((a, i) => a.classList.toggle("on", i === cur));
+  }
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  top.addEventListener("click", () => scrollTo({ top: 0 }));
+})();
 $("theme").addEventListener("click", () => {
   const root = document.documentElement, dark = root.dataset.theme ? root.dataset.theme === "dark"
     : matchMedia("(prefers-color-scheme: dark)").matches;
