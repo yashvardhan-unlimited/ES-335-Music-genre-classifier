@@ -32,7 +32,7 @@ SPLITS = {
           "Main result."),
 }
 FIGURES = ["mel_per_genre.png", "val_svm_heatmap.png", "cnn_curves_C.png", "permutation_importance.png",
-           "analysis_learning_curves.png", "analysis_calibration.png"]
+           "analysis_learning_curves.png", "analysis_calibration.png", "leakage_lab.png", "rms_by_genre.png"]
 log = get_logger("export_site_data")
 
 

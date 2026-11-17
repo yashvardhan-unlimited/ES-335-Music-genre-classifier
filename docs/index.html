@@ -221,7 +221,8 @@ th { position: sticky; top: 0; background: var(--surface); }
   <h2>Data</h2>
   <p><strong>GTZAN</strong> (Tzanetakis &amp; Cook, 2002): 1,000 clips of 30 s, 100 per genre, 22,050 Hz mono, in
     10 genres: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae and rock. We downloaded it from a
-    Kaggle mirror. The audio is not republished here.</p>
+    Kaggle mirror (a free Kaggle account is needed). The clips are excerpts of commercial recordings, so the audio is
+    not republished here or in the repository; only numbers, clip ids and figures are.</p>
   <h3>Size and key variables</h3>
   <div class="table-wrap"><table>
     <tr><th>Variable</th><th>What it is</th></tr>
@@ -249,6 +250,10 @@ th { position: sticky; top: 0; background: var(--surface); }
     <p>A model that has heard a clip, a duplicate of it, or another clip by the same band during training can score well
       by recognition instead of by understanding genre. Each fault above is one way that can happen, and the splits
       below remove them one at a time.</p></div>
+  <figure><img src="img/rms_by_genre.png" alt="Box plot of clip loudness (RMS level in dBFS) for each genre" loading="lazy">
+    <figcaption>Loudness differs by genre: classical clips sit around −28 dBFS, pop and hip-hop around −13 to −14. A
+      model can partly tell genres apart by level alone, which is a recording property rather than musical content
+      (see Limitations).</figcaption></figure>
   <figure><img src="img/mel_per_genre.png" alt="One log-mel spectrogram per genre: time on the x axis, mel frequency on the y axis" loading="lazy">
     <figcaption>What the CNN sees: one log-mel spectrogram per genre (fixed dB reference, so loudness differences are kept).</figcaption></figure>
 </section>
@@ -314,6 +319,11 @@ th { position: sticky; top: 0; background: var(--surface); }
       exists. The tag is created only after every choice, including which models count as final, is written down,
       and test is then scored once.</li>
   </ol>
+  <figure><img src="img/leakage_lab.png" alt="Bar chart: score each SVM tuning procedure reports versus its true validation clip macro-F1" loading="lazy">
+    <figcaption>Why the protocol matters (validation only, SVM on split C). Three common mistakes, one at a time:
+      fitting the scaler on train plus validation, k-fold over windows, and selecting by window accuracy. k-fold over
+      windows reports 0.973 because every held-out window has sibling windows of the same clip in training; the setting
+      it picks really scores 0.433. The correct protocol reports what it gets (0.458).</figcaption></figure>
   <figure><img src="img/val_svm_heatmap.png" alt="Heatmap of SVM validation macro-F1 over C and gamma" loading="lazy">
     <figcaption>Tuning on validation only: the SVM's grid on split C. The best cell has untried neighbours on every side.</figcaption></figure>
   <figure><img src="img/analysis_learning_curves.png" alt="Validation macro-F1 against the number of training artists for SVM and CNN" loading="lazy">
@@ -386,7 +396,7 @@ th { position: sticky; top: 0; background: var(--surface); }
         artist's clips together.</li>
       <li><strong>Some genres are only a few artists.</strong> C's test blues is three artists: Robert Johnson (17
         clips), Clifton Chenier (12) and Albert Collins (2). The classical models call most of it jazz (SVM: 18 of 31,
-        logistic regression: 17 of 31), so their blues F1 is under 0.1; the three CNN runs reach 0.36 to 0.68.</li>
+        logistic regression: 17 of 31), so the classical models' blues F1 is 0.10 or lower; the three CNN runs reach 0.36 to 0.68.</li>
       <li><strong>One confusion is about the genre, not an artist.</strong> The CNN's 15 disco clips called blues come
         from 15 different artists, so that mistake is spread across the genre.</li>
       <li><strong>The three CNN runs disagree.</strong> Per-genre F1 swings between training seeds (classical 0.98 vs
@@ -580,7 +590,8 @@ function renderAnswer() {
   const ci2 = (m) => `95% interval ${fmt(m.ci_low, 2)} to ${fmt(m.ci_high, 2)}`;
   const tiles = [
     [`Best classical model on test (${best.label})`, fmt(best.macro_f1, 2), ci2(best)],
-    ...(best.model === "svm" ? [] : [["RBF SVM (comparator fixed before the test run)", fmt(svm.macro_f1, 2), ci2(svm)]]),
+    ...(best.model === "svm" ? [] : [["RBF SVM (comparator fixed before the test run)", fmt(svm.macro_f1, 2),
+      `${ci2(svm)}; validation ${fmt(svm.valid_macro_f1, 3)} vs ${fmt(best.valid_macro_f1, 3)} for ${best.label.toLowerCase()}`]]),
     ["Chance-level floor", fmt(h.floor, 2), "stratified dummy on the same clips"],
     ["CNN on C-strict", strict ? fmt(strict.macro_f1, 2) : "–", strict ? `${strict.n_clips} clips with no artist cluster in train` : ""],
     ["CNN on a leaky random split (B)", ladB ? fmt(ladB.mean, 2) : "–", "same sizes, artists shared, train-only models"],

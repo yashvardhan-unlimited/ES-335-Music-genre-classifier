@@ -48,9 +48,13 @@
 
 **Cluster bootstrap.** A bootstrap that resamples whole clusters (here artists) with replacement, keeping correlated clips together.
 
+**Cold start.** In recommendation, a new song or artist with no listening history, so only its content (here its audio) can describe it. An artist-disjoint split imitates this case.
+
 **Column subsampling (colsample_bytree).** Growing each boosted tree on a random share of the features (0.8 here); makes trees less alike and reduces variance.
 
 **Commit hash.** The identifier of a git commit, computed from all committed file contents, the parent commit, author, date and message; changing any committed byte gives a different hash.
+
+**Comparator (pre-registered).** The model named before the test run as the one the headline model is compared with (here the RBF SVM). It stays the comparator even if another model scores higher on test, because choosing it afterwards would be selection on test.
 
 **Confidence interval (95%).** A range produced by a procedure that, over repeated samples, contains the true value 95% of the time. Here estimated with the bootstrap percentile method.
 
@@ -87,6 +91,8 @@
 **Decision boundary.** The surface in feature space where a classifier switches from one predicted class to another; for logistic regression it is a hyperplane.
 
 **Decision tree.** A model that predicts by a sequence of yes/no threshold questions on single features, ending in a leaf. Trained greedily by choosing the split that most reduces impurity (or, in XGBoost, most reduces the loss).
+
+**Design effect.** How much clustering shrinks the effective sample size: n_eff = n / (1 + (m - 1) rho) for clusters of average size m with within-cluster correlation rho. C test's 290 clips in 119 artist clusters carry at least 119 clips' worth of evidence.
 
 **Distance weighting.** A kNN option in which each neighbour's vote is weighted by 1/distance, so closer neighbours count more.
 
@@ -243,6 +249,8 @@
 **Pipeline.** An sklearn object chaining preprocessing and a model, so preprocessing such as scaling is refit on the training rows of each fit and never sees held-out data.
 
 **Platt scaling.** Turning an SVM's decision values into probabilities with a fitted sigmoid 1/(1 + exp(A f + B)); sklearn fits A and B on internal 5-fold cross-validation scores.
+
+**Post-freeze correction.** A change made after the one test run, marked as such in the commit and DECISIONS.md. Only wording and reporting may change; models, settings and the headline may not.
 
 **Post-hoc analysis.** An analysis decided after seeing the results it is about. It suggests hypotheses but does not confirm them; it is labelled as such and never replaces the pre-specified result.
 
