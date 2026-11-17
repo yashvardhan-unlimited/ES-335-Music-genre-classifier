@@ -1,0 +1,11060 @@
+{
+ "part": "test",
+ "generated": "2026-11-17",
+ "fit_on_C": "train+valid",
+ "headline": {
+  "model": "cnn",
+  "label": "CNN on log-mels",
+  "macro_f1": 0.5519,
+  "ci_low": 0.4666,
+  "ci_high": 0.583,
+  "n_runs": 3,
+  "floor": 0.0921,
+  "n_clips": 290
+ },
+ "c": {
+  "models": [
+   {
+    "model": "logreg",
+    "label": "Logistic regression",
+    "macro_f1": 0.5681,
+    "ci_low": 0.4755,
+    "ci_high": 0.6407,
+    "n_runs": 1
+   },
+   {
+    "model": "cnn",
+    "label": "CNN on log-mels",
+    "macro_f1": 0.5519,
+    "ci_low": 0.4666,
+    "ci_high": 0.583,
+    "n_runs": 3
+   },
+   {
+    "model": "svm",
+    "label": "RBF SVM",
+    "macro_f1": 0.5408,
+    "ci_low": 0.4588,
+    "ci_high": 0.6109,
+    "n_runs": 1
+   },
+   {
+    "model": "xgb",
+    "label": "XGBoost",
+    "macro_f1": 0.5179,
+    "ci_low": 0.4334,
+    "ci_high": 0.5809,
+    "n_runs": 1
+   },
+   {
+    "model": "knn",
+    "label": "k-nearest neighbours",
+    "macro_f1": 0.4334,
+    "ci_low": 0.3472,
+    "ci_high": 0.4951,
+    "n_runs": 1
+   },
+   {
+    "model": "dummy_stratified",
+    "label": "Dummy (stratified)",
+    "macro_f1": 0.0921,
+    "ci_low": 0.0525,
+    "ci_high": 0.1178,
+    "n_runs": 1
+   },
+   {
+    "model": "dummy_most_frequent",
+    "label": "Dummy (most frequent)",
+    "macro_f1": 0.0193,
+    "ci_low": 0.0,
+    "ci_high": 0.0395,
+    "n_runs": 1
+   }
+  ],
+  "paired": {
+   "cnn - dummy_most_frequent": {
+    "diff": 0.5326,
+    "ci_low": 0.451,
+    "ci_high": 0.5674,
+    "share_resamples_cnn_better": 1.0
+   },
+   "cnn - dummy_stratified": {
+    "diff": 0.4599,
+    "ci_low": 0.3801,
+    "ci_high": 0.5012,
+    "share_resamples_cnn_better": 1.0
+   },
+   "cnn - knn": {
+    "diff": 0.1186,
+    "ci_low": 0.0278,
+    "ci_high": 0.1898,
+    "share_resamples_cnn_better": 0.9965
+   },
+   "cnn - logreg": {
+    "diff": -0.0162,
+    "ci_low": -0.1065,
+    "ci_high": 0.0558,
+    "share_resamples_cnn_better": 0.2945
+   },
+   "cnn - svm": {
+    "diff": 0.0112,
+    "ci_low": -0.0828,
+    "ci_high": 0.0761,
+    "share_resamples_cnn_better": 0.521
+   },
+   "cnn - xgb": {
+    "diff": 0.034,
+    "ci_low": -0.0652,
+    "ci_high": 0.0975,
+    "share_resamples_cnn_better": 0.734
+   }
+  },
+  "strict": {
+   "dummy_most_frequent": {
+    "macro_f1": 0.0209,
+    "ci_low": 0.0,
+    "ci_high": 0.0416,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "dummy_stratified": {
+    "macro_f1": 0.0838,
+    "ci_low": 0.0453,
+    "ci_high": 0.1103,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "knn": {
+    "macro_f1": 0.4216,
+    "ci_low": 0.3211,
+    "ci_high": 0.4878,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "logreg": {
+    "macro_f1": 0.5573,
+    "ci_low": 0.4526,
+    "ci_high": 0.6382,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "svm": {
+    "macro_f1": 0.5374,
+    "ci_low": 0.4507,
+    "ci_high": 0.6194,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "xgb": {
+    "macro_f1": 0.5064,
+    "ci_low": 0.4103,
+    "ci_high": 0.5853,
+    "n_clips": 265,
+    "n_runs": 1
+   },
+   "cnn": {
+    "macro_f1": 0.5473,
+    "ci_low": 0.4618,
+    "ci_high": 0.5843,
+    "n_clips": 265,
+    "n_runs": 3
+   }
+  }
+ },
+ "ladder": {
+  "dummy_most_frequent": {
+   "A": {
+    "mean": 0.0181,
+    "ci_low": 0.0081,
+    "ci_high": 0.0287,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0181
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.0182,
+    "ci_low": 0.0141,
+    "ci_high": 0.022,
+    "sd": 0.0,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0182
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0182
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.0182
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.0182
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.0182
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.0193,
+    "ci_low": 0.0142,
+    "ci_high": 0.024,
+    "sd": 0.0,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.0193
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.0191,
+    "ci_low": 0.0123,
+    "ci_high": 0.0264,
+    "sd": 0.0003,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0187
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.0193
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.0187
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.0193
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.0193,
+    "ci_low": 0.0039,
+    "ci_high": 0.0342,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0193
+     }
+    ]
+   }
+  },
+  "dummy_stratified": {
+   "A": {
+    "mean": 0.1045,
+    "ci_low": 0.0844,
+    "ci_high": 0.1206,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.1045
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.1025,
+    "ci_low": 0.0837,
+    "ci_high": 0.1135,
+    "sd": 0.0085,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0931
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0974
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.1102
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.1127
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.099
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.0782,
+    "ci_low": 0.0637,
+    "ci_high": 0.0876,
+    "sd": 0.0005,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0778
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0778
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.0778
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.0788
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.0788
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.0851,
+    "ci_low": 0.069,
+    "ci_high": 0.0958,
+    "sd": 0.0116,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.0976
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.0904
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.0671
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.0816
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.0891
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.1033,
+    "ci_low": 0.0665,
+    "ci_high": 0.13,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.1033
+     }
+    ]
+   }
+  },
+  "knn": {
+   "A": {
+    "mean": 0.9446,
+    "ci_low": 0.9245,
+    "ci_high": 0.9557,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.9446
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.6984,
+    "ci_low": 0.6564,
+    "ci_high": 0.7109,
+    "sd": 0.031,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.6808
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6678
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6832
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7432
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7172
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.6743,
+    "ci_low": 0.6351,
+    "ci_high": 0.6908,
+    "sd": 0.0267,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.6314
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6659
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6885
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.6883
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.6974
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.5046,
+    "ci_low": 0.4405,
+    "ci_high": 0.5231,
+    "sd": 0.0388,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4473
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.4964
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.5466
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.5341
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.4984
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.4532,
+    "ci_low": 0.3574,
+    "ci_high": 0.5092,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4532
+     }
+    ]
+   }
+  },
+  "logreg": {
+   "A": {
+    "mean": 0.767,
+    "ci_low": 0.7236,
+    "ci_high": 0.7908,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.767
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.7066,
+    "ci_low": 0.6682,
+    "ci_high": 0.7195,
+    "sd": 0.0197,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.6975
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.7182
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6761
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7184
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7231
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.7047,
+    "ci_low": 0.6678,
+    "ci_high": 0.7178,
+    "sd": 0.0386,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.691
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6996
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6698
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.6925
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7708
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.5598,
+    "ci_low": 0.503,
+    "ci_high": 0.5824,
+    "sd": 0.0422,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4877
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.5861
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.5834
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.5852
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.5566
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.5149,
+    "ci_low": 0.414,
+    "ci_high": 0.5907,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.5149
+     }
+    ]
+   }
+  },
+  "svm": {
+   "A": {
+    "mean": 0.9488,
+    "ci_low": 0.9277,
+    "ci_high": 0.9607,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.9488
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.7392,
+    "ci_low": 0.7013,
+    "ci_high": 0.7507,
+    "sd": 0.0249,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.725
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.7476
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.7098
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7759
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.738
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.7319,
+    "ci_low": 0.6945,
+    "ci_high": 0.7468,
+    "sd": 0.0151,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.7178
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.7335
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.7192
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7341
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7552
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.5689,
+    "ci_low": 0.5082,
+    "ci_high": 0.592,
+    "sd": 0.0428,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.5008
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.5792
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.5968
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.6099
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.5576
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.4878,
+    "ci_low": 0.3862,
+    "ci_high": 0.5632,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4878
+     }
+    ]
+   }
+  },
+  "xgb": {
+   "A": {
+    "mean": 0.9312,
+    "ci_low": 0.9065,
+    "ci_high": 0.9441,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.9312
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.7272,
+    "ci_low": 0.6873,
+    "ci_high": 0.7404,
+    "sd": 0.0323,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.7107
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.7477
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6805
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7347
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7623
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.7218,
+    "ci_low": 0.6829,
+    "ci_high": 0.7372,
+    "sd": 0.0264,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.7058
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6997
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.7141
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7229
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7663
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.5391,
+    "ci_low": 0.4786,
+    "ci_high": 0.5576,
+    "sd": 0.0344,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4849
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.534
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.5768
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.5579
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.5417
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.4818,
+    "ci_low": 0.3837,
+    "ci_high": 0.5492,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.4818
+     }
+    ]
+   }
+  },
+  "cnn": {
+   "A": {
+    "mean": 0.8188,
+    "ci_low": 0.7715,
+    "ci_high": 0.8466,
+    "sd": null,
+    "n_runs": 1,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.8188
+     }
+    ]
+   },
+   "B": {
+    "mean": 0.7761,
+    "ci_low": 0.7402,
+    "ci_high": 0.7902,
+    "sd": 0.0239,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.751
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.786
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.7857
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.8057
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7521
+     }
+    ]
+   },
+   "Bp": {
+    "mean": 0.7478,
+    "ci_low": 0.7116,
+    "ci_high": 0.7619,
+    "sd": 0.0417,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.762
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.8115
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.7079
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.7149
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.7425
+     }
+    ]
+   },
+   "D": {
+    "mean": 0.6542,
+    "ci_low": 0.5864,
+    "ci_high": 0.67,
+    "sd": 0.0497,
+    "n_runs": 5,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.6676
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6818
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6926
+     },
+     {
+      "seed": 3,
+      "macro_f1": 0.5681
+     },
+     {
+      "seed": 4,
+      "macro_f1": 0.6607
+     }
+    ]
+   },
+   "C": {
+    "mean": 0.5943,
+    "ci_low": 0.4906,
+    "ci_high": 0.6626,
+    "sd": 0.0234,
+    "n_runs": 3,
+    "runs": [
+     {
+      "seed": 0,
+      "macro_f1": 0.5674
+     },
+     {
+      "seed": 1,
+      "macro_f1": 0.6069
+     },
+     {
+      "seed": 2,
+      "macro_f1": 0.6088
+     }
+    ]
+   }
+  }
+ },
+ "drops": {
+  "dummy_most_frequent: A - B": {
+   "diff": -0.0001,
+   "ci_low": -0.011,
+   "ci_high": 0.0114
+  },
+  "dummy_most_frequent: B - Bp": {
+   "diff": -0.0011,
+   "ci_low": -0.0071,
+   "ci_high": 0.0052
+  },
+  "dummy_most_frequent: Bp - D": {
+   "diff": 0.0002,
+   "ci_low": -0.009,
+   "ci_high": 0.0087
+  },
+  "dummy_most_frequent: D - C": {
+   "diff": -0.0002,
+   "ci_low": -0.017,
+   "ci_high": 0.0169
+  },
+  "dummy_most_frequent: Bp - C": {
+   "diff": 0.0,
+   "ci_low": -0.0161,
+   "ci_high": 0.0157
+  },
+  "dummy_stratified: A - B": {
+   "diff": 0.002,
+   "ci_low": -0.0184,
+   "ci_high": 0.0271
+  },
+  "dummy_stratified: B - Bp": {
+   "diff": 0.0243,
+   "ci_low": 0.005,
+   "ci_high": 0.0421
+  },
+  "dummy_stratified: Bp - D": {
+   "diff": -0.007,
+   "ci_low": -0.0245,
+   "ci_high": 0.012
+  },
+  "dummy_stratified: D - C": {
+   "diff": -0.0182,
+   "ci_low": -0.0489,
+   "ci_high": 0.0186
+  },
+  "dummy_stratified: Bp - C": {
+   "diff": -0.0252,
+   "ci_low": -0.0573,
+   "ci_high": 0.0119
+  },
+  "knn: A - B": {
+   "diff": 0.2462,
+   "ci_low": 0.2259,
+   "ci_high": 0.2882
+  },
+  "knn: B - Bp": {
+   "diff": 0.0241,
+   "ci_low": -0.0181,
+   "ci_high": 0.0601
+  },
+  "knn: Bp - D": {
+   "diff": 0.1697,
+   "ci_low": 0.1314,
+   "ci_high": 0.2305
+  },
+  "knn: D - C": {
+   "diff": 0.0514,
+   "ci_low": -0.036,
+   "ci_high": 0.141
+  },
+  "knn: Bp - C": {
+   "diff": 0.2211,
+   "ci_low": 0.152,
+   "ci_high": 0.312
+  },
+  "logreg: A - B": {
+   "diff": 0.0603,
+   "ci_low": 0.0217,
+   "ci_high": 0.1067
+  },
+  "logreg: B - Bp": {
+   "diff": 0.0019,
+   "ci_low": -0.0365,
+   "ci_high": 0.0368
+  },
+  "logreg: Bp - D": {
+   "diff": 0.1449,
+   "ci_low": 0.103,
+   "ci_high": 0.197
+  },
+  "logreg: D - C": {
+   "diff": 0.0449,
+   "ci_low": -0.0502,
+   "ci_high": 0.136
+  },
+  "logreg: Bp - C": {
+   "diff": 0.1899,
+   "ci_low": 0.097,
+   "ci_high": 0.2839
+  },
+  "svm: A - B": {
+   "diff": 0.2095,
+   "ci_low": 0.1886,
+   "ci_high": 0.2494
+  },
+  "svm: B - Bp": {
+   "diff": 0.0073,
+   "ci_low": -0.0302,
+   "ci_high": 0.0408
+  },
+  "svm: Bp - D": {
+   "diff": 0.1631,
+   "ci_low": 0.1213,
+   "ci_high": 0.2204
+  },
+  "svm: D - C": {
+   "diff": 0.081,
+   "ci_low": -0.0246,
+   "ci_high": 0.1738
+  },
+  "svm: Bp - C": {
+   "diff": 0.2441,
+   "ci_low": 0.154,
+   "ci_high": 0.3424
+  },
+  "xgb: A - B": {
+   "diff": 0.204,
+   "ci_low": 0.18,
+   "ci_high": 0.2435
+  },
+  "xgb: B - Bp": {
+   "diff": 0.0054,
+   "ci_low": -0.0331,
+   "ci_high": 0.0413
+  },
+  "xgb: Bp - D": {
+   "diff": 0.1827,
+   "ci_low": 0.1429,
+   "ci_high": 0.2368
+  },
+  "xgb: D - C": {
+   "diff": 0.0573,
+   "ci_low": -0.0362,
+   "ci_high": 0.1433
+  },
+  "xgb: Bp - C": {
+   "diff": 0.2399,
+   "ci_low": 0.1618,
+   "ci_high": 0.3277
+  },
+  "cnn: A - B": {
+   "diff": 0.0427,
+   "ci_low": -0.0022,
+   "ci_high": 0.0906
+  },
+  "cnn: B - Bp": {
+   "diff": 0.0283,
+   "ci_low": -0.0078,
+   "ci_high": 0.0625
+  },
+  "cnn: Bp - D": {
+   "diff": 0.0936,
+   "ci_low": 0.0605,
+   "ci_high": 0.1587
+  },
+  "cnn: D - C": {
+   "diff": 0.0598,
+   "ci_low": -0.0422,
+   "ci_high": 0.1531
+  },
+  "cnn: Bp - C": {
+   "diff": 0.1534,
+   "ci_low": 0.0707,
+   "ci_high": 0.2519
+  }
+ },
+ "splits": {
+  "A": {
+   "short": "A",
+   "name": "Window-random",
+   "description": "3 s windows shuffled at random: windows of one clip sit in train and test.",
+   "test_share_artist_in_train": 0.9846,
+   "test_clips_also_in_train": 970
+  },
+  "B": {
+   "short": "B",
+   "name": "Clip-random",
+   "description": "Whole clips at random from all 999, stratified by genre (5 seeds).",
+   "test_share_artist_in_train": 0.749,
+   "test_clips_also_in_train": 0
+  },
+  "Bp": {
+   "short": "B\u2032",
+   "name": "Clip-random, fault-filtered",
+   "description": "As B, but only from the 929 clips left after removing duplicates, mislabels and distortions (5 seeds).",
+   "test_share_artist_in_train": 0.7455,
+   "test_clips_also_in_train": 0
+  },
+  "D": {
+   "short": "D",
+   "name": "Artist-grouped, random",
+   "description": "As B\u2032, but every artist's clips stay in one part (5 seeds).",
+   "test_share_artist_in_train": 0.0,
+   "test_clips_also_in_train": 0
+  },
+  "C": {
+   "short": "C",
+   "name": "Published artist-disjoint",
+   "description": "The published fault-filtered split (Kereliuk, Sturm & Larsen 2015). Main result.",
+   "test_share_artist_in_train": 0.0862,
+   "test_clips_also_in_train": 0
+  }
+ },
+ "confusion": {
+  "cnn_s0": {
+   "model": "cnn",
+   "seed": 0,
+   "label": "CNN on log-mels (seed 0)",
+   "confusion": [
+    [
+     30,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     30,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     3,
+     0,
+     27,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     15,
+     0,
+     2,
+     3,
+     6,
+     0,
+     0,
+     1,
+     0,
+     2
+    ],
+    [
+     0,
+     0,
+     1,
+     0,
+     25,
+     0,
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     8,
+     0,
+     16,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     24,
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     5,
+     3,
+     3,
+     0,
+     0,
+     18,
+     0,
+     0
+    ],
+    [
+     8,
+     0,
+     0,
+     0,
+     5,
+     0,
+     0,
+     2,
+     11,
+     0
+    ],
+    [
+     6,
+     0,
+     20,
+     1,
+     1,
+     0,
+     1,
+     1,
+     0,
+     2
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.5825,
+    "classical": 0.9836,
+    "country": 0.5243,
+    "disco": 0.1667,
+    "hiphop": 0.7353,
+    "jazz": 0.2,
+    "metal": 0.9231,
+    "pop": 0.6792,
+    "reggae": 0.5946,
+    "rock": 0.1081
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00017",
+      0.999
+     ],
+     [
+      "blues.00022",
+      0.998
+     ],
+     [
+      "blues.00028",
+      0.997
+     ],
+     [
+      "blues.00021",
+      0.997
+     ],
+     [
+      "blues.00019",
+      0.997
+     ],
+     [
+      "blues.00062",
+      0.996
+     ],
+     [
+      "blues.00025",
+      0.996
+     ],
+     [
+      "blues.00013",
+      0.996
+     ],
+     [
+      "blues.00024",
+      0.995
+     ],
+     [
+      "blues.00026",
+      0.995
+     ],
+     [
+      "blues.00012",
+      0.994
+     ],
+     [
+      "blues.00015",
+      0.993
+     ],
+     [
+      "blues.00023",
+      0.992
+     ],
+     [
+      "blues.00068",
+      0.992
+     ],
+     [
+      "blues.00014",
+      0.978
+     ],
+     [
+      "blues.00070",
+      0.978
+     ],
+     [
+      "blues.00066",
+      0.966
+     ],
+     [
+      "blues.00027",
+      0.948
+     ],
+     [
+      "blues.00018",
+      0.943
+     ],
+     [
+      "blues.00067",
+      0.933
+     ],
+     [
+      "blues.00016",
+      0.915
+     ],
+     [
+      "blues.00061",
+      0.912
+     ],
+     [
+      "blues.00020",
+      0.905
+     ],
+     [
+      "blues.00069",
+      0.897
+     ],
+     [
+      "blues.00063",
+      0.793
+     ],
+     [
+      "blues.00065",
+      0.673
+     ],
+     [
+      "blues.00099",
+      0.648
+     ],
+     [
+      "blues.00064",
+      0.584
+     ],
+     [
+      "blues.00071",
+      0.561
+     ],
+     [
+      "blues.00098",
+      0.499
+     ]
+    ],
+    "blues|country": [
+     [
+      "blues.00072",
+      0.797
+     ]
+    ],
+    "classical|blues": [
+     [
+      "classical.00035",
+      0.54
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00012",
+      0.996
+     ],
+     [
+      "classical.00018",
+      0.994
+     ],
+     [
+      "classical.00014",
+      0.993
+     ],
+     [
+      "classical.00015",
+      0.989
+     ],
+     [
+      "classical.00013",
+      0.986
+     ],
+     [
+      "classical.00026",
+      0.982
+     ],
+     [
+      "classical.00029",
+      0.982
+     ],
+     [
+      "classical.00041",
+      0.977
+     ],
+     [
+      "classical.00016",
+      0.977
+     ],
+     [
+      "classical.00019",
+      0.972
+     ],
+     [
+      "classical.00017",
+      0.97
+     ],
+     [
+      "classical.00011",
+      0.964
+     ],
+     [
+      "classical.00024",
+      0.958
+     ],
+     [
+      "classical.00027",
+      0.957
+     ],
+     [
+      "classical.00022",
+      0.954
+     ],
+     [
+      "classical.00034",
+      0.948
+     ],
+     [
+      "classical.00028",
+      0.939
+     ],
+     [
+      "classical.00040",
+      0.934
+     ],
+     [
+      "classical.00021",
+      0.922
+     ],
+     [
+      "classical.00020",
+      0.914
+     ],
+     [
+      "classical.00023",
+      0.908
+     ],
+     [
+      "classical.00078",
+      0.845
+     ],
+     [
+      "classical.00025",
+      0.806
+     ],
+     [
+      "classical.00039",
+      0.774
+     ],
+     [
+      "classical.00049",
+      0.769
+     ],
+     [
+      "classical.00038",
+      0.768
+     ],
+     [
+      "classical.00037",
+      0.75
+     ],
+     [
+      "classical.00077",
+      0.75
+     ],
+     [
+      "classical.00036",
+      0.639
+     ],
+     [
+      "classical.00079",
+      0.564
+     ]
+    ],
+    "country|blues": [
+     [
+      "country.00063",
+      0.671
+     ],
+     [
+      "country.00059",
+      0.629
+     ],
+     [
+      "country.00036",
+      0.55
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00031",
+      0.998
+     ],
+     [
+      "country.00038",
+      0.983
+     ],
+     [
+      "country.00035",
+      0.977
+     ],
+     [
+      "country.00044",
+      0.968
+     ],
+     [
+      "country.00056",
+      0.957
+     ],
+     [
+      "country.00043",
+      0.942
+     ],
+     [
+      "country.00037",
+      0.933
+     ],
+     [
+      "country.00046",
+      0.928
+     ],
+     [
+      "country.00033",
+      0.912
+     ],
+     [
+      "country.00032",
+      0.89
+     ],
+     [
+      "country.00057",
+      0.889
+     ],
+     [
+      "country.00051",
+      0.888
+     ],
+     [
+      "country.00053",
+      0.859
+     ],
+     [
+      "country.00055",
+      0.837
+     ],
+     [
+      "country.00061",
+      0.832
+     ],
+     [
+      "country.00054",
+      0.817
+     ],
+     [
+      "country.00040",
+      0.809
+     ],
+     [
+      "country.00062",
+      0.791
+     ],
+     [
+      "country.00064",
+      0.779
+     ],
+     [
+      "country.00060",
+      0.774
+     ],
+     [
+      "country.00050",
+      0.687
+     ],
+     [
+      "country.00058",
+      0.655
+     ],
+     [
+      "country.00039",
+      0.633
+     ],
+     [
+      "country.00030",
+      0.632
+     ],
+     [
+      "country.00047",
+      0.536
+     ],
+     [
+      "country.00048",
+      0.481
+     ],
+     [
+      "country.00034",
+      0.41
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00097",
+      0.935
+     ],
+     [
+      "disco.00086",
+      0.833
+     ],
+     [
+      "disco.00077",
+      0.797
+     ],
+     [
+      "disco.00065",
+      0.776
+     ],
+     [
+      "disco.00092",
+      0.725
+     ],
+     [
+      "disco.00091",
+      0.718
+     ],
+     [
+      "disco.00093",
+      0.707
+     ],
+     [
+      "disco.00064",
+      0.654
+     ],
+     [
+      "disco.00082",
+      0.589
+     ],
+     [
+      "disco.00083",
+      0.54
+     ],
+     [
+      "disco.00058",
+      0.452
+     ],
+     [
+      "disco.00079",
+      0.447
+     ],
+     [
+      "disco.00081",
+      0.411
+     ],
+     [
+      "disco.00066",
+      0.364
+     ],
+     [
+      "disco.00087",
+      0.34
+     ]
+    ],
+    "disco|country": [
+     [
+      "disco.00001",
+      0.535
+     ],
+     [
+      "disco.00088",
+      0.519
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00099",
+      0.598
+     ],
+     [
+      "disco.00076",
+      0.485
+     ],
+     [
+      "disco.00078",
+      0.362
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00085",
+      0.998
+     ],
+     [
+      "disco.00063",
+      0.858
+     ],
+     [
+      "disco.00084",
+      0.77
+     ],
+     [
+      "disco.00096",
+      0.77
+     ],
+     [
+      "disco.00080",
+      0.642
+     ],
+     [
+      "disco.00062",
+      0.628
+     ]
+    ],
+    "disco|pop": [
+     [
+      "disco.00021",
+      0.494
+     ]
+    ],
+    "disco|rock": [
+     [
+      "disco.00069",
+      0.392
+     ],
+     [
+      "disco.00094",
+      0.315
+     ]
+    ],
+    "hiphop|country": [
+     [
+      "hiphop.00044",
+      0.395
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00027",
+      1.0
+     ],
+     [
+      "hiphop.00062",
+      1.0
+     ],
+     [
+      "hiphop.00065",
+      0.997
+     ],
+     [
+      "hiphop.00068",
+      0.99
+     ],
+     [
+      "hiphop.00052",
+      0.987
+     ],
+     [
+      "hiphop.00026",
+      0.986
+     ],
+     [
+      "hiphop.00054",
+      0.985
+     ],
+     [
+      "hiphop.00069",
+      0.982
+     ],
+     [
+      "hiphop.00063",
+      0.98
+     ],
+     [
+      "hiphop.00074",
+      0.977
+     ],
+     [
+      "hiphop.00075",
+      0.972
+     ],
+     [
+      "hiphop.00099",
+      0.97
+     ],
+     [
+      "hiphop.00064",
+      0.961
+     ],
+     [
+      "hiphop.00053",
+      0.933
+     ],
+     [
+      "hiphop.00070",
+      0.884
+     ],
+     [
+      "hiphop.00043",
+      0.846
+     ],
+     [
+      "hiphop.00073",
+      0.803
+     ],
+     [
+      "hiphop.00072",
+      0.802
+     ],
+     [
+      "hiphop.00045",
+      0.759
+     ],
+     [
+      "hiphop.00066",
+      0.716
+     ],
+     [
+      "hiphop.00071",
+      0.712
+     ],
+     [
+      "hiphop.00030",
+      0.709
+     ],
+     [
+      "hiphop.00051",
+      0.662
+     ],
+     [
+      "hiphop.00000",
+      0.644
+     ],
+     [
+      "hiphop.00067",
+      0.617
+     ]
+    ],
+    "hiphop|pop": [
+     [
+      "hiphop.00040",
+      0.403
+     ]
+    ],
+    "jazz|blues": [
+     [
+      "jazz.00094",
+      0.975
+     ],
+     [
+      "jazz.00099",
+      0.972
+     ],
+     [
+      "jazz.00096",
+      0.958
+     ],
+     [
+      "jazz.00095",
+      0.951
+     ],
+     [
+      "jazz.00098",
+      0.894
+     ],
+     [
+      "jazz.00097",
+      0.576
+     ],
+     [
+      "jazz.00089",
+      0.488
+     ],
+     [
+      "jazz.00087",
+      0.438
+     ]
+    ],
+    "jazz|country": [
+     [
+      "jazz.00077",
+      0.965
+     ],
+     [
+      "jazz.00075",
+      0.944
+     ],
+     [
+      "jazz.00076",
+      0.887
+     ],
+     [
+      "jazz.00079",
+      0.86
+     ],
+     [
+      "jazz.00073",
+      0.858
+     ],
+     [
+      "jazz.00085",
+      0.805
+     ],
+     [
+      "jazz.00093",
+      0.738
+     ],
+     [
+      "jazz.00080",
+      0.736
+     ],
+     [
+      "jazz.00083",
+      0.676
+     ],
+     [
+      "jazz.00082",
+      0.664
+     ],
+     [
+      "jazz.00086",
+      0.663
+     ],
+     [
+      "jazz.00090",
+      0.652
+     ],
+     [
+      "jazz.00078",
+      0.582
+     ],
+     [
+      "jazz.00074",
+      0.543
+     ],
+     [
+      "jazz.00084",
+      0.384
+     ],
+     [
+      "jazz.00081",
+      0.306
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00092",
+      0.611
+     ],
+     [
+      "jazz.00088",
+      0.604
+     ],
+     [
+      "jazz.00091",
+      0.4
+     ]
+    ],
+    "metal|country": [
+     [
+      "metal.00030",
+      0.816
+     ]
+    ],
+    "metal|hiphop": [
+     [
+      "metal.00088",
+      0.486
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00013",
+      0.998
+     ],
+     [
+      "metal.00015",
+      0.99
+     ],
+     [
+      "metal.00012",
+      0.986
+     ],
+     [
+      "metal.00078",
+      0.982
+     ],
+     [
+      "metal.00025",
+      0.979
+     ],
+     [
+      "metal.00087",
+      0.979
+     ],
+     [
+      "metal.00074",
+      0.965
+     ],
+     [
+      "metal.00027",
+      0.956
+     ],
+     [
+      "metal.00014",
+      0.946
+     ],
+     [
+      "metal.00026",
+      0.944
+     ],
+     [
+      "metal.00033",
+      0.923
+     ],
+     [
+      "metal.00031",
+      0.904
+     ],
+     [
+      "metal.00067",
+      0.858
+     ],
+     [
+      "metal.00023",
+      0.834
+     ],
+     [
+      "metal.00073",
+      0.832
+     ],
+     [
+      "metal.00028",
+      0.81
+     ],
+     [
+      "metal.00032",
+      0.766
+     ],
+     [
+      "metal.00083",
+      0.757
+     ],
+     [
+      "metal.00038",
+      0.617
+     ],
+     [
+      "metal.00070",
+      0.583
+     ],
+     [
+      "metal.00085",
+      0.564
+     ],
+     [
+      "metal.00029",
+      0.444
+     ],
+     [
+      "metal.00022",
+      0.402
+     ],
+     [
+      "metal.00075",
+      0.387
+     ]
+    ],
+    "metal|rock": [
+     [
+      "metal.00039",
+      0.511
+     ]
+    ],
+    "pop|blues": [
+     [
+      "pop.00079",
+      0.567
+     ]
+    ],
+    "pop|country": [
+     [
+      "pop.00094",
+      0.652
+     ],
+     [
+      "pop.00063",
+      0.592
+     ],
+     [
+      "pop.00013",
+      0.465
+     ],
+     [
+      "pop.00065",
+      0.408
+     ],
+     [
+      "pop.00014",
+      0.27
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00093",
+      0.497
+     ],
+     [
+      "pop.00082",
+      0.433
+     ],
+     [
+      "pop.00072",
+      0.37
+     ]
+    ],
+    "pop|hiphop": [
+     [
+      "pop.00069",
+      0.701
+     ],
+     [
+      "pop.00078",
+      0.665
+     ],
+     [
+      "pop.00001",
+      0.557
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      0.954
+     ],
+     [
+      "pop.00096",
+      0.884
+     ],
+     [
+      "pop.00076",
+      0.87
+     ],
+     [
+      "pop.00066",
+      0.863
+     ],
+     [
+      "pop.00000",
+      0.853
+     ],
+     [
+      "pop.00077",
+      0.853
+     ],
+     [
+      "pop.00070",
+      0.831
+     ],
+     [
+      "pop.00091",
+      0.816
+     ],
+     [
+      "pop.00088",
+      0.768
+     ],
+     [
+      "pop.00075",
+      0.759
+     ],
+     [
+      "pop.00089",
+      0.739
+     ],
+     [
+      "pop.00073",
+      0.701
+     ],
+     [
+      "pop.00074",
+      0.634
+     ],
+     [
+      "pop.00064",
+      0.577
+     ],
+     [
+      "pop.00071",
+      0.565
+     ],
+     [
+      "pop.00090",
+      0.52
+     ],
+     [
+      "pop.00043",
+      0.518
+     ],
+     [
+      "pop.00092",
+      0.511
+     ]
+    ],
+    "reggae|blues": [
+     [
+      "reggae.00048",
+      0.899
+     ],
+     [
+      "reggae.00040",
+      0.784
+     ],
+     [
+      "reggae.00089",
+      0.78
+     ],
+     [
+      "reggae.00083",
+      0.71
+     ],
+     [
+      "reggae.00038",
+      0.679
+     ],
+     [
+      "reggae.00084",
+      0.595
+     ],
+     [
+      "reggae.00046",
+      0.587
+     ],
+     [
+      "reggae.00067",
+      0.447
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00052",
+      0.919
+     ],
+     [
+      "reggae.00082",
+      0.919
+     ],
+     [
+      "reggae.00053",
+      0.548
+     ],
+     [
+      "reggae.00034",
+      0.476
+     ],
+     [
+      "reggae.00066",
+      0.385
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.818
+     ],
+     [
+      "reggae.00088",
+      0.672
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00037",
+      0.997
+     ],
+     [
+      "reggae.00035",
+      0.992
+     ],
+     [
+      "reggae.00090",
+      0.931
+     ],
+     [
+      "reggae.00036",
+      0.816
+     ],
+     [
+      "reggae.00071",
+      0.792
+     ],
+     [
+      "reggae.00039",
+      0.754
+     ],
+     [
+      "reggae.00068",
+      0.688
+     ],
+     [
+      "reggae.00079",
+      0.609
+     ],
+     [
+      "reggae.00047",
+      0.489
+     ],
+     [
+      "reggae.00065",
+      0.445
+     ],
+     [
+      "reggae.00064",
+      0.383
+     ]
+    ],
+    "rock|blues": [
+     [
+      "rock.00090",
+      0.806
+     ],
+     [
+      "rock.00011",
+      0.805
+     ],
+     [
+      "rock.00015",
+      0.688
+     ],
+     [
+      "rock.00013",
+      0.607
+     ],
+     [
+      "rock.00014",
+      0.507
+     ],
+     [
+      "rock.00027",
+      0.359
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00034",
+      0.981
+     ],
+     [
+      "rock.00044",
+      0.942
+     ],
+     [
+      "rock.00045",
+      0.877
+     ],
+     [
+      "rock.00039",
+      0.837
+     ],
+     [
+      "rock.00046",
+      0.833
+     ],
+     [
+      "rock.00032",
+      0.824
+     ],
+     [
+      "rock.00036",
+      0.822
+     ],
+     [
+      "rock.00048",
+      0.816
+     ],
+     [
+      "rock.00028",
+      0.795
+     ],
+     [
+      "rock.00089",
+      0.77
+     ],
+     [
+      "rock.00029",
+      0.763
+     ],
+     [
+      "rock.00033",
+      0.75
+     ],
+     [
+      "rock.00037",
+      0.729
+     ],
+     [
+      "rock.00041",
+      0.673
+     ],
+     [
+      "rock.00010",
+      0.606
+     ],
+     [
+      "rock.00035",
+      0.467
+     ],
+     [
+      "rock.00030",
+      0.432
+     ],
+     [
+      "rock.00042",
+      0.415
+     ],
+     [
+      "rock.00040",
+      0.364
+     ],
+     [
+      "rock.00086",
+      0.264
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00031",
+      0.532
+     ]
+    ],
+    "rock|hiphop": [
+     [
+      "rock.00012",
+      0.542
+     ]
+    ],
+    "rock|metal": [
+     [
+      "rock.00088",
+      0.412
+     ]
+    ],
+    "rock|pop": [
+     [
+      "rock.00043",
+      0.229
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.452
+     ],
+     [
+      "rock.00047",
+      0.249
+     ]
+    ]
+   }
+  },
+  "knn_s0": {
+   "model": "knn",
+   "seed": 0,
+   "label": "k-nearest neighbours",
+   "confusion": [
+    [
+     2,
+     0,
+     3,
+     2,
+     0,
+     13,
+     2,
+     0,
+     1,
+     8
+    ],
+    [
+     0,
+     31,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     16,
+     4,
+     0,
+     1,
+     0,
+     0,
+     2,
+     6
+    ],
+    [
+     3,
+     0,
+     1,
+     11,
+     5,
+     0,
+     1,
+     0,
+     2,
+     6
+    ],
+    [
+     0,
+     0,
+     1,
+     4,
+     8,
+     0,
+     0,
+     11,
+     3,
+     0
+    ],
+    [
+     0,
+     1,
+     4,
+     1,
+     0,
+     10,
+     0,
+     4,
+     3,
+     4
+    ],
+    [
+     3,
+     0,
+     0,
+     1,
+     1,
+     0,
+     15,
+     0,
+     0,
+     7
+    ],
+    [
+     0,
+     0,
+     2,
+     4,
+     0,
+     0,
+     0,
+     22,
+     2,
+     0
+    ],
+    [
+     1,
+     0,
+     1,
+     2,
+     8,
+     1,
+     0,
+     2,
+     11,
+     0
+    ],
+    [
+     0,
+     3,
+     2,
+     16,
+     0,
+     1,
+     1,
+     0,
+     6,
+     3
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.1,
+    "classical": 0.9254,
+    "country": 0.5333,
+    "disco": 0.2973,
+    "hiphop": 0.3265,
+    "jazz": 0.3774,
+    "metal": 0.6522,
+    "pop": 0.6377,
+    "reggae": 0.3929,
+    "rock": 0.0909
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00014",
+      0.433
+     ],
+     [
+      "blues.00017",
+      0.4
+     ]
+    ],
+    "blues|country": [
+     [
+      "blues.00028",
+      0.467
+     ],
+     [
+      "blues.00067",
+      0.4
+     ],
+     [
+      "blues.00023",
+      0.3
+     ]
+    ],
+    "blues|disco": [
+     [
+      "blues.00064",
+      0.633
+     ],
+     [
+      "blues.00071",
+      0.367
+     ]
+    ],
+    "blues|jazz": [
+     [
+      "blues.00027",
+      0.733
+     ],
+     [
+      "blues.00018",
+      0.7
+     ],
+     [
+      "blues.00013",
+      0.633
+     ],
+     [
+      "blues.00020",
+      0.633
+     ],
+     [
+      "blues.00025",
+      0.6
+     ],
+     [
+      "blues.00019",
+      0.433
+     ],
+     [
+      "blues.00026",
+      0.433
+     ],
+     [
+      "blues.00021",
+      0.4
+     ],
+     [
+      "blues.00015",
+      0.4
+     ],
+     [
+      "blues.00099",
+      0.367
+     ],
+     [
+      "blues.00024",
+      0.367
+     ],
+     [
+      "blues.00022",
+      0.367
+     ],
+     [
+      "blues.00012",
+      0.333
+     ]
+    ],
+    "blues|metal": [
+     [
+      "blues.00069",
+      0.567
+     ],
+     [
+      "blues.00061",
+      0.467
+     ]
+    ],
+    "blues|reggae": [
+     [
+      "blues.00016",
+      0.6
+     ]
+    ],
+    "blues|rock": [
+     [
+      "blues.00068",
+      0.767
+     ],
+     [
+      "blues.00065",
+      0.667
+     ],
+     [
+      "blues.00070",
+      0.533
+     ],
+     [
+      "blues.00098",
+      0.5
+     ],
+     [
+      "blues.00063",
+      0.433
+     ],
+     [
+      "blues.00066",
+      0.433
+     ],
+     [
+      "blues.00072",
+      0.367
+     ],
+     [
+      "blues.00062",
+      0.333
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00016",
+      1.0
+     ],
+     [
+      "classical.00078",
+      1.0
+     ],
+     [
+      "classical.00025",
+      0.967
+     ],
+     [
+      "classical.00024",
+      0.967
+     ],
+     [
+      "classical.00014",
+      0.967
+     ],
+     [
+      "classical.00027",
+      0.933
+     ],
+     [
+      "classical.00011",
+      0.933
+     ],
+     [
+      "classical.00041",
+      0.933
+     ],
+     [
+      "classical.00035",
+      0.9
+     ],
+     [
+      "classical.00079",
+      0.9
+     ],
+     [
+      "classical.00037",
+      0.9
+     ],
+     [
+      "classical.00018",
+      0.9
+     ],
+     [
+      "classical.00017",
+      0.867
+     ],
+     [
+      "classical.00012",
+      0.867
+     ],
+     [
+      "classical.00022",
+      0.867
+     ],
+     [
+      "classical.00029",
+      0.867
+     ],
+     [
+      "classical.00021",
+      0.833
+     ],
+     [
+      "classical.00023",
+      0.833
+     ],
+     [
+      "classical.00019",
+      0.8
+     ],
+     [
+      "classical.00028",
+      0.8
+     ],
+     [
+      "classical.00036",
+      0.8
+     ],
+     [
+      "classical.00015",
+      0.8
+     ],
+     [
+      "classical.00034",
+      0.767
+     ],
+     [
+      "classical.00020",
+      0.767
+     ],
+     [
+      "classical.00013",
+      0.767
+     ],
+     [
+      "classical.00039",
+      0.767
+     ],
+     [
+      "classical.00038",
+      0.733
+     ],
+     [
+      "classical.00077",
+      0.733
+     ],
+     [
+      "classical.00040",
+      0.7
+     ],
+     [
+      "classical.00026",
+      0.667
+     ],
+     [
+      "classical.00049",
+      0.567
+     ]
+    ],
+    "country|classical": [
+     [
+      "country.00030",
+      0.467
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00046",
+      0.967
+     ],
+     [
+      "country.00044",
+      0.633
+     ],
+     [
+      "country.00048",
+      0.633
+     ],
+     [
+      "country.00035",
+      0.633
+     ],
+     [
+      "country.00037",
+      0.6
+     ],
+     [
+      "country.00050",
+      0.533
+     ],
+     [
+      "country.00060",
+      0.5
+     ],
+     [
+      "country.00058",
+      0.467
+     ],
+     [
+      "country.00038",
+      0.433
+     ],
+     [
+      "country.00051",
+      0.4
+     ],
+     [
+      "country.00031",
+      0.367
+     ],
+     [
+      "country.00032",
+      0.333
+     ],
+     [
+      "country.00036",
+      0.3
+     ],
+     [
+      "country.00040",
+      0.267
+     ],
+     [
+      "country.00062",
+      0.267
+     ],
+     [
+      "country.00064",
+      0.267
+     ]
+    ],
+    "country|disco": [
+     [
+      "country.00033",
+      0.633
+     ],
+     [
+      "country.00039",
+      0.6
+     ],
+     [
+      "country.00043",
+      0.567
+     ],
+     [
+      "country.00034",
+      0.333
+     ]
+    ],
+    "country|jazz": [
+     [
+      "country.00047",
+      0.4
+     ]
+    ],
+    "country|reggae": [
+     [
+      "country.00063",
+      0.667
+     ],
+     [
+      "country.00059",
+      0.433
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00053",
+      0.833
+     ],
+     [
+      "country.00055",
+      0.7
+     ],
+     [
+      "country.00054",
+      0.467
+     ],
+     [
+      "country.00061",
+      0.433
+     ],
+     [
+      "country.00056",
+      0.433
+     ],
+     [
+      "country.00057",
+      0.4
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00077",
+      0.5
+     ],
+     [
+      "disco.00065",
+      0.5
+     ],
+     [
+      "disco.00088",
+      0.3
+     ]
+    ],
+    "disco|country": [
+     [
+      "disco.00086",
+      0.367
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00001",
+      0.933
+     ],
+     [
+      "disco.00097",
+      0.9
+     ],
+     [
+      "disco.00094",
+      0.6
+     ],
+     [
+      "disco.00079",
+      0.567
+     ],
+     [
+      "disco.00082",
+      0.5
+     ],
+     [
+      "disco.00080",
+      0.5
+     ],
+     [
+      "disco.00078",
+      0.5
+     ],
+     [
+      "disco.00085",
+      0.467
+     ],
+     [
+      "disco.00076",
+      0.467
+     ],
+     [
+      "disco.00093",
+      0.4
+     ],
+     [
+      "disco.00083",
+      0.333
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00063",
+      1.0
+     ],
+     [
+      "disco.00096",
+      0.767
+     ],
+     [
+      "disco.00062",
+      0.5
+     ],
+     [
+      "disco.00084",
+      0.467
+     ],
+     [
+      "disco.00091",
+      0.433
+     ]
+    ],
+    "disco|metal": [
+     [
+      "disco.00066",
+      0.3
+     ]
+    ],
+    "disco|reggae": [
+     [
+      "disco.00064",
+      0.9
+     ],
+     [
+      "disco.00081",
+      0.333
+     ]
+    ],
+    "disco|rock": [
+     [
+      "disco.00087",
+      0.567
+     ],
+     [
+      "disco.00069",
+      0.567
+     ],
+     [
+      "disco.00099",
+      0.467
+     ],
+     [
+      "disco.00092",
+      0.433
+     ],
+     [
+      "disco.00058",
+      0.433
+     ],
+     [
+      "disco.00021",
+      0.433
+     ]
+    ],
+    "hiphop|country": [
+     [
+      "hiphop.00044",
+      0.2
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00030",
+      0.867
+     ],
+     [
+      "hiphop.00054",
+      0.733
+     ],
+     [
+      "hiphop.00000",
+      0.467
+     ],
+     [
+      "hiphop.00068",
+      0.367
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00062",
+      0.767
+     ],
+     [
+      "hiphop.00099",
+      0.733
+     ],
+     [
+      "hiphop.00074",
+      0.7
+     ],
+     [
+      "hiphop.00063",
+      0.633
+     ],
+     [
+      "hiphop.00066",
+      0.567
+     ],
+     [
+      "hiphop.00026",
+      0.533
+     ],
+     [
+      "hiphop.00051",
+      0.367
+     ],
+     [
+      "hiphop.00043",
+      0.333
+     ]
+    ],
+    "hiphop|pop": [
+     [
+      "hiphop.00073",
+      0.9
+     ],
+     [
+      "hiphop.00075",
+      0.833
+     ],
+     [
+      "hiphop.00070",
+      0.8
+     ],
+     [
+      "hiphop.00072",
+      0.8
+     ],
+     [
+      "hiphop.00071",
+      0.767
+     ],
+     [
+      "hiphop.00064",
+      0.767
+     ],
+     [
+      "hiphop.00040",
+      0.633
+     ],
+     [
+      "hiphop.00065",
+      0.6
+     ],
+     [
+      "hiphop.00069",
+      0.567
+     ],
+     [
+      "hiphop.00067",
+      0.567
+     ],
+     [
+      "hiphop.00045",
+      0.5
+     ]
+    ],
+    "hiphop|reggae": [
+     [
+      "hiphop.00053",
+      0.667
+     ],
+     [
+      "hiphop.00027",
+      0.6
+     ],
+     [
+      "hiphop.00052",
+      0.533
+     ]
+    ],
+    "jazz|classical": [
+     [
+      "jazz.00089",
+      0.4
+     ]
+    ],
+    "jazz|country": [
+     [
+      "jazz.00084",
+      0.533
+     ],
+     [
+      "jazz.00090",
+      0.533
+     ],
+     [
+      "jazz.00081",
+      0.467
+     ],
+     [
+      "jazz.00080",
+      0.467
+     ]
+    ],
+    "jazz|disco": [
+     [
+      "jazz.00085",
+      0.2
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00095",
+      0.933
+     ],
+     [
+      "jazz.00098",
+      0.867
+     ],
+     [
+      "jazz.00097",
+      0.8
+     ],
+     [
+      "jazz.00099",
+      0.767
+     ],
+     [
+      "jazz.00096",
+      0.6
+     ],
+     [
+      "jazz.00076",
+      0.567
+     ],
+     [
+      "jazz.00075",
+      0.467
+     ],
+     [
+      "jazz.00073",
+      0.433
+     ],
+     [
+      "jazz.00094",
+      0.4
+     ],
+     [
+      "jazz.00077",
+      0.367
+     ]
+    ],
+    "jazz|pop": [
+     [
+      "jazz.00086",
+      0.467
+     ],
+     [
+      "jazz.00082",
+      0.3
+     ],
+     [
+      "jazz.00092",
+      0.3
+     ],
+     [
+      "jazz.00088",
+      0.267
+     ]
+    ],
+    "jazz|reggae": [
+     [
+      "jazz.00087",
+      0.633
+     ],
+     [
+      "jazz.00074",
+      0.467
+     ],
+     [
+      "jazz.00078",
+      0.4
+     ]
+    ],
+    "jazz|rock": [
+     [
+      "jazz.00083",
+      0.767
+     ],
+     [
+      "jazz.00093",
+      0.733
+     ],
+     [
+      "jazz.00091",
+      0.433
+     ],
+     [
+      "jazz.00079",
+      0.267
+     ]
+    ],
+    "metal|blues": [
+     [
+      "metal.00088",
+      0.467
+     ],
+     [
+      "metal.00031",
+      0.367
+     ],
+     [
+      "metal.00038",
+      0.333
+     ]
+    ],
+    "metal|disco": [
+     [
+      "metal.00070",
+      0.467
+     ]
+    ],
+    "metal|hiphop": [
+     [
+      "metal.00074",
+      0.467
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00015",
+      1.0
+     ],
+     [
+      "metal.00023",
+      1.0
+     ],
+     [
+      "metal.00087",
+      1.0
+     ],
+     [
+      "metal.00078",
+      1.0
+     ],
+     [
+      "metal.00026",
+      0.967
+     ],
+     [
+      "metal.00014",
+      0.967
+     ],
+     [
+      "metal.00012",
+      0.933
+     ],
+     [
+      "metal.00013",
+      0.933
+     ],
+     [
+      "metal.00033",
+      0.8
+     ],
+     [
+      "metal.00030",
+      0.7
+     ],
+     [
+      "metal.00073",
+      0.667
+     ],
+     [
+      "metal.00029",
+      0.667
+     ],
+     [
+      "metal.00067",
+      0.6
+     ],
+     [
+      "metal.00025",
+      0.533
+     ],
+     [
+      "metal.00085",
+      0.367
+     ]
+    ],
+    "metal|rock": [
+     [
+      "metal.00028",
+      0.733
+     ],
+     [
+      "metal.00022",
+      0.733
+     ],
+     [
+      "metal.00083",
+      0.633
+     ],
+     [
+      "metal.00039",
+      0.567
+     ],
+     [
+      "metal.00027",
+      0.533
+     ],
+     [
+      "metal.00032",
+      0.533
+     ],
+     [
+      "metal.00075",
+      0.4
+     ]
+    ],
+    "pop|country": [
+     [
+      "pop.00079",
+      0.467
+     ],
+     [
+      "pop.00063",
+      0.333
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00069",
+      0.767
+     ],
+     [
+      "pop.00065",
+      0.6
+     ],
+     [
+      "pop.00090",
+      0.6
+     ],
+     [
+      "pop.00043",
+      0.567
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00091",
+      1.0
+     ],
+     [
+      "pop.00001",
+      0.967
+     ],
+     [
+      "pop.00095",
+      0.967
+     ],
+     [
+      "pop.00089",
+      0.967
+     ],
+     [
+      "pop.00077",
+      0.967
+     ],
+     [
+      "pop.00075",
+      0.933
+     ],
+     [
+      "pop.00092",
+      0.9
+     ],
+     [
+      "pop.00078",
+      0.9
+     ],
+     [
+      "pop.00074",
+      0.9
+     ],
+     [
+      "pop.00000",
+      0.9
+     ],
+     [
+      "pop.00096",
+      0.867
+     ],
+     [
+      "pop.00066",
+      0.867
+     ],
+     [
+      "pop.00076",
+      0.833
+     ],
+     [
+      "pop.00073",
+      0.833
+     ],
+     [
+      "pop.00093",
+      0.833
+     ],
+     [
+      "pop.00088",
+      0.833
+     ],
+     [
+      "pop.00070",
+      0.767
+     ],
+     [
+      "pop.00071",
+      0.733
+     ],
+     [
+      "pop.00082",
+      0.733
+     ],
+     [
+      "pop.00072",
+      0.7
+     ],
+     [
+      "pop.00094",
+      0.533
+     ],
+     [
+      "pop.00064",
+      0.433
+     ]
+    ],
+    "pop|reggae": [
+     [
+      "pop.00013",
+      0.467
+     ],
+     [
+      "pop.00014",
+      0.433
+     ]
+    ],
+    "reggae|blues": [
+     [
+      "reggae.00089",
+      0.267
+     ]
+    ],
+    "reggae|country": [
+     [
+      "reggae.00040",
+      0.567
+     ]
+    ],
+    "reggae|disco": [
+     [
+      "reggae.00088",
+      0.567
+     ],
+     [
+      "reggae.00084",
+      0.333
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00082",
+      0.633
+     ],
+     [
+      "reggae.00065",
+      0.567
+     ],
+     [
+      "reggae.00090",
+      0.567
+     ],
+     [
+      "reggae.00048",
+      0.533
+     ],
+     [
+      "reggae.00064",
+      0.5
+     ],
+     [
+      "reggae.00047",
+      0.5
+     ],
+     [
+      "reggae.00079",
+      0.4
+     ],
+     [
+      "reggae.00067",
+      0.367
+     ]
+    ],
+    "reggae|jazz": [
+     [
+      "reggae.00083",
+      0.267
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.9
+     ],
+     [
+      "reggae.00052",
+      0.633
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00037",
+      1.0
+     ],
+     [
+      "reggae.00034",
+      0.933
+     ],
+     [
+      "reggae.00035",
+      0.833
+     ],
+     [
+      "reggae.00036",
+      0.833
+     ],
+     [
+      "reggae.00068",
+      0.833
+     ],
+     [
+      "reggae.00039",
+      0.833
+     ],
+     [
+      "reggae.00053",
+      0.667
+     ],
+     [
+      "reggae.00038",
+      0.633
+     ],
+     [
+      "reggae.00066",
+      0.533
+     ],
+     [
+      "reggae.00046",
+      0.5
+     ],
+     [
+      "reggae.00071",
+      0.467
+     ]
+    ],
+    "rock|classical": [
+     [
+      "rock.00045",
+      0.567
+     ],
+     [
+      "rock.00048",
+      0.4
+     ],
+     [
+      "rock.00033",
+      0.333
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00089",
+      0.367
+     ],
+     [
+      "rock.00090",
+      0.367
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00037",
+      0.933
+     ],
+     [
+      "rock.00031",
+      0.9
+     ],
+     [
+      "rock.00043",
+      0.8
+     ],
+     [
+      "rock.00032",
+      0.767
+     ],
+     [
+      "rock.00030",
+      0.7
+     ],
+     [
+      "rock.00040",
+      0.667
+     ],
+     [
+      "rock.00029",
+      0.667
+     ],
+     [
+      "rock.00042",
+      0.667
+     ],
+     [
+      "rock.00036",
+      0.567
+     ],
+     [
+      "rock.00088",
+      0.533
+     ],
+     [
+      "rock.00046",
+      0.467
+     ],
+     [
+      "rock.00034",
+      0.467
+     ],
+     [
+      "rock.00047",
+      0.4
+     ],
+     [
+      "rock.00041",
+      0.4
+     ],
+     [
+      "rock.00027",
+      0.3
+     ],
+     [
+      "rock.00039",
+      0.3
+     ]
+    ],
+    "rock|jazz": [
+     [
+      "rock.00044",
+      0.567
+     ]
+    ],
+    "rock|metal": [
+     [
+      "rock.00010",
+      0.433
+     ]
+    ],
+    "rock|reggae": [
+     [
+      "rock.00028",
+      0.667
+     ],
+     [
+      "rock.00013",
+      0.6
+     ],
+     [
+      "rock.00014",
+      0.6
+     ],
+     [
+      "rock.00015",
+      0.5
+     ],
+     [
+      "rock.00035",
+      0.5
+     ],
+     [
+      "rock.00012",
+      0.333
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.733
+     ],
+     [
+      "rock.00011",
+      0.433
+     ],
+     [
+      "rock.00086",
+      0.367
+     ]
+    ]
+   }
+  },
+  "logreg_s0": {
+   "model": "logreg",
+   "seed": 0,
+   "label": "Logistic regression",
+   "confusion": [
+    [
+     2,
+     0,
+     0,
+     0,
+     0,
+     17,
+     5,
+     0,
+     3,
+     4
+    ],
+    [
+     0,
+     31,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     1,
+     19,
+     4,
+     0,
+     0,
+     0,
+     1,
+     0,
+     4
+    ],
+    [
+     4,
+     0,
+     0,
+     14,
+     3,
+     0,
+     0,
+     0,
+     1,
+     7
+    ],
+    [
+     0,
+     0,
+     0,
+     4,
+     15,
+     0,
+     0,
+     6,
+     2,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     1,
+     0,
+     22,
+     0,
+     0,
+     1,
+     2
+    ],
+    [
+     2,
+     0,
+     0,
+     0,
+     1,
+     0,
+     22,
+     0,
+     0,
+     2
+    ],
+    [
+     0,
+     0,
+     0,
+     3,
+     2,
+     0,
+     0,
+     24,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     1,
+     1,
+     4,
+     1,
+     0,
+     4,
+     14,
+     0
+    ],
+    [
+     4,
+     0,
+     8,
+     10,
+     0,
+     1,
+     0,
+     1,
+     2,
+     6
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.0889,
+    "classical": 0.9688,
+    "country": 0.6552,
+    "disco": 0.4242,
+    "hiphop": 0.5769,
+    "jazz": 0.6471,
+    "metal": 0.8148,
+    "pop": 0.7273,
+    "reggae": 0.5714,
+    "rock": 0.2069
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00028",
+      0.438
+     ],
+     [
+      "blues.00069",
+      0.348
+     ]
+    ],
+    "blues|jazz": [
+     [
+      "blues.00023",
+      0.92
+     ],
+     [
+      "blues.00018",
+      0.856
+     ],
+     [
+      "blues.00021",
+      0.835
+     ],
+     [
+      "blues.00014",
+      0.821
+     ],
+     [
+      "blues.00020",
+      0.809
+     ],
+     [
+      "blues.00013",
+      0.801
+     ],
+     [
+      "blues.00026",
+      0.784
+     ],
+     [
+      "blues.00022",
+      0.775
+     ],
+     [
+      "blues.00025",
+      0.721
+     ],
+     [
+      "blues.00017",
+      0.675
+     ],
+     [
+      "blues.00027",
+      0.664
+     ],
+     [
+      "blues.00015",
+      0.61
+     ],
+     [
+      "blues.00012",
+      0.574
+     ],
+     [
+      "blues.00019",
+      0.548
+     ],
+     [
+      "blues.00099",
+      0.526
+     ],
+     [
+      "blues.00016",
+      0.514
+     ],
+     [
+      "blues.00024",
+      0.496
+     ]
+    ],
+    "blues|metal": [
+     [
+      "blues.00098",
+      0.715
+     ],
+     [
+      "blues.00064",
+      0.571
+     ],
+     [
+      "blues.00061",
+      0.52
+     ],
+     [
+      "blues.00067",
+      0.49
+     ],
+     [
+      "blues.00068",
+      0.316
+     ]
+    ],
+    "blues|reggae": [
+     [
+      "blues.00070",
+      0.411
+     ],
+     [
+      "blues.00066",
+      0.388
+     ],
+     [
+      "blues.00062",
+      0.34
+     ]
+    ],
+    "blues|rock": [
+     [
+      "blues.00072",
+      0.425
+     ],
+     [
+      "blues.00071",
+      0.405
+     ],
+     [
+      "blues.00065",
+      0.344
+     ],
+     [
+      "blues.00063",
+      0.276
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00041",
+      0.989
+     ],
+     [
+      "classical.00011",
+      0.972
+     ],
+     [
+      "classical.00015",
+      0.967
+     ],
+     [
+      "classical.00018",
+      0.961
+     ],
+     [
+      "classical.00078",
+      0.952
+     ],
+     [
+      "classical.00037",
+      0.924
+     ],
+     [
+      "classical.00039",
+      0.913
+     ],
+     [
+      "classical.00016",
+      0.908
+     ],
+     [
+      "classical.00021",
+      0.906
+     ],
+     [
+      "classical.00027",
+      0.881
+     ],
+     [
+      "classical.00077",
+      0.863
+     ],
+     [
+      "classical.00079",
+      0.862
+     ],
+     [
+      "classical.00012",
+      0.859
+     ],
+     [
+      "classical.00014",
+      0.858
+     ],
+     [
+      "classical.00026",
+      0.844
+     ],
+     [
+      "classical.00019",
+      0.82
+     ],
+     [
+      "classical.00029",
+      0.811
+     ],
+     [
+      "classical.00038",
+      0.799
+     ],
+     [
+      "classical.00022",
+      0.796
+     ],
+     [
+      "classical.00017",
+      0.791
+     ],
+     [
+      "classical.00036",
+      0.779
+     ],
+     [
+      "classical.00025",
+      0.767
+     ],
+     [
+      "classical.00013",
+      0.767
+     ],
+     [
+      "classical.00040",
+      0.763
+     ],
+     [
+      "classical.00020",
+      0.742
+     ],
+     [
+      "classical.00028",
+      0.741
+     ],
+     [
+      "classical.00024",
+      0.725
+     ],
+     [
+      "classical.00023",
+      0.721
+     ],
+     [
+      "classical.00034",
+      0.562
+     ],
+     [
+      "classical.00035",
+      0.53
+     ],
+     [
+      "classical.00049",
+      0.499
+     ]
+    ],
+    "country|blues": [
+     [
+      "country.00059",
+      0.376
+     ]
+    ],
+    "country|classical": [
+     [
+      "country.00030",
+      0.295
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00048",
+      0.835
+     ],
+     [
+      "country.00035",
+      0.814
+     ],
+     [
+      "country.00060",
+      0.68
+     ],
+     [
+      "country.00044",
+      0.665
+     ],
+     [
+      "country.00051",
+      0.658
+     ],
+     [
+      "country.00031",
+      0.628
+     ],
+     [
+      "country.00056",
+      0.623
+     ],
+     [
+      "country.00037",
+      0.599
+     ],
+     [
+      "country.00057",
+      0.577
+     ],
+     [
+      "country.00046",
+      0.573
+     ],
+     [
+      "country.00047",
+      0.555
+     ],
+     [
+      "country.00061",
+      0.486
+     ],
+     [
+      "country.00054",
+      0.484
+     ],
+     [
+      "country.00040",
+      0.458
+     ],
+     [
+      "country.00064",
+      0.439
+     ],
+     [
+      "country.00050",
+      0.378
+     ],
+     [
+      "country.00036",
+      0.306
+     ],
+     [
+      "country.00032",
+      0.263
+     ],
+     [
+      "country.00063",
+      0.251
+     ]
+    ],
+    "country|disco": [
+     [
+      "country.00038",
+      0.527
+     ],
+     [
+      "country.00039",
+      0.448
+     ],
+     [
+      "country.00034",
+      0.43
+     ],
+     [
+      "country.00043",
+      0.301
+     ]
+    ],
+    "country|pop": [
+     [
+      "country.00033",
+      0.307
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00053",
+      0.487
+     ],
+     [
+      "country.00055",
+      0.423
+     ],
+     [
+      "country.00058",
+      0.378
+     ],
+     [
+      "country.00062",
+      0.362
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00077",
+      0.671
+     ],
+     [
+      "disco.00065",
+      0.573
+     ],
+     [
+      "disco.00086",
+      0.425
+     ],
+     [
+      "disco.00091",
+      0.37
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00001",
+      0.916
+     ],
+     [
+      "disco.00076",
+      0.821
+     ],
+     [
+      "disco.00066",
+      0.68
+     ],
+     [
+      "disco.00021",
+      0.661
+     ],
+     [
+      "disco.00079",
+      0.56
+     ],
+     [
+      "disco.00082",
+      0.494
+     ],
+     [
+      "disco.00097",
+      0.465
+     ],
+     [
+      "disco.00078",
+      0.453
+     ],
+     [
+      "disco.00093",
+      0.431
+     ],
+     [
+      "disco.00084",
+      0.408
+     ],
+     [
+      "disco.00058",
+      0.385
+     ],
+     [
+      "disco.00087",
+      0.369
+     ],
+     [
+      "disco.00088",
+      0.28
+     ],
+     [
+      "disco.00081",
+      0.252
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00063",
+      0.986
+     ],
+     [
+      "disco.00085",
+      0.713
+     ],
+     [
+      "disco.00062",
+      0.572
+     ]
+    ],
+    "disco|reggae": [
+     [
+      "disco.00064",
+      0.317
+     ]
+    ],
+    "disco|rock": [
+     [
+      "disco.00094",
+      0.538
+     ],
+     [
+      "disco.00069",
+      0.469
+     ],
+     [
+      "disco.00099",
+      0.409
+     ],
+     [
+      "disco.00080",
+      0.34
+     ],
+     [
+      "disco.00092",
+      0.327
+     ],
+     [
+      "disco.00096",
+      0.288
+     ],
+     [
+      "disco.00083",
+      0.203
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00000",
+      0.632
+     ],
+     [
+      "hiphop.00030",
+      0.503
+     ],
+     [
+      "hiphop.00044",
+      0.306
+     ],
+     [
+      "hiphop.00054",
+      0.289
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00074",
+      0.971
+     ],
+     [
+      "hiphop.00067",
+      0.909
+     ],
+     [
+      "hiphop.00099",
+      0.906
+     ],
+     [
+      "hiphop.00026",
+      0.881
+     ],
+     [
+      "hiphop.00063",
+      0.875
+     ],
+     [
+      "hiphop.00064",
+      0.836
+     ],
+     [
+      "hiphop.00062",
+      0.827
+     ],
+     [
+      "hiphop.00069",
+      0.822
+     ],
+     [
+      "hiphop.00075",
+      0.738
+     ],
+     [
+      "hiphop.00065",
+      0.621
+     ],
+     [
+      "hiphop.00043",
+      0.538
+     ],
+     [
+      "hiphop.00068",
+      0.53
+     ],
+     [
+      "hiphop.00066",
+      0.528
+     ],
+     [
+      "hiphop.00051",
+      0.522
+     ],
+     [
+      "hiphop.00027",
+      0.488
+     ]
+    ],
+    "hiphop|pop": [
+     [
+      "hiphop.00070",
+      0.783
+     ],
+     [
+      "hiphop.00073",
+      0.753
+     ],
+     [
+      "hiphop.00040",
+      0.734
+     ],
+     [
+      "hiphop.00072",
+      0.727
+     ],
+     [
+      "hiphop.00071",
+      0.682
+     ],
+     [
+      "hiphop.00045",
+      0.465
+     ]
+    ],
+    "hiphop|reggae": [
+     [
+      "hiphop.00053",
+      0.466
+     ],
+     [
+      "hiphop.00052",
+      0.339
+     ]
+    ],
+    "jazz|classical": [
+     [
+      "jazz.00086",
+      0.34
+     ]
+    ],
+    "jazz|disco": [
+     [
+      "jazz.00081",
+      0.27
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00097",
+      0.739
+     ],
+     [
+      "jazz.00099",
+      0.665
+     ],
+     [
+      "jazz.00095",
+      0.64
+     ],
+     [
+      "jazz.00089",
+      0.627
+     ],
+     [
+      "jazz.00088",
+      0.621
+     ],
+     [
+      "jazz.00075",
+      0.62
+     ],
+     [
+      "jazz.00078",
+      0.601
+     ],
+     [
+      "jazz.00077",
+      0.597
+     ],
+     [
+      "jazz.00098",
+      0.558
+     ],
+     [
+      "jazz.00096",
+      0.558
+     ],
+     [
+      "jazz.00074",
+      0.557
+     ],
+     [
+      "jazz.00091",
+      0.495
+     ],
+     [
+      "jazz.00094",
+      0.484
+     ],
+     [
+      "jazz.00090",
+      0.465
+     ],
+     [
+      "jazz.00084",
+      0.456
+     ],
+     [
+      "jazz.00076",
+      0.454
+     ],
+     [
+      "jazz.00079",
+      0.424
+     ],
+     [
+      "jazz.00092",
+      0.423
+     ],
+     [
+      "jazz.00085",
+      0.408
+     ],
+     [
+      "jazz.00073",
+      0.376
+     ],
+     [
+      "jazz.00080",
+      0.373
+     ],
+     [
+      "jazz.00093",
+      0.292
+     ]
+    ],
+    "jazz|reggae": [
+     [
+      "jazz.00087",
+      0.653
+     ]
+    ],
+    "jazz|rock": [
+     [
+      "jazz.00082",
+      0.408
+     ],
+     [
+      "jazz.00083",
+      0.323
+     ]
+    ],
+    "metal|blues": [
+     [
+      "metal.00038",
+      0.645
+     ],
+     [
+      "metal.00088",
+      0.42
+     ]
+    ],
+    "metal|hiphop": [
+     [
+      "metal.00070",
+      0.288
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00012",
+      0.998
+     ],
+     [
+      "metal.00023",
+      0.997
+     ],
+     [
+      "metal.00014",
+      0.997
+     ],
+     [
+      "metal.00013",
+      0.995
+     ],
+     [
+      "metal.00026",
+      0.991
+     ],
+     [
+      "metal.00015",
+      0.97
+     ],
+     [
+      "metal.00025",
+      0.927
+     ],
+     [
+      "metal.00033",
+      0.918
+     ],
+     [
+      "metal.00078",
+      0.854
+     ],
+     [
+      "metal.00028",
+      0.848
+     ],
+     [
+      "metal.00027",
+      0.803
+     ],
+     [
+      "metal.00087",
+      0.786
+     ],
+     [
+      "metal.00032",
+      0.762
+     ],
+     [
+      "metal.00029",
+      0.742
+     ],
+     [
+      "metal.00067",
+      0.729
+     ],
+     [
+      "metal.00074",
+      0.726
+     ],
+     [
+      "metal.00073",
+      0.527
+     ],
+     [
+      "metal.00085",
+      0.477
+     ],
+     [
+      "metal.00031",
+      0.451
+     ],
+     [
+      "metal.00030",
+      0.45
+     ],
+     [
+      "metal.00083",
+      0.445
+     ],
+     [
+      "metal.00075",
+      0.311
+     ]
+    ],
+    "metal|rock": [
+     [
+      "metal.00022",
+      0.413
+     ],
+     [
+      "metal.00039",
+      0.245
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00072",
+      0.64
+     ],
+     [
+      "pop.00064",
+      0.579
+     ],
+     [
+      "pop.00014",
+      0.276
+     ]
+    ],
+    "pop|hiphop": [
+     [
+      "pop.00069",
+      0.498
+     ],
+     [
+      "pop.00043",
+      0.491
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      0.998
+     ],
+     [
+      "pop.00096",
+      0.994
+     ],
+     [
+      "pop.00074",
+      0.984
+     ],
+     [
+      "pop.00066",
+      0.981
+     ],
+     [
+      "pop.00001",
+      0.976
+     ],
+     [
+      "pop.00000",
+      0.971
+     ],
+     [
+      "pop.00088",
+      0.952
+     ],
+     [
+      "pop.00073",
+      0.944
+     ],
+     [
+      "pop.00089",
+      0.916
+     ],
+     [
+      "pop.00071",
+      0.891
+     ],
+     [
+      "pop.00077",
+      0.828
+     ],
+     [
+      "pop.00094",
+      0.821
+     ],
+     [
+      "pop.00090",
+      0.789
+     ],
+     [
+      "pop.00091",
+      0.76
+     ],
+     [
+      "pop.00082",
+      0.736
+     ],
+     [
+      "pop.00078",
+      0.731
+     ],
+     [
+      "pop.00075",
+      0.691
+     ],
+     [
+      "pop.00093",
+      0.668
+     ],
+     [
+      "pop.00092",
+      0.646
+     ],
+     [
+      "pop.00063",
+      0.581
+     ],
+     [
+      "pop.00070",
+      0.572
+     ],
+     [
+      "pop.00076",
+      0.482
+     ],
+     [
+      "pop.00065",
+      0.399
+     ],
+     [
+      "pop.00013",
+      0.354
+     ]
+    ],
+    "pop|rock": [
+     [
+      "pop.00079",
+      0.343
+     ]
+    ],
+    "reggae|blues": [
+     [
+      "reggae.00089",
+      0.561
+     ]
+    ],
+    "reggae|country": [
+     [
+      "reggae.00067",
+      0.488
+     ]
+    ],
+    "reggae|disco": [
+     [
+      "reggae.00079",
+      0.35
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00082",
+      0.953
+     ],
+     [
+      "reggae.00039",
+      0.659
+     ],
+     [
+      "reggae.00052",
+      0.576
+     ],
+     [
+      "reggae.00090",
+      0.471
+     ]
+    ],
+    "reggae|jazz": [
+     [
+      "reggae.00083",
+      0.618
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.9
+     ],
+     [
+      "reggae.00065",
+      0.555
+     ],
+     [
+      "reggae.00088",
+      0.53
+     ],
+     [
+      "reggae.00064",
+      0.513
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00068",
+      0.837
+     ],
+     [
+      "reggae.00034",
+      0.816
+     ],
+     [
+      "reggae.00066",
+      0.811
+     ],
+     [
+      "reggae.00053",
+      0.795
+     ],
+     [
+      "reggae.00037",
+      0.776
+     ],
+     [
+      "reggae.00071",
+      0.662
+     ],
+     [
+      "reggae.00036",
+      0.623
+     ],
+     [
+      "reggae.00035",
+      0.567
+     ],
+     [
+      "reggae.00046",
+      0.563
+     ],
+     [
+      "reggae.00038",
+      0.56
+     ],
+     [
+      "reggae.00047",
+      0.54
+     ],
+     [
+      "reggae.00048",
+      0.461
+     ],
+     [
+      "reggae.00084",
+      0.46
+     ],
+     [
+      "reggae.00040",
+      0.452
+     ]
+    ],
+    "rock|blues": [
+     [
+      "rock.00010",
+      0.757
+     ],
+     [
+      "rock.00013",
+      0.644
+     ],
+     [
+      "rock.00011",
+      0.452
+     ],
+     [
+      "rock.00012",
+      0.358
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00032",
+      0.454
+     ],
+     [
+      "rock.00034",
+      0.395
+     ],
+     [
+      "rock.00028",
+      0.332
+     ],
+     [
+      "rock.00015",
+      0.292
+     ],
+     [
+      "rock.00033",
+      0.29
+     ],
+     [
+      "rock.00045",
+      0.28
+     ],
+     [
+      "rock.00039",
+      0.263
+     ],
+     [
+      "rock.00044",
+      0.232
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00031",
+      0.624
+     ],
+     [
+      "rock.00037",
+      0.461
+     ],
+     [
+      "rock.00030",
+      0.436
+     ],
+     [
+      "rock.00040",
+      0.405
+     ],
+     [
+      "rock.00041",
+      0.399
+     ],
+     [
+      "rock.00036",
+      0.363
+     ],
+     [
+      "rock.00042",
+      0.341
+     ],
+     [
+      "rock.00046",
+      0.335
+     ],
+     [
+      "rock.00088",
+      0.29
+     ],
+     [
+      "rock.00047",
+      0.251
+     ]
+    ],
+    "rock|jazz": [
+     [
+      "rock.00090",
+      0.4
+     ]
+    ],
+    "rock|pop": [
+     [
+      "rock.00043",
+      0.413
+     ]
+    ],
+    "rock|reggae": [
+     [
+      "rock.00014",
+      0.631
+     ],
+     [
+      "rock.00035",
+      0.447
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.55
+     ],
+     [
+      "rock.00029",
+      0.436
+     ],
+     [
+      "rock.00089",
+      0.375
+     ],
+     [
+      "rock.00048",
+      0.341
+     ],
+     [
+      "rock.00027",
+      0.317
+     ],
+     [
+      "rock.00086",
+      0.284
+     ]
+    ]
+   }
+  },
+  "svm_s0": {
+   "model": "svm",
+   "seed": 0,
+   "label": "RBF SVM",
+   "confusion": [
+    [
+     1,
+     0,
+     0,
+     0,
+     0,
+     18,
+     5,
+     0,
+     0,
+     7
+    ],
+    [
+     0,
+     31,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     2,
+     0,
+     16,
+     2,
+     0,
+     1,
+     0,
+     0,
+     2,
+     7
+    ],
+    [
+     2,
+     0,
+     0,
+     17,
+     3,
+     0,
+     0,
+     0,
+     2,
+     5
+    ],
+    [
+     0,
+     0,
+     0,
+     2,
+     15,
+     0,
+     0,
+     7,
+     3,
+     0
+    ],
+    [
+     0,
+     0,
+     4,
+     0,
+     0,
+     14,
+     0,
+     3,
+     1,
+     5
+    ],
+    [
+     3,
+     0,
+     0,
+     1,
+     0,
+     0,
+     23,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     2,
+     3,
+     2,
+     0,
+     0,
+     23,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     2,
+     0,
+     4,
+     1,
+     0,
+     3,
+     15,
+     0
+    ],
+    [
+     2,
+     0,
+     6,
+     8,
+     1,
+     2,
+     1,
+     1,
+     5,
+     6
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.0476,
+    "classical": 1.0,
+    "country": 0.5333,
+    "disco": 0.5484,
+    "hiphop": 0.5769,
+    "jazz": 0.4444,
+    "metal": 0.8214,
+    "pop": 0.6866,
+    "reggae": 0.5556,
+    "rock": 0.1935
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00069",
+      0.408
+     ]
+    ],
+    "blues|jazz": [
+     [
+      "blues.00023",
+      0.979
+     ],
+     [
+      "blues.00018",
+      0.871
+     ],
+     [
+      "blues.00014",
+      0.862
+     ],
+     [
+      "blues.00020",
+      0.851
+     ],
+     [
+      "blues.00013",
+      0.812
+     ],
+     [
+      "blues.00026",
+      0.809
+     ],
+     [
+      "blues.00017",
+      0.796
+     ],
+     [
+      "blues.00022",
+      0.75
+     ],
+     [
+      "blues.00012",
+      0.74
+     ],
+     [
+      "blues.00025",
+      0.712
+     ],
+     [
+      "blues.00021",
+      0.685
+     ],
+     [
+      "blues.00016",
+      0.671
+     ],
+     [
+      "blues.00024",
+      0.668
+     ],
+     [
+      "blues.00019",
+      0.662
+     ],
+     [
+      "blues.00027",
+      0.645
+     ],
+     [
+      "blues.00015",
+      0.589
+     ],
+     [
+      "blues.00028",
+      0.406
+     ],
+     [
+      "blues.00099",
+      0.281
+     ]
+    ],
+    "blues|metal": [
+     [
+      "blues.00061",
+      0.915
+     ],
+     [
+      "blues.00064",
+      0.75
+     ],
+     [
+      "blues.00098",
+      0.64
+     ],
+     [
+      "blues.00067",
+      0.508
+     ],
+     [
+      "blues.00062",
+      0.225
+     ]
+    ],
+    "blues|rock": [
+     [
+      "blues.00072",
+      0.726
+     ],
+     [
+      "blues.00070",
+      0.605
+     ],
+     [
+      "blues.00065",
+      0.551
+     ],
+     [
+      "blues.00071",
+      0.482
+     ],
+     [
+      "blues.00063",
+      0.473
+     ],
+     [
+      "blues.00068",
+      0.393
+     ],
+     [
+      "blues.00066",
+      0.328
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00041",
+      0.995
+     ],
+     [
+      "classical.00011",
+      0.986
+     ],
+     [
+      "classical.00018",
+      0.974
+     ],
+     [
+      "classical.00016",
+      0.958
+     ],
+     [
+      "classical.00078",
+      0.956
+     ],
+     [
+      "classical.00014",
+      0.952
+     ],
+     [
+      "classical.00027",
+      0.948
+     ],
+     [
+      "classical.00079",
+      0.947
+     ],
+     [
+      "classical.00039",
+      0.947
+     ],
+     [
+      "classical.00021",
+      0.924
+     ],
+     [
+      "classical.00037",
+      0.914
+     ],
+     [
+      "classical.00012",
+      0.914
+     ],
+     [
+      "classical.00026",
+      0.914
+     ],
+     [
+      "classical.00015",
+      0.898
+     ],
+     [
+      "classical.00017",
+      0.892
+     ],
+     [
+      "classical.00024",
+      0.88
+     ],
+     [
+      "classical.00022",
+      0.867
+     ],
+     [
+      "classical.00025",
+      0.867
+     ],
+     [
+      "classical.00029",
+      0.849
+     ],
+     [
+      "classical.00020",
+      0.838
+     ],
+     [
+      "classical.00019",
+      0.833
+     ],
+     [
+      "classical.00028",
+      0.832
+     ],
+     [
+      "classical.00077",
+      0.83
+     ],
+     [
+      "classical.00013",
+      0.817
+     ],
+     [
+      "classical.00040",
+      0.801
+     ],
+     [
+      "classical.00038",
+      0.796
+     ],
+     [
+      "classical.00023",
+      0.781
+     ],
+     [
+      "classical.00036",
+      0.733
+     ],
+     [
+      "classical.00034",
+      0.625
+     ],
+     [
+      "classical.00049",
+      0.576
+     ],
+     [
+      "classical.00035",
+      0.471
+     ]
+    ],
+    "country|blues": [
+     [
+      "country.00059",
+      0.575
+     ],
+     [
+      "country.00063",
+      0.235
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00035",
+      0.898
+     ],
+     [
+      "country.00037",
+      0.808
+     ],
+     [
+      "country.00031",
+      0.789
+     ],
+     [
+      "country.00060",
+      0.683
+     ],
+     [
+      "country.00046",
+      0.656
+     ],
+     [
+      "country.00057",
+      0.647
+     ],
+     [
+      "country.00048",
+      0.62
+     ],
+     [
+      "country.00044",
+      0.547
+     ],
+     [
+      "country.00056",
+      0.534
+     ],
+     [
+      "country.00050",
+      0.526
+     ],
+     [
+      "country.00051",
+      0.521
+     ],
+     [
+      "country.00047",
+      0.479
+     ],
+     [
+      "country.00032",
+      0.428
+     ],
+     [
+      "country.00040",
+      0.417
+     ],
+     [
+      "country.00033",
+      0.4
+     ],
+     [
+      "country.00036",
+      0.364
+     ]
+    ],
+    "country|disco": [
+     [
+      "country.00038",
+      0.381
+     ],
+     [
+      "country.00039",
+      0.365
+     ]
+    ],
+    "country|jazz": [
+     [
+      "country.00030",
+      0.307
+     ]
+    ],
+    "country|reggae": [
+     [
+      "country.00043",
+      0.285
+     ],
+     [
+      "country.00034",
+      0.281
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00053",
+      0.639
+     ],
+     [
+      "country.00061",
+      0.624
+     ],
+     [
+      "country.00055",
+      0.484
+     ],
+     [
+      "country.00058",
+      0.483
+     ],
+     [
+      "country.00054",
+      0.457
+     ],
+     [
+      "country.00064",
+      0.336
+     ],
+     [
+      "country.00062",
+      0.29
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00065",
+      0.72
+     ],
+     [
+      "disco.00077",
+      0.607
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00001",
+      0.982
+     ],
+     [
+      "disco.00076",
+      0.952
+     ],
+     [
+      "disco.00097",
+      0.886
+     ],
+     [
+      "disco.00082",
+      0.803
+     ],
+     [
+      "disco.00066",
+      0.775
+     ],
+     [
+      "disco.00079",
+      0.681
+     ],
+     [
+      "disco.00085",
+      0.613
+     ],
+     [
+      "disco.00078",
+      0.598
+     ],
+     [
+      "disco.00021",
+      0.582
+     ],
+     [
+      "disco.00091",
+      0.538
+     ],
+     [
+      "disco.00058",
+      0.527
+     ],
+     [
+      "disco.00084",
+      0.517
+     ],
+     [
+      "disco.00093",
+      0.512
+     ],
+     [
+      "disco.00092",
+      0.508
+     ],
+     [
+      "disco.00087",
+      0.431
+     ],
+     [
+      "disco.00081",
+      0.3
+     ],
+     [
+      "disco.00083",
+      0.267
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00063",
+      0.995
+     ],
+     [
+      "disco.00062",
+      0.526
+     ],
+     [
+      "disco.00096",
+      0.453
+     ]
+    ],
+    "disco|reggae": [
+     [
+      "disco.00064",
+      0.454
+     ],
+     [
+      "disco.00086",
+      0.239
+     ]
+    ],
+    "disco|rock": [
+     [
+      "disco.00069",
+      0.722
+     ],
+     [
+      "disco.00094",
+      0.534
+     ],
+     [
+      "disco.00080",
+      0.446
+     ],
+     [
+      "disco.00099",
+      0.425
+     ],
+     [
+      "disco.00088",
+      0.314
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00030",
+      0.703
+     ],
+     [
+      "hiphop.00000",
+      0.661
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00074",
+      0.988
+     ],
+     [
+      "hiphop.00063",
+      0.968
+     ],
+     [
+      "hiphop.00069",
+      0.965
+     ],
+     [
+      "hiphop.00026",
+      0.937
+     ],
+     [
+      "hiphop.00075",
+      0.843
+     ],
+     [
+      "hiphop.00099",
+      0.824
+     ],
+     [
+      "hiphop.00067",
+      0.767
+     ],
+     [
+      "hiphop.00051",
+      0.758
+     ],
+     [
+      "hiphop.00062",
+      0.745
+     ],
+     [
+      "hiphop.00064",
+      0.741
+     ],
+     [
+      "hiphop.00043",
+      0.68
+     ],
+     [
+      "hiphop.00066",
+      0.577
+     ],
+     [
+      "hiphop.00065",
+      0.522
+     ],
+     [
+      "hiphop.00068",
+      0.478
+     ],
+     [
+      "hiphop.00027",
+      0.444
+     ]
+    ],
+    "hiphop|pop": [
+     [
+      "hiphop.00045",
+      0.879
+     ],
+     [
+      "hiphop.00040",
+      0.86
+     ],
+     [
+      "hiphop.00073",
+      0.84
+     ],
+     [
+      "hiphop.00070",
+      0.76
+     ],
+     [
+      "hiphop.00072",
+      0.532
+     ],
+     [
+      "hiphop.00071",
+      0.429
+     ],
+     [
+      "hiphop.00054",
+      0.412
+     ]
+    ],
+    "hiphop|reggae": [
+     [
+      "hiphop.00053",
+      0.528
+     ],
+     [
+      "hiphop.00044",
+      0.312
+     ],
+     [
+      "hiphop.00052",
+      0.276
+     ]
+    ],
+    "jazz|country": [
+     [
+      "jazz.00078",
+      0.517
+     ],
+     [
+      "jazz.00079",
+      0.502
+     ],
+     [
+      "jazz.00080",
+      0.222
+     ],
+     [
+      "jazz.00073",
+      0.21
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00097",
+      0.834
+     ],
+     [
+      "jazz.00099",
+      0.821
+     ],
+     [
+      "jazz.00095",
+      0.813
+     ],
+     [
+      "jazz.00094",
+      0.695
+     ],
+     [
+      "jazz.00096",
+      0.685
+     ],
+     [
+      "jazz.00084",
+      0.629
+     ],
+     [
+      "jazz.00098",
+      0.592
+     ],
+     [
+      "jazz.00077",
+      0.587
+     ],
+     [
+      "jazz.00075",
+      0.504
+     ],
+     [
+      "jazz.00074",
+      0.486
+     ],
+     [
+      "jazz.00076",
+      0.45
+     ],
+     [
+      "jazz.00085",
+      0.431
+     ],
+     [
+      "jazz.00089",
+      0.388
+     ],
+     [
+      "jazz.00090",
+      0.312
+     ]
+    ],
+    "jazz|pop": [
+     [
+      "jazz.00093",
+      0.433
+     ],
+     [
+      "jazz.00088",
+      0.384
+     ],
+     [
+      "jazz.00086",
+      0.338
+     ]
+    ],
+    "jazz|reggae": [
+     [
+      "jazz.00087",
+      0.352
+     ]
+    ],
+    "jazz|rock": [
+     [
+      "jazz.00082",
+      0.739
+     ],
+     [
+      "jazz.00083",
+      0.65
+     ],
+     [
+      "jazz.00081",
+      0.574
+     ],
+     [
+      "jazz.00091",
+      0.301
+     ],
+     [
+      "jazz.00092",
+      0.219
+     ]
+    ],
+    "metal|blues": [
+     [
+      "metal.00088",
+      0.647
+     ],
+     [
+      "metal.00022",
+      0.543
+     ],
+     [
+      "metal.00038",
+      0.4
+     ]
+    ],
+    "metal|disco": [
+     [
+      "metal.00070",
+      0.44
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00023",
+      1.0
+     ],
+     [
+      "metal.00026",
+      0.999
+     ],
+     [
+      "metal.00012",
+      0.997
+     ],
+     [
+      "metal.00014",
+      0.996
+     ],
+     [
+      "metal.00013",
+      0.993
+     ],
+     [
+      "metal.00015",
+      0.989
+     ],
+     [
+      "metal.00025",
+      0.944
+     ],
+     [
+      "metal.00033",
+      0.934
+     ],
+     [
+      "metal.00078",
+      0.908
+     ],
+     [
+      "metal.00032",
+      0.886
+     ],
+     [
+      "metal.00029",
+      0.856
+     ],
+     [
+      "metal.00067",
+      0.854
+     ],
+     [
+      "metal.00027",
+      0.837
+     ],
+     [
+      "metal.00028",
+      0.836
+     ],
+     [
+      "metal.00087",
+      0.832
+     ],
+     [
+      "metal.00073",
+      0.752
+     ],
+     [
+      "metal.00074",
+      0.719
+     ],
+     [
+      "metal.00030",
+      0.558
+     ],
+     [
+      "metal.00039",
+      0.521
+     ],
+     [
+      "metal.00085",
+      0.517
+     ],
+     [
+      "metal.00083",
+      0.472
+     ],
+     [
+      "metal.00031",
+      0.4
+     ],
+     [
+      "metal.00075",
+      0.315
+     ]
+    ],
+    "pop|country": [
+     [
+      "pop.00079",
+      0.446
+     ],
+     [
+      "pop.00014",
+      0.406
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00072",
+      0.668
+     ],
+     [
+      "pop.00065",
+      0.52
+     ],
+     [
+      "pop.00064",
+      0.49
+     ]
+    ],
+    "pop|hiphop": [
+     [
+      "pop.00043",
+      0.6
+     ],
+     [
+      "pop.00069",
+      0.355
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      1.0
+     ],
+     [
+      "pop.00001",
+      0.998
+     ],
+     [
+      "pop.00077",
+      0.997
+     ],
+     [
+      "pop.00088",
+      0.996
+     ],
+     [
+      "pop.00066",
+      0.985
+     ],
+     [
+      "pop.00096",
+      0.979
+     ],
+     [
+      "pop.00089",
+      0.975
+     ],
+     [
+      "pop.00000",
+      0.97
+     ],
+     [
+      "pop.00073",
+      0.943
+     ],
+     [
+      "pop.00071",
+      0.941
+     ],
+     [
+      "pop.00074",
+      0.938
+     ],
+     [
+      "pop.00091",
+      0.869
+     ],
+     [
+      "pop.00078",
+      0.75
+     ],
+     [
+      "pop.00082",
+      0.73
+     ],
+     [
+      "pop.00070",
+      0.73
+     ],
+     [
+      "pop.00075",
+      0.718
+     ],
+     [
+      "pop.00094",
+      0.714
+     ],
+     [
+      "pop.00090",
+      0.693
+     ],
+     [
+      "pop.00092",
+      0.692
+     ],
+     [
+      "pop.00063",
+      0.636
+     ],
+     [
+      "pop.00076",
+      0.632
+     ],
+     [
+      "pop.00013",
+      0.572
+     ],
+     [
+      "pop.00093",
+      0.553
+     ]
+    ],
+    "reggae|blues": [
+     [
+      "reggae.00089",
+      0.637
+     ]
+    ],
+    "reggae|country": [
+     [
+      "reggae.00067",
+      0.621
+     ],
+     [
+      "reggae.00040",
+      0.402
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00082",
+      0.977
+     ],
+     [
+      "reggae.00065",
+      0.776
+     ],
+     [
+      "reggae.00039",
+      0.77
+     ],
+     [
+      "reggae.00052",
+      0.618
+     ]
+    ],
+    "reggae|jazz": [
+     [
+      "reggae.00083",
+      0.5
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.895
+     ],
+     [
+      "reggae.00088",
+      0.618
+     ],
+     [
+      "reggae.00064",
+      0.389
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00034",
+      0.92
+     ],
+     [
+      "reggae.00068",
+      0.9
+     ],
+     [
+      "reggae.00037",
+      0.897
+     ],
+     [
+      "reggae.00035",
+      0.889
+     ],
+     [
+      "reggae.00046",
+      0.889
+     ],
+     [
+      "reggae.00084",
+      0.761
+     ],
+     [
+      "reggae.00047",
+      0.748
+     ],
+     [
+      "reggae.00066",
+      0.716
+     ],
+     [
+      "reggae.00053",
+      0.662
+     ],
+     [
+      "reggae.00036",
+      0.631
+     ],
+     [
+      "reggae.00071",
+      0.594
+     ],
+     [
+      "reggae.00090",
+      0.556
+     ],
+     [
+      "reggae.00079",
+      0.547
+     ],
+     [
+      "reggae.00048",
+      0.525
+     ],
+     [
+      "reggae.00038",
+      0.507
+     ]
+    ],
+    "rock|blues": [
+     [
+      "rock.00010",
+      0.728
+     ],
+     [
+      "rock.00011",
+      0.394
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00032",
+      0.549
+     ],
+     [
+      "rock.00034",
+      0.538
+     ],
+     [
+      "rock.00048",
+      0.433
+     ],
+     [
+      "rock.00033",
+      0.404
+     ],
+     [
+      "rock.00015",
+      0.309
+     ],
+     [
+      "rock.00046",
+      0.296
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00031",
+      0.694
+     ],
+     [
+      "rock.00030",
+      0.54
+     ],
+     [
+      "rock.00036",
+      0.537
+     ],
+     [
+      "rock.00040",
+      0.521
+     ],
+     [
+      "rock.00042",
+      0.457
+     ],
+     [
+      "rock.00088",
+      0.427
+     ],
+     [
+      "rock.00037",
+      0.295
+     ],
+     [
+      "rock.00047",
+      0.248
+     ]
+    ],
+    "rock|hiphop": [
+     [
+      "rock.00013",
+      0.334
+     ]
+    ],
+    "rock|jazz": [
+     [
+      "rock.00045",
+      0.35
+     ],
+     [
+      "rock.00044",
+      0.294
+     ]
+    ],
+    "rock|metal": [
+     [
+      "rock.00086",
+      0.355
+     ]
+    ],
+    "rock|pop": [
+     [
+      "rock.00043",
+      0.49
+     ]
+    ],
+    "rock|reggae": [
+     [
+      "rock.00035",
+      0.661
+     ],
+     [
+      "rock.00028",
+      0.629
+     ],
+     [
+      "rock.00014",
+      0.536
+     ],
+     [
+      "rock.00012",
+      0.442
+     ],
+     [
+      "rock.00027",
+      0.306
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.749
+     ],
+     [
+      "rock.00089",
+      0.422
+     ],
+     [
+      "rock.00041",
+      0.378
+     ],
+     [
+      "rock.00039",
+      0.352
+     ],
+     [
+      "rock.00090",
+      0.345
+     ],
+     [
+      "rock.00029",
+      0.312
+     ]
+    ]
+   }
+  },
+  "xgb_s0": {
+   "model": "xgb",
+   "seed": 0,
+   "label": "XGBoost",
+   "confusion": [
+    [
+     2,
+     0,
+     4,
+     0,
+     0,
+     15,
+     5,
+     0,
+     0,
+     5
+    ],
+    [
+     0,
+     31,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     3,
+     1,
+     16,
+     3,
+     0,
+     4,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     3,
+     0,
+     1,
+     14,
+     4,
+     0,
+     2,
+     0,
+     1,
+     4
+    ],
+    [
+     0,
+     1,
+     0,
+     3,
+     11,
+     0,
+     0,
+     10,
+     2,
+     0
+    ],
+    [
+     0,
+     3,
+     3,
+     1,
+     0,
+     14,
+     0,
+     1,
+     1,
+     4
+    ],
+    [
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     24,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     2,
+     3,
+     0,
+     0,
+     0,
+     23,
+     1,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     1,
+     3,
+     1,
+     0,
+     3,
+     15,
+     0
+    ],
+    [
+     2,
+     0,
+     3,
+     10,
+     0,
+     3,
+     1,
+     2,
+     5,
+     6
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.093,
+    "classical": 0.9254,
+    "country": 0.5246,
+    "disco": 0.4375,
+    "hiphop": 0.4783,
+    "jazz": 0.4375,
+    "metal": 0.8136,
+    "pop": 0.6667,
+    "reggae": 0.5882,
+    "rock": 0.2143
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00022",
+      0.25
+     ],
+     [
+      "blues.00099",
+      0.216
+     ]
+    ],
+    "blues|country": [
+     [
+      "blues.00017",
+      0.305
+     ],
+     [
+      "blues.00067",
+      0.297
+     ],
+     [
+      "blues.00028",
+      0.28
+     ],
+     [
+      "blues.00069",
+      0.265
+     ]
+    ],
+    "blues|jazz": [
+     [
+      "blues.00018",
+      0.581
+     ],
+     [
+      "blues.00020",
+      0.485
+     ],
+     [
+      "blues.00025",
+      0.45
+     ],
+     [
+      "blues.00013",
+      0.445
+     ],
+     [
+      "blues.00023",
+      0.444
+     ],
+     [
+      "blues.00014",
+      0.411
+     ],
+     [
+      "blues.00019",
+      0.409
+     ],
+     [
+      "blues.00027",
+      0.397
+     ],
+     [
+      "blues.00026",
+      0.383
+     ],
+     [
+      "blues.00015",
+      0.344
+     ],
+     [
+      "blues.00024",
+      0.324
+     ],
+     [
+      "blues.00021",
+      0.315
+     ],
+     [
+      "blues.00012",
+      0.309
+     ],
+     [
+      "blues.00016",
+      0.298
+     ],
+     [
+      "blues.00072",
+      0.217
+     ]
+    ],
+    "blues|metal": [
+     [
+      "blues.00061",
+      0.58
+     ],
+     [
+      "blues.00071",
+      0.446
+     ],
+     [
+      "blues.00064",
+      0.435
+     ],
+     [
+      "blues.00098",
+      0.319
+     ],
+     [
+      "blues.00068",
+      0.23
+     ]
+    ],
+    "blues|rock": [
+     [
+      "blues.00065",
+      0.349
+     ],
+     [
+      "blues.00066",
+      0.335
+     ],
+     [
+      "blues.00070",
+      0.32
+     ],
+     [
+      "blues.00063",
+      0.302
+     ],
+     [
+      "blues.00062",
+      0.27
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00011",
+      0.915
+     ],
+     [
+      "classical.00027",
+      0.908
+     ],
+     [
+      "classical.00016",
+      0.894
+     ],
+     [
+      "classical.00041",
+      0.891
+     ],
+     [
+      "classical.00078",
+      0.887
+     ],
+     [
+      "classical.00015",
+      0.881
+     ],
+     [
+      "classical.00079",
+      0.874
+     ],
+     [
+      "classical.00018",
+      0.866
+     ],
+     [
+      "classical.00012",
+      0.865
+     ],
+     [
+      "classical.00023",
+      0.855
+     ],
+     [
+      "classical.00034",
+      0.841
+     ],
+     [
+      "classical.00040",
+      0.837
+     ],
+     [
+      "classical.00039",
+      0.827
+     ],
+     [
+      "classical.00014",
+      0.825
+     ],
+     [
+      "classical.00022",
+      0.822
+     ],
+     [
+      "classical.00019",
+      0.821
+     ],
+     [
+      "classical.00077",
+      0.817
+     ],
+     [
+      "classical.00025",
+      0.802
+     ],
+     [
+      "classical.00024",
+      0.797
+     ],
+     [
+      "classical.00036",
+      0.792
+     ],
+     [
+      "classical.00017",
+      0.786
+     ],
+     [
+      "classical.00021",
+      0.778
+     ],
+     [
+      "classical.00026",
+      0.755
+     ],
+     [
+      "classical.00037",
+      0.7
+     ],
+     [
+      "classical.00028",
+      0.65
+     ],
+     [
+      "classical.00013",
+      0.641
+     ],
+     [
+      "classical.00020",
+      0.629
+     ],
+     [
+      "classical.00029",
+      0.6
+     ],
+     [
+      "classical.00038",
+      0.563
+     ],
+     [
+      "classical.00049",
+      0.403
+     ],
+     [
+      "classical.00035",
+      0.338
+     ]
+    ],
+    "country|blues": [
+     [
+      "country.00063",
+      0.304
+     ],
+     [
+      "country.00058",
+      0.263
+     ],
+     [
+      "country.00059",
+      0.225
+     ]
+    ],
+    "country|classical": [
+     [
+      "country.00036",
+      0.274
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00046",
+      0.717
+     ],
+     [
+      "country.00044",
+      0.447
+     ],
+     [
+      "country.00031",
+      0.441
+     ],
+     [
+      "country.00035",
+      0.398
+     ],
+     [
+      "country.00037",
+      0.387
+     ],
+     [
+      "country.00048",
+      0.364
+     ],
+     [
+      "country.00057",
+      0.359
+     ],
+     [
+      "country.00040",
+      0.329
+     ],
+     [
+      "country.00047",
+      0.309
+     ],
+     [
+      "country.00051",
+      0.305
+     ],
+     [
+      "country.00050",
+      0.289
+     ],
+     [
+      "country.00056",
+      0.272
+     ],
+     [
+      "country.00061",
+      0.259
+     ],
+     [
+      "country.00060",
+      0.259
+     ],
+     [
+      "country.00033",
+      0.243
+     ],
+     [
+      "country.00038",
+      0.231
+     ]
+    ],
+    "country|disco": [
+     [
+      "country.00043",
+      0.375
+     ],
+     [
+      "country.00034",
+      0.294
+     ],
+     [
+      "country.00039",
+      0.273
+     ]
+    ],
+    "country|jazz": [
+     [
+      "country.00054",
+      0.374
+     ],
+     [
+      "country.00030",
+      0.337
+     ],
+     [
+      "country.00032",
+      0.314
+     ],
+     [
+      "country.00064",
+      0.297
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00053",
+      0.508
+     ],
+     [
+      "country.00062",
+      0.438
+     ],
+     [
+      "country.00055",
+      0.376
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00077",
+      0.364
+     ],
+     [
+      "disco.00086",
+      0.323
+     ],
+     [
+      "disco.00088",
+      0.223
+     ]
+    ],
+    "disco|country": [
+     [
+      "disco.00081",
+      0.247
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00097",
+      0.747
+     ],
+     [
+      "disco.00001",
+      0.659
+     ],
+     [
+      "disco.00076",
+      0.51
+     ],
+     [
+      "disco.00066",
+      0.509
+     ],
+     [
+      "disco.00082",
+      0.448
+     ],
+     [
+      "disco.00085",
+      0.447
+     ],
+     [
+      "disco.00021",
+      0.445
+     ],
+     [
+      "disco.00099",
+      0.409
+     ],
+     [
+      "disco.00092",
+      0.305
+     ],
+     [
+      "disco.00084",
+      0.299
+     ],
+     [
+      "disco.00079",
+      0.295
+     ],
+     [
+      "disco.00058",
+      0.274
+     ],
+     [
+      "disco.00078",
+      0.264
+     ],
+     [
+      "disco.00083",
+      0.202
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00063",
+      0.687
+     ],
+     [
+      "disco.00062",
+      0.527
+     ],
+     [
+      "disco.00091",
+      0.516
+     ],
+     [
+      "disco.00065",
+      0.333
+     ]
+    ],
+    "disco|metal": [
+     [
+      "disco.00093",
+      0.214
+     ],
+     [
+      "disco.00096",
+      0.197
+     ]
+    ],
+    "disco|reggae": [
+     [
+      "disco.00064",
+      0.557
+     ]
+    ],
+    "disco|rock": [
+     [
+      "disco.00094",
+      0.506
+     ],
+     [
+      "disco.00087",
+      0.403
+     ],
+     [
+      "disco.00069",
+      0.34
+     ],
+     [
+      "disco.00080",
+      0.308
+     ]
+    ],
+    "hiphop|classical": [
+     [
+      "hiphop.00044",
+      0.176
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00000",
+      0.527
+     ],
+     [
+      "hiphop.00054",
+      0.422
+     ],
+     [
+      "hiphop.00030",
+      0.257
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00063",
+      0.74
+     ],
+     [
+      "hiphop.00062",
+      0.635
+     ],
+     [
+      "hiphop.00074",
+      0.562
+     ],
+     [
+      "hiphop.00026",
+      0.539
+     ],
+     [
+      "hiphop.00099",
+      0.537
+     ],
+     [
+      "hiphop.00064",
+      0.501
+     ],
+     [
+      "hiphop.00066",
+      0.425
+     ],
+     [
+      "hiphop.00065",
+      0.416
+     ],
+     [
+      "hiphop.00027",
+      0.388
+     ],
+     [
+      "hiphop.00043",
+      0.377
+     ],
+     [
+      "hiphop.00051",
+      0.357
+     ]
+    ],
+    "hiphop|pop": [
+     [
+      "hiphop.00075",
+      0.615
+     ],
+     [
+      "hiphop.00045",
+      0.578
+     ],
+     [
+      "hiphop.00067",
+      0.558
+     ],
+     [
+      "hiphop.00070",
+      0.538
+     ],
+     [
+      "hiphop.00071",
+      0.528
+     ],
+     [
+      "hiphop.00040",
+      0.47
+     ],
+     [
+      "hiphop.00073",
+      0.441
+     ],
+     [
+      "hiphop.00072",
+      0.429
+     ],
+     [
+      "hiphop.00069",
+      0.309
+     ],
+     [
+      "hiphop.00068",
+      0.273
+     ]
+    ],
+    "hiphop|reggae": [
+     [
+      "hiphop.00053",
+      0.3
+     ],
+     [
+      "hiphop.00052",
+      0.248
+     ]
+    ],
+    "jazz|classical": [
+     [
+      "jazz.00097",
+      0.415
+     ],
+     [
+      "jazz.00092",
+      0.265
+     ],
+     [
+      "jazz.00091",
+      0.225
+     ]
+    ],
+    "jazz|country": [
+     [
+      "jazz.00078",
+      0.391
+     ],
+     [
+      "jazz.00085",
+      0.371
+     ],
+     [
+      "jazz.00074",
+      0.256
+     ]
+    ],
+    "jazz|disco": [
+     [
+      "jazz.00073",
+      0.267
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00095",
+      0.683
+     ],
+     [
+      "jazz.00099",
+      0.634
+     ],
+     [
+      "jazz.00098",
+      0.63
+     ],
+     [
+      "jazz.00084",
+      0.472
+     ],
+     [
+      "jazz.00076",
+      0.456
+     ],
+     [
+      "jazz.00096",
+      0.437
+     ],
+     [
+      "jazz.00094",
+      0.431
+     ],
+     [
+      "jazz.00079",
+      0.403
+     ],
+     [
+      "jazz.00089",
+      0.358
+     ],
+     [
+      "jazz.00080",
+      0.344
+     ],
+     [
+      "jazz.00088",
+      0.34
+     ],
+     [
+      "jazz.00090",
+      0.337
+     ],
+     [
+      "jazz.00077",
+      0.325
+     ],
+     [
+      "jazz.00093",
+      0.29
+     ]
+    ],
+    "jazz|pop": [
+     [
+      "jazz.00075",
+      0.323
+     ]
+    ],
+    "jazz|reggae": [
+     [
+      "jazz.00087",
+      0.24
+     ]
+    ],
+    "jazz|rock": [
+     [
+      "jazz.00083",
+      0.345
+     ],
+     [
+      "jazz.00081",
+      0.3
+     ],
+     [
+      "jazz.00082",
+      0.253
+     ],
+     [
+      "jazz.00086",
+      0.183
+     ]
+    ],
+    "metal|blues": [
+     [
+      "metal.00088",
+      0.489
+     ]
+    ],
+    "metal|hiphop": [
+     [
+      "metal.00038",
+      0.272
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00012",
+      0.961
+     ],
+     [
+      "metal.00013",
+      0.897
+     ],
+     [
+      "metal.00023",
+      0.882
+     ],
+     [
+      "metal.00014",
+      0.862
+     ],
+     [
+      "metal.00026",
+      0.835
+     ],
+     [
+      "metal.00015",
+      0.788
+     ],
+     [
+      "metal.00028",
+      0.755
+     ],
+     [
+      "metal.00087",
+      0.736
+     ],
+     [
+      "metal.00027",
+      0.685
+     ],
+     [
+      "metal.00032",
+      0.666
+     ],
+     [
+      "metal.00078",
+      0.609
+     ],
+     [
+      "metal.00029",
+      0.528
+     ],
+     [
+      "metal.00030",
+      0.518
+     ],
+     [
+      "metal.00031",
+      0.459
+     ],
+     [
+      "metal.00025",
+      0.441
+     ],
+     [
+      "metal.00083",
+      0.435
+     ],
+     [
+      "metal.00074",
+      0.405
+     ],
+     [
+      "metal.00033",
+      0.386
+     ],
+     [
+      "metal.00067",
+      0.374
+     ],
+     [
+      "metal.00073",
+      0.318
+     ],
+     [
+      "metal.00075",
+      0.287
+     ],
+     [
+      "metal.00070",
+      0.287
+     ],
+     [
+      "metal.00085",
+      0.282
+     ],
+     [
+      "metal.00039",
+      0.279
+     ]
+    ],
+    "metal|rock": [
+     [
+      "metal.00022",
+      0.257
+     ]
+    ],
+    "pop|country": [
+     [
+      "pop.00063",
+      0.419
+     ],
+     [
+      "pop.00079",
+      0.227
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00072",
+      0.461
+     ],
+     [
+      "pop.00065",
+      0.388
+     ],
+     [
+      "pop.00043",
+      0.317
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      0.937
+     ],
+     [
+      "pop.00074",
+      0.895
+     ],
+     [
+      "pop.00001",
+      0.892
+     ],
+     [
+      "pop.00088",
+      0.87
+     ],
+     [
+      "pop.00096",
+      0.87
+     ],
+     [
+      "pop.00000",
+      0.865
+     ],
+     [
+      "pop.00066",
+      0.865
+     ],
+     [
+      "pop.00091",
+      0.849
+     ],
+     [
+      "pop.00089",
+      0.83
+     ],
+     [
+      "pop.00076",
+      0.781
+     ],
+     [
+      "pop.00078",
+      0.748
+     ],
+     [
+      "pop.00075",
+      0.726
+     ],
+     [
+      "pop.00093",
+      0.725
+     ],
+     [
+      "pop.00077",
+      0.721
+     ],
+     [
+      "pop.00092",
+      0.717
+     ],
+     [
+      "pop.00082",
+      0.703
+     ],
+     [
+      "pop.00090",
+      0.694
+     ],
+     [
+      "pop.00071",
+      0.64
+     ],
+     [
+      "pop.00073",
+      0.639
+     ],
+     [
+      "pop.00094",
+      0.621
+     ],
+     [
+      "pop.00070",
+      0.462
+     ],
+     [
+      "pop.00064",
+      0.399
+     ],
+     [
+      "pop.00069",
+      0.267
+     ]
+    ],
+    "pop|reggae": [
+     [
+      "pop.00013",
+      0.472
+     ]
+    ],
+    "pop|rock": [
+     [
+      "pop.00014",
+      0.252
+     ]
+    ],
+    "reggae|blues": [
+     [
+      "reggae.00089",
+      0.459
+     ]
+    ],
+    "reggae|country": [
+     [
+      "reggae.00067",
+      0.351
+     ],
+     [
+      "reggae.00040",
+      0.188
+     ]
+    ],
+    "reggae|disco": [
+     [
+      "reggae.00088",
+      0.39
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00082",
+      0.787
+     ],
+     [
+      "reggae.00065",
+      0.428
+     ],
+     [
+      "reggae.00090",
+      0.389
+     ]
+    ],
+    "reggae|jazz": [
+     [
+      "reggae.00083",
+      0.199
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.753
+     ],
+     [
+      "reggae.00052",
+      0.624
+     ],
+     [
+      "reggae.00064",
+      0.5
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00068",
+      0.74
+     ],
+     [
+      "reggae.00037",
+      0.593
+     ],
+     [
+      "reggae.00053",
+      0.576
+     ],
+     [
+      "reggae.00066",
+      0.545
+     ],
+     [
+      "reggae.00071",
+      0.543
+     ],
+     [
+      "reggae.00036",
+      0.515
+     ],
+     [
+      "reggae.00039",
+      0.506
+     ],
+     [
+      "reggae.00034",
+      0.483
+     ],
+     [
+      "reggae.00079",
+      0.481
+     ],
+     [
+      "reggae.00038",
+      0.455
+     ],
+     [
+      "reggae.00035",
+      0.424
+     ],
+     [
+      "reggae.00047",
+      0.417
+     ],
+     [
+      "reggae.00084",
+      0.372
+     ],
+     [
+      "reggae.00046",
+      0.36
+     ],
+     [
+      "reggae.00048",
+      0.321
+     ]
+    ],
+    "rock|blues": [
+     [
+      "rock.00010",
+      0.461
+     ],
+     [
+      "rock.00011",
+      0.296
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00048",
+      0.422
+     ],
+     [
+      "rock.00089",
+      0.329
+     ],
+     [
+      "rock.00032",
+      0.295
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00031",
+      0.591
+     ],
+     [
+      "rock.00041",
+      0.588
+     ],
+     [
+      "rock.00040",
+      0.56
+     ],
+     [
+      "rock.00037",
+      0.528
+     ],
+     [
+      "rock.00036",
+      0.389
+     ],
+     [
+      "rock.00047",
+      0.387
+     ],
+     [
+      "rock.00046",
+      0.373
+     ],
+     [
+      "rock.00042",
+      0.346
+     ],
+     [
+      "rock.00034",
+      0.324
+     ],
+     [
+      "rock.00029",
+      0.308
+     ]
+    ],
+    "rock|jazz": [
+     [
+      "rock.00044",
+      0.411
+     ],
+     [
+      "rock.00033",
+      0.314
+     ],
+     [
+      "rock.00045",
+      0.313
+     ]
+    ],
+    "rock|metal": [
+     [
+      "rock.00027",
+      0.269
+     ]
+    ],
+    "rock|pop": [
+     [
+      "rock.00043",
+      0.401
+     ],
+     [
+      "rock.00039",
+      0.387
+     ]
+    ],
+    "rock|reggae": [
+     [
+      "rock.00013",
+      0.386
+     ],
+     [
+      "rock.00015",
+      0.323
+     ],
+     [
+      "rock.00012",
+      0.309
+     ],
+     [
+      "rock.00014",
+      0.233
+     ],
+     [
+      "rock.00028",
+      0.202
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.479
+     ],
+     [
+      "rock.00086",
+      0.374
+     ],
+     [
+      "rock.00088",
+      0.321
+     ],
+     [
+      "rock.00030",
+      0.314
+     ],
+     [
+      "rock.00035",
+      0.303
+     ],
+     [
+      "rock.00090",
+      0.233
+     ]
+    ]
+   }
+  },
+  "cnn_s1": {
+   "model": "cnn",
+   "seed": 1,
+   "label": "CNN on log-mels (seed 1)",
+   "confusion": [
+    [
+     16,
+     0,
+     8,
+     0,
+     0,
+     0,
+     6,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     30,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     29,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     1,
+     18,
+     3,
+     0,
+     7,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     2,
+     1,
+     23,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     17,
+     0,
+     0,
+     10,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     27,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     5,
+     3,
+     6,
+     0,
+     2,
+     13,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     8,
+     1,
+     5,
+     0,
+     2,
+     1,
+     8,
+     1
+    ],
+    [
+     0,
+     0,
+     14,
+     2,
+     2,
+     0,
+     14,
+     0,
+     0,
+     0
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.6809,
+    "classical": 0.9836,
+    "country": 0.5043,
+    "disco": 0.6667,
+    "hiphop": 0.697,
+    "jazz": 0.5405,
+    "metal": 0.6279,
+    "pop": 0.5909,
+    "reggae": 0.4706,
+    "rock": 0.0
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00017",
+      0.847
+     ],
+     [
+      "blues.00021",
+      0.695
+     ],
+     [
+      "blues.00026",
+      0.694
+     ],
+     [
+      "blues.00025",
+      0.666
+     ],
+     [
+      "blues.00013",
+      0.65
+     ],
+     [
+      "blues.00022",
+      0.632
+     ],
+     [
+      "blues.00014",
+      0.628
+     ],
+     [
+      "blues.00015",
+      0.626
+     ],
+     [
+      "blues.00019",
+      0.579
+     ],
+     [
+      "blues.00024",
+      0.564
+     ],
+     [
+      "blues.00018",
+      0.549
+     ],
+     [
+      "blues.00012",
+      0.515
+     ],
+     [
+      "blues.00020",
+      0.506
+     ],
+     [
+      "blues.00028",
+      0.494
+     ],
+     [
+      "blues.00023",
+      0.464
+     ],
+     [
+      "blues.00016",
+      0.455
+     ]
+    ],
+    "blues|country": [
+     [
+      "blues.00067",
+      0.867
+     ],
+     [
+      "blues.00070",
+      0.849
+     ],
+     [
+      "blues.00066",
+      0.741
+     ],
+     [
+      "blues.00027",
+      0.594
+     ],
+     [
+      "blues.00062",
+      0.576
+     ],
+     [
+      "blues.00069",
+      0.496
+     ],
+     [
+      "blues.00072",
+      0.465
+     ],
+     [
+      "blues.00061",
+      0.42
+     ]
+    ],
+    "blues|metal": [
+     [
+      "blues.00098",
+      0.683
+     ],
+     [
+      "blues.00064",
+      0.582
+     ],
+     [
+      "blues.00065",
+      0.507
+     ],
+     [
+      "blues.00071",
+      0.469
+     ],
+     [
+      "blues.00063",
+      0.43
+     ],
+     [
+      "blues.00068",
+      0.412
+     ]
+    ],
+    "blues|rock": [
+     [
+      "blues.00099",
+      0.351
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00019",
+      0.995
+     ],
+     [
+      "classical.00015",
+      0.992
+     ],
+     [
+      "classical.00016",
+      0.992
+     ],
+     [
+      "classical.00023",
+      0.98
+     ],
+     [
+      "classical.00012",
+      0.973
+     ],
+     [
+      "classical.00018",
+      0.968
+     ],
+     [
+      "classical.00014",
+      0.957
+     ],
+     [
+      "classical.00011",
+      0.956
+     ],
+     [
+      "classical.00078",
+      0.938
+     ],
+     [
+      "classical.00041",
+      0.918
+     ],
+     [
+      "classical.00020",
+      0.904
+     ],
+     [
+      "classical.00013",
+      0.897
+     ],
+     [
+      "classical.00027",
+      0.885
+     ],
+     [
+      "classical.00039",
+      0.853
+     ],
+     [
+      "classical.00026",
+      0.826
+     ],
+     [
+      "classical.00017",
+      0.816
+     ],
+     [
+      "classical.00022",
+      0.809
+     ],
+     [
+      "classical.00079",
+      0.801
+     ],
+     [
+      "classical.00077",
+      0.767
+     ],
+     [
+      "classical.00040",
+      0.75
+     ],
+     [
+      "classical.00029",
+      0.742
+     ],
+     [
+      "classical.00024",
+      0.732
+     ],
+     [
+      "classical.00021",
+      0.724
+     ],
+     [
+      "classical.00036",
+      0.705
+     ],
+     [
+      "classical.00025",
+      0.665
+     ],
+     [
+      "classical.00034",
+      0.586
+     ],
+     [
+      "classical.00028",
+      0.576
+     ],
+     [
+      "classical.00037",
+      0.494
+     ],
+     [
+      "classical.00038",
+      0.463
+     ],
+     [
+      "classical.00035",
+      0.442
+     ]
+    ],
+    "classical|country": [
+     [
+      "classical.00049",
+      0.483
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00047",
+      0.997
+     ],
+     [
+      "country.00033",
+      0.987
+     ],
+     [
+      "country.00046",
+      0.978
+     ],
+     [
+      "country.00038",
+      0.954
+     ],
+     [
+      "country.00031",
+      0.949
+     ],
+     [
+      "country.00044",
+      0.942
+     ],
+     [
+      "country.00048",
+      0.916
+     ],
+     [
+      "country.00032",
+      0.908
+     ],
+     [
+      "country.00035",
+      0.902
+     ],
+     [
+      "country.00030",
+      0.9
+     ],
+     [
+      "country.00036",
+      0.872
+     ],
+     [
+      "country.00056",
+      0.857
+     ],
+     [
+      "country.00037",
+      0.855
+     ],
+     [
+      "country.00060",
+      0.838
+     ],
+     [
+      "country.00059",
+      0.832
+     ],
+     [
+      "country.00034",
+      0.818
+     ],
+     [
+      "country.00063",
+      0.786
+     ],
+     [
+      "country.00062",
+      0.779
+     ],
+     [
+      "country.00051",
+      0.735
+     ],
+     [
+      "country.00040",
+      0.719
+     ],
+     [
+      "country.00057",
+      0.712
+     ],
+     [
+      "country.00061",
+      0.691
+     ],
+     [
+      "country.00043",
+      0.685
+     ],
+     [
+      "country.00039",
+      0.619
+     ],
+     [
+      "country.00053",
+      0.516
+     ],
+     [
+      "country.00064",
+      0.509
+     ],
+     [
+      "country.00055",
+      0.49
+     ],
+     [
+      "country.00058",
+      0.459
+     ],
+     [
+      "country.00054",
+      0.459
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00050",
+      0.573
+     ]
+    ],
+    "disco|country": [
+     [
+      "disco.00086",
+      0.482
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00097",
+      0.98
+     ],
+     [
+      "disco.00099",
+      0.974
+     ],
+     [
+      "disco.00064",
+      0.948
+     ],
+     [
+      "disco.00084",
+      0.921
+     ],
+     [
+      "disco.00058",
+      0.826
+     ],
+     [
+      "disco.00085",
+      0.805
+     ],
+     [
+      "disco.00093",
+      0.795
+     ],
+     [
+      "disco.00021",
+      0.729
+     ],
+     [
+      "disco.00079",
+      0.727
+     ],
+     [
+      "disco.00081",
+      0.709
+     ],
+     [
+      "disco.00066",
+      0.647
+     ],
+     [
+      "disco.00082",
+      0.642
+     ],
+     [
+      "disco.00001",
+      0.603
+     ],
+     [
+      "disco.00077",
+      0.56
+     ],
+     [
+      "disco.00088",
+      0.538
+     ],
+     [
+      "disco.00065",
+      0.457
+     ],
+     [
+      "disco.00080",
+      0.36
+     ],
+     [
+      "disco.00091",
+      0.332
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00062",
+      0.647
+     ],
+     [
+      "disco.00063",
+      0.627
+     ],
+     [
+      "disco.00096",
+      0.441
+     ]
+    ],
+    "disco|metal": [
+     [
+      "disco.00069",
+      0.893
+     ],
+     [
+      "disco.00094",
+      0.882
+     ],
+     [
+      "disco.00087",
+      0.713
+     ],
+     [
+      "disco.00092",
+      0.703
+     ],
+     [
+      "disco.00083",
+      0.557
+     ],
+     [
+      "disco.00076",
+      0.493
+     ],
+     [
+      "disco.00078",
+      0.475
+     ]
+    ],
+    "hiphop|country": [
+     [
+      "hiphop.00044",
+      0.521
+     ],
+     [
+      "hiphop.00040",
+      0.481
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00000",
+      0.593
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00062",
+      0.999
+     ],
+     [
+      "hiphop.00027",
+      0.998
+     ],
+     [
+      "hiphop.00075",
+      0.994
+     ],
+     [
+      "hiphop.00069",
+      0.993
+     ],
+     [
+      "hiphop.00026",
+      0.987
+     ],
+     [
+      "hiphop.00065",
+      0.982
+     ],
+     [
+      "hiphop.00063",
+      0.98
+     ],
+     [
+      "hiphop.00068",
+      0.977
+     ],
+     [
+      "hiphop.00054",
+      0.965
+     ],
+     [
+      "hiphop.00064",
+      0.952
+     ],
+     [
+      "hiphop.00073",
+      0.931
+     ],
+     [
+      "hiphop.00070",
+      0.922
+     ],
+     [
+      "hiphop.00099",
+      0.896
+     ],
+     [
+      "hiphop.00072",
+      0.894
+     ],
+     [
+      "hiphop.00074",
+      0.868
+     ],
+     [
+      "hiphop.00067",
+      0.804
+     ],
+     [
+      "hiphop.00051",
+      0.724
+     ],
+     [
+      "hiphop.00045",
+      0.7
+     ],
+     [
+      "hiphop.00053",
+      0.67
+     ],
+     [
+      "hiphop.00066",
+      0.669
+     ],
+     [
+      "hiphop.00052",
+      0.646
+     ],
+     [
+      "hiphop.00071",
+      0.612
+     ],
+     [
+      "hiphop.00043",
+      0.581
+     ]
+    ],
+    "hiphop|metal": [
+     [
+      "hiphop.00030",
+      0.84
+     ]
+    ],
+    "jazz|country": [
+     [
+      "jazz.00073",
+      0.923
+     ],
+     [
+      "jazz.00077",
+      0.909
+     ],
+     [
+      "jazz.00090",
+      0.907
+     ],
+     [
+      "jazz.00075",
+      0.889
+     ],
+     [
+      "jazz.00081",
+      0.839
+     ],
+     [
+      "jazz.00078",
+      0.791
+     ],
+     [
+      "jazz.00079",
+      0.767
+     ],
+     [
+      "jazz.00080",
+      0.756
+     ],
+     [
+      "jazz.00093",
+      0.744
+     ],
+     [
+      "jazz.00082",
+      0.742
+     ],
+     [
+      "jazz.00083",
+      0.723
+     ],
+     [
+      "jazz.00074",
+      0.706
+     ],
+     [
+      "jazz.00076",
+      0.686
+     ],
+     [
+      "jazz.00086",
+      0.63
+     ],
+     [
+      "jazz.00085",
+      0.58
+     ],
+     [
+      "jazz.00084",
+      0.558
+     ],
+     [
+      "jazz.00087",
+      0.362
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00098",
+      0.878
+     ],
+     [
+      "jazz.00092",
+      0.846
+     ],
+     [
+      "jazz.00091",
+      0.841
+     ],
+     [
+      "jazz.00089",
+      0.82
+     ],
+     [
+      "jazz.00097",
+      0.759
+     ],
+     [
+      "jazz.00088",
+      0.727
+     ],
+     [
+      "jazz.00095",
+      0.709
+     ],
+     [
+      "jazz.00096",
+      0.634
+     ],
+     [
+      "jazz.00099",
+      0.604
+     ],
+     [
+      "jazz.00094",
+      0.463
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00013",
+      1.0
+     ],
+     [
+      "metal.00012",
+      1.0
+     ],
+     [
+      "metal.00073",
+      1.0
+     ],
+     [
+      "metal.00078",
+      1.0
+     ],
+     [
+      "metal.00031",
+      1.0
+     ],
+     [
+      "metal.00023",
+      0.999
+     ],
+     [
+      "metal.00028",
+      0.999
+     ],
+     [
+      "metal.00087",
+      0.999
+     ],
+     [
+      "metal.00026",
+      0.999
+     ],
+     [
+      "metal.00027",
+      0.999
+     ],
+     [
+      "metal.00015",
+      0.999
+     ],
+     [
+      "metal.00083",
+      0.999
+     ],
+     [
+      "metal.00025",
+      0.998
+     ],
+     [
+      "metal.00032",
+      0.998
+     ],
+     [
+      "metal.00033",
+      0.998
+     ],
+     [
+      "metal.00085",
+      0.997
+     ],
+     [
+      "metal.00067",
+      0.997
+     ],
+     [
+      "metal.00014",
+      0.996
+     ],
+     [
+      "metal.00074",
+      0.993
+     ],
+     [
+      "metal.00022",
+      0.983
+     ],
+     [
+      "metal.00070",
+      0.946
+     ],
+     [
+      "metal.00029",
+      0.939
+     ],
+     [
+      "metal.00039",
+      0.871
+     ],
+     [
+      "metal.00088",
+      0.799
+     ],
+     [
+      "metal.00038",
+      0.773
+     ],
+     [
+      "metal.00030",
+      0.627
+     ],
+     [
+      "metal.00075",
+      0.592
+     ]
+    ],
+    "pop|country": [
+     [
+      "pop.00013",
+      0.82
+     ],
+     [
+      "pop.00094",
+      0.618
+     ],
+     [
+      "pop.00063",
+      0.576
+     ],
+     [
+      "pop.00090",
+      0.478
+     ],
+     [
+      "pop.00065",
+      0.355
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00082",
+      0.635
+     ],
+     [
+      "pop.00093",
+      0.574
+     ],
+     [
+      "pop.00091",
+      0.367
+     ]
+    ],
+    "pop|hiphop": [
+     [
+      "pop.00078",
+      0.869
+     ],
+     [
+      "pop.00001",
+      0.807
+     ],
+     [
+      "pop.00069",
+      0.726
+     ],
+     [
+      "pop.00092",
+      0.714
+     ],
+     [
+      "pop.00071",
+      0.522
+     ],
+     [
+      "pop.00077",
+      0.415
+     ]
+    ],
+    "pop|metal": [
+     [
+      "pop.00072",
+      0.844
+     ],
+     [
+      "pop.00014",
+      0.505
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      0.909
+     ],
+     [
+      "pop.00096",
+      0.864
+     ],
+     [
+      "pop.00000",
+      0.846
+     ],
+     [
+      "pop.00066",
+      0.819
+     ],
+     [
+      "pop.00070",
+      0.741
+     ],
+     [
+      "pop.00075",
+      0.717
+     ],
+     [
+      "pop.00076",
+      0.678
+     ],
+     [
+      "pop.00073",
+      0.661
+     ],
+     [
+      "pop.00074",
+      0.651
+     ],
+     [
+      "pop.00089",
+      0.584
+     ],
+     [
+      "pop.00088",
+      0.541
+     ],
+     [
+      "pop.00064",
+      0.464
+     ],
+     [
+      "pop.00043",
+      0.44
+     ]
+    ],
+    "pop|rock": [
+     [
+      "pop.00079",
+      0.579
+     ]
+    ],
+    "reggae|country": [
+     [
+      "reggae.00067",
+      0.849
+     ],
+     [
+      "reggae.00083",
+      0.842
+     ],
+     [
+      "reggae.00038",
+      0.744
+     ],
+     [
+      "reggae.00046",
+      0.735
+     ],
+     [
+      "reggae.00036",
+      0.636
+     ],
+     [
+      "reggae.00034",
+      0.603
+     ],
+     [
+      "reggae.00064",
+      0.579
+     ],
+     [
+      "reggae.00047",
+      0.488
+     ]
+    ],
+    "reggae|disco": [
+     [
+      "reggae.00088",
+      0.718
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00082",
+      0.91
+     ],
+     [
+      "reggae.00052",
+      0.887
+     ],
+     [
+      "reggae.00065",
+      0.688
+     ],
+     [
+      "reggae.00048",
+      0.569
+     ],
+     [
+      "reggae.00084",
+      0.453
+     ]
+    ],
+    "reggae|metal": [
+     [
+      "reggae.00066",
+      0.457
+     ],
+     [
+      "reggae.00079",
+      0.32
+     ]
+    ],
+    "reggae|pop": [
+     [
+      "reggae.00087",
+      0.888
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00037",
+      0.866
+     ],
+     [
+      "reggae.00039",
+      0.761
+     ],
+     [
+      "reggae.00089",
+      0.68
+     ],
+     [
+      "reggae.00090",
+      0.577
+     ],
+     [
+      "reggae.00053",
+      0.498
+     ],
+     [
+      "reggae.00035",
+      0.495
+     ],
+     [
+      "reggae.00068",
+      0.491
+     ],
+     [
+      "reggae.00071",
+      0.41
+     ]
+    ],
+    "reggae|rock": [
+     [
+      "reggae.00040",
+      0.587
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00089",
+      0.813
+     ],
+     [
+      "rock.00033",
+      0.764
+     ],
+     [
+      "rock.00044",
+      0.759
+     ],
+     [
+      "rock.00030",
+      0.733
+     ],
+     [
+      "rock.00034",
+      0.685
+     ],
+     [
+      "rock.00039",
+      0.592
+     ],
+     [
+      "rock.00046",
+      0.57
+     ],
+     [
+      "rock.00010",
+      0.49
+     ],
+     [
+      "rock.00028",
+      0.474
+     ],
+     [
+      "rock.00045",
+      0.468
+     ],
+     [
+      "rock.00037",
+      0.42
+     ],
+     [
+      "rock.00011",
+      0.352
+     ],
+     [
+      "rock.00035",
+      0.333
+     ],
+     [
+      "rock.00041",
+      0.327
+     ]
+    ],
+    "rock|disco": [
+     [
+      "rock.00031",
+      0.552
+     ],
+     [
+      "rock.00014",
+      0.325
+     ]
+    ],
+    "rock|hiphop": [
+     [
+      "rock.00015",
+      0.697
+     ],
+     [
+      "rock.00013",
+      0.294
+     ]
+    ],
+    "rock|metal": [
+     [
+      "rock.00088",
+      0.971
+     ],
+     [
+      "rock.00087",
+      0.902
+     ],
+     [
+      "rock.00047",
+      0.852
+     ],
+     [
+      "rock.00043",
+      0.697
+     ],
+     [
+      "rock.00090",
+      0.689
+     ],
+     [
+      "rock.00036",
+      0.647
+     ],
+     [
+      "rock.00032",
+      0.613
+     ],
+     [
+      "rock.00029",
+      0.595
+     ],
+     [
+      "rock.00027",
+      0.578
+     ],
+     [
+      "rock.00086",
+      0.529
+     ],
+     [
+      "rock.00012",
+      0.518
+     ],
+     [
+      "rock.00042",
+      0.5
+     ],
+     [
+      "rock.00048",
+      0.419
+     ],
+     [
+      "rock.00040",
+      0.403
+     ]
+    ]
+   }
+  },
+  "cnn_s2": {
+   "model": "cnn",
+   "seed": 2,
+   "label": "CNN on log-mels (seed 2)",
+   "confusion": [
+    [
+     9,
+     5,
+     0,
+     0,
+     0,
+     17,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     31,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     2,
+     5,
+     11,
+     0,
+     0,
+     1,
+     0,
+     0,
+     4,
+     7
+    ],
+    [
+     3,
+     1,
+     0,
+     17,
+     1,
+     0,
+     0,
+     0,
+     7,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1,
+     13,
+     0,
+     0,
+     0,
+     13,
+     0
+    ],
+    [
+     0,
+     2,
+     0,
+     0,
+     0,
+     23,
+     0,
+     0,
+     1,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     0,
+     0,
+     1,
+     20,
+     0,
+     0,
+     3
+    ],
+    [
+     0,
+     2,
+     0,
+     6,
+     4,
+     0,
+     0,
+     6,
+     12,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     22,
+     0
+    ],
+    [
+     3,
+     7,
+     3,
+     0,
+     0,
+     3,
+     0,
+     0,
+     10,
+     6
+    ]
+   ],
+   "per_genre_f1": {
+    "blues": 0.36,
+    "classical": 0.7209,
+    "country": 0.5,
+    "disco": 0.6296,
+    "hiphop": 0.5652,
+    "jazz": 0.6301,
+    "metal": 0.8511,
+    "pop": 0.3333,
+    "reggae": 0.4632,
+    "rock": 0.2449
+   },
+   "support": {
+    "blues": 31,
+    "classical": 31,
+    "country": 30,
+    "disco": 29,
+    "hiphop": 27,
+    "jazz": 27,
+    "metal": 27,
+    "pop": 30,
+    "reggae": 26,
+    "rock": 32
+   },
+   "cells": {
+    "blues|blues": [
+     [
+      "blues.00070",
+      0.965
+     ],
+     [
+      "blues.00066",
+      0.887
+     ],
+     [
+      "blues.00067",
+      0.863
+     ],
+     [
+      "blues.00061",
+      0.588
+     ],
+     [
+      "blues.00023",
+      0.516
+     ],
+     [
+      "blues.00062",
+      0.502
+     ],
+     [
+      "blues.00098",
+      0.5
+     ],
+     [
+      "blues.00025",
+      0.494
+     ],
+     [
+      "blues.00068",
+      0.485
+     ]
+    ],
+    "blues|classical": [
+     [
+      "blues.00072",
+      0.838
+     ],
+     [
+      "blues.00099",
+      0.639
+     ],
+     [
+      "blues.00071",
+      0.581
+     ],
+     [
+      "blues.00064",
+      0.461
+     ],
+     [
+      "blues.00069",
+      0.423
+     ]
+    ],
+    "blues|jazz": [
+     [
+      "blues.00020",
+      0.913
+     ],
+     [
+      "blues.00018",
+      0.872
+     ],
+     [
+      "blues.00024",
+      0.856
+     ],
+     [
+      "blues.00028",
+      0.854
+     ],
+     [
+      "blues.00015",
+      0.801
+     ],
+     [
+      "blues.00016",
+      0.776
+     ],
+     [
+      "blues.00014",
+      0.736
+     ],
+     [
+      "blues.00065",
+      0.692
+     ],
+     [
+      "blues.00019",
+      0.676
+     ],
+     [
+      "blues.00027",
+      0.63
+     ],
+     [
+      "blues.00021",
+      0.596
+     ],
+     [
+      "blues.00026",
+      0.588
+     ],
+     [
+      "blues.00022",
+      0.587
+     ],
+     [
+      "blues.00013",
+      0.54
+     ],
+     [
+      "blues.00063",
+      0.527
+     ],
+     [
+      "blues.00017",
+      0.524
+     ],
+     [
+      "blues.00012",
+      0.472
+     ]
+    ],
+    "classical|classical": [
+     [
+      "classical.00014",
+      1.0
+     ],
+     [
+      "classical.00017",
+      1.0
+     ],
+     [
+      "classical.00013",
+      1.0
+     ],
+     [
+      "classical.00024",
+      1.0
+     ],
+     [
+      "classical.00012",
+      1.0
+     ],
+     [
+      "classical.00015",
+      1.0
+     ],
+     [
+      "classical.00020",
+      1.0
+     ],
+     [
+      "classical.00029",
+      1.0
+     ],
+     [
+      "classical.00018",
+      1.0
+     ],
+     [
+      "classical.00028",
+      1.0
+     ],
+     [
+      "classical.00021",
+      1.0
+     ],
+     [
+      "classical.00019",
+      1.0
+     ],
+     [
+      "classical.00025",
+      1.0
+     ],
+     [
+      "classical.00016",
+      1.0
+     ],
+     [
+      "classical.00027",
+      1.0
+     ],
+     [
+      "classical.00022",
+      1.0
+     ],
+     [
+      "classical.00034",
+      1.0
+     ],
+     [
+      "classical.00041",
+      1.0
+     ],
+     [
+      "classical.00040",
+      1.0
+     ],
+     [
+      "classical.00011",
+      1.0
+     ],
+     [
+      "classical.00026",
+      0.999
+     ],
+     [
+      "classical.00038",
+      0.999
+     ],
+     [
+      "classical.00023",
+      0.998
+     ],
+     [
+      "classical.00037",
+      0.998
+     ],
+     [
+      "classical.00077",
+      0.997
+     ],
+     [
+      "classical.00078",
+      0.997
+     ],
+     [
+      "classical.00049",
+      0.997
+     ],
+     [
+      "classical.00039",
+      0.996
+     ],
+     [
+      "classical.00079",
+      0.995
+     ],
+     [
+      "classical.00035",
+      0.974
+     ],
+     [
+      "classical.00036",
+      0.885
+     ]
+    ],
+    "country|blues": [
+     [
+      "country.00059",
+      0.397
+     ],
+     [
+      "country.00063",
+      0.384
+     ]
+    ],
+    "country|classical": [
+     [
+      "country.00030",
+      0.721
+     ],
+     [
+      "country.00057",
+      0.612
+     ],
+     [
+      "country.00037",
+      0.575
+     ],
+     [
+      "country.00064",
+      0.453
+     ],
+     [
+      "country.00036",
+      0.327
+     ]
+    ],
+    "country|country": [
+     [
+      "country.00033",
+      0.745
+     ],
+     [
+      "country.00062",
+      0.706
+     ],
+     [
+      "country.00046",
+      0.667
+     ],
+     [
+      "country.00044",
+      0.638
+     ],
+     [
+      "country.00031",
+      0.594
+     ],
+     [
+      "country.00053",
+      0.591
+     ],
+     [
+      "country.00038",
+      0.526
+     ],
+     [
+      "country.00035",
+      0.517
+     ],
+     [
+      "country.00055",
+      0.515
+     ],
+     [
+      "country.00056",
+      0.502
+     ],
+     [
+      "country.00032",
+      0.47
+     ]
+    ],
+    "country|jazz": [
+     [
+      "country.00047",
+      0.414
+     ]
+    ],
+    "country|reggae": [
+     [
+      "country.00034",
+      0.768
+     ],
+     [
+      "country.00040",
+      0.703
+     ],
+     [
+      "country.00048",
+      0.507
+     ],
+     [
+      "country.00039",
+      0.446
+     ]
+    ],
+    "country|rock": [
+     [
+      "country.00050",
+      0.921
+     ],
+     [
+      "country.00058",
+      0.843
+     ],
+     [
+      "country.00060",
+      0.686
+     ],
+     [
+      "country.00043",
+      0.681
+     ],
+     [
+      "country.00054",
+      0.631
+     ],
+     [
+      "country.00061",
+      0.578
+     ],
+     [
+      "country.00051",
+      0.448
+     ]
+    ],
+    "disco|blues": [
+     [
+      "disco.00094",
+      0.406
+     ],
+     [
+      "disco.00080",
+      0.342
+     ],
+     [
+      "disco.00083",
+      0.277
+     ]
+    ],
+    "disco|classical": [
+     [
+      "disco.00069",
+      0.638
+     ]
+    ],
+    "disco|disco": [
+     [
+      "disco.00099",
+      0.998
+     ],
+     [
+      "disco.00088",
+      0.863
+     ],
+     [
+      "disco.00079",
+      0.823
+     ],
+     [
+      "disco.00001",
+      0.77
+     ],
+     [
+      "disco.00076",
+      0.759
+     ],
+     [
+      "disco.00021",
+      0.712
+     ],
+     [
+      "disco.00082",
+      0.686
+     ],
+     [
+      "disco.00097",
+      0.658
+     ],
+     [
+      "disco.00065",
+      0.633
+     ],
+     [
+      "disco.00058",
+      0.633
+     ],
+     [
+      "disco.00077",
+      0.607
+     ],
+     [
+      "disco.00084",
+      0.595
+     ],
+     [
+      "disco.00066",
+      0.559
+     ],
+     [
+      "disco.00093",
+      0.51
+     ],
+     [
+      "disco.00078",
+      0.446
+     ],
+     [
+      "disco.00092",
+      0.411
+     ],
+     [
+      "disco.00087",
+      0.324
+     ]
+    ],
+    "disco|hiphop": [
+     [
+      "disco.00085",
+      0.539
+     ]
+    ],
+    "disco|reggae": [
+     [
+      "disco.00091",
+      0.939
+     ],
+     [
+      "disco.00062",
+      0.612
+     ],
+     [
+      "disco.00096",
+      0.524
+     ],
+     [
+      "disco.00086",
+      0.445
+     ],
+     [
+      "disco.00064",
+      0.437
+     ],
+     [
+      "disco.00081",
+      0.385
+     ],
+     [
+      "disco.00063",
+      0.359
+     ]
+    ],
+    "hiphop|disco": [
+     [
+      "hiphop.00000",
+      0.793
+     ]
+    ],
+    "hiphop|hiphop": [
+     [
+      "hiphop.00027",
+      0.991
+     ],
+     [
+      "hiphop.00054",
+      0.987
+     ],
+     [
+      "hiphop.00026",
+      0.931
+     ],
+     [
+      "hiphop.00069",
+      0.885
+     ],
+     [
+      "hiphop.00030",
+      0.871
+     ],
+     [
+      "hiphop.00099",
+      0.835
+     ],
+     [
+      "hiphop.00068",
+      0.811
+     ],
+     [
+      "hiphop.00074",
+      0.791
+     ],
+     [
+      "hiphop.00052",
+      0.745
+     ],
+     [
+      "hiphop.00065",
+      0.722
+     ],
+     [
+      "hiphop.00064",
+      0.546
+     ],
+     [
+      "hiphop.00071",
+      0.48
+     ],
+     [
+      "hiphop.00053",
+      0.477
+     ]
+    ],
+    "hiphop|reggae": [
+     [
+      "hiphop.00066",
+      0.913
+     ],
+     [
+      "hiphop.00043",
+      0.897
+     ],
+     [
+      "hiphop.00073",
+      0.805
+     ],
+     [
+      "hiphop.00072",
+      0.765
+     ],
+     [
+      "hiphop.00063",
+      0.755
+     ],
+     [
+      "hiphop.00070",
+      0.721
+     ],
+     [
+      "hiphop.00075",
+      0.709
+     ],
+     [
+      "hiphop.00067",
+      0.597
+     ],
+     [
+      "hiphop.00040",
+      0.59
+     ],
+     [
+      "hiphop.00044",
+      0.568
+     ],
+     [
+      "hiphop.00062",
+      0.561
+     ],
+     [
+      "hiphop.00051",
+      0.477
+     ],
+     [
+      "hiphop.00045",
+      0.401
+     ]
+    ],
+    "jazz|classical": [
+     [
+      "jazz.00093",
+      0.837
+     ],
+     [
+      "jazz.00086",
+      0.625
+     ]
+    ],
+    "jazz|jazz": [
+     [
+      "jazz.00078",
+      0.999
+     ],
+     [
+      "jazz.00075",
+      0.999
+     ],
+     [
+      "jazz.00098",
+      0.999
+     ],
+     [
+      "jazz.00077",
+      0.998
+     ],
+     [
+      "jazz.00073",
+      0.997
+     ],
+     [
+      "jazz.00095",
+      0.992
+     ],
+     [
+      "jazz.00099",
+      0.978
+     ],
+     [
+      "jazz.00074",
+      0.97
+     ],
+     [
+      "jazz.00094",
+      0.96
+     ],
+     [
+      "jazz.00085",
+      0.917
+     ],
+     [
+      "jazz.00084",
+      0.895
+     ],
+     [
+      "jazz.00088",
+      0.873
+     ],
+     [
+      "jazz.00076",
+      0.87
+     ],
+     [
+      "jazz.00083",
+      0.859
+     ],
+     [
+      "jazz.00096",
+      0.815
+     ],
+     [
+      "jazz.00082",
+      0.814
+     ],
+     [
+      "jazz.00080",
+      0.792
+     ],
+     [
+      "jazz.00097",
+      0.745
+     ],
+     [
+      "jazz.00089",
+      0.742
+     ],
+     [
+      "jazz.00092",
+      0.73
+     ],
+     [
+      "jazz.00091",
+      0.624
+     ],
+     [
+      "jazz.00087",
+      0.57
+     ],
+     [
+      "jazz.00090",
+      0.432
+     ]
+    ],
+    "jazz|reggae": [
+     [
+      "jazz.00081",
+      0.532
+     ]
+    ],
+    "jazz|rock": [
+     [
+      "jazz.00079",
+      0.339
+     ]
+    ],
+    "metal|blues": [
+     [
+      "metal.00088",
+      0.339
+     ],
+     [
+      "metal.00029",
+      0.331
+     ]
+    ],
+    "metal|classical": [
+     [
+      "metal.00039",
+      0.369
+     ]
+    ],
+    "metal|jazz": [
+     [
+      "metal.00070",
+      0.374
+     ]
+    ],
+    "metal|metal": [
+     [
+      "metal.00013",
+      0.993
+     ],
+     [
+      "metal.00087",
+      0.973
+     ],
+     [
+      "metal.00015",
+      0.973
+     ],
+     [
+      "metal.00025",
+      0.956
+     ],
+     [
+      "metal.00078",
+      0.946
+     ],
+     [
+      "metal.00012",
+      0.94
+     ],
+     [
+      "metal.00031",
+      0.912
+     ],
+     [
+      "metal.00014",
+      0.906
+     ],
+     [
+      "metal.00033",
+      0.897
+     ],
+     [
+      "metal.00027",
+      0.877
+     ],
+     [
+      "metal.00023",
+      0.837
+     ],
+     [
+      "metal.00083",
+      0.837
+     ],
+     [
+      "metal.00032",
+      0.824
+     ],
+     [
+      "metal.00028",
+      0.821
+     ],
+     [
+      "metal.00026",
+      0.76
+     ],
+     [
+      "metal.00073",
+      0.745
+     ],
+     [
+      "metal.00074",
+      0.713
+     ],
+     [
+      "metal.00067",
+      0.508
+     ],
+     [
+      "metal.00085",
+      0.421
+     ],
+     [
+      "metal.00038",
+      0.392
+     ]
+    ],
+    "metal|rock": [
+     [
+      "metal.00030",
+      0.582
+     ],
+     [
+      "metal.00022",
+      0.569
+     ],
+     [
+      "metal.00075",
+      0.548
+     ]
+    ],
+    "pop|classical": [
+     [
+      "pop.00063",
+      0.769
+     ],
+     [
+      "pop.00079",
+      0.524
+     ]
+    ],
+    "pop|disco": [
+     [
+      "pop.00093",
+      0.689
+     ],
+     [
+      "pop.00073",
+      0.628
+     ],
+     [
+      "pop.00082",
+      0.517
+     ],
+     [
+      "pop.00077",
+      0.516
+     ],
+     [
+      "pop.00091",
+      0.509
+     ],
+     [
+      "pop.00072",
+      0.396
+     ]
+    ],
+    "pop|hiphop": [
+     [
+      "pop.00069",
+      0.926
+     ],
+     [
+      "pop.00092",
+      0.668
+     ],
+     [
+      "pop.00078",
+      0.56
+     ],
+     [
+      "pop.00001",
+      0.531
+     ]
+    ],
+    "pop|pop": [
+     [
+      "pop.00095",
+      0.953
+     ],
+     [
+      "pop.00096",
+      0.72
+     ],
+     [
+      "pop.00089",
+      0.7
+     ],
+     [
+      "pop.00000",
+      0.641
+     ],
+     [
+      "pop.00090",
+      0.442
+     ],
+     [
+      "pop.00094",
+      0.377
+     ]
+    ],
+    "pop|reggae": [
+     [
+      "pop.00013",
+      0.81
+     ],
+     [
+      "pop.00043",
+      0.777
+     ],
+     [
+      "pop.00074",
+      0.77
+     ],
+     [
+      "pop.00088",
+      0.7
+     ],
+     [
+      "pop.00065",
+      0.663
+     ],
+     [
+      "pop.00076",
+      0.588
+     ],
+     [
+      "pop.00014",
+      0.578
+     ],
+     [
+      "pop.00075",
+      0.554
+     ],
+     [
+      "pop.00066",
+      0.511
+     ],
+     [
+      "pop.00070",
+      0.47
+     ],
+     [
+      "pop.00064",
+      0.423
+     ],
+     [
+      "pop.00071",
+      0.39
+     ]
+    ],
+    "reggae|classical": [
+     [
+      "reggae.00040",
+      0.437
+     ]
+    ],
+    "reggae|disco": [
+     [
+      "reggae.00088",
+      0.542
+     ]
+    ],
+    "reggae|hiphop": [
+     [
+      "reggae.00052",
+      0.818
+     ]
+    ],
+    "reggae|jazz": [
+     [
+      "reggae.00083",
+      0.745
+     ]
+    ],
+    "reggae|reggae": [
+     [
+      "reggae.00090",
+      1.0
+     ],
+     [
+      "reggae.00037",
+      1.0
+     ],
+     [
+      "reggae.00065",
+      1.0
+     ],
+     [
+      "reggae.00035",
+      1.0
+     ],
+     [
+      "reggae.00071",
+      1.0
+     ],
+     [
+      "reggae.00066",
+      1.0
+     ],
+     [
+      "reggae.00068",
+      1.0
+     ],
+     [
+      "reggae.00053",
+      0.999
+     ],
+     [
+      "reggae.00039",
+      0.998
+     ],
+     [
+      "reggae.00036",
+      0.998
+     ],
+     [
+      "reggae.00034",
+      0.997
+     ],
+     [
+      "reggae.00079",
+      0.986
+     ],
+     [
+      "reggae.00087",
+      0.971
+     ],
+     [
+      "reggae.00064",
+      0.967
+     ],
+     [
+      "reggae.00047",
+      0.967
+     ],
+     [
+      "reggae.00089",
+      0.94
+     ],
+     [
+      "reggae.00067",
+      0.939
+     ],
+     [
+      "reggae.00082",
+      0.868
+     ],
+     [
+      "reggae.00048",
+      0.854
+     ],
+     [
+      "reggae.00038",
+      0.836
+     ],
+     [
+      "reggae.00084",
+      0.722
+     ],
+     [
+      "reggae.00046",
+      0.713
+     ]
+    ],
+    "rock|blues": [
+     [
+      "rock.00011",
+      0.595
+     ],
+     [
+      "rock.00012",
+      0.545
+     ],
+     [
+      "rock.00090",
+      0.395
+     ]
+    ],
+    "rock|classical": [
+     [
+      "rock.00045",
+      0.969
+     ],
+     [
+      "rock.00048",
+      0.952
+     ],
+     [
+      "rock.00027",
+      0.847
+     ],
+     [
+      "rock.00044",
+      0.646
+     ],
+     [
+      "rock.00032",
+      0.502
+     ],
+     [
+      "rock.00033",
+      0.453
+     ],
+     [
+      "rock.00046",
+      0.432
+     ]
+    ],
+    "rock|country": [
+     [
+      "rock.00034",
+      0.438
+     ],
+     [
+      "rock.00089",
+      0.422
+     ],
+     [
+      "rock.00036",
+      0.298
+     ]
+    ],
+    "rock|jazz": [
+     [
+      "rock.00047",
+      0.589
+     ],
+     [
+      "rock.00088",
+      0.324
+     ],
+     [
+      "rock.00040",
+      0.312
+     ]
+    ],
+    "rock|reggae": [
+     [
+      "rock.00035",
+      0.798
+     ],
+     [
+      "rock.00042",
+      0.69
+     ],
+     [
+      "rock.00037",
+      0.625
+     ],
+     [
+      "rock.00043",
+      0.618
+     ],
+     [
+      "rock.00031",
+      0.573
+     ],
+     [
+      "rock.00015",
+      0.542
+     ],
+     [
+      "rock.00028",
+      0.523
+     ],
+     [
+      "rock.00014",
+      0.495
+     ],
+     [
+      "rock.00013",
+      0.416
+     ],
+     [
+      "rock.00030",
+      0.323
+     ]
+    ],
+    "rock|rock": [
+     [
+      "rock.00087",
+      0.938
+     ],
+     [
+      "rock.00029",
+      0.559
+     ],
+     [
+      "rock.00039",
+      0.492
+     ],
+     [
+      "rock.00086",
+      0.435
+     ],
+     [
+      "rock.00010",
+      0.405
+     ],
+     [
+      "rock.00041",
+      0.37
+     ]
+    ]
+   }
+  }
+ },
+ "genres": [
+  "blues",
+  "classical",
+  "country",
+  "disco",
+  "hiphop",
+  "jazz",
+  "metal",
+  "pop",
+  "reggae",
+  "rock"
+ ],
+ "labels": {
+  "dummy_most_frequent": "Dummy (most frequent)",
+  "dummy_stratified": "Dummy (stratified)",
+  "knn": "k-nearest neighbours",
+  "logreg": "Logistic regression",
+  "svm": "RBF SVM",
+  "xgb": "XGBoost",
+  "cnn": "CNN on log-mels"
+ },
+ "data": {
+  "n_files": 1000,
+  "n_loadable": 999,
+  "failures": [
+   "jazz.00054"
+  ]
+ }
+}

@@ -1,0 +1,291 @@
+clip_id,cluster,y_true,y_pred,p_blues,p_classical,p_country,p_disco,p_hiphop,p_jazz,p_metal,p_pop,p_reggae,p_rock
+blues.00001,John Lee Hooker,blues,classical,0.1,0.2,0.0,0.2,0.0,0.1,0.1,0.0,0.1,0.2
+blues.00003,John Lee Hooker,blues,metal,0.0,0.0,0.1,0.1,0.0,0.1,0.4,0.2,0.1,0.0
+blues.00004,John Lee Hooker,blues,blues,0.2,0.0,0.1,0.1,0.1,0.1,0.1,0.0,0.1,0.2
+blues.00009,John Lee Hooker,blues,jazz,0.0,0.1,0.0,0.1,0.0,0.3,0.1,0.2,0.1,0.1
+blues.00016,Robert Johnson,blues,blues,0.3,0.1,0.3,0.0,0.1,0.1,0.0,0.1,0.0,0.0
+blues.00017,Robert Johnson,blues,metal,0.1,0.0,0.2,0.0,0.0,0.0,0.3,0.3,0.0,0.1
+blues.00018,Robert Johnson,blues,jazz,0.1,0.1,0.0,0.0,0.1,0.3,0.2,0.0,0.0,0.2
+blues.00023,Robert Johnson,blues,blues,0.2,0.0,0.2,0.1,0.1,0.1,0.1,0.2,0.0,0.0
+blues.00026,Robert Johnson,blues,classical,0.1,0.4,0.0,0.1,0.1,0.1,0.1,0.0,0.0,0.1
+blues.00027,Robert Johnson,blues,blues,0.2,0.1,0.2,0.1,0.0,0.1,0.2,0.0,0.1,0.0
+blues.00030,Kelly Joe Phelps,blues,hiphop,0.1,0.1,0.1,0.1,0.3,0.0,0.1,0.0,0.1,0.1
+blues.00033,Kelly Joe Phelps,blues,blues,0.2,0.1,0.1,0.2,0.0,0.1,0.0,0.1,0.2,0.0
+blues.00042,Stevie Ray Vaughan,blues,hiphop,0.0,0.0,0.1,0.0,0.2,0.1,0.1,0.2,0.2,0.1
+blues.00043,Stevie Ray Vaughan,blues,reggae,0.1,0.1,0.2,0.1,0.1,0.1,0.0,0.0,0.3,0.0
+blues.00046,Stevie Ray Vaughan,blues,disco,0.0,0.0,0.1,0.2,0.2,0.1,0.1,0.1,0.1,0.1
+blues.00052,Magic Slim,blues,country,0.2,0.1,0.3,0.0,0.1,0.0,0.2,0.0,0.1,0.0
+blues.00054,Magic Slim,blues,reggae,0.1,0.0,0.0,0.1,0.0,0.1,0.2,0.1,0.3,0.1
+blues.00056,Magic Slim,blues,hiphop,0.1,0.0,0.1,0.1,0.2,0.2,0.0,0.0,0.1,0.2
+blues.00058,Magic Slim,blues,disco,0.1,0.1,0.1,0.2,0.1,0.0,0.1,0.0,0.1,0.2
+blues.00059,Magic Slim,blues,disco,0.2,0.1,0.2,0.3,0.0,0.0,0.0,0.1,0.1,0.0
+blues.00067,Clifton Chenier,blues,disco,0.2,0.1,0.0,0.3,0.1,0.1,0.0,0.1,0.1,0.0
+blues.00072,Clifton Chenier,blues,blues,0.2,0.1,0.2,0.0,0.0,0.2,0.1,0.0,0.0,0.2
+blues.00076,Buckwheat Zydeco,blues,classical,0.0,0.3,0.1,0.1,0.0,0.1,0.1,0.2,0.1,0.0
+blues.00080,Buckwheat Zydeco,blues,classical,0.1,0.2,0.2,0.1,0.1,0.1,0.0,0.2,0.0,0.0
+blues.00085,Hot Toddy,blues,hiphop,0.0,0.0,0.0,0.1,0.3,0.1,0.1,0.1,0.3,0.0
+blues.00091,Hot Toddy,blues,blues,0.2,0.0,0.0,0.2,0.0,0.2,0.1,0.1,0.1,0.1
+blues.00093,Hot Toddy,blues,jazz,0.0,0.0,0.1,0.1,0.1,0.3,0.3,0.1,0.0,0.0
+blues.00096,Quiet Resonance,blues,disco,0.1,0.1,0.1,0.4,0.1,0.0,0.0,0.0,0.1,0.1
+blues.00099,Albert Collins,blues,classical,0.0,0.3,0.0,0.0,0.2,0.1,0.0,0.1,0.2,0.1
+classical.00010,Heinz Holliger,classical,country,0.0,0.0,0.2,0.0,0.1,0.2,0.2,0.1,0.1,0.1
+classical.00011,Gunther Hasselmann,classical,metal,0.1,0.0,0.1,0.2,0.0,0.1,0.3,0.2,0.0,0.0
+classical.00016,Gunther Hasselmann,classical,pop,0.1,0.2,0.1,0.2,0.0,0.0,0.1,0.3,0.0,0.0
+classical.00019,Gunther Hasselmann,classical,country,0.0,0.1,0.2,0.0,0.0,0.1,0.1,0.1,0.2,0.2
+classical.00022,Academy of St Martin in the Fields,classical,classical,0.1,0.3,0.1,0.1,0.1,0.1,0.0,0.1,0.1,0.0
+classical.00024,Academy of St Martin in the Fields,classical,disco,0.0,0.0,0.1,0.3,0.0,0.2,0.1,0.2,0.1,0.0
+classical.00025,Academy of St Martin in the Fields,classical,pop,0.2,0.1,0.0,0.0,0.1,0.0,0.0,0.4,0.1,0.1
+classical.00037,Juilliard String Quartet,classical,rock,0.2,0.0,0.1,0.1,0.0,0.0,0.1,0.1,0.1,0.3
+classical.00043,Gitti Pirner,classical,jazz,0.1,0.1,0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.0
+classical.00044,Udo Wachtveitl,classical,hiphop,0.0,0.0,0.1,0.1,0.3,0.1,0.1,0.1,0.0,0.2
+classical.00049,Gewandhausorchester,classical,blues,0.2,0.2,0.1,0.1,0.0,0.2,0.2,0.0,0.0,0.0
+classical.00050,Leonard Bernstein,classical,disco,0.0,0.1,0.1,0.2,0.0,0.1,0.1,0.2,0.2,0.0
+classical.00057,Leonard Bernstein,classical,hiphop,0.0,0.0,0.2,0.2,0.3,0.2,0.0,0.0,0.0,0.1
+classical.00060,Federico Procopio,classical,country,0.0,0.0,0.3,0.1,0.0,0.0,0.1,0.2,0.3,0.0
+classical.00061,LTN,classical,hiphop,0.0,0.1,0.1,0.0,0.2,0.1,0.2,0.1,0.1,0.1
+classical.00063,Alfred Brendel,classical,reggae,0.0,0.0,0.2,0.0,0.1,0.1,0.2,0.1,0.3,0.0
+classical.00064,Alfred Brendel,classical,classical,0.1,0.3,0.1,0.0,0.1,0.0,0.0,0.1,0.0,0.3
+classical.00066,Javier Perianes,classical,country,0.1,0.0,0.3,0.1,0.3,0.0,0.2,0.0,0.0,0.0
+classical.00070,Nicholas Ward,classical,classical,0.0,0.3,0.1,0.0,0.1,0.1,0.1,0.0,0.2,0.1
+classical.00072,Nicholas Ward,classical,classical,0.0,0.3,0.0,0.0,0.3,0.0,0.0,0.1,0.3,0.0
+classical.00078,Chicago Symphony Orchestra,classical,rock,0.0,0.2,0.0,0.1,0.0,0.0,0.2,0.2,0.0,0.3
+classical.00082,Timothy Reynish,classical,classical,0.1,0.2,0.1,0.2,0.0,0.0,0.2,0.0,0.1,0.1
+classical.00086,Timothy Reynish,classical,blues,0.2,0.1,0.1,0.1,0.0,0.0,0.2,0.1,0.0,0.2
+classical.00089,English Chamber Orchestra,classical,blues,0.2,0.2,0.1,0.0,0.1,0.1,0.1,0.0,0.1,0.1
+classical.00094,English Chamber Orchestra,classical,blues,0.5,0.1,0.0,0.0,0.0,0.1,0.1,0.1,0.1,0.0
+classical.00095,English Chamber Orchestra,classical,classical,0.0,0.2,0.1,0.1,0.1,0.0,0.2,0.1,0.1,0.1
+classical.00096,Takako Nishizaki,classical,rock,0.0,0.2,0.1,0.0,0.2,0.1,0.0,0.1,0.0,0.3
+classical.00098,English Chamber Orchestra,classical,reggae,0.1,0.2,0.0,0.2,0.0,0.2,0.0,0.0,0.3,0.0
+classical.00099,English Chamber Orchestra,classical,country,0.1,0.0,0.2,0.2,0.1,0.0,0.0,0.2,0.1,0.1
+country.00004,Suzy Bogguss,country,disco,0.0,0.0,0.0,0.3,0.2,0.1,0.0,0.0,0.1,0.3
+country.00007,Travis Tritt,country,blues,0.3,0.0,0.0,0.1,0.0,0.0,0.2,0.1,0.2,0.1
+country.00008,Vince Gill,country,reggae,0.0,0.0,0.1,0.1,0.0,0.2,0.0,0.2,0.3,0.1
+country.00012,Bobby Bare,country,country,0.0,0.1,0.2,0.1,0.0,0.1,0.2,0.1,0.0,0.2
+country.00014,Nina Martinique,country,country,0.1,0.0,0.3,0.0,0.0,0.3,0.0,0.0,0.2,0.1
+country.00017,Floyd Cramer,country,metal,0.2,0.0,0.1,0.2,0.0,0.1,0.3,0.1,0.0,0.0
+country.00018,Billie Jo Spears,country,classical,0.1,0.2,0.0,0.1,0.1,0.1,0.1,0.1,0.0,0.2
+country.00025,Gram Parsons,country,classical,0.0,0.4,0.1,0.0,0.0,0.2,0.1,0.0,0.2,0.0
+country.00034,Armin van Buuren,country,rock,0.1,0.1,0.0,0.0,0.1,0.1,0.1,0.1,0.1,0.3
+country.00038,,country,pop,0.1,0.0,0.0,0.1,0.1,0.1,0.1,0.2,0.1,0.2
+country.00039,Zydecajun,country,hiphop,0.2,0.1,0.0,0.1,0.3,0.0,0.2,0.0,0.1,0.0
+country.00040,The Kentucky Headhunters,country,classical,0.1,0.2,0.2,0.0,0.0,0.1,0.1,0.1,0.1,0.1
+country.00046,Jimmie Skinner,country,reggae,0.1,0.2,0.1,0.2,0.0,0.0,0.0,0.1,0.3,0.0
+country.00047,Connie Hall,country,jazz,0.0,0.1,0.0,0.1,0.1,0.3,0.1,0.3,0.0,0.0
+country.00051,Vince Gill,country,blues,0.2,0.1,0.2,0.1,0.1,0.1,0.0,0.1,0.1,0.0
+country.00057,Reba McEntire,country,classical,0.0,0.2,0.0,0.1,0.2,0.2,0.0,0.0,0.2,0.1
+country.00058,Vince Gill,country,blues,0.2,0.1,0.0,0.2,0.0,0.0,0.1,0.0,0.2,0.2
+country.00059,Vince Gill,country,classical,0.1,0.2,0.1,0.1,0.1,0.1,0.0,0.1,0.2,0.0
+country.00060,Vince Gill,country,disco,0.1,0.1,0.0,0.2,0.0,0.0,0.2,0.2,0.0,0.2
+country.00063,Vince Gill,country,blues,0.2,0.0,0.1,0.1,0.1,0.0,0.1,0.1,0.2,0.1
+country.00075,Willie Nelson,country,rock,0.0,0.0,0.3,0.1,0.1,0.0,0.1,0.0,0.0,0.4
+country.00079,Willie Nelson,country,metal,0.1,0.1,0.2,0.0,0.0,0.1,0.3,0.1,0.1,0.0
+country.00081,Brad Paisley,country,metal,0.1,0.1,0.1,0.1,0.0,0.1,0.2,0.0,0.1,0.2
+country.00083,Brad Paisley,country,classical,0.1,0.2,0.0,0.0,0.0,0.2,0.1,0.2,0.2,0.0
+country.00090,Brad Paisley,country,blues,0.2,0.1,0.0,0.1,0.1,0.1,0.2,0.0,0.1,0.1
+country.00092,Brad Paisley,country,hiphop,0.0,0.0,0.1,0.0,0.3,0.0,0.0,0.2,0.2,0.2
+country.00094,George Strait,country,country,0.1,0.1,0.3,0.1,0.2,0.0,0.0,0.0,0.1,0.1
+country.00095,George Strait,country,pop,0.1,0.0,0.3,0.0,0.1,0.0,0.1,0.4,0.0,0.0
+country.00099,George Strait,country,disco,0.0,0.1,0.0,0.3,0.3,0.1,0.1,0.0,0.1,0.0
+disco.00000,Boz Scaggs,disco,metal,0.1,0.1,0.0,0.1,0.1,0.1,0.4,0.0,0.1,0.0
+disco.00003,Don Armando's 2nd Ave. Rhumba Band,disco,disco,0.1,0.2,0.0,0.3,0.1,0.0,0.0,0.1,0.1,0.1
+disco.00007,Miquel Brown,disco,blues,0.3,0.0,0.0,0.1,0.2,0.1,0.1,0.0,0.1,0.1
+disco.00013,Donna Summer,disco,hiphop,0.1,0.1,0.1,0.0,0.2,0.1,0.1,0.0,0.2,0.1
+disco.00014,Bee Gees,disco,country,0.0,0.0,0.3,0.2,0.2,0.2,0.0,0.1,0.0,0.0
+disco.00017,Ottawan,disco,classical,0.0,0.2,0.1,0.1,0.2,0.0,0.1,0.1,0.1,0.1
+disco.00024,Ottawan,disco,reggae,0.1,0.2,0.1,0.1,0.0,0.1,0.0,0.0,0.3,0.1
+disco.00027,The Sugarhill Gang,disco,pop,0.1,0.0,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.0
+disco.00028,Gibson Brothers,disco,hiphop,0.0,0.1,0.1,0.1,0.4,0.1,0.0,0.0,0.2,0.0
+disco.00029,Evelyn Thomas,disco,classical,0.0,0.2,0.2,0.2,0.2,0.0,0.0,0.1,0.1,0.0
+disco.00030,Gibson Brothers,disco,disco,0.0,0.0,0.1,0.4,0.1,0.0,0.0,0.2,0.1,0.1
+disco.00037,Gibson Brothers,disco,blues,0.2,0.1,0.2,0.2,0.0,0.1,0.0,0.2,0.0,0.0
+disco.00040,David Christie,disco,country,0.1,0.1,0.3,0.0,0.0,0.2,0.1,0.1,0.1,0.0
+disco.00041,Heatwave,disco,blues,0.2,0.1,0.1,0.0,0.2,0.0,0.1,0.1,0.2,0.0
+disco.00042,Disco-Tex,disco,metal,0.1,0.0,0.0,0.1,0.0,0.1,0.2,0.2,0.2,0.1
+disco.00049,KC and the Sunshine Band,disco,reggae,0.0,0.1,0.0,0.1,0.2,0.0,0.0,0.2,0.3,0.1
+disco.00050,KC and the Sunshine Band,disco,blues,0.4,0.0,0.1,0.0,0.2,0.0,0.1,0.0,0.1,0.1
+disco.00053,Amii Stewart,disco,reggae,0.0,0.0,0.1,0.2,0.1,0.1,0.1,0.0,0.3,0.1
+disco.00060,The Trammps,disco,disco,0.0,0.1,0.1,0.2,0.2,0.1,0.2,0.1,0.0,0.0
+disco.00062,Peter Brown,disco,classical,0.1,0.3,0.1,0.1,0.0,0.1,0.1,0.0,0.1,0.1
+disco.00064,Lipps,disco,blues,0.3,0.0,0.1,0.2,0.0,0.0,0.3,0.0,0.0,0.1
+disco.00069,KC and the Sunshine Band,disco,metal,0.0,0.0,0.1,0.1,0.0,0.1,0.2,0.2,0.2,0.1
+disco.00071,KC and the Sunshine Band,disco,disco,0.0,0.1,0.0,0.2,0.2,0.0,0.1,0.2,0.0,0.2
+disco.00084,,disco,classical,0.1,0.3,0.0,0.2,0.1,0.0,0.1,0.1,0.1,0.0
+disco.00086,Alicia Bridges,disco,hiphop,0.1,0.1,0.1,0.0,0.2,0.1,0.2,0.1,0.0,0.1
+disco.00090,Village People,disco,classical,0.1,0.2,0.0,0.1,0.1,0.0,0.2,0.0,0.2,0.1
+disco.00092,Blondie,disco,jazz,0.1,0.1,0.0,0.0,0.1,0.4,0.1,0.1,0.1,0.0
+disco.00095,Donna Summer,disco,blues,0.3,0.0,0.0,0.0,0.0,0.3,0.0,0.1,0.2,0.1
+disco.00099,Boney M.,disco,rock,0.0,0.1,0.1,0.2,0.0,0.0,0.2,0.0,0.1,0.3
+hiphop.00000,Afrika Bambaataa,hiphop,classical,0.0,0.2,0.2,0.1,0.2,0.0,0.1,0.2,0.0,0.0
+hiphop.00001,Wu-Tang Clan,hiphop,jazz,0.1,0.1,0.1,0.1,0.0,0.2,0.1,0.1,0.1,0.1
+hiphop.00002,De La Soul,hiphop,hiphop,0.1,0.0,0.0,0.1,0.3,0.1,0.1,0.1,0.1,0.1
+hiphop.00006,Ice Cube,hiphop,hiphop,0.0,0.0,0.2,0.0,0.3,0.3,0.0,0.1,0.1,0.0
+hiphop.00007,Wu-Tang Clan,hiphop,classical,0.0,0.2,0.0,0.1,0.1,0.2,0.1,0.1,0.2,0.0
+hiphop.00014,Beastie Boys,hiphop,hiphop,0.2,0.0,0.1,0.1,0.3,0.0,0.1,0.0,0.1,0.1
+hiphop.00015,Beastie Boys,hiphop,rock,0.2,0.0,0.1,0.0,0.0,0.0,0.2,0.1,0.1,0.3
+hiphop.00017,Beastie Boys,hiphop,metal,0.0,0.0,0.1,0.2,0.1,0.0,0.3,0.2,0.0,0.1
+hiphop.00022,Beastie Boys,hiphop,disco,0.1,0.1,0.2,0.3,0.1,0.1,0.0,0.1,0.0,0.0
+hiphop.00027,The Ambassador,hiphop,metal,0.2,0.1,0.1,0.0,0.1,0.0,0.3,0.1,0.1,0.0
+hiphop.00029,Aaliyah,hiphop,blues,0.3,0.0,0.1,0.1,0.2,0.0,0.1,0.1,0.0,0.1
+hiphop.00035,Cru Thik,hiphop,blues,0.3,0.0,0.1,0.1,0.1,0.1,0.2,0.0,0.1,0.0
+hiphop.00045,Lauryn Hill,hiphop,blues,0.3,0.0,0.2,0.0,0.0,0.2,0.1,0.1,0.1,0.0
+hiphop.00046,A Tribe Called Quest,hiphop,jazz,0.0,0.0,0.1,0.0,0.2,0.4,0.0,0.2,0.0,0.1
+hiphop.00048,A Tribe Called Quest,hiphop,rock,0.1,0.0,0.1,0.1,0.1,0.2,0.0,0.1,0.0,0.3
+hiphop.00050,A Tribe Called Quest,hiphop,blues,0.2,0.1,0.1,0.1,0.1,0.1,0.0,0.0,0.1,0.2
+hiphop.00052,Temper Temper,hiphop,country,0.0,0.0,0.3,0.3,0.1,0.2,0.1,0.0,0.0,0.0
+hiphop.00057,Cypress Hill,hiphop,hiphop,0.1,0.1,0.0,0.1,0.2,0.1,0.1,0.2,0.0,0.1
+hiphop.00058,Cypress Hill,hiphop,blues,0.3,0.0,0.1,0.2,0.2,0.0,0.0,0.0,0.0,0.2
+hiphop.00059,Cypress Hill,hiphop,disco,0.0,0.1,0.0,0.3,0.0,0.1,0.1,0.1,0.1,0.2
+hiphop.00063,A Tribe Called Quest,hiphop,pop,0.2,0.1,0.0,0.2,0.2,0.0,0.0,0.3,0.0,0.0
+hiphop.00067,A Tribe Called Quest,hiphop,jazz,0.1,0.1,0.0,0.1,0.1,0.2,0.1,0.0,0.2,0.1
+hiphop.00068,A Tribe Called Quest,hiphop,pop,0.0,0.1,0.0,0.0,0.1,0.1,0.1,0.3,0.2,0.1
+hiphop.00069,A Tribe Called Quest,hiphop,metal,0.0,0.1,0.0,0.2,0.0,0.0,0.4,0.0,0.0,0.3
+hiphop.00071,A Tribe Called Quest,hiphop,country,0.1,0.1,0.2,0.0,0.0,0.2,0.1,0.0,0.1,0.2
+hiphop.00080,Eminem,hiphop,reggae,0.0,0.1,0.0,0.0,0.2,0.1,0.0,0.2,0.3,0.1
+hiphop.00093,Public Enemy,hiphop,classical,0.0,0.2,0.1,0.1,0.2,0.1,0.1,0.1,0.0,0.1
+hiphop.00097,Public Enemy,hiphop,country,0.0,0.1,0.3,0.1,0.0,0.0,0.0,0.1,0.3,0.1
+hiphop.00098,Public Enemy,hiphop,blues,0.2,0.1,0.1,0.1,0.1,0.1,0.1,0.0,0.1,0.1
+jazz.00002,James Carter,jazz,reggae,0.2,0.1,0.0,0.0,0.1,0.1,0.2,0.0,0.3,0.0
+jazz.00004,James Carter,jazz,hiphop,0.0,0.0,0.1,0.1,0.3,0.2,0.0,0.0,0.3,0.0
+jazz.00007,James Carter,jazz,country,0.1,0.1,0.2,0.1,0.0,0.2,0.0,0.0,0.1,0.2
+jazz.00011,Joe Lovano,jazz,disco,0.1,0.0,0.0,0.2,0.2,0.0,0.2,0.2,0.0,0.1
+jazz.00015,Joe Lovano,jazz,classical,0.1,0.2,0.1,0.1,0.1,0.1,0.0,0.1,0.2,0.0
+jazz.00018,Joe Lovano,jazz,country,0.0,0.0,0.2,0.0,0.2,0.2,0.2,0.1,0.0,0.1
+jazz.00019,Joe Lovano,jazz,country,0.0,0.0,0.2,0.2,0.0,0.1,0.0,0.2,0.2,0.1
+jazz.00020,Joe Lovano,jazz,pop,0.1,0.2,0.0,0.1,0.0,0.0,0.1,0.3,0.0,0.2
+jazz.00021,Joe Lovano,jazz,classical,0.0,0.2,0.0,0.0,0.2,0.0,0.2,0.1,0.1,0.2
+jazz.00038,Coleman Hawkins,jazz,jazz,0.1,0.1,0.1,0.0,0.0,0.3,0.1,0.1,0.2,0.0
+jazz.00042,Coleman Hawkins,jazz,blues,0.2,0.0,0.0,0.2,0.0,0.1,0.2,0.0,0.2,0.1
+jazz.00043,Coleman Hawkins,jazz,country,0.2,0.2,0.3,0.0,0.0,0.1,0.1,0.0,0.1,0.0
+jazz.00045,Coleman Hawkins,jazz,blues,0.2,0.0,0.0,0.2,0.1,0.0,0.2,0.1,0.1,0.1
+jazz.00050,,jazz,pop,0.0,0.1,0.1,0.0,0.2,0.0,0.2,0.4,0.0,0.0
+jazz.00051,Coleman Hawkins,jazz,blues,0.2,0.0,0.1,0.1,0.0,0.1,0.1,0.1,0.1,0.2
+jazz.00052,Terell Stafford,jazz,reggae,0.0,0.1,0.0,0.2,0.1,0.1,0.0,0.1,0.3,0.1
+jazz.00053,Lionel Hampton,jazz,rock,0.1,0.3,0.0,0.0,0.1,0.0,0.0,0.0,0.1,0.4
+jazz.00055,Coleman Hawkins,jazz,country,0.0,0.1,0.2,0.2,0.1,0.0,0.0,0.1,0.1,0.2
+jazz.00061,Johnny O'Neal,jazz,classical,0.1,0.2,0.0,0.2,0.0,0.0,0.1,0.1,0.1,0.2
+jazz.00062,Coleman Hawkins,jazz,pop,0.1,0.0,0.0,0.1,0.1,0.2,0.0,0.3,0.0,0.2
+jazz.00066,,jazz,blues,0.2,0.1,0.0,0.2,0.0,0.0,0.0,0.1,0.2,0.2
+jazz.00067,Coleman Hawkins,jazz,metal,0.0,0.0,0.0,0.1,0.2,0.1,0.4,0.0,0.1,0.1
+jazz.00070,"Henry ""Red"" Allen",jazz,country,0.1,0.1,0.2,0.1,0.1,0.0,0.1,0.1,0.1,0.1
+jazz.00075,Dexter Gordon,jazz,disco,0.0,0.2,0.0,0.3,0.1,0.0,0.1,0.1,0.2,0.0
+jazz.00080,Tony Williams,jazz,blues,0.2,0.1,0.1,0.1,0.2,0.2,0.1,0.0,0.0,0.0
+jazz.00081,Tony Williams,jazz,rock,0.2,0.0,0.0,0.1,0.0,0.1,0.1,0.1,0.1,0.3
+jazz.00083,Tony Williams,jazz,country,0.0,0.0,0.2,0.2,0.2,0.0,0.1,0.1,0.0,0.2
+jazz.00094,Joe Henderson,jazz,rock,0.2,0.0,0.0,0.1,0.1,0.2,0.1,0.0,0.0,0.3
+jazz.00099,Joe Henderson,jazz,pop,0.1,0.1,0.1,0.1,0.0,0.1,0.1,0.2,0.0,0.2
+metal.00000,Falconer,metal,classical,0.1,0.2,0.0,0.0,0.2,0.1,0.1,0.0,0.2,0.1
+metal.00009,Tvangeste,metal,classical,0.2,0.3,0.0,0.1,0.0,0.0,0.1,0.0,0.1,0.2
+metal.00011,,metal,pop,0.0,0.1,0.2,0.0,0.0,0.0,0.0,0.3,0.1,0.3
+metal.00012,Dark Tranquillity,metal,rock,0.2,0.2,0.0,0.0,0.0,0.1,0.1,0.0,0.1,0.3
+metal.00013,Dark Tranquillity,metal,pop,0.0,0.1,0.1,0.0,0.0,0.0,0.1,0.3,0.2,0.2
+metal.00014,Dark Tranquillity,metal,jazz,0.1,0.0,0.1,0.1,0.1,0.2,0.0,0.1,0.1,0.2
+metal.00022,Ozzy Osbourne,metal,classical,0.1,0.2,0.1,0.1,0.2,0.1,0.0,0.0,0.0,0.2
+metal.00023,,metal,jazz,0.0,0.0,0.1,0.1,0.0,0.6,0.1,0.0,0.1,0.0
+metal.00024,Jacob's Dream,metal,hiphop,0.1,0.1,0.1,0.0,0.2,0.1,0.0,0.2,0.1,0.1
+metal.00027,Anthrax,metal,classical,0.1,0.2,0.0,0.1,0.2,0.2,0.0,0.1,0.1,0.0
+metal.00030,Megadeth,metal,blues,0.2,0.1,0.2,0.2,0.0,0.0,0.0,0.2,0.1,0.0
+metal.00034,Iron Maiden,metal,hiphop,0.0,0.1,0.2,0.0,0.3,0.0,0.1,0.1,0.1,0.1
+metal.00040,Dio,metal,jazz,0.1,0.0,0.1,0.0,0.1,0.3,0.0,0.0,0.3,0.1
+metal.00041,Dio,metal,jazz,0.0,0.1,0.1,0.1,0.0,0.2,0.2,0.1,0.2,0.0
+metal.00044,Dio,metal,country,0.0,0.1,0.2,0.2,0.2,0.0,0.0,0.1,0.1,0.1
+metal.00051,New Bomb Turks,metal,classical,0.1,0.3,0.1,0.0,0.0,0.2,0.1,0.0,0.2,0.0
+metal.00052,New Bomb Turks,metal,classical,0.0,0.2,0.1,0.1,0.0,0.1,0.2,0.0,0.1,0.2
+metal.00056,New Bomb Turks,metal,classical,0.0,0.3,0.1,0.0,0.1,0.2,0.1,0.0,0.1,0.1
+metal.00057,New Bomb Turks,metal,pop,0.1,0.1,0.0,0.0,0.1,0.0,0.1,0.3,0.2,0.1
+metal.00063,Dio,metal,classical,0.0,0.3,0.1,0.1,0.2,0.1,0.0,0.1,0.0,0.1
+metal.00065,Dio,metal,blues,0.3,0.0,0.0,0.2,0.0,0.1,0.2,0.0,0.0,0.2
+metal.00066,Dio,metal,classical,0.1,0.4,0.1,0.0,0.1,0.1,0.1,0.0,0.1,0.0
+metal.00067,AC/DC,metal,disco,0.0,0.1,0.0,0.2,0.1,0.1,0.2,0.1,0.0,0.2
+metal.00068,Judas Priest,metal,pop,0.0,0.1,0.0,0.0,0.0,0.1,0.1,0.3,0.2,0.2
+metal.00070,AC/DC,metal,hiphop,0.1,0.1,0.0,0.0,0.5,0.1,0.1,0.1,0.0,0.0
+metal.00073,Metallica,metal,hiphop,0.1,0.0,0.0,0.1,0.2,0.0,0.1,0.1,0.2,0.2
+metal.00085,Ozzy Osbourne,metal,hiphop,0.0,0.2,0.0,0.0,0.3,0.0,0.3,0.0,0.1,0.1
+metal.00086,Bon Jovi,metal,classical,0.0,0.3,0.1,0.0,0.1,0.3,0.1,0.0,0.0,0.1
+metal.00088,Danzig,metal,country,0.0,0.0,0.4,0.1,0.1,0.1,0.1,0.0,0.1,0.1
+pop.00003,Alanis Morissette,pop,blues,0.2,0.1,0.0,0.1,0.0,0.1,0.2,0.1,0.0,0.2
+pop.00004,Alanis Morissette,pop,classical,0.0,0.4,0.0,0.1,0.0,0.2,0.1,0.2,0.0,0.0
+pop.00005,Alanis Morissette,pop,disco,0.1,0.1,0.1,0.2,0.2,0.0,0.0,0.1,0.1,0.1
+pop.00008,Alanis Morissette,pop,blues,0.2,0.1,0.2,0.1,0.1,0.0,0.1,0.1,0.0,0.1
+pop.00023,Britney Spears,pop,hiphop,0.1,0.1,0.1,0.1,0.2,0.0,0.1,0.0,0.2,0.1
+pop.00032,Britney Spears,pop,pop,0.1,0.2,0.1,0.0,0.2,0.1,0.0,0.3,0.0,0.0
+pop.00042,Babyface,pop,blues,0.2,0.1,0.0,0.1,0.1,0.2,0.1,0.1,0.1,0.0
+pop.00044,Christina Aguilera,pop,hiphop,0.1,0.0,0.0,0.2,0.3,0.1,0.0,0.1,0.0,0.2
+pop.00047,Christina Aguilera,pop,metal,0.0,0.2,0.1,0.0,0.0,0.1,0.3,0.1,0.0,0.2
+pop.00048,Christina Aguilera,pop,hiphop,0.0,0.1,0.0,0.1,0.2,0.2,0.2,0.1,0.0,0.1
+pop.00049,Christina Aguilera,pop,pop,0.1,0.1,0.1,0.1,0.1,0.0,0.0,0.2,0.1,0.2
+pop.00051,Christina Aguilera,pop,blues,0.2,0.2,0.0,0.1,0.1,0.2,0.0,0.1,0.1,0.0
+pop.00054,Destiny's Child,pop,pop,0.2,0.0,0.0,0.1,0.2,0.0,0.0,0.3,0.1,0.1
+pop.00056,Destiny's Child,pop,metal,0.2,0.1,0.0,0.1,0.0,0.1,0.3,0.0,0.2,0.0
+pop.00057,Destiny's Child,pop,classical,0.1,0.3,0.1,0.0,0.0,0.2,0.2,0.0,0.0,0.1
+pop.00058,Destiny's Child,pop,country,0.1,0.0,0.2,0.2,0.1,0.0,0.2,0.0,0.1,0.1
+pop.00059,Destiny's Child,pop,blues,0.2,0.1,0.2,0.0,0.0,0.2,0.0,0.0,0.2,0.1
+pop.00066,Whitney Houston And Enrique Iglesias,pop,classical,0.1,0.3,0.2,0.0,0.1,0.1,0.0,0.0,0.1,0.1
+pop.00067,Janet Jackson,pop,blues,0.2,0.1,0.0,0.2,0.2,0.0,0.2,0.0,0.0,0.1
+pop.00069,Janet Jackson,pop,disco,0.0,0.0,0.1,0.2,0.2,0.2,0.0,0.0,0.2,0.1
+pop.00072,Janet Jackson,pop,rock,0.0,0.2,0.1,0.0,0.2,0.0,0.0,0.0,0.2,0.3
+pop.00079,Kate Bush,pop,classical,0.1,0.2,0.0,0.0,0.2,0.1,0.1,0.1,0.0,0.2
+pop.00082,Jennifer Lopez,pop,classical,0.0,0.3,0.0,0.2,0.0,0.1,0.0,0.0,0.2,0.2
+pop.00085,Madonna,pop,classical,0.1,0.2,0.2,0.1,0.1,0.0,0.0,0.0,0.2,0.1
+pop.00087,Mandy Moore,pop,classical,0.0,0.2,0.2,0.0,0.0,0.1,0.1,0.1,0.1,0.2
+pop.00088,Mandy Moore,pop,disco,0.1,0.1,0.1,0.3,0.1,0.0,0.2,0.0,0.0,0.1
+pop.00094,Mandy Moore,pop,country,0.1,0.0,0.2,0.0,0.2,0.0,0.1,0.1,0.2,0.1
+pop.00097,Babyface,pop,reggae,0.1,0.1,0.0,0.1,0.0,0.1,0.2,0.0,0.3,0.1
+pop.00099,Babyface,pop,metal,0.0,0.1,0.1,0.0,0.1,0.0,0.3,0.2,0.1,0.1
+reggae.00001,Bob Marley,reggae,hiphop,0.1,0.1,0.0,0.0,0.2,0.1,0.2,0.1,0.0,0.2
+reggae.00009,Bob Marley,reggae,blues,0.2,0.1,0.0,0.0,0.1,0.0,0.1,0.2,0.1,0.2
+reggae.00011,Bob Marley,reggae,disco,0.1,0.0,0.1,0.3,0.0,0.1,0.1,0.0,0.3,0.0
+reggae.00016,Bob Marley,reggae,reggae,0.0,0.1,0.1,0.1,0.0,0.2,0.1,0.0,0.3,0.1
+reggae.00018,Bob Marley,reggae,disco,0.1,0.0,0.1,0.2,0.1,0.1,0.2,0.0,0.0,0.2
+reggae.00020,Bob Marley,reggae,pop,0.1,0.1,0.1,0.1,0.1,0.0,0.0,0.4,0.1,0.0
+reggae.00026,Bob Marley,reggae,country,0.1,0.1,0.2,0.2,0.2,0.0,0.0,0.1,0.0,0.1
+reggae.00028,Burning Spear,reggae,country,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1,0.1,0.0
+reggae.00032,Burning Spear,reggae,hiphop,0.1,0.2,0.0,0.0,0.3,0.2,0.1,0.1,0.0,0.0
+reggae.00037,Burning Spear,reggae,blues,0.3,0.0,0.0,0.2,0.0,0.1,0.0,0.2,0.0,0.2
+reggae.00039,Burning Spear,reggae,blues,0.3,0.0,0.1,0.0,0.1,0.2,0.0,0.0,0.3,0.0
+reggae.00041,Desmond Dekker,reggae,country,0.1,0.2,0.3,0.0,0.1,0.0,0.1,0.1,0.0,0.1
+reggae.00046,Big Youth,reggae,pop,0.0,0.1,0.1,0.1,0.0,0.0,0.1,0.2,0.2,0.2
+reggae.00047,Big Youth,reggae,reggae,0.2,0.0,0.1,0.1,0.0,0.0,0.2,0.0,0.4,0.0
+reggae.00050,Burning Spear,reggae,metal,0.0,0.1,0.2,0.1,0.0,0.0,0.4,0.0,0.0,0.2
+reggae.00051,David Morales,reggae,metal,0.0,0.1,0.1,0.1,0.0,0.1,0.4,0.1,0.1,0.0
+reggae.00058,Bob Marley,reggae,jazz,0.1,0.0,0.0,0.1,0.1,0.4,0.2,0.0,0.0,0.1
+reggae.00060,Bob Marley,reggae,jazz,0.0,0.0,0.0,0.1,0.1,0.3,0.2,0.2,0.0,0.1
+reggae.00061,Barrington Levy,reggae,pop,0.1,0.1,0.0,0.1,0.1,0.1,0.0,0.2,0.1,0.2
+reggae.00062,Burning Spear,reggae,country,0.1,0.0,0.2,0.1,0.0,0.1,0.2,0.1,0.0,0.2
+reggae.00067,Big Youth,reggae,blues,0.3,0.0,0.1,0.1,0.0,0.1,0.0,0.2,0.1,0.1
+reggae.00069,Desmond Dekker,reggae,classical,0.0,0.4,0.1,0.0,0.1,0.1,0.0,0.2,0.1,0.0
+reggae.00076,Simply Red,reggae,country,0.0,0.1,0.2,0.0,0.1,0.2,0.2,0.0,0.2,0.0
+reggae.00077,Freddie McGregor,reggae,hiphop,0.0,0.1,0.1,0.1,0.3,0.2,0.1,0.0,0.1,0.0
+reggae.00080,Ini Kamoze,reggae,classical,0.2,0.3,0.0,0.2,0.0,0.2,0.0,0.1,0.0,0.0
+reggae.00081,Ini Kamoze,reggae,country,0.1,0.1,0.2,0.1,0.1,0.1,0.0,0.2,0.1,0.0
+reggae.00084,Jimmy Cliff,reggae,classical,0.1,0.2,0.0,0.2,0.1,0.0,0.2,0.0,0.2,0.0
+reggae.00093,Peter Tosh,reggae,blues,0.2,0.1,0.1,0.1,0.0,0.0,0.1,0.2,0.1,0.1
+reggae.00094,Prince Buster,reggae,pop,0.1,0.0,0.0,0.0,0.2,0.0,0.0,0.5,0.2,0.0
+rock.00005,George S. Clinton,rock,blues,0.3,0.0,0.2,0.0,0.0,0.2,0.0,0.1,0.1,0.1
+rock.00009,George S. Clinton,rock,blues,0.2,0.2,0.1,0.0,0.1,0.2,0.0,0.1,0.1,0.0
+rock.00017,Queen,rock,classical,0.0,0.2,0.1,0.0,0.0,0.2,0.2,0.0,0.2,0.1
+rock.00021,Queen,rock,jazz,0.1,0.1,0.1,0.1,0.1,0.4,0.0,0.0,0.1,0.0
+rock.00022,Queen,rock,metal,0.1,0.1,0.0,0.1,0.1,0.1,0.2,0.1,0.1,0.1
+rock.00030,The Rolling Stones,rock,country,0.2,0.0,0.4,0.2,0.1,0.0,0.1,0.0,0.0,0.0
+rock.00032,Led Zeppelin,rock,classical,0.0,0.3,0.1,0.1,0.1,0.0,0.1,0.1,0.2,0.0
+rock.00033,The Rolling Stones,rock,hiphop,0.0,0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1,0.1
+rock.00038,Guns N' Roses,rock,hiphop,0.1,0.1,0.1,0.1,0.3,0.2,0.1,0.0,0.0,0.0
+rock.00039,Led Zeppelin,rock,pop,0.1,0.0,0.1,0.1,0.0,0.0,0.0,0.4,0.1,0.2
+rock.00041,Led Zeppelin,rock,country,0.2,0.0,0.3,0.2,0.0,0.0,0.1,0.1,0.1,0.0
+rock.00042,Led Zeppelin,rock,country,0.0,0.1,0.3,0.1,0.0,0.1,0.0,0.2,0.0,0.2
+rock.00043,Led Zeppelin,rock,pop,0.0,0.1,0.1,0.0,0.1,0.0,0.1,0.3,0.2,0.1
+rock.00044,Led Zeppelin,rock,reggae,0.2,0.0,0.1,0.0,0.1,0.0,0.2,0.1,0.3,0.0
+rock.00047,Led Zeppelin,rock,disco,0.1,0.0,0.0,0.3,0.0,0.1,0.1,0.2,0.1,0.1
+rock.00048,Led Zeppelin,rock,hiphop,0.1,0.1,0.0,0.1,0.2,0.1,0.1,0.1,0.0,0.2
+rock.00053,Simple Minds,rock,reggae,0.1,0.0,0.0,0.2,0.0,0.1,0.1,0.0,0.5,0.0
+rock.00058,Sting,rock,disco,0.1,0.1,0.1,0.2,0.2,0.0,0.2,0.0,0.0,0.1
+rock.00060,Sting,rock,pop,0.1,0.0,0.0,0.1,0.1,0.2,0.0,0.3,0.0,0.2
+rock.00064,Jethro Tull,rock,blues,0.3,0.0,0.3,0.1,0.0,0.1,0.0,0.1,0.1,0.0
+rock.00066,Jethro Tull,rock,classical,0.1,0.2,0.0,0.1,0.1,0.1,0.2,0.0,0.1,0.1
+rock.00068,Jethro Tull,rock,country,0.0,0.0,0.3,0.2,0.2,0.0,0.0,0.1,0.0,0.2
+rock.00073,Simply Red,rock,hiphop,0.0,0.1,0.0,0.1,0.3,0.1,0.0,0.2,0.0,0.2
+rock.00074,Simply Red,rock,country,0.0,0.1,0.3,0.2,0.0,0.0,0.0,0.1,0.2,0.1
+rock.00075,Simply Red,rock,reggae,0.2,0.0,0.2,0.0,0.1,0.0,0.1,0.1,0.3,0.0
+rock.00076,Simply Red,rock,blues,0.2,0.2,0.1,0.1,0.0,0.2,0.0,0.1,0.1,0.0
+rock.00077,Simply Red,rock,disco,0.0,0.0,0.0,0.3,0.1,0.1,0.0,0.2,0.1,0.2
+rock.00080,Survivor,rock,blues,0.2,0.0,0.1,0.2,0.1,0.0,0.2,0.2,0.0,0.0
+rock.00091,The Stone Roses,rock,metal,0.1,0.1,0.1,0.1,0.0,0.1,0.3,0.0,0.1,0.1
